@@ -34,7 +34,7 @@ namespace Summaries
             usernameBox.Text = user;
         }
 
-        private void resetBTN_Click(object sender, EventArgs e)
+        private void resetFields()
         {
             currentPasswordBox.Clear();
             newPasswordBox.Clear();
@@ -86,13 +86,13 @@ namespace Summaries
                     }
                     else
                     {
-                        resetBTN_Click(sender, e);
+                        resetFields();
                         MessageBox.Show("The current password and the new password given are the same.", "Cannot change to the same password", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     }
                 }
                 else
                 {
-                    resetBTN_Click(sender, e);
+                    resetFields();
                     MessageBox.Show("The new passwords don't match. Please try again.", "The passwords don't match", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
@@ -180,6 +180,11 @@ namespace Summaries
         {
             keyHandler(sender, e);
             e.Handled = true;
+        }
+
+        private void cancelBTN_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

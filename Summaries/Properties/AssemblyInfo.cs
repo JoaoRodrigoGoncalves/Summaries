@@ -6,12 +6,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Summaries")]
-[assembly: AssemblyDescription("Software to register daily summarieson João Gonçalves' platform")]
+[assembly: AssemblyTitle("Summaries - Summary Control Software")]
+[assembly: AssemblyDescription("Summaries is a software designed to help (ex) Erasmus+ students from Torres Novas Professional School's class 67 to write and keep up with their summaries.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Summaries")]
-[assembly: AssemblyCopyright("Copyright © João Rodrigo Lopes Gonçalves 2019")]
+[assembly: AssemblyProduct("Summaries - Summary Control Software")]
+[assembly: AssemblyCopyright("Copyright © João Rodrigo Lopes Gonçalves 2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

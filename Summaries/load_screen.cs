@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -53,6 +54,18 @@ namespace Summaries
                 }
                 else
                 {
+                    try
+                    {
+                        using (var client = new WebClient())
+                        {
+                            client.DownloadFile("https://joaogoncalves.myftp.org/restricted/licenses.txt", Path.GetTempPath() + "\\licenses.txt");
+                        }
+                    }catch(Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Cannot load all needed resources", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Application.Exit();
+                    }
+
                     login loginForm = new login();
                     this.Close();
                     loginForm.Show();

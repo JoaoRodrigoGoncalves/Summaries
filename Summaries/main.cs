@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Net;
 using System.Windows.Forms;
 
 namespace Summaries
@@ -8,6 +10,8 @@ namespace Summaries
         private int userID;
         private string user;
         private string displayName;
+
+        private bool isHidden = false;
 
         /// <summary>
         /// Main function from the dashboard form.
@@ -23,7 +27,7 @@ namespace Summaries
             displayName = display;
         }
 
-        private void menuFileExit_Click(object sender, EventArgs e)
+        private void menuOptionsExit_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
@@ -38,10 +42,51 @@ namespace Summaries
             Application.Exit();
         }
 
-        private void menuFileChange_Password_Click(object sender, EventArgs e)
+        private void menuOptionsChange_Password_Click(object sender, EventArgs e)
         {
             changePassword password = new changePassword(userID, user, displayName);
             password.ShowDialog();
+        }
+
+        private void trayIcon_Click(object sender, EventArgs e)
+        {
+            if (isHidden)
+            {
+                this.Show();
+                isHidden = false;
+            }
+            else
+            {
+                this.Hide();
+                isHidden = true;
+            }
+        }
+
+        private void menuAboutLicenses_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start(Path.GetTempPath() + "\\licenses.txt");
+            }
+            catch (System.ComponentModel.Win32Exception)
+            {
+                using (var client = new WebClient())
+                {
+                    client.DownloadFile("https://joaogoncalves.myftp.org/restricted/licenses.txt", Path.GetTempPath() + "\\licenses.txt");
+                }
+                menuAboutLicenses_Click(sender, e);
+            }
+        }
+
+        private void menuAboutSummaries_Click(object sender, EventArgs e)
+        {
+            aboutSummaries about = new aboutSummaries();
+            about.ShowDialog();
+        }
+
+        private void menuSummaryNew_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }

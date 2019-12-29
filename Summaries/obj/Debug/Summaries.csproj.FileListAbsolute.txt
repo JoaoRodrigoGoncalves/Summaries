@@ -18,3 +18,4 @@ D:\Documents\GitHub\Summaries\Summaries\bin\Debug\Newtonsoft.Json.xml
 D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.csproj.CopyComplete
 D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.main.resources
 D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.changePassword.resources
+D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.aboutSummaries.resources

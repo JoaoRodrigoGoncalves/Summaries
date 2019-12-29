@@ -86,6 +86,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="aboutSummaries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="aboutSummaries.Designer.cs">
+      <DependentUpon>aboutSummaries.cs</DependentUpon>
+    </Compile>
     <Compile Include="changePassword.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -112,6 +118,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="aboutSummaries.resx">
+      <DependentUpon>aboutSummaries.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="changePassword.resx">
       <DependentUpon>changePassword.cs</DependentUpon>
     </EmbeddedResource>

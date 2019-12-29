@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(changePassword));
             this.changeBTN = new System.Windows.Forms.Button();
-            this.resetBTN = new System.Windows.Forms.Button();
+            this.cancelBTN = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.usernameBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -52,16 +52,17 @@
             this.changeBTN.UseVisualStyleBackColor = true;
             this.changeBTN.Click += new System.EventHandler(this.changeBTN_Click);
             // 
-            // resetBTN
+            // cancelBTN
             // 
-            this.resetBTN.CausesValidation = false;
-            this.resetBTN.Location = new System.Drawing.Point(184, 133);
-            this.resetBTN.Name = "resetBTN";
-            this.resetBTN.Size = new System.Drawing.Size(75, 23);
-            this.resetBTN.TabIndex = 1;
-            this.resetBTN.Text = "Reset Fields";
-            this.resetBTN.UseVisualStyleBackColor = true;
-            this.resetBTN.Click += new System.EventHandler(this.resetBTN_Click);
+            this.cancelBTN.CausesValidation = false;
+            this.cancelBTN.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.cancelBTN.Location = new System.Drawing.Point(184, 133);
+            this.cancelBTN.Name = "cancelBTN";
+            this.cancelBTN.Size = new System.Drawing.Size(75, 23);
+            this.cancelBTN.TabIndex = 1;
+            this.cancelBTN.Text = "Cancel";
+            this.cancelBTN.UseVisualStyleBackColor = true;
+            this.cancelBTN.Click += new System.EventHandler(this.cancelBTN_Click);
             // 
             // label1
             // 
@@ -138,6 +139,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.cancelBTN;
             this.CausesValidation = false;
             this.ClientSize = new System.Drawing.Size(397, 172);
             this.Controls.Add(this.confirmPasswordBox);
@@ -148,7 +150,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.usernameBox);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.resetBTN);
+            this.Controls.Add(this.cancelBTN);
             this.Controls.Add(this.changeBTN);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -164,7 +166,7 @@
         #endregion
 
         private System.Windows.Forms.Button changeBTN;
-        private System.Windows.Forms.Button resetBTN;
+        private System.Windows.Forms.Button cancelBTN;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox usernameBox;
         private System.Windows.Forms.Label label2;
