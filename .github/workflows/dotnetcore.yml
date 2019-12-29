@@ -1,4 +1,4 @@
-name: .NET Core
+name: c# .NET Runner
 
 on: [push, pull_request]
 
@@ -8,12 +8,12 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@master
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 2.2.108
+        dotnet-version: 4.0.30319
     - name: Build with dotnet
       run: |
         cd Summaries
-        dotnet build --configuration Release
+        dotnet build Summaries
