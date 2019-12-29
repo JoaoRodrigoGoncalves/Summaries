@@ -29,7 +29,7 @@ namespace Summaries
         private void loginBTN_Click(object sender, EventArgs e)
         {
             serverResponse response;
-            UserSession session;
+            userSession session;
 
             string username = usernameBox.Text;
             string password = passwordBox.Text;
@@ -38,8 +38,8 @@ namespace Summaries
 
             if (response.status)
             {
-                session = JsonConvert.DeserializeObject<UserSession>(jsonResponse);
-                main mainForm = new main();
+                session = JsonConvert.DeserializeObject<userSession>(jsonResponse);
+                main mainForm = new main(session.userID, session.user, session.displayName);
                 this.Hide();
                 mainForm.Show();
             }
@@ -56,6 +56,13 @@ namespace Summaries
             }
         }
 
+        private class userSession
+        {
+            public int userID { get; set; }
+            public string user { get; set; }
+            public string displayName { get; set; }
+        }
+
         private class serverResponse
         {
             public bool status { get; set; }
@@ -70,28 +77,28 @@ namespace Summaries
         /// <returns></returns>
         public static string LoginValidation(string username, string password)
         {
-            string dadosPOST = "usrnm=" + username + "&psswd=" + password;
-            var dados = Encoding.UTF8.GetBytes(dadosPOST);
-            var requisicaoWeb = WebRequest.CreateHttp("https://joaogoncalves.myftp.org/restricted/loginvalidator.php");
-            requisicaoWeb.Method = "POST";
-            requisicaoWeb.ContentType = "application/x-www-form-urlencoded";
-            requisicaoWeb.ContentLength = dados.Length;
-            requisicaoWeb.UserAgent = "app";
-            //precisamos escrever os dados post para o stream
-            using (var stream = requisicaoWeb.GetRequestStream())
+            string POSTdata = "usrnm=" + username + "&psswd=" + password;
+            var data = Encoding.UTF8.GetBytes(POSTdata);
+            var request = WebRequest.CreateHttp("https://joaogoncalves.myftp.org/restricted/loginvalidator.php");
+            request.Method = "POST";
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.ContentLength = data.Length;
+            request.UserAgent = "app";
+            //writes the post data to the stream
+            using (var stream = request.GetRequestStream())
             {
-                stream.Write(dados, 0, dados.Length);
+                stream.Write(data, 0, data.Length);
                 stream.Close();
             }
             //ler a resposta
             string finalData = "";
-            using (var resposta = requisicaoWeb.GetResponse())
+            using (var response = request.GetResponse())
             {
-                var streamDados = resposta.GetResponseStream();
-                StreamReader reader = new StreamReader(streamDados);
+                var dataStream = response.GetResponseStream();
+                StreamReader reader = new StreamReader(dataStream);
                 finalData = reader.ReadToEnd();
-                streamDados.Close();
-                resposta.Close();
+                dataStream.Close();
+                response.Close();
             }
             return finalData;
         }
@@ -133,6 +140,7 @@ namespace Summaries
             if (e.KeyCode == Keys.Enter)
             {
                 loginBTN_Click(sender, e);
+                e.Handled = true;
             }
         }
     }

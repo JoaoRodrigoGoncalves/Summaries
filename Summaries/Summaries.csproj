@@ -86,6 +86,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="changePassword.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="changePassword.Designer.cs">
+      <DependentUpon>changePassword.cs</DependentUpon>
+    </Compile>
     <Compile Include="load_screen.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -106,7 +112,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="userSession.cs" />
+    <EmbeddedResource Include="changePassword.resx">
+      <DependentUpon>changePassword.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="load_screen.resx">
       <DependentUpon>load_screen.cs</DependentUpon>
     </EmbeddedResource>
@@ -144,6 +152,12 @@
   <ItemGroup>
     <None Include="Resources\icon.png" />
     <None Include="assets\icon.ico" />
+    <None Include="assets\exit.png" />
+    <None Include="assets\changePassword.png" />
+    <None Include="assets\newSummary.png" />
+    <None Include="assets\summariesList.png" />
+    <None Include="assets\licenses.png" />
+    <None Include="assets\aboutSummaries.png" />
     <Content Include="icon.ico" />
   </ItemGroup>
   <ItemGroup />
