@@ -3,7 +3,6 @@ D:\Documents\GitHub\Summaries\Summaries\bin\Debug\Summaries.exe.manifest
 D:\Documents\GitHub\Summaries\Summaries\bin\Debug\Summaries.application
 D:\Documents\GitHub\Summaries\Summaries\bin\Debug\Summaries.exe
 D:\Documents\GitHub\Summaries\Summaries\bin\Debug\Summaries.pdb
-D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.csprojAssemblyReference.cache
 D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.loading.resources
 D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.Properties.Resources.resources
 D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.csproj.GenerateResource.cache
@@ -21,3 +20,4 @@ D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.changePassword.resou
 D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.aboutSummaries.resources
 D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.summariesList.resources
 D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.newSummary.resources
+D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.csprojAssemblyReference.cache

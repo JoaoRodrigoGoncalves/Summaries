@@ -1,15 +1,9 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Summaries
@@ -82,10 +76,10 @@ namespace Summaries
 
             if (response.status)
             {
-                if(response.contents != null)
+                dataGrid.Rows.Clear();
+                dataGrid.Refresh();
+                if (response.contents != null)
                 {
-                    dataGrid.Rows.Clear();
-                    dataGrid.Refresh();
                     dataGrid.ColumnCount = 3;
                     dataGrid.Columns[0].Name = "date";
                     dataGrid.Columns[0].HeaderText = "Date";
@@ -99,7 +93,6 @@ namespace Summaries
                     dataGrid.AllowUserToDeleteRows = false;
                     dataGrid.AllowUserToAddRows = false;
                     dataGrid.MultiSelect = false; //just to reinforce
-                    
 
                     var rows = new List<string[]>();
                     foreach (Content content in response.contents)
@@ -173,7 +166,7 @@ namespace Summaries
                 {
                     if(serverResponse.errors == null || serverResponse.errors.Length < 1)
                     {
-                        MessageBox.Show("The row you are trying to remove does not exist in the database! " + jsonResponse, "Row does not exist", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("The row you are trying to remove does not exist in the database! ", "Row does not exist", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         summariesList_Load(sender, e);
                     }
                     else
@@ -181,7 +174,6 @@ namespace Summaries
                         MessageBox.Show("Error: " + serverResponse.errors, "Critital Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
-
             }
         }
 
@@ -208,6 +200,7 @@ namespace Summaries
 
         private void refreshList_Click(object sender, EventArgs e)
         {
+
             summariesList_Load(sender, e);
         }
     }
