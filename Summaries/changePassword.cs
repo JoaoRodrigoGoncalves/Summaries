@@ -151,35 +151,43 @@ namespace Summaries
             return finalData;
         }
 
-        private void keyHandler(object sender, KeyPressEventArgs e)
+        private void currentPasswordBox_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if(e.KeyChar == (char)(Keys.Escape))
+            if (e.KeyChar == (char)(Keys.Escape))
             {
                 this.Close();
             }
 
-            if(e.KeyChar == (char)(Keys.Enter))
+            if (e.KeyChar == (char)(Keys.Enter))
             {
                 changeBTN_Click(sender, e);
             }
         }
 
-        private void currentPasswordBox_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            keyHandler(sender, e);
-            e.Handled = true;
-        }
-
         private void newPasswordBox_KeyPress(object sender, KeyPressEventArgs e)
         {
-            keyHandler(sender, e);
-            e.Handled = true;
+            if (e.KeyChar == (char)(Keys.Escape))
+            {
+                this.Close();
+            }
+
+            if (e.KeyChar == (char)(Keys.Enter))
+            {
+                changeBTN_Click(sender, e);
+            }
         }
 
         private void confirmPasswordBox_KeyPress(object sender, KeyPressEventArgs e)
         {
-            keyHandler(sender, e);
-            e.Handled = true;
+            if (e.KeyChar == (char)(Keys.Escape))
+            {
+                this.Close();
+            }
+
+            if (e.KeyChar == (char)(Keys.Enter))
+            {
+                changeBTN_Click(sender, e);
+            }
         }
 
         private void cancelBTN_Click(object sender, EventArgs e)

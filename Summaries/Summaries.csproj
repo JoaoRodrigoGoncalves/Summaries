@@ -116,8 +116,20 @@
     <Compile Include="main.Designer.cs">
       <DependentUpon>main.cs</DependentUpon>
     </Compile>
+    <Compile Include="newSummary.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="newSummary.Designer.cs">
+      <DependentUpon>newSummary.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="summariesList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="summariesList.Designer.cs">
+      <DependentUpon>summariesList.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="aboutSummaries.resx">
       <DependentUpon>aboutSummaries.cs</DependentUpon>
     </EmbeddedResource>
@@ -133,6 +145,9 @@
     <EmbeddedResource Include="main.resx">
       <DependentUpon>main.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="newSummary.resx">
+      <DependentUpon>newSummary.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -143,6 +158,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="summariesList.resx">
+      <DependentUpon>summariesList.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
@@ -167,6 +185,9 @@
     <None Include="assets\summariesList.png" />
     <None Include="assets\licenses.png" />
     <None Include="assets\aboutSummaries.png" />
+    <None Include="assets\deleteSummary.png" />
+    <None Include="assets\addSummary.png" />
+    <None Include="assets\refresh.png" />
     <Content Include="icon.ico" />
   </ItemGroup>
   <ItemGroup />

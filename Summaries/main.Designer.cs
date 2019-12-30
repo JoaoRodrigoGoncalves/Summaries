@@ -39,10 +39,10 @@
             this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.menuOptionsChange_Password = new System.Windows.Forms.ToolStripMenuItem();
             this.menuOptionsExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSummaryNew = new System.Windows.Forms.ToolStripMenuItem();
             this.menuSummaryList = new System.Windows.Forms.ToolStripMenuItem();
             this.menuAboutLicenses = new System.Windows.Forms.ToolStripMenuItem();
             this.menuAboutSummaries = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuSummaryNew = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -119,7 +119,7 @@
             // 
             this.menuOptionsChange_Password.Image = global::Summaries.Properties.Resources.changePassword;
             this.menuOptionsChange_Password.Name = "menuOptionsChange_Password";
-            this.menuOptionsChange_Password.Size = new System.Drawing.Size(180, 22);
+            this.menuOptionsChange_Password.Size = new System.Drawing.Size(168, 22);
             this.menuOptionsChange_Password.Text = "Change &Password";
             this.menuOptionsChange_Password.Click += new System.EventHandler(this.menuOptionsChange_Password_Click);
             // 
@@ -127,32 +127,9 @@
             // 
             this.menuOptionsExit.Image = global::Summaries.Properties.Resources.exit;
             this.menuOptionsExit.Name = "menuOptionsExit";
-            this.menuOptionsExit.Size = new System.Drawing.Size(180, 22);
+            this.menuOptionsExit.Size = new System.Drawing.Size(168, 22);
             this.menuOptionsExit.Text = "&Exit";
             this.menuOptionsExit.Click += new System.EventHandler(this.menuOptionsExit_Click);
-            // 
-            // menuSummaryList
-            // 
-            this.menuSummaryList.Image = global::Summaries.Properties.Resources.summariesList;
-            this.menuSummaryList.Name = "menuSummaryList";
-            this.menuSummaryList.Size = new System.Drawing.Size(180, 22);
-            this.menuSummaryList.Text = "Summaries &List";
-            // 
-            // menuAboutLicenses
-            // 
-            this.menuAboutLicenses.Image = global::Summaries.Properties.Resources.licenses;
-            this.menuAboutLicenses.Name = "menuAboutLicenses";
-            this.menuAboutLicenses.Size = new System.Drawing.Size(180, 22);
-            this.menuAboutLicenses.Text = "Li&censes";
-            this.menuAboutLicenses.Click += new System.EventHandler(this.menuAboutLicenses_Click);
-            // 
-            // menuAboutSummaries
-            // 
-            this.menuAboutSummaries.Image = global::Summaries.Properties.Resources.aboutSummaries;
-            this.menuAboutSummaries.Name = "menuAboutSummaries";
-            this.menuAboutSummaries.Size = new System.Drawing.Size(180, 22);
-            this.menuAboutSummaries.Text = "A&bout Summaries";
-            this.menuAboutSummaries.Click += new System.EventHandler(this.menuAboutSummaries_Click);
             // 
             // menuSummaryNew
             // 
@@ -161,6 +138,30 @@
             this.menuSummaryNew.Size = new System.Drawing.Size(180, 22);
             this.menuSummaryNew.Text = "&New Summary";
             this.menuSummaryNew.Click += new System.EventHandler(this.menuSummaryNew_Click);
+            // 
+            // menuSummaryList
+            // 
+            this.menuSummaryList.Image = global::Summaries.Properties.Resources.summariesList;
+            this.menuSummaryList.Name = "menuSummaryList";
+            this.menuSummaryList.Size = new System.Drawing.Size(180, 22);
+            this.menuSummaryList.Text = "Summaries &List";
+            this.menuSummaryList.Click += new System.EventHandler(this.menuSummaryList_Click);
+            // 
+            // menuAboutLicenses
+            // 
+            this.menuAboutLicenses.Image = global::Summaries.Properties.Resources.licenses;
+            this.menuAboutLicenses.Name = "menuAboutLicenses";
+            this.menuAboutLicenses.Size = new System.Drawing.Size(169, 22);
+            this.menuAboutLicenses.Text = "Li&censes";
+            this.menuAboutLicenses.Click += new System.EventHandler(this.menuAboutLicenses_Click);
+            // 
+            // menuAboutSummaries
+            // 
+            this.menuAboutSummaries.Image = global::Summaries.Properties.Resources.aboutSummaries;
+            this.menuAboutSummaries.Name = "menuAboutSummaries";
+            this.menuAboutSummaries.Size = new System.Drawing.Size(169, 22);
+            this.menuAboutSummaries.Text = "A&bout Summaries";
+            this.menuAboutSummaries.Click += new System.EventHandler(this.menuAboutSummaries_Click);
             // 
             // main
             // 

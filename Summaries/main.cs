@@ -86,7 +86,14 @@ namespace Summaries
 
         private void menuSummaryNew_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            newSummary newSummary = new newSummary(userID);
+            newSummary.ShowDialog();
+        }
+
+        private void menuSummaryList_Click(object sender, EventArgs e)
+        {
+            summariesList summaries = new summariesList(userID);
+            summaries.ShowDialog();
         }
     }
 }

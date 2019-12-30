@@ -47,7 +47,7 @@
             this.changeBTN.Location = new System.Drawing.Point(265, 133);
             this.changeBTN.Name = "changeBTN";
             this.changeBTN.Size = new System.Drawing.Size(110, 23);
-            this.changeBTN.TabIndex = 0;
+            this.changeBTN.TabIndex = 4;
             this.changeBTN.Text = "Change Password";
             this.changeBTN.UseVisualStyleBackColor = true;
             this.changeBTN.Click += new System.EventHandler(this.changeBTN_Click);
@@ -59,7 +59,7 @@
             this.cancelBTN.Location = new System.Drawing.Point(184, 133);
             this.cancelBTN.Name = "cancelBTN";
             this.cancelBTN.Size = new System.Drawing.Size(75, 23);
-            this.cancelBTN.TabIndex = 1;
+            this.cancelBTN.TabIndex = 5;
             this.cancelBTN.Text = "Cancel";
             this.cancelBTN.UseVisualStyleBackColor = true;
             this.cancelBTN.Click += new System.EventHandler(this.cancelBTN_Click);
@@ -95,7 +95,7 @@
             this.currentPasswordBox.Location = new System.Drawing.Point(134, 55);
             this.currentPasswordBox.Name = "currentPasswordBox";
             this.currentPasswordBox.Size = new System.Drawing.Size(241, 20);
-            this.currentPasswordBox.TabIndex = 5;
+            this.currentPasswordBox.TabIndex = 1;
             this.currentPasswordBox.UseSystemPasswordChar = true;
             this.currentPasswordBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.currentPasswordBox_KeyPress);
             // 
@@ -104,7 +104,7 @@
             this.newPasswordBox.Location = new System.Drawing.Point(134, 81);
             this.newPasswordBox.Name = "newPasswordBox";
             this.newPasswordBox.Size = new System.Drawing.Size(241, 20);
-            this.newPasswordBox.TabIndex = 7;
+            this.newPasswordBox.TabIndex = 2;
             this.newPasswordBox.UseSystemPasswordChar = true;
             this.newPasswordBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.newPasswordBox_KeyPress);
             // 
@@ -122,7 +122,7 @@
             this.confirmPasswordBox.Location = new System.Drawing.Point(134, 107);
             this.confirmPasswordBox.Name = "confirmPasswordBox";
             this.confirmPasswordBox.Size = new System.Drawing.Size(241, 20);
-            this.confirmPasswordBox.TabIndex = 9;
+            this.confirmPasswordBox.TabIndex = 3;
             this.confirmPasswordBox.UseSystemPasswordChar = true;
             this.confirmPasswordBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.confirmPasswordBox_KeyPress);
             // 

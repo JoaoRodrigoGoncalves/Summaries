@@ -19,3 +19,5 @@ D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.csproj.CopyComplete
 D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.main.resources
 D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.changePassword.resources
 D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.aboutSummaries.resources
+D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.summariesList.resources
+D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.newSummary.resources
