@@ -15,6 +15,12 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_DDDD19B6BAF24B289A2A0DAB42080CAA"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_B30D2F817E304A3EB9B923F12E343944"
         "MsmSig" = "8:_UNDEFINED"
@@ -114,6 +120,26 @@
         }
         "File"
         {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DDDD19B6BAF24B289A2A0DAB42080CAA"
+            {
+            "SourcePath" = "8:..\\Summaries\\assets\\icon.ico"
+            "TargetName" = "8:icon.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_45CC7F54A0574787BCF15319FAAF5A9F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
         }
         "FileType"
         {
@@ -169,25 +195,25 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:Installer"
+        "ProductName" = "8:Summaries"
         "ProductCode" = "8:{DC840F3F-6468-4F2C-8C5E-8AF9CF6D7445}"
-        "PackageCode" = "8:{1479F409-62AE-41FB-A4C7-E5A4B4040313}"
+        "PackageCode" = "8:{BB7B5937-7367-4CA8-A0A7-7F019B954C87}"
         "UpgradeCode" = "8:{43134371-67D1-4D4D-8E36-02F775648D5B}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
-        "RemovePreviousVersions" = "11:FALSE"
+        "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
         "ProductVersion" = "8:1.0.0"
-        "Manufacturer" = "8:Default Company Name"
+        "Manufacturer" = "8:João Rodrigo Gonçalves"
         "ARPHELPTELEPHONE" = "8:"
-        "ARPHELPLINK" = "8:"
-        "Title" = "8:Installer"
+        "ARPHELPLINK" = "8:https://joaogoncalves.myftp.org/"
+        "Title" = "8:Summaries Installer"
         "Subject" = "8:"
-        "ARPCONTACT" = "8:Default Company Name"
+        "ARPCONTACT" = "8:João Rodrigo Gonçalves"
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
-        "ARPURLINFOABOUT" = "8:"
+        "ARPURLINFOABOUT" = "8:https://joaogoncalves.myftp.org/"
         "ARPPRODUCTICON" = "8:"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
@@ -293,7 +319,7 @@
         {
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_A307EC5EC4F445F09179339D9F9BDBAB"
             {
-            "Name" = "8:Shortcut to Primary output from Summaries (Release Any CPU)"
+            "Name" = "8:Summaries"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
@@ -302,12 +328,12 @@
             "Target" = "8:_B30D2F817E304A3EB9B923F12E343944"
             "Folder" = "8:_E6991B0613894692B52931408D9C86B5"
             "WorkingFolder" = "8:_45CC7F54A0574787BCF15319FAAF5A9F"
-            "Icon" = "8:"
+            "Icon" = "8:_DDDD19B6BAF24B289A2A0DAB42080CAA"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_E9F3BDCCF30B4B53B2DFAED69D6BD371"
             {
-            "Name" = "8:Shortcut to Primary output from Summaries (Release Any CPU)"
+            "Name" = "8:Summaries"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
@@ -316,7 +342,7 @@
             "Target" = "8:_B30D2F817E304A3EB9B923F12E343944"
             "Folder" = "8:_9CD12571DB50446CA5EDA6115ACBC6D8"
             "WorkingFolder" = "8:_45CC7F54A0574787BCF15319FAAF5A9F"
-            "Icon" = "8:"
+            "Icon" = "8:_DDDD19B6BAF24B289A2A0DAB42080CAA"
             "Feature" = "8:"
             }
         }
