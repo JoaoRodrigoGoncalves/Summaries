@@ -4,7 +4,7 @@
   <description asmv2:iconFile="icon.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="Summaries" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+    <assemblyIdentity name="Summaries" version="2.0.0.1" language="neutral" processorArchitecture="msil" />
     <commandLine file="Summaries.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -55,14 +55,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Summaries.exe" size="1077744">
-      <assemblyIdentity name="Summaries" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Summaries.exe" size="1209328">
+      <assemblyIdentity name="Summaries" version="2.0.0.1" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>lQMDmfaNPrHIAnrYI4eHnVrMG3yH138DGeUw6FHVWhk=</dsig:DigestValue>
+        <dsig:DigestValue>+ViiM+aQt4ar8V+m633lbVHBmNc/7rlAZ5x55IEO8kM=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
