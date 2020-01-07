@@ -10,6 +10,7 @@ namespace Summaries
         private int userID;
         private string user;
         private string displayName;
+        private bool isAdmin = false;
 
         private bool isHidden = false;
 
@@ -19,12 +20,13 @@ namespace Summaries
         /// <param name="id">The user id retrived from the database</param>
         /// <param name="username">The username retrived from the database (login name)</param>
         /// <param name="display">The name to be displayed that was retrived from the database</param>
-        public main(int id, string username, string display)
+        public main(int id, string username, string display, bool adminControl)
         {
             InitializeComponent();
             userID = id;
             user = username;
             displayName = display;
+            isAdmin = adminControl;
         }
 
         private void menuOptionsExit_Click(object sender, EventArgs e)
@@ -94,6 +96,21 @@ namespace Summaries
         {
             summariesList summaries = new summariesList(userID);
             summaries.ShowDialog();
+        }
+
+        private void main_Load(object sender, EventArgs e)
+        {
+            if (isAdmin)
+            {
+                menuOptionsAdministration_Panel.Visible = true;
+                menuOptionsAdministration_PanelStrip.Visible = true;
+            }
+        }
+
+        private void menuOptionsAdministration_Panel_Click(object sender, EventArgs e)
+        {
+            AdministrationPanel panel = new AdministrationPanel(userID);
+            panel.ShowDialog();
         }
     }
 }

@@ -20,4 +20,4 @@ D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.changePassword.resou
 D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.aboutSummaries.resources
 D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.summariesList.resources
 D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.newSummary.resources
-D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.csprojAssemblyReference.cache
+D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.AdministrationPanel.resources

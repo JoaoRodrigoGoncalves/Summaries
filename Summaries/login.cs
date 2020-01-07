@@ -39,9 +39,9 @@ namespace Summaries
             if (response.status)
             {
                 session = JsonConvert.DeserializeObject<userSession>(jsonResponse);
-                main mainForm = new main(session.userID, session.user, session.displayName);
+                main form = new main(session.userID, session.user, session.displayName, session.adminControl);
                 this.Hide();
-                mainForm.Show();
+                form.Show();
             }
             else
             {
@@ -61,6 +61,7 @@ namespace Summaries
             public int userID { get; set; }
             public string user { get; set; }
             public string displayName { get; set; }
+            public bool adminControl { get; set; }
         }
 
         private class serverResponse

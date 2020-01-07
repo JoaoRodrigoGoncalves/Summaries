@@ -37,7 +37,10 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.sessionLabel = new System.Windows.Forms.Label();
             this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.menuOptionsAdministration_PanelStrip = new System.Windows.Forms.ToolStripSeparator();
             this.menuOptionsChange_Password = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuOptionsAdministration_Panel = new System.Windows.Forms.ToolStripMenuItem();
             this.menuOptionsExit = new System.Windows.Forms.ToolStripMenuItem();
             this.menuSummaryNew = new System.Windows.Forms.ToolStripMenuItem();
             this.menuSummaryList = new System.Windows.Forms.ToolStripMenuItem();
@@ -64,6 +67,9 @@
             // 
             this.menuOptions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuOptionsChange_Password,
+            this.toolStripSeparator1,
+            this.menuOptionsAdministration_Panel,
+            this.menuOptionsAdministration_PanelStrip,
             this.menuOptionsExit});
             this.menuOptions.Name = "menuOptions";
             this.menuOptions.Size = new System.Drawing.Size(61, 20);
@@ -115,19 +121,39 @@
             this.trayIcon.Visible = true;
             this.trayIcon.Click += new System.EventHandler(this.trayIcon_Click);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(182, 6);
+            // 
+            // menuOptionsAdministration_PanelStrip
+            // 
+            this.menuOptionsAdministration_PanelStrip.Name = "menuOptionsAdministration_PanelStrip";
+            this.menuOptionsAdministration_PanelStrip.Size = new System.Drawing.Size(182, 6);
+            this.menuOptionsAdministration_PanelStrip.Visible = false;
+            // 
             // menuOptionsChange_Password
             // 
             this.menuOptionsChange_Password.Image = global::Summaries.Properties.Resources.changePassword;
             this.menuOptionsChange_Password.Name = "menuOptionsChange_Password";
-            this.menuOptionsChange_Password.Size = new System.Drawing.Size(168, 22);
+            this.menuOptionsChange_Password.Size = new System.Drawing.Size(185, 22);
             this.menuOptionsChange_Password.Text = "Change &Password";
             this.menuOptionsChange_Password.Click += new System.EventHandler(this.menuOptionsChange_Password_Click);
+            // 
+            // menuOptionsAdministration_Panel
+            // 
+            this.menuOptionsAdministration_Panel.Image = global::Summaries.Properties.Resources.administrationPanel;
+            this.menuOptionsAdministration_Panel.Name = "menuOptionsAdministration_Panel";
+            this.menuOptionsAdministration_Panel.Size = new System.Drawing.Size(185, 22);
+            this.menuOptionsAdministration_Panel.Text = "Administration Panel";
+            this.menuOptionsAdministration_Panel.Visible = false;
+            this.menuOptionsAdministration_Panel.Click += new System.EventHandler(this.menuOptionsAdministration_Panel_Click);
             // 
             // menuOptionsExit
             // 
             this.menuOptionsExit.Image = global::Summaries.Properties.Resources.exit;
             this.menuOptionsExit.Name = "menuOptionsExit";
-            this.menuOptionsExit.Size = new System.Drawing.Size(168, 22);
+            this.menuOptionsExit.Size = new System.Drawing.Size(185, 22);
             this.menuOptionsExit.Text = "&Exit";
             this.menuOptionsExit.Click += new System.EventHandler(this.menuOptionsExit_Click);
             // 
@@ -135,7 +161,7 @@
             // 
             this.menuSummaryNew.Image = global::Summaries.Properties.Resources.newSummary;
             this.menuSummaryNew.Name = "menuSummaryNew";
-            this.menuSummaryNew.Size = new System.Drawing.Size(180, 22);
+            this.menuSummaryNew.Size = new System.Drawing.Size(154, 22);
             this.menuSummaryNew.Text = "&New Summary";
             this.menuSummaryNew.Click += new System.EventHandler(this.menuSummaryNew_Click);
             // 
@@ -143,7 +169,7 @@
             // 
             this.menuSummaryList.Image = global::Summaries.Properties.Resources.summariesList;
             this.menuSummaryList.Name = "menuSummaryList";
-            this.menuSummaryList.Size = new System.Drawing.Size(180, 22);
+            this.menuSummaryList.Size = new System.Drawing.Size(154, 22);
             this.menuSummaryList.Text = "Summaries &List";
             this.menuSummaryList.Click += new System.EventHandler(this.menuSummaryList_Click);
             // 
@@ -180,6 +206,7 @@
             this.Text = "Summaries";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.main_FormClosed);
+            this.Load += new System.EventHandler(this.main_Load);
             this.Shown += new System.EventHandler(this.main_Shown);
             this.menu.ResumeLayout(false);
             this.menu.PerformLayout();
@@ -205,5 +232,8 @@
         private System.Windows.Forms.Label sessionLabel;
         private System.Windows.Forms.NotifyIcon trayIcon;
         private System.Windows.Forms.ToolStripMenuItem menuSummaryNew;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem menuOptionsAdministration_Panel;
+        private System.Windows.Forms.ToolStripSeparator menuOptionsAdministration_PanelStrip;
     }
 }
