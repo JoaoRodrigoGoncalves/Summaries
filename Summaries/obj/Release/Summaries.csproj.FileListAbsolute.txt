@@ -21,3 +21,27 @@ D:\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.application
 D:\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.csproj.CopyComplete
 D:\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.exe
 D:\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.pdb
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\bin\Release\Summaries.exe.config
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\bin\Release\Summaries.exe.manifest
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\bin\Release\Summaries.application
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\bin\Release\Summaries.exe
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\bin\Release\Summaries.pdb
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\bin\Release\Newtonsoft.Json.dll
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\bin\Release\Newtonsoft.Json.xml
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.csprojAssemblyReference.cache
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.aboutSummaries.resources
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.AdministrationPanel.resources
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.changePassword.resources
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.loading.resources
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.login.resources
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.main.resources
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.newSummary.resources
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.Properties.Resources.resources
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.summariesList.resources
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.csproj.GenerateResource.cache
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.TrustInfo.xml
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.exe.manifest
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.application
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.csproj.CopyComplete
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.exe
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.pdb

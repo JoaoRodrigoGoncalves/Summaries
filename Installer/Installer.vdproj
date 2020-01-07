@@ -15,25 +15,19 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_790E45EC578147B2A21D68FF1D417EDD"
+        "MsmKey" = "8:_004AA9133DB9473D96C740F41366A1B3"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_D802CC1BD6CE4817959086A3A6F3A989"
+        "MsmKey" = "8:_03D37703119B4F33ADB15B379F1D30F5"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_DDDD19B6BAF24B289A2A0DAB42080CAA"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_E3BEC83410AD48DA9AD152A6FAD599F5"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -46,7 +40,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E3BEC83410AD48DA9AD152A6FAD599F5"
+        "OwnerKey" = "8:_004AA9133DB9473D96C740F41366A1B3"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -144,10 +138,21 @@
         }
         "File"
         {
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_790E45EC578147B2A21D68FF1D417EDD"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_004AA9133DB9473D96C740F41366A1B3"
             {
-            "SourcePath" = "8:C:\\Users\\João Gonçalves\\Desktop\\net45\\Newtonsoft.Json.xml"
-            "TargetName" = "8:Newtonsoft.Json.xml"
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_004AA9133DB9473D96C740F41366A1B3"
+                    {
+                    "Name" = "8:Newtonsoft.Json.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\Summaries\\packages\\Newtonsoft.Json.12.0.3\\lib\\net45\\Newtonsoft.Json.dll"
+            "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_45CC7F54A0574787BCF15319FAAF5A9F"
             "Condition" = "8:"
@@ -164,10 +169,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D802CC1BD6CE4817959086A3A6F3A989"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_03D37703119B4F33ADB15B379F1D30F5"
             {
-            "SourcePath" = "8:C:\\Users\\João Gonçalves\\Desktop\\net45\\Newtonsoft.Json.pdb"
-            "TargetName" = "8:Newtonsoft.Json.pdb"
+            "SourcePath" = "8:..\\Summaries\\packages\\Newtonsoft.Json.12.0.3\\lib\\net45\\Newtonsoft.Json.xml"
+            "TargetName" = "8:Newtonsoft.Json.xml"
             "Tag" = "8:"
             "Folder" = "8:_45CC7F54A0574787BCF15319FAAF5A9F"
             "Condition" = "8:"
@@ -188,37 +193,6 @@
             {
             "SourcePath" = "8:..\\Summaries\\assets\\icon.ico"
             "TargetName" = "8:icon.ico"
-            "Tag" = "8:"
-            "Folder" = "8:_45CC7F54A0574787BCF15319FAAF5A9F"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E3BEC83410AD48DA9AD152A6FAD599F5"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_E3BEC83410AD48DA9AD152A6FAD599F5"
-                    {
-                    "Name" = "8:Newtonsoft.Json.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:C:\\Users\\João Gonçalves\\Desktop\\net45\\Newtonsoft.Json.dll"
-            "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_45CC7F54A0574787BCF15319FAAF5A9F"
             "Condition" = "8:"
