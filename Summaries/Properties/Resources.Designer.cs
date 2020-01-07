@@ -83,6 +83,16 @@ namespace Summaries.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap administrationPanel {
+            get {
+                object obj = ResourceManager.GetObject("administrationPanel", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap changePassword {
             get {
                 object obj = ResourceManager.GetObject("changePassword", resourceCulture);

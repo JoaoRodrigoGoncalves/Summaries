@@ -125,7 +125,7 @@ namespace Summaries
         /// <returns></returns>
         public static string ChangePassword(int userID, string oldPassword, string newPassword)
         {
-            string POSTdata = "id=" + userID + "&oldpsswd=" + oldPassword + "&newpsswd=" + newPassword;
+            string POSTdata = "userID=" + userID + "&oldpsswd=" + oldPassword + "&newpsswd=" + newPassword;
             var data = Encoding.UTF8.GetBytes(POSTdata);
             var request = WebRequest.CreateHttp("https://joaogoncalves.myftp.org/restricted/api/changePassword.php");
             request.Method = "POST";

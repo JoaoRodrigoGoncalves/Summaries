@@ -124,54 +124,58 @@ namespace Summaries
         {
             if (dataGrid.SelectedRows.Count > 0 || dataGrid.SelectedCells.Count > 0)
             {
-                int selectedrowindex = dataGrid.SelectedCells[0].RowIndex;
-                DataGridViewRow selectedRow = dataGrid.Rows[selectedrowindex];
-                int selectedSummary = Convert.ToInt32(selectedRow.Cells["summaryNumber"].Value);
-
-                string POSTdata = "userid=" + userID + "&summaryID=" + selectedSummary;
-                var data = Encoding.UTF8.GetBytes(POSTdata);
-                var request = WebRequest.CreateHttp("https://joaogoncalves.myftp.org/restricted/api/summaryDeleteRequest.php");
-                request.Method = "POST";
-                request.ContentType = "application/x-www-form-urlencoded";
-                request.ContentLength = data.Length;
-                request.UserAgent = "app";
-                //writes the post data to the stream
-                using (var stream = request.GetRequestStream())
+                DialogResult boxResponse = MessageBox.Show("Are you sure you want to delete the summary?", "Delete a summary", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if(boxResponse == DialogResult.Yes)
                 {
-                    stream.Write(data, 0, data.Length);
-                    stream.Close();
-                }
-                //ler a resposta
-                string finalData = "";
-                using (var response = request.GetResponse())
-                {
-                    var dataStream = response.GetResponseStream();
-                    StreamReader reader = new StreamReader(dataStream);
-                    finalData = reader.ReadToEnd();
-                    dataStream.Close();
-                    response.Close();
-                }
+                    int selectedrowindex = dataGrid.SelectedCells[0].RowIndex;
+                    DataGridViewRow selectedRow = dataGrid.Rows[selectedrowindex];
+                    int selectedSummary = Convert.ToInt32(selectedRow.Cells["summaryNumber"].Value);
 
-                string jsonResponse = finalData;
-
-                simpleServerResponse serverResponse;
-
-                serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(jsonResponse);
-
-                if (serverResponse.status)
-                {
-                    summariesList_Load(sender, e);
-                }
-                else
-                {
-                    if(serverResponse.errors == null || serverResponse.errors.Length < 1)
+                    string POSTdata = "userid=" + userID + "&summaryID=" + selectedSummary;
+                    var data = Encoding.UTF8.GetBytes(POSTdata);
+                    var request = WebRequest.CreateHttp("https://joaogoncalves.myftp.org/restricted/api/summaryDeleteRequest.php");
+                    request.Method = "POST";
+                    request.ContentType = "application/x-www-form-urlencoded";
+                    request.ContentLength = data.Length;
+                    request.UserAgent = "app";
+                    //writes the post data to the stream
+                    using (var stream = request.GetRequestStream())
                     {
-                        MessageBox.Show("The row you are trying to remove does not exist in the database! ", "Row does not exist", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        stream.Write(data, 0, data.Length);
+                        stream.Close();
+                    }
+                    //ler a resposta
+                    string finalData = "";
+                    using (var response = request.GetResponse())
+                    {
+                        var dataStream = response.GetResponseStream();
+                        StreamReader reader = new StreamReader(dataStream);
+                        finalData = reader.ReadToEnd();
+                        dataStream.Close();
+                        response.Close();
+                    }
+
+                    string jsonResponse = finalData;
+
+                    simpleServerResponse serverResponse;
+
+                    serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(jsonResponse);
+
+                    if (serverResponse.status)
+                    {
                         summariesList_Load(sender, e);
                     }
                     else
                     {
-                        MessageBox.Show("Error: " + serverResponse.errors, "Critital Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        if (serverResponse.errors == null || serverResponse.errors.Length < 1)
+                        {
+                            MessageBox.Show("The row you are trying to remove does not exist in the database! ", "Row does not exist", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            summariesList_Load(sender, e);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Error: " + serverResponse.errors, "Critital Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
                 }
             }

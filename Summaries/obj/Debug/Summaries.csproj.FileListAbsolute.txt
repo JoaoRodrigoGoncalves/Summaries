@@ -20,4 +20,28 @@ D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.changePassword.resou
 D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.aboutSummaries.resources
 D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.summariesList.resources
 D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.newSummary.resources
-D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.csprojAssemblyReference.cache
+D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.AdministrationPanel.resources
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\bin\Debug\Summaries.exe.config
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\bin\Debug\Summaries.exe.manifest
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\bin\Debug\Summaries.application
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\bin\Debug\Summaries.exe
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\bin\Debug\Summaries.pdb
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\bin\Debug\Newtonsoft.Json.dll
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\bin\Debug\Newtonsoft.Json.xml
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.csprojAssemblyReference.cache
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.aboutSummaries.resources
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.AdministrationPanel.resources
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.changePassword.resources
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.loading.resources
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.login.resources
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.main.resources
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.newSummary.resources
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.Properties.Resources.resources
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.summariesList.resources
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.csproj.GenerateResource.cache
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.TrustInfo.xml
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.exe.manifest
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.application
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.csproj.CopyComplete
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.exe
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.pdb

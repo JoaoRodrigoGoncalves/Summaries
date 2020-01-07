@@ -98,6 +98,12 @@
     <Compile Include="aboutSummaries.Designer.cs">
       <DependentUpon>aboutSummaries.cs</DependentUpon>
     </Compile>
+    <Compile Include="AdministrationPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdministrationPanel.Designer.cs">
+      <DependentUpon>AdministrationPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="changePassword.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -138,6 +144,9 @@
     </Compile>
     <EmbeddedResource Include="aboutSummaries.resx">
       <DependentUpon>aboutSummaries.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AdministrationPanel.resx">
+      <DependentUpon>AdministrationPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="changePassword.resx">
       <DependentUpon>changePassword.cs</DependentUpon>
@@ -195,6 +204,7 @@
     <None Include="assets\deleteSummary.png" />
     <None Include="assets\addSummary.png" />
     <None Include="assets\refresh.png" />
+    <None Include="assets\administrationPanel.png" />
     <Content Include="icon.ico" />
   </ItemGroup>
   <ItemGroup />
