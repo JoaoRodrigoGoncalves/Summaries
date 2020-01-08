@@ -47,7 +47,7 @@ namespace Summaries
             }
             else
             {
-                if (!CheckForInternetConnection("https://joaogoncalves.myftp.org"))
+                if (!CheckForInternetConnection("https://joaogoncalves.eu"))
                 {
                     MessageBox.Show("Couldn't establish a connection to the Summaries server. Please try again later.", "Failed to connect to the server", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Application.Exit();
@@ -58,7 +58,7 @@ namespace Summaries
                     {
                         using (var client = new WebClient())
                         {
-                            client.DownloadFile("https://joaogoncalves.myftp.org/restricted/licenses.txt", Path.GetTempPath() + "\\licenses.txt");
+                            client.DownloadFile("https://joaogoncalves.eu/restricted/licenses.txt", Path.GetTempPath() + "\\licenses.txt");
                         }
                     }catch(Exception ex)
                     {
