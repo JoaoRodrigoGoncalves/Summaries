@@ -100,6 +100,10 @@ namespace Summaries
 
         private void saveBTN_Click(object sender, EventArgs e)
         {
+            if(contentsBox.Text == "" || contentsBox.TextLength < 1)
+            {
+                this.Close();
+            }
             bool shouldAbort = false;
             if (!isEdit)
             {
