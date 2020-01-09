@@ -10,28 +10,15 @@ namespace Summaries
     public partial class changePassword : Form
     {
 
-        private int userID;
-        private string user;
-        private string displayName;
-
-        /// <summary>
-        /// Main function from the changePassword form.
-        /// </summary>
-        /// <param name="id">The user id retrived from the database</param>
-        /// <param name="username">The username retrived from the database (login name)</param>
-        /// <param name="display">The name to be displayed that was retrived from the database</param>
-        public changePassword(int id, string username, string display)
+        public changePassword()
         {
             InitializeComponent();
-            userID = id;
-            user = username;
-            displayName = display;
         }
 
         private void changePassword_Shown(object sender, EventArgs e)
         {
-            this.Text += displayName;
-            usernameBox.Text = user;
+            this.Text += userStorage.displayName;
+            usernameBox.Text = userStorage.username;
         }
 
         private void resetFields()
@@ -56,7 +43,7 @@ namespace Summaries
                         string jsonResponse = "";
                         try
                         {
-                            jsonResponse = ChangePassword(userID, HashPW(currentPasswordBox.Text), HashPW(newPasswordBox.Text));
+                            jsonResponse = ChangePassword(userStorage.userID, HashPW(currentPasswordBox.Text), HashPW(newPasswordBox.Text));
                             serverResponse response;
                             response = JsonConvert.DeserializeObject<serverResponse>(jsonResponse);
 
@@ -127,7 +114,7 @@ namespace Summaries
         {
             string POSTdata = "userID=" + userID + "&oldpsswd=" + oldPassword + "&newpsswd=" + newPassword;
             var data = Encoding.UTF8.GetBytes(POSTdata);
-            var request = WebRequest.CreateHttp("https://joaogoncalves.myftp.org/restricted/api/changePassword.php");
+            var request = WebRequest.CreateHttp(userStorage.inUseDomain + "/restricted/api/changePassword.php");
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";
             request.ContentLength = data.Length;

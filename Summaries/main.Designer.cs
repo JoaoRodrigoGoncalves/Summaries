@@ -124,7 +124,7 @@
             // 
             this.menuSummaryNew.Image = global::Summaries.Properties.Resources.newSummary;
             this.menuSummaryNew.Name = "menuSummaryNew";
-            this.menuSummaryNew.Size = new System.Drawing.Size(180, 22);
+            this.menuSummaryNew.Size = new System.Drawing.Size(154, 22);
             this.menuSummaryNew.Text = "&New Summary";
             this.menuSummaryNew.Click += new System.EventHandler(this.menuSummaryNew_Click);
             // 
@@ -132,7 +132,7 @@
             // 
             this.menuSummaryList.Image = global::Summaries.Properties.Resources.summariesList;
             this.menuSummaryList.Name = "menuSummaryList";
-            this.menuSummaryList.Size = new System.Drawing.Size(180, 22);
+            this.menuSummaryList.Size = new System.Drawing.Size(154, 22);
             this.menuSummaryList.Text = "Summaries &List";
             this.menuSummaryList.Click += new System.EventHandler(this.menuSummaryList_Click);
             // 
@@ -149,7 +149,7 @@
             // 
             this.menuAboutLicenses.Image = global::Summaries.Properties.Resources.licenses;
             this.menuAboutLicenses.Name = "menuAboutLicenses";
-            this.menuAboutLicenses.Size = new System.Drawing.Size(180, 22);
+            this.menuAboutLicenses.Size = new System.Drawing.Size(169, 22);
             this.menuAboutLicenses.Text = "Li&censes";
             this.menuAboutLicenses.Click += new System.EventHandler(this.menuAboutLicenses_Click);
             // 
@@ -157,7 +157,7 @@
             // 
             this.menuAboutSummaries.Image = global::Summaries.Properties.Resources.aboutSummaries;
             this.menuAboutSummaries.Name = "menuAboutSummaries";
-            this.menuAboutSummaries.Size = new System.Drawing.Size(180, 22);
+            this.menuAboutSummaries.Size = new System.Drawing.Size(169, 22);
             this.menuAboutSummaries.Text = "A&bout Summaries";
             this.menuAboutSummaries.Click += new System.EventHandler(this.menuAboutSummaries_Click);
             // 

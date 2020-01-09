@@ -7,26 +7,12 @@ namespace Summaries
 {
     public partial class main : Form
     {
-        private int userID;
-        private string user;
-        private string displayName;
-        private bool isAdmin = false;
 
         private bool isHidden = false;
 
-        /// <summary>
-        /// Main function from the dashboard form.
-        /// </summary>
-        /// <param name="id">The user id retrived from the database</param>
-        /// <param name="username">The username retrived from the database (login name)</param>
-        /// <param name="display">The name to be displayed that was retrived from the database</param>
-        public main(int id, string username, string display, bool adminControl)
+        public main()
         {
             InitializeComponent();
-            userID = id;
-            user = username;
-            displayName = display;
-            isAdmin = adminControl;
         }
 
         private void menuOptionsExit_Click(object sender, EventArgs e)
@@ -36,7 +22,7 @@ namespace Summaries
 
         private void main_Shown(object sender, EventArgs e)
         {
-            sessionLabel.Text += " " + displayName;
+            sessionLabel.Text += " " + userStorage.displayName;
         }
 
         private void main_FormClosed(object sender, FormClosedEventArgs e)
@@ -46,7 +32,7 @@ namespace Summaries
 
         private void menuOptionsChange_Password_Click(object sender, EventArgs e)
         {
-            changePassword password = new changePassword(userID, user, displayName);
+            changePassword password = new changePassword();
             password.ShowDialog();
         }
 
@@ -88,19 +74,19 @@ namespace Summaries
 
         private void menuSummaryNew_Click(object sender, EventArgs e)
         {
-            newSummary newSummary = new newSummary(userID);
+            newSummary newSummary = new newSummary();
             newSummary.ShowDialog();
         }
 
         private void menuSummaryList_Click(object sender, EventArgs e)
         {
-            summariesList summaries = new summariesList(userID);
+            summariesList summaries = new summariesList();
             summaries.ShowDialog();
         }
 
         private void main_Load(object sender, EventArgs e)
         {
-            if (isAdmin)
+            if (userStorage.adminControl)
             {
                 menuOptionsAdministration_Panel.Visible = true;
                 menuOptionsAdministration_PanelStrip.Visible = true;
@@ -109,7 +95,7 @@ namespace Summaries
 
         private void menuOptionsAdministration_Panel_Click(object sender, EventArgs e)
         {
-            AdministrationPanel panel = new AdministrationPanel(userID);
+            AdministrationPanel panel = new AdministrationPanel();
             panel.ShowDialog();
         }
     }

@@ -42,27 +42,36 @@ namespace Summaries
             {
                 if (!CheckForInternetConnection("https://joaogoncalves.eu"))
                 {
-                    MessageBox.Show("Couldn't establish a connection to the Summaries server. Please try again later.", "Failed to connect to the server", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Application.Exit();
+                    if (!CheckForInternetConnection("https://joaogoncalves.myftp.org"))
+                    {
+                        MessageBox.Show("Couldn't establish a connection to the Summaries server. Please try again later.", "Failed to connect to the server", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Application.Exit();
+                    }
+                    else
+                    {
+                        userStorage.inUseDomain = "https://joaogoncalves.myftp.org";
+                    }
+
                 }
                 else
                 {
-                    try
-                    {
-                        using (var client = new WebClient())
-                        {
-                            client.DownloadFile("https://joaogoncalves.eu/restricted/licenses.txt", Path.GetTempPath() + "\\licenses.txt");
-                        }
-                    }catch(Exception ex)
-                    {
-                        MessageBox.Show(ex.Message, "Cannot load all needed resources", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        Application.Exit();
-                    }
-
-                    login loginForm = new login();
-                    this.Close();
-                    loginForm.Show();
+                    userStorage.inUseDomain = "https://joaogoncalves.eu";
                 }
+
+                try
+                {
+                    using (var client = new WebClient())
+                    {
+                        client.DownloadFile(userStorage.inUseDomain + "/restricted/licenses.txt", Path.GetTempPath() + "\\licenses.txt");
+                    }
+                }catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Cannot load all needed resources", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Application.Exit();
+                }
+                login loginForm = new login();
+                this.Close();
+                loginForm.Show();
             }
         }
     }

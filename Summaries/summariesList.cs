@@ -10,13 +10,9 @@ namespace Summaries
 {
     public partial class summariesList : Form
     {
-
-        private int userID;
-
-        public summariesList(int id)
+        public summariesList()
         {
             InitializeComponent();
-            userID = id;
         }
 
         /// <summary>
@@ -28,7 +24,7 @@ namespace Summaries
         {
             string POSTdata = "userid=" + userid;
             var data = Encoding.UTF8.GetBytes(POSTdata);
-            var request = WebRequest.CreateHttp("https://joaogoncalves.myftp.org/restricted/api/summaryListRequest.php");
+            var request = WebRequest.CreateHttp(userStorage.inUseDomain + "/restricted/api/summaryListRequest.php");
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";
             request.ContentLength = data.Length;
@@ -70,7 +66,7 @@ namespace Summaries
 
         private void summariesList_Load(object sender, EventArgs e)
         {
-            string jsonResponse = summaryListRequest(userID);
+            string jsonResponse = summaryListRequest(userStorage.userID);
             serverResponse response;
             response = JsonConvert.DeserializeObject<serverResponse>(jsonResponse);
 
@@ -131,7 +127,7 @@ namespace Summaries
                     DataGridViewRow selectedRow = dataGrid.Rows[selectedrowindex];
                     int selectedSummary = Convert.ToInt32(selectedRow.Cells["summaryNumber"].Value);
 
-                    string POSTdata = "userid=" + userID + "&summaryID=" + selectedSummary;
+                    string POSTdata = "userid=" + userStorage.userID + "&summaryID=" + selectedSummary;
                     var data = Encoding.UTF8.GetBytes(POSTdata);
                     var request = WebRequest.CreateHttp("https://joaogoncalves.myftp.org/restricted/api/summaryDeleteRequest.php");
                     request.Method = "POST";
@@ -189,7 +185,7 @@ namespace Summaries
                 DataGridViewRow selectedRow = dataGrid.Rows[selectedrowindex];
                 int selectedSummary = Convert.ToInt32(selectedRow.Cells["summaryNumber"].Value);
 
-                newSummary editSummary = new newSummary(userID, selectedSummary);
+                newSummary editSummary = new newSummary(selectedSummary);
                 editSummary.ShowDialog();
                 summariesList_Load(sender, e);
             }
@@ -197,7 +193,7 @@ namespace Summaries
 
         private void addSummary_Click(object sender, EventArgs e)
         {
-            newSummary newSummary = new newSummary(userID);
+            newSummary newSummary = new newSummary();
             newSummary.ShowDialog();
             summariesList_Load(sender, e);
         }

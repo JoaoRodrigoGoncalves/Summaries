@@ -39,7 +39,11 @@ namespace Summaries
             if (response.status)
             {
                 session = JsonConvert.DeserializeObject<userSession>(jsonResponse);
-                main form = new main(session.userID, session.user, session.displayName, session.adminControl);
+                userStorage.userID = session.userID;
+                userStorage.username = session.user;
+                userStorage.displayName = session.displayName;
+                userStorage.adminControl = session.adminControl;
+                main form = new main();
                 this.Hide();
                 form.Show();
             }

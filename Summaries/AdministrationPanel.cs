@@ -10,16 +10,13 @@ namespace Summaries
 {
     public partial class AdministrationPanel : Form
     {
-
-        private int userID;
         private int currentSelectedrow = 0;
         private int previousSelectedrow = 0;
         private bool addingUser = false;
 
-        public AdministrationPanel(int userid)
+        public AdministrationPanel()
         {
             InitializeComponent();
-            userID = userid;
         }
 
         public class Content
@@ -48,7 +45,7 @@ namespace Summaries
         {
             try
             {
-                string jsonResponse = RequestUserList(userID);
+                string jsonResponse = RequestUserList(userStorage.userID);
                 serverResponse response;
                 response = JsonConvert.DeserializeObject<serverResponse>(jsonResponse);
 
@@ -133,7 +130,7 @@ namespace Summaries
         {
             string POSTdata = "userID=" + userid;
             var data = Encoding.UTF8.GetBytes(POSTdata);
-            var request = WebRequest.CreateHttp("https://joaogoncalves.myftp.org/restricted/api/userListRequest.php");
+            var request = WebRequest.CreateHttp(userStorage.inUseDomain + "/restricted/api/userListRequest.php");
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";
             request.ContentLength = data.Length;
@@ -256,7 +253,7 @@ namespace Summaries
                         {
                             string POSTdata = "userID=" + userToReset + "&reset=true";
                             var data = Encoding.UTF8.GetBytes(POSTdata);
-                            var request = WebRequest.CreateHttp("https://joaogoncalves.myftp.org/restricted/api/changePassword.php");
+                            var request = WebRequest.CreateHttp(userStorage.inUseDomain + "/restricted/api/changePassword.php");
                             request.Method = "POST";
                             request.ContentType = "application/x-www-form-urlencoded";
                             request.ContentLength = data.Length;
@@ -319,7 +316,7 @@ namespace Summaries
                     {
                         string POSTdata = "username=" + username + "&displayName=" + displayName + "&admin=" + isAdmin + "&deletionProtection=" + isDeletionProtected;
                         var data = Encoding.UTF8.GetBytes(POSTdata);
-                        var request = WebRequest.CreateHttp("https://joaogoncalves.myftp.org/restricted/api/changeUser.php");
+                        var request = WebRequest.CreateHttp(userStorage.inUseDomain + "/restricted/api/changeUser.php");
                         request.Method = "POST";
                         request.ContentType = "application/x-www-form-urlencoded";
                         request.ContentLength = data.Length;
@@ -363,7 +360,7 @@ namespace Summaries
                         int userToUpdate = Convert.ToInt32(selectedRow.Cells["userID"].Value.ToString());
                         string POSTdata = "userID=" + userToUpdate + "&username=" + username + "&displayName=" + displayName + "&admin=" + isAdmin + "&deletionProtection=" + isDeletionProtected;
                         var data = Encoding.UTF8.GetBytes(POSTdata);
-                        var request = WebRequest.CreateHttp("https://joaogoncalves.myftp.org/restricted/api/changeUser.php");
+                        var request = WebRequest.CreateHttp(userStorage.inUseDomain + "/restricted/api/changeUser.php");
                         request.Method = "POST";
                         request.ContentType = "application/x-www-form-urlencoded";
                         request.ContentLength = data.Length;
@@ -425,7 +422,7 @@ namespace Summaries
                 int userToDelete = Convert.ToInt32(selectedRow.Cells["userID"].Value.ToString());
                 string POSTdata = "userID=" + userToDelete;
                 var data = Encoding.UTF8.GetBytes(POSTdata);
-                var request = WebRequest.CreateHttp("https://joaogoncalves.myftp.org/restricted/api/requestUserDelete.php");
+                var request = WebRequest.CreateHttp(userStorage.inUseDomain + "/restricted/api/requestUserDelete.php");
                 request.Method = "POST";
                 request.ContentType = "application/x-www-form-urlencoded";
                 request.ContentLength = data.Length;

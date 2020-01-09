@@ -12,7 +12,6 @@ namespace Summaries
     public partial class newSummary : Form
     {
 
-        private int userID;
         private bool isEdit = false;
         private string originalText = null;
         private string originalDate = null;
@@ -41,18 +40,16 @@ namespace Summaries
         /// <summary>
         /// Main function for the newSummary form.
         /// </summary>
-        /// <param name="id">UserID</param>
         /// <param name="summaryid">(Optional) ID of the summary to be edited.</param>
-        public newSummary(int id, int summaryid = 0)
+        public newSummary(int summaryid = 0)
         {
             InitializeComponent();
-            userID = id;
             summaryID = summaryid;
         }
 
         private void newSummary_Load(object sender, EventArgs e)
         {
-            string jsonResponse = summariesList.summaryListRequest(userID);
+            string jsonResponse = summariesList.summaryListRequest(userStorage.userID);
             
             response = JsonConvert.DeserializeObject<serverResponse>(jsonResponse);
             if (response.status)
@@ -185,14 +182,14 @@ namespace Summaries
             string POSTdata = null;
             if(dbRowID > 0)
             {
-                POSTdata = "userID=" + userID + "&dbrowID=" + dbRowID + "&summaryID=" + summaryID + "&date=" + Convert.ToBase64String(Encoding.UTF8.GetBytes(date)) + "&contents=" + Convert.ToBase64String(Encoding.UTF8.GetBytes(text));
+                POSTdata = "userID=" + userStorage.userID + "&dbrowID=" + dbRowID + "&summaryID=" + summaryID + "&date=" + Convert.ToBase64String(Encoding.UTF8.GetBytes(date)) + "&contents=" + Convert.ToBase64String(Encoding.UTF8.GetBytes(text));
             }
             else
             {
-                POSTdata = "userID=" + userID + "&summaryID=" + summaryID + "&date=" + Convert.ToBase64String(Encoding.UTF8.GetBytes(date)) + "&contents=" + Convert.ToBase64String(Encoding.UTF8.GetBytes(text));
+                POSTdata = "userID=" + userStorage.userID + "&summaryID=" + summaryID + "&date=" + Convert.ToBase64String(Encoding.UTF8.GetBytes(date)) + "&contents=" + Convert.ToBase64String(Encoding.UTF8.GetBytes(text));
             }
             var data = Encoding.UTF8.GetBytes(POSTdata);
-            var request = WebRequest.CreateHttp("https://joaogoncalves.myftp.org/restricted/api/summaryUpdateRequest.php");
+            var request = WebRequest.CreateHttp(userStorage.inUseDomain + "/restricted/api/summaryUpdateRequest.php");
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";
             request.ContentLength = data.Length;
