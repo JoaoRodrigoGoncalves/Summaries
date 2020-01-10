@@ -35,12 +35,6 @@ namespace Summaries
             public List<Content> contents { get; set; }
         }
 
-        public class simpleServerResponse
-        {
-            public bool status { get; set; }
-            public string errors { get; set; }
-        }
-
         private void AdministrationPanel_Load(object sender, EventArgs e)
         {
             try
@@ -308,8 +302,9 @@ namespace Summaries
                 }
                 else
                 {
-                    string username = Convert.ToBase64String(Encoding.UTF8.GetBytes(usernameBox.Text));
-                    string displayName = Convert.ToBase64String(Encoding.UTF8.GetBytes(displayNameBox.Text));
+                    var functions = new codeResources.functions();
+                    string username = functions.HashPW(usernameBox.Text);
+                    string displayName = functions.HashPW(displayNameBox.Text);
                     string isAdmin = adminPrivBox.Checked.ToString();
                     string isDeletionProtected = accidentalDeletionBox.Checked.ToString();
                     if (addingUser)

@@ -50,6 +50,7 @@
             this.dataGrid.ReadOnly = true;
             this.dataGrid.Size = new System.Drawing.Size(776, 402);
             this.dataGrid.TabIndex = 0;
+            this.dataGrid.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrid_CellDoubleClick);
             // 
             // toolStrip
             // 

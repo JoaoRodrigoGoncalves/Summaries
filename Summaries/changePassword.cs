@@ -43,9 +43,10 @@ namespace Summaries
                         string jsonResponse = "";
                         try
                         {
-                            jsonResponse = ChangePassword(userStorage.userID, HashPW(currentPasswordBox.Text), HashPW(newPasswordBox.Text));
-                            serverResponse response;
-                            response = JsonConvert.DeserializeObject<serverResponse>(jsonResponse);
+                            var functions = new codeResources.functions();
+                            jsonResponse = ChangePassword(userStorage.userID, functions.HashPW(currentPasswordBox.Text), functions.HashPW(newPasswordBox.Text));
+                            simpleServerResponse response;
+                            response = JsonConvert.DeserializeObject<simpleServerResponse>(jsonResponse);
 
                             if (!response.status)
                             {
@@ -83,24 +84,6 @@ namespace Summaries
                     MessageBox.Show("The new passwords don't match. Please try again.", "The passwords don't match", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-        }
-
-        private class serverResponse
-        {
-            public bool status { get; set; }
-            public string errors { get; set; }
-        }
-
-
-        /// <summary>
-        /// Uses BASE64 to hash the given string
-        /// </summary>
-        /// <param name="text">String to hash</param>
-        /// <returns></returns>
-        private string HashPW(string text)
-        {
-            var plainTextBytes = Encoding.UTF8.GetBytes(text);
-            return Convert.ToBase64String(plainTextBytes);
         }
 
         /// <summary>

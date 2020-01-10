@@ -60,7 +60,7 @@ namespace Summaries
             {
                 using (var client = new WebClient())
                 {
-                    client.DownloadFile("https://joaogoncalves.myftp.org/restricted/licenses.txt", Path.GetTempPath() + "\\licenses.txt");
+                    client.DownloadFile(userStorage.inUseDomain + "/restricted/licenses.txt", Path.GetTempPath() + "\\licenses.txt");
                 }
                 menuAboutLicenses_Click(sender, e);
             }

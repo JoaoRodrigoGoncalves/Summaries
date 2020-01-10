@@ -110,12 +110,6 @@ namespace Summaries
 
         }
 
-        private class simpleServerResponse
-        {
-            public bool status { get; set; }
-            public string errors { get; set; }
-        }
-
         private void deleteSummary_Click(object sender, EventArgs e)
         {
             if (dataGrid.SelectedRows.Count > 0 || dataGrid.SelectedCells.Count > 0)
@@ -129,7 +123,7 @@ namespace Summaries
 
                     string POSTdata = "userid=" + userStorage.userID + "&summaryID=" + selectedSummary;
                     var data = Encoding.UTF8.GetBytes(POSTdata);
-                    var request = WebRequest.CreateHttp("https://joaogoncalves.myftp.org/restricted/api/summaryDeleteRequest.php");
+                    var request = WebRequest.CreateHttp(userStorage.inUseDomain + "/restricted/api/summaryDeleteRequest.php");
                     request.Method = "POST";
                     request.ContentType = "application/x-www-form-urlencoded";
                     request.ContentLength = data.Length;
@@ -202,6 +196,11 @@ namespace Summaries
         {
 
             summariesList_Load(sender, e);
+        }
+
+        private void dataGrid_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            editSummary_Click(sender, e);
         }
     }
 }

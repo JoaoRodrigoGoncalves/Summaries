@@ -3,7 +3,6 @@ using System;
 using System.IO;
 using System.Net;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace Summaries
@@ -28,21 +27,17 @@ namespace Summaries
 
         private void loginBTN_Click(object sender, EventArgs e)
         {
-            serverResponse response;
-            userSession session;
+            simpleServerResponse response;
+            userStorage storage;
 
             string username = usernameBox.Text;
             string password = passwordBox.Text;
             string jsonResponse = LoginValidation(username, password);
-            response = JsonConvert.DeserializeObject<serverResponse>(jsonResponse);
+            response = JsonConvert.DeserializeObject<simpleServerResponse>(jsonResponse);
 
             if (response.status)
             {
-                session = JsonConvert.DeserializeObject<userSession>(jsonResponse);
-                userStorage.userID = session.userID;
-                userStorage.username = session.user;
-                userStorage.displayName = session.displayName;
-                userStorage.adminControl = session.adminControl;
+                storage = JsonConvert.DeserializeObject<userStorage>(jsonResponse);
                 main form = new main();
                 this.Hide();
                 form.Show();
@@ -60,20 +55,6 @@ namespace Summaries
             }
         }
 
-        private class userSession
-        {
-            public int userID { get; set; }
-            public string user { get; set; }
-            public string displayName { get; set; }
-            public bool adminControl { get; set; }
-        }
-
-        private class serverResponse
-        {
-            public bool status { get; set; }
-            public string errors { get; set; }
-        }
-
         /// <summary>
         /// Sends a login request to the server through HTTPS
         /// </summary>
@@ -84,7 +65,7 @@ namespace Summaries
         {
             string POSTdata = "usrnm=" + username + "&psswd=" + password;
             var data = Encoding.UTF8.GetBytes(POSTdata);
-            var request = WebRequest.CreateHttp("https://joaogoncalves.myftp.org/restricted/loginvalidator.php");
+            var request = WebRequest.CreateHttp(userStorage.inUseDomain + "/restricted/loginvalidator.php");
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";
             request.ContentLength = data.Length;

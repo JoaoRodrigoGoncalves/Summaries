@@ -110,6 +110,7 @@
     <Compile Include="changePassword.Designer.cs">
       <DependentUpon>changePassword.cs</DependentUpon>
     </Compile>
+    <Compile Include="codeResources\functions.cs" />
     <Compile Include="load_screen.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -142,7 +143,7 @@
     <Compile Include="summariesList.Designer.cs">
       <DependentUpon>summariesList.cs</DependentUpon>
     </Compile>
-    <Compile Include="userStorage.cs" />
+    <Compile Include="codeResources\userStorage.cs" />
     <EmbeddedResource Include="aboutSummaries.resx">
       <DependentUpon>aboutSummaries.cs</DependentUpon>
     </EmbeddedResource>

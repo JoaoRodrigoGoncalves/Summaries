@@ -49,8 +49,9 @@ namespace Summaries
 
         private void newSummary_Load(object sender, EventArgs e)
         {
+            var functions = new codeResources.functions();
             string jsonResponse = summariesList.summaryListRequest(userStorage.userID);
-            
+
             response = JsonConvert.DeserializeObject<serverResponse>(jsonResponse);
             if (response.status)
             {
@@ -69,7 +70,7 @@ namespace Summaries
                     summaryNumberBox.Value = summaryID;
                     dateBox.Value = DateTime.ParseExact(response.contents[summaryID - 1].date, "yyyy-MM-dd", new CultureInfo("pt"));
                     contentsBox.Text = response.contents[summaryID - 1].contents;
-                    originalText = Convert.ToBase64String(Encoding.UTF8.GetBytes(response.contents[summaryID - 1].contents));
+                    originalText = functions.HashPW(response.contents[summaryID - 1].contents);
                     originalDate = response.contents[summaryID - 1].date;
                     originalSummaryID = summaryID;
                     dbRow = response.contents[summaryID - 1].id;
@@ -130,9 +131,11 @@ namespace Summaries
                 }
             }
 
+            var functions = new codeResources.functions();
+
             if (isEdit && !shouldAbort)
             {
-                if ((originalText != Convert.ToBase64String(Encoding.UTF8.GetBytes(contentsBox.Text))) || (originalDate != dateBox.Value.ToString("yyyy-MM-dd")) || (originalSummaryID != summaryNumberBox.Value))
+                if ((originalText != functions.HashPW(contentsBox.Text)) || (originalDate != dateBox.Value.ToString("yyyy-MM-dd")) || (originalSummaryID != summaryNumberBox.Value))
                 {
                     if(UpdateDB(Convert.ToInt32(summaryNumberBox.Value), dateBox.Value.ToString("yyyy-MM-dd"), contentsBox.Text, dbRow))
                     {
@@ -163,12 +166,6 @@ namespace Summaries
             }
         }
 
-        private class simpleServerResponse
-        {
-            public bool status { get; set; }
-            public string errors { get; set; }
-        }
-
         /// <summary>
         /// Updates the database with the new information
         /// </summary>
@@ -179,14 +176,15 @@ namespace Summaries
         /// <returns></returns>
         private bool UpdateDB(int summaryID, string date, string text, int dbRowID = 0)
         {
+            var functions = new codeResources.functions();
             string POSTdata = null;
             if(dbRowID > 0)
             {
-                POSTdata = "userID=" + userStorage.userID + "&dbrowID=" + dbRowID + "&summaryID=" + summaryID + "&date=" + Convert.ToBase64String(Encoding.UTF8.GetBytes(date)) + "&contents=" + Convert.ToBase64String(Encoding.UTF8.GetBytes(text));
+                POSTdata = "userID=" + userStorage.userID + "&dbrowID=" + dbRowID + "&summaryID=" + summaryID + "&date=" + functions.HashPW(date) + "&contents=" + functions.HashPW(text);
             }
             else
             {
-                POSTdata = "userID=" + userStorage.userID + "&summaryID=" + summaryID + "&date=" + Convert.ToBase64String(Encoding.UTF8.GetBytes(date)) + "&contents=" + Convert.ToBase64String(Encoding.UTF8.GetBytes(text));
+                POSTdata = "userID=" + userStorage.userID + "&summaryID=" + summaryID + "&date=" + functions.HashPW(date) + "&contents=" + functions.HashPW(text);
             }
             var data = Encoding.UTF8.GetBytes(POSTdata);
             var request = WebRequest.CreateHttp(userStorage.inUseDomain + "/restricted/api/summaryUpdateRequest.php");
