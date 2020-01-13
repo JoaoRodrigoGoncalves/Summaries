@@ -32,6 +32,7 @@
             this.administrationTabMenu = new System.Windows.Forms.TabControl();
             this.usersTab = new System.Windows.Forms.TabPage();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.refreshBTN = new System.Windows.Forms.ToolStripButton();
             this.newUserBTN = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.deleteUserBTN = new System.Windows.Forms.Button();
@@ -45,7 +46,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.saveBTN = new System.Windows.Forms.Button();
             this.userDataGrid = new System.Windows.Forms.DataGridView();
-            this.refreshBTN = new System.Windows.Forms.ToolStripButton();
+            this.label3 = new System.Windows.Forms.Label();
+            this.classBox = new System.Windows.Forms.ComboBox();
             this.administrationTabMenu.SuspendLayout();
             this.usersTab.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -91,6 +93,15 @@
             this.toolStrip1.TabIndex = 10;
             this.toolStrip1.Text = "toolStrip1";
             // 
+            // refreshBTN
+            // 
+            this.refreshBTN.Image = global::Summaries.Properties.Resources.refresh;
+            this.refreshBTN.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.refreshBTN.Name = "refreshBTN";
+            this.refreshBTN.Size = new System.Drawing.Size(66, 22);
+            this.refreshBTN.Text = "Refresh";
+            this.refreshBTN.Click += new System.EventHandler(this.refreshBTN_Click);
+            // 
             // newUserBTN
             // 
             this.newUserBTN.Location = new System.Drawing.Point(375, 7);
@@ -105,9 +116,9 @@
             // 
             this.groupBox1.Controls.Add(this.deleteUserBTN);
             this.groupBox1.Controls.Add(this.resetPWBTN);
-            this.groupBox1.Location = new System.Drawing.Point(368, 162);
+            this.groupBox1.Location = new System.Drawing.Point(368, 189);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(424, 231);
+            this.groupBox1.Size = new System.Drawing.Size(424, 204);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Advanced User Options";
@@ -136,6 +147,8 @@
             // 
             // infoGBox
             // 
+            this.infoGBox.Controls.Add(this.classBox);
+            this.infoGBox.Controls.Add(this.label3);
             this.infoGBox.Controls.Add(this.accidentalDeletionBox);
             this.infoGBox.Controls.Add(this.adminPrivBox);
             this.infoGBox.Controls.Add(this.displayNameBox);
@@ -153,7 +166,7 @@
             // accidentalDeletionBox
             // 
             this.accidentalDeletionBox.AutoSize = true;
-            this.accidentalDeletionBox.Location = new System.Drawing.Point(96, 103);
+            this.accidentalDeletionBox.Location = new System.Drawing.Point(96, 130);
             this.accidentalDeletionBox.Name = "accidentalDeletionBox";
             this.accidentalDeletionBox.Size = new System.Drawing.Size(236, 17);
             this.accidentalDeletionBox.TabIndex = 6;
@@ -163,7 +176,7 @@
             // adminPrivBox
             // 
             this.adminPrivBox.AutoSize = true;
-            this.adminPrivBox.Location = new System.Drawing.Point(96, 79);
+            this.adminPrivBox.Location = new System.Drawing.Point(96, 106);
             this.adminPrivBox.Name = "adminPrivBox";
             this.adminPrivBox.Size = new System.Drawing.Size(134, 17);
             this.adminPrivBox.TabIndex = 5;
@@ -204,7 +217,7 @@
             // 
             // saveBTN
             // 
-            this.saveBTN.Location = new System.Drawing.Point(340, 79);
+            this.saveBTN.Location = new System.Drawing.Point(340, 106);
             this.saveBTN.Name = "saveBTN";
             this.saveBTN.Size = new System.Drawing.Size(75, 23);
             this.saveBTN.TabIndex = 0;
@@ -226,14 +239,22 @@
             this.userDataGrid.TabIndex = 0;
             this.userDataGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.userDataGrid_CellClick);
             // 
-            // refreshBTN
+            // label3
             // 
-            this.refreshBTN.Image = global::Summaries.Properties.Resources.refresh;
-            this.refreshBTN.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.refreshBTN.Name = "refreshBTN";
-            this.refreshBTN.Size = new System.Drawing.Size(66, 22);
-            this.refreshBTN.Text = "Refresh";
-            this.refreshBTN.Click += new System.EventHandler(this.refreshBTN_Click);
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(50, 82);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(32, 13);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "Class";
+            // 
+            // classBox
+            // 
+            this.classBox.FormattingEnabled = true;
+            this.classBox.Location = new System.Drawing.Point(96, 79);
+            this.classBox.Name = "classBox";
+            this.classBox.Size = new System.Drawing.Size(319, 21);
+            this.classBox.TabIndex = 8;
             // 
             // AdministrationPanel
             // 
@@ -278,5 +299,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button saveBTN;
         private System.Windows.Forms.DataGridView userDataGrid;
+        private System.Windows.Forms.ComboBox classBox;
+        private System.Windows.Forms.Label label3;
     }
 }

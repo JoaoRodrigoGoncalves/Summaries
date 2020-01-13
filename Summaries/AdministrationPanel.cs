@@ -24,6 +24,7 @@ namespace Summaries
             public int userid { get; set; }
             public string user { get; set; }
             public string displayName { get; set; }
+            public string className { get; set; }
             public bool isAdmin { get; set; } = false;
             public bool isDeletionProtected { get; set; } = false;
         }
@@ -57,12 +58,15 @@ namespace Summaries
                     userDataGrid.Columns[2].Name = "displayName";
                     userDataGrid.Columns[2].HeaderText = "Display Name";
                     userDataGrid.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                    userDataGrid.Columns[3].Name = "isAdmin";
-                    userDataGrid.Columns[3].HeaderText = "Admin?";
+                    userDataGrid.Columns[3].Name = "class";
+                    userDataGrid.Columns[3].HeaderText = "Class";
                     userDataGrid.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                    userDataGrid.Columns[4].Name = "isProtected";
-                    userDataGrid.Columns[4].HeaderText = "Deletion Protected?";
+                    userDataGrid.Columns[4].Name = "isAdmin";
+                    userDataGrid.Columns[4].HeaderText = "Admin?";
                     userDataGrid.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                    userDataGrid.Columns[5].Name = "isProtected";
+                    userDataGrid.Columns[5].HeaderText = "Deletion Protected?";
+                    userDataGrid.Columns[5].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                     userDataGrid.AllowUserToDeleteRows = false;
                     userDataGrid.AllowUserToAddRows = false;
                     userDataGrid.AllowUserToResizeColumns = true;
@@ -71,7 +75,7 @@ namespace Summaries
                     var rows = new List<string[]>();
                     foreach (Content content in response.contents)
                     {
-                        string[] row1 = new string[] { content.userid.ToString(), content.user.ToString(), content.displayName.ToString(), content.isAdmin.ToString(), content.isDeletionProtected.ToString() };
+                        string[] row1 = new string[] { content.userid.ToString(), content.user.ToString(), content.displayName.ToString(), content.className.ToString(), content.isAdmin.ToString(), content.isDeletionProtected.ToString() };
                         rows.Add(row1);
                     }
 
@@ -194,6 +198,7 @@ namespace Summaries
                 userDataGrid.Enabled = true;
                 usernameBox.Text = userDataGrid.Rows[currentSelectedrow].Cells["username"].Value.ToString();
                 displayNameBox.Text = userDataGrid.Rows[currentSelectedrow].Cells["displayName"].Value.ToString();
+                classBox.SelectedItem = userDataGrid.Rows[currentSelectedrow].Cells["class"].Value.ToString();
                 if (userDataGrid.Rows[currentSelectedrow].Cells["isAdmin"].Value.ToString() == "True")
                 {
                     adminPrivBox.Checked = true;
@@ -218,6 +223,7 @@ namespace Summaries
                 currentSelectedrow = 0;
                 usernameBox.Clear();
                 displayNameBox.Clear();
+                classBox.SelectedIndex = 0;
                 adminPrivBox.Checked = false;
                 accidentalDeletionBox.Checked = false;
                 resetPWBTN.Enabled = false;
@@ -305,11 +311,12 @@ namespace Summaries
                     var functions = new codeResources.functions();
                     string username = functions.HashPW(usernameBox.Text);
                     string displayName = functions.HashPW(displayNameBox.Text);
+                    string className = functions.HashPW(classBox.SelectedItem.ToString());
                     string isAdmin = adminPrivBox.Checked.ToString();
                     string isDeletionProtected = accidentalDeletionBox.Checked.ToString();
                     if (addingUser)
                     {
-                        string POSTdata = "username=" + username + "&displayName=" + displayName + "&admin=" + isAdmin + "&deletionProtection=" + isDeletionProtected;
+                        string POSTdata = "username=" + username + "&displayName=" + displayName + "&className=" + className + "&admin=" + isAdmin + "&deletionProtection=" + isDeletionProtected;
                         var data = Encoding.UTF8.GetBytes(POSTdata);
                         var request = WebRequest.CreateHttp(userStorage.inUseDomain + "/restricted/api/changeUser.php");
                         request.Method = "POST";
@@ -353,7 +360,7 @@ namespace Summaries
                         int selectedrowindex = userDataGrid.SelectedCells[0].RowIndex;
                         DataGridViewRow selectedRow = userDataGrid.Rows[selectedrowindex];
                         int userToUpdate = Convert.ToInt32(selectedRow.Cells["userID"].Value.ToString());
-                        string POSTdata = "userID=" + userToUpdate + "&username=" + username + "&displayName=" + displayName + "&admin=" + isAdmin + "&deletionProtection=" + isDeletionProtected;
+                        string POSTdata = "userID=" + userToUpdate + "&username=" + username + "&displayName=" + displayName + "&className=" + className + "&admin=" + isAdmin + "&deletionProtection=" + isDeletionProtected;
                         var data = Encoding.UTF8.GetBytes(POSTdata);
                         var request = WebRequest.CreateHttp(userStorage.inUseDomain + "/restricted/api/changeUser.php");
                         request.Method = "POST";
