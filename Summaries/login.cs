@@ -25,11 +25,19 @@ namespace Summaries
             Application.Exit();
         }
 
+        private class tempUserStorage
+        {
+            public int userID { get; set; }
+            public string username { get; set; }
+            public string displayName { get; set; }
+            public bool adminControl { get; set; }
+            public string inUseDomain { get; set; }
+        }
+
         private void loginBTN_Click(object sender, EventArgs e)
         {
             simpleServerResponse response;
-            userStorage storage;
-
+            
             string username = usernameBox.Text;
             string password = passwordBox.Text;
             string jsonResponse = LoginValidation(username, password);
@@ -37,7 +45,9 @@ namespace Summaries
 
             if (response.status)
             {
-                storage = JsonConvert.DeserializeObject<userStorage>(jsonResponse);
+                tempUserStorage temp;
+                temp = JsonConvert.DeserializeObject<tempUserStorage>(jsonResponse);
+                valueLoader(temp.userID, temp.username, temp.displayName, temp.inUseDomain, temp.adminControl);
                 main form = new main();
                 this.Hide();
                 form.Show();
@@ -54,6 +64,16 @@ namespace Summaries
                 }
             }
         }
+
+        private void valueLoader(int user, string username, string displayName, string inUseDomain, bool adminControl = false)
+        {
+            userStorage.userID = user;
+            userStorage.username = username;
+            userStorage.displayName = displayName;
+            userStorage.adminControl = adminControl;
+            userStorage.inUseDomain = inUseDomain;
+        }
+
 
         /// <summary>
         /// Sends a login request to the server through HTTPS
