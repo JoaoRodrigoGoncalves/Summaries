@@ -9,6 +9,13 @@ namespace Summaries.codeResources
 {
     public class functions
     {
+
+        public class simpleServerResponse
+        {
+            public bool status { get; set; }
+            public string errors { get; set; }
+        }
+
         /// <summary>
         /// Uses BASE64 to hash the given string
         /// </summary>

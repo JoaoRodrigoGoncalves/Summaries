@@ -7,6 +7,8 @@ namespace Summaries
 {
     public partial class loading : Form
     {
+        private string inUseDomain;
+
         public loading()
         {
             InitializeComponent();
@@ -32,13 +34,13 @@ namespace Summaries
                     }
                     else
                     {
-                        userStorage.inUseDomain = "https://joaogoncalves.myftp.org";
+                        inUseDomain = "https://joaogoncalves.myftp.org";
                     }
 
                 }
                 else
                 {
-                    userStorage.inUseDomain = "https://joaogoncalves.eu";
+                    inUseDomain = "https://joaogoncalves.eu";
                 }
 
                 try
@@ -52,7 +54,7 @@ namespace Summaries
                     MessageBox.Show(ex.Message, "Cannot load all needed resources", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Application.Exit();
                 }
-                login loginForm = new login();
+                login loginForm = new login(inUseDomain);
                 this.Close();
                 loginForm.Show();
             }

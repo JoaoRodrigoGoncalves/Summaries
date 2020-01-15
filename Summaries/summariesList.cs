@@ -5,14 +5,32 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Windows.Forms;
+using static Summaries.codeResources.functions;
 
 namespace Summaries
 {
     public partial class summariesList : Form
     {
-        public summariesList()
+
+        private int userID;
+        private string username;
+        private string displayName;
+        private string inUseDomain;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userid">The current userID</param>
+        /// <param name="UserName">The current username</param>
+        /// <param name="DisplayName">The current user display name</param>
+        /// <param name="InUseDomain">The domain to be used to make API calls</param>
+        public summariesList(int userid, string UserName, string DisplayName, string InUseDomain)
         {
             InitializeComponent();
+            userID = userid;
+            username = UserName;
+            displayName = DisplayName;
+            inUseDomain = InUseDomain;
         }
 
         /// <summary>
@@ -20,11 +38,12 @@ namespace Summaries
         /// </summary>
         /// <param name="userid">The id of the user to get the summaries from</param>
         /// <returns></returns>
-        public static string summaryListRequest(int userid)
+        public static string summaryListRequest(int userid, string inUseDomain)
         {
-            string POSTdata = "userid=" + userid;
+            string POSTdata = "API=1f984e2ed1545f287fe473c890266fea901efcd63d07967ae6d2f09f4566ddde930923ee9212ea815186b0c11a620a5cc85e";
+            POSTdata += "&userid=" + userid;
             var data = Encoding.UTF8.GetBytes(POSTdata);
-            var request = WebRequest.CreateHttp(userStorage.inUseDomain + "/restricted/api/summaryListRequest.php");
+            var request = WebRequest.CreateHttp(inUseDomain + "/restricted/api/summaryListRequest.php");
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";
             request.ContentLength = data.Length;
@@ -66,7 +85,7 @@ namespace Summaries
 
         private void summariesList_Load(object sender, EventArgs e)
         {
-            string jsonResponse = summaryListRequest(userStorage.userID);
+            string jsonResponse = summaryListRequest(userID, inUseDomain);
             serverResponse response;
             response = JsonConvert.DeserializeObject<serverResponse>(jsonResponse);
 
@@ -121,9 +140,10 @@ namespace Summaries
                     DataGridViewRow selectedRow = dataGrid.Rows[selectedrowindex];
                     int selectedSummary = Convert.ToInt32(selectedRow.Cells["summaryNumber"].Value);
 
-                    string POSTdata = "userid=" + userStorage.userID + "&summaryID=" + selectedSummary;
+                    string POSTdata = "API=1f984e2ed1545f287fe473c890266fea901efcd63d07967ae6d2f09f4566ddde930923ee9212ea815186b0c11a620a5cc85e";
+                    POSTdata += "&userid=" + userID + "&summaryID=" + selectedSummary;
                     var data = Encoding.UTF8.GetBytes(POSTdata);
-                    var request = WebRequest.CreateHttp(userStorage.inUseDomain + "/restricted/api/summaryDeleteRequest.php");
+                    var request = WebRequest.CreateHttp(inUseDomain + "/restricted/api/summaryDeleteRequest.php");
                     request.Method = "POST";
                     request.ContentType = "application/x-www-form-urlencoded";
                     request.ContentLength = data.Length;
@@ -179,7 +199,7 @@ namespace Summaries
                 DataGridViewRow selectedRow = dataGrid.Rows[selectedrowindex];
                 int selectedSummary = Convert.ToInt32(selectedRow.Cells["summaryNumber"].Value);
 
-                newSummary editSummary = new newSummary(selectedSummary);
+                newSummary editSummary = new newSummary(userID, inUseDomain, selectedSummary);
                 editSummary.ShowDialog();
                 summariesList_Load(sender, e);
             }
@@ -187,7 +207,7 @@ namespace Summaries
 
         private void addSummary_Click(object sender, EventArgs e)
         {
-            newSummary newSummary = new newSummary();
+            newSummary newSummary = new newSummary(userID, inUseDomain);
             newSummary.ShowDialog();
             summariesList_Load(sender, e);
         }

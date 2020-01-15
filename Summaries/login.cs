@@ -4,14 +4,23 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Windows.Forms;
+using static Summaries.codeResources.functions;
 
 namespace Summaries
 {
     public partial class login : Form
     {
-        public login()
+
+        private string inUseDomain;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="InUseDomain">The domain used to make API calls</param>
+        public login(string InUseDomain)
         {
             InitializeComponent();
+            inUseDomain = InUseDomain;
         }
 
         private void resetBTN_Click(object sender, EventArgs e)
@@ -25,30 +34,28 @@ namespace Summaries
             Application.Exit();
         }
 
-        private class tempUserStorage
+        private class userInfo
         {
             public int userID { get; set; }
             public string username { get; set; }
             public string displayName { get; set; }
             public bool adminControl { get; set; }
-            public string inUseDomain { get; set; }
         }
 
         private void loginBTN_Click(object sender, EventArgs e)
         {
             simpleServerResponse response;
+            userInfo userInfo;
             
             string username = usernameBox.Text;
             string password = passwordBox.Text;
-            string jsonResponse = LoginValidation(username, password);
+            string jsonResponse = LoginValidation(username, password, inUseDomain);
             response = JsonConvert.DeserializeObject<simpleServerResponse>(jsonResponse);
 
             if (response.status)
             {
-                tempUserStorage temp;
-                temp = JsonConvert.DeserializeObject<tempUserStorage>(jsonResponse);
-                valueLoader(temp.userID, temp.username, temp.displayName, temp.inUseDomain, temp.adminControl);
-                main form = new main();
+                userInfo = JsonConvert.DeserializeObject<userInfo>(jsonResponse);
+                main form = new main(userInfo.userID, userInfo.username, userInfo.displayName, inUseDomain, userInfo.adminControl);
                 this.Hide();
                 form.Show();
             }
@@ -65,27 +72,18 @@ namespace Summaries
             }
         }
 
-        private void valueLoader(int user, string username, string displayName, string inUseDomain, bool adminControl = false)
-        {
-            userStorage.userID = user;
-            userStorage.username = username;
-            userStorage.displayName = displayName;
-            userStorage.adminControl = adminControl;
-            userStorage.inUseDomain = inUseDomain;
-        }
-
-
         /// <summary>
         /// Sends a login request to the server through HTTPS
         /// </summary>
         /// <param name="username">The username given by the user to login</param>
         /// <param name="password">The password given by the user to login</param>
         /// <returns></returns>
-        public static string LoginValidation(string username, string password)
+        public static string LoginValidation(string username, string password, string inUseDomain)
         {
-            string POSTdata = "usrnm=" + username + "&psswd=" + password;
+            string POSTdata = "API=1f984e2ed1545f287fe473c890266fea901efcd63d07967ae6d2f09f4566ddde930923ee9212ea815186b0c11a620a5cc85e";
+            POSTdata += "&usrnm=" + username + "&psswd=" + password;
             var data = Encoding.UTF8.GetBytes(POSTdata);
-            var request = WebRequest.CreateHttp(userStorage.inUseDomain + "/restricted/loginvalidator.php");
+            var request = WebRequest.CreateHttp(inUseDomain + "/restricted/loginvalidator.php");
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";
             request.ContentLength = data.Length;

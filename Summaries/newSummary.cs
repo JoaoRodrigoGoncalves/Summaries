@@ -6,11 +6,17 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Windows.Forms;
+using static Summaries.codeResources.functions;
 
 namespace Summaries
 {
     public partial class newSummary : Form
     {
+
+        private int userID;
+        private string inUseDomain;
+
+        //*********************//
 
         private bool isEdit = false;
         private string originalText = null;
@@ -40,17 +46,21 @@ namespace Summaries
         /// <summary>
         /// Main function for the newSummary form.
         /// </summary>
+        /// <param name="userid">The userID</param>
+        /// <param name="InUseDomain">The userID</param>
         /// <param name="summaryid">(Optional) ID of the summary to be edited.</param>
-        public newSummary(int summaryid = 0)
+        public newSummary(int userid, string InUseDomain, int summaryid = 0)
         {
             InitializeComponent();
+            userID = userid;
+            InUseDomain = inUseDomain;
             summaryID = summaryid;
         }
 
         private void newSummary_Load(object sender, EventArgs e)
         {
             var functions = new codeResources.functions();
-            string jsonResponse = summariesList.summaryListRequest(userStorage.userID);
+            string jsonResponse = summariesList.summaryListRequest(userID, inUseDomain);
 
             response = JsonConvert.DeserializeObject<serverResponse>(jsonResponse);
             if (response.status)
@@ -177,17 +187,17 @@ namespace Summaries
         private bool UpdateDB(int summaryID, string date, string text, int dbRowID = 0)
         {
             var functions = new codeResources.functions();
-            string POSTdata = null;
+            string POSTdata = "API=1f984e2ed1545f287fe473c890266fea901efcd63d07967ae6d2f09f4566ddde930923ee9212ea815186b0c11a620a5cc85e";
             if(dbRowID > 0)
             {
-                POSTdata = "userID=" + userStorage.userID + "&dbrowID=" + dbRowID + "&summaryID=" + summaryID + "&date=" + functions.HashPW(date) + "&contents=" + functions.HashPW(text);
+                POSTdata += "&userID=" + userID + "&dbrowID=" + dbRowID + "&summaryID=" + summaryID + "&date=" + functions.HashPW(date) + "&contents=" + functions.HashPW(text);
             }
             else
             {
-                POSTdata = "userID=" + userStorage.userID + "&summaryID=" + summaryID + "&date=" + functions.HashPW(date) + "&contents=" + functions.HashPW(text);
+                POSTdata += "&userID=" + userID + "&summaryID=" + summaryID + "&date=" + functions.HashPW(date) + "&contents=" + functions.HashPW(text);
             }
             var data = Encoding.UTF8.GetBytes(POSTdata);
-            var request = WebRequest.CreateHttp(userStorage.inUseDomain + "/restricted/api/summaryUpdateRequest.php");
+            var request = WebRequest.CreateHttp(inUseDomain + "/restricted/api/summaryUpdateRequest.php");
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";
             request.ContentLength = data.Length;
