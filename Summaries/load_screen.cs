@@ -103,7 +103,17 @@ namespace Summaries
                     Version appVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
                     if(appVersion.CompareTo(newVersion) < 0)
                     {
-                        MessageBox.Show("A new version is available. Would you like to update now?");
+                        var res = MessageBox.Show("A new version is available. Would you like to download and update now?", "New version available!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        if(res == DialogResult.Yes)
+                        {
+                            System.Diagnostics.Process.Start(downloadURL);
+                            Application.Exit();
+                        }
+                        else
+                        {
+                            MessageBox.Show("The application can only be lauched on the latest version. Closing...", "Closing...", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            Application.Exit();
+                        }
                     }
 
                 }catch(Exception ex)

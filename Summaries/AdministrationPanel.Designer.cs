@@ -38,6 +38,8 @@
             this.deleteUserBTN = new System.Windows.Forms.Button();
             this.resetPWBTN = new System.Windows.Forms.Button();
             this.infoGBox = new System.Windows.Forms.GroupBox();
+            this.classBox = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.accidentalDeletionBox = new System.Windows.Forms.CheckBox();
             this.adminPrivBox = new System.Windows.Forms.CheckBox();
             this.displayNameBox = new System.Windows.Forms.TextBox();
@@ -46,8 +48,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.saveBTN = new System.Windows.Forms.Button();
             this.userDataGrid = new System.Windows.Forms.DataGridView();
-            this.label3 = new System.Windows.Forms.Label();
-            this.classBox = new System.Windows.Forms.ComboBox();
+            this.classesTab = new System.Windows.Forms.TabPage();
             this.administrationTabMenu.SuspendLayout();
             this.usersTab.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -59,6 +60,7 @@
             // administrationTabMenu
             // 
             this.administrationTabMenu.Controls.Add(this.usersTab);
+            this.administrationTabMenu.Controls.Add(this.classesTab);
             this.administrationTabMenu.Dock = System.Windows.Forms.DockStyle.Fill;
             this.administrationTabMenu.Location = new System.Drawing.Point(0, 0);
             this.administrationTabMenu.Name = "administrationTabMenu";
@@ -163,6 +165,23 @@
             this.infoGBox.TabStop = false;
             this.infoGBox.Text = "Editing User ";
             // 
+            // classBox
+            // 
+            this.classBox.FormattingEnabled = true;
+            this.classBox.Location = new System.Drawing.Point(96, 79);
+            this.classBox.Name = "classBox";
+            this.classBox.Size = new System.Drawing.Size(319, 21);
+            this.classBox.TabIndex = 8;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(50, 82);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(32, 13);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "Class";
+            // 
             // accidentalDeletionBox
             // 
             this.accidentalDeletionBox.AutoSize = true;
@@ -239,22 +258,15 @@
             this.userDataGrid.TabIndex = 0;
             this.userDataGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.userDataGrid_CellClick);
             // 
-            // label3
+            // classesTab
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(50, 82);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(32, 13);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "Class";
-            // 
-            // classBox
-            // 
-            this.classBox.FormattingEnabled = true;
-            this.classBox.Location = new System.Drawing.Point(96, 79);
-            this.classBox.Name = "classBox";
-            this.classBox.Size = new System.Drawing.Size(319, 21);
-            this.classBox.TabIndex = 8;
+            this.classesTab.Location = new System.Drawing.Point(4, 22);
+            this.classesTab.Name = "classesTab";
+            this.classesTab.Padding = new System.Windows.Forms.Padding(3);
+            this.classesTab.Size = new System.Drawing.Size(792, 424);
+            this.classesTab.TabIndex = 1;
+            this.classesTab.Text = "Classes";
+            this.classesTab.UseVisualStyleBackColor = true;
             // 
             // AdministrationPanel
             // 
@@ -301,5 +313,6 @@
         private System.Windows.Forms.DataGridView userDataGrid;
         private System.Windows.Forms.ComboBox classBox;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TabPage classesTab;
     }
 }

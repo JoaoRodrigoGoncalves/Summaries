@@ -50,19 +50,38 @@ namespace Summaries
             public List<Content> contents { get; set; }
         }
 
+        public class classContent
+        {
+            public int classID { get; set; }
+            public string className { get; set; }
+        }
+
+        public class classServerResponse
+        {
+            public bool status { get; set; }
+            public string errors { get; set; }
+            public List<classContent> contents { get; set; }
+        }
+
         private void AdministrationPanel_Load(object sender, EventArgs e)
         {
             try
             {
-                string jsonResponse = RequestUserList(userID, inUseDomain);
+                string jsonResponse = RequestUserList(inUseDomain);
                 serverResponse response;
                 response = JsonConvert.DeserializeObject<serverResponse>(jsonResponse);
+                classServerResponse classServer;
+                codeResources.functions funct = new codeResources.functions();
+                string classJsonResponse = funct.RequestClassesList(inUseDomain);
+                classServer = JsonConvert.DeserializeObject<classServerResponse>(classJsonResponse);
 
-                if (response.status)
+
+
+                if (response.status && classServer.status)
                 {
                     userDataGrid.Rows.Clear();
                     userDataGrid.Refresh();
-                    userDataGrid.ColumnCount = 5;
+                    userDataGrid.ColumnCount = 6;
                     userDataGrid.Columns[0].Name = "userID";
                     userDataGrid.Columns[0].HeaderText = "#";
                     userDataGrid.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
@@ -122,6 +141,11 @@ namespace Summaries
                     resetPWBTN.Enabled = true;
                     deleteUserBTN.Enabled = true;
 
+                    foreach(classContent classContent in classServer.contents)
+                    {
+                        classBox.Items.Add(classContent.className);
+                    }
+
                 }
                 else
                 {
@@ -138,10 +162,9 @@ namespace Summaries
 
         }
 
-        public static string RequestUserList(int userid, string inUseDomain)
+        public static string RequestUserList(string inUseDomain)
         {
             string POSTdata = "API=1f984e2ed1545f287fe473c890266fea901efcd63d07967ae6d2f09f4566ddde930923ee9212ea815186b0c11a620a5cc85e";
-            POSTdata = "&userID=" + userid;
             var data = Encoding.UTF8.GetBytes(POSTdata);
             var request = WebRequest.CreateHttp(inUseDomain + "/summaries/api/userListRequest.php");
             request.Method = "POST";
