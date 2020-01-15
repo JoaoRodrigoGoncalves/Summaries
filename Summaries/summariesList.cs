@@ -43,7 +43,7 @@ namespace Summaries
             string POSTdata = "API=1f984e2ed1545f287fe473c890266fea901efcd63d07967ae6d2f09f4566ddde930923ee9212ea815186b0c11a620a5cc85e";
             POSTdata += "&userid=" + userid;
             var data = Encoding.UTF8.GetBytes(POSTdata);
-            var request = WebRequest.CreateHttp(inUseDomain + "/restricted/api/summaryListRequest.php");
+            var request = WebRequest.CreateHttp(inUseDomain + "/summaries/api/summaryListRequest.php");
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";
             request.ContentLength = data.Length;
@@ -143,7 +143,7 @@ namespace Summaries
                     string POSTdata = "API=1f984e2ed1545f287fe473c890266fea901efcd63d07967ae6d2f09f4566ddde930923ee9212ea815186b0c11a620a5cc85e";
                     POSTdata += "&userid=" + userID + "&summaryID=" + selectedSummary;
                     var data = Encoding.UTF8.GetBytes(POSTdata);
-                    var request = WebRequest.CreateHttp(inUseDomain + "/restricted/api/summaryDeleteRequest.php");
+                    var request = WebRequest.CreateHttp(inUseDomain + "/summaries/api/summaryDeleteRequest.php");
                     request.Method = "POST";
                     request.ContentType = "application/x-www-form-urlencoded";
                     request.ContentLength = data.Length;

@@ -197,7 +197,7 @@ namespace Summaries
                 POSTdata += "&userID=" + userID + "&summaryID=" + summaryID + "&date=" + functions.HashPW(date) + "&contents=" + functions.HashPW(text);
             }
             var data = Encoding.UTF8.GetBytes(POSTdata);
-            var request = WebRequest.CreateHttp(inUseDomain + "/restricted/api/summaryUpdateRequest.php");
+            var request = WebRequest.CreateHttp(inUseDomain + "/summaries/api/summaryUpdateRequest.php");
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";
             request.ContentLength = data.Length;

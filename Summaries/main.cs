@@ -80,7 +80,7 @@ namespace Summaries
             {
                 using (var client = new WebClient())
                 {
-                    client.DownloadFile(inUseDomain + "/restricted/licenses.txt", Path.GetTempPath() + "\\licenses.txt");
+                    client.DownloadFile(inUseDomain + "/summaries/resources/licenses.txt", Path.GetTempPath() + "\\licenses.txt");
                 }
                 menuAboutLicenses_Click(sender, e);
             }

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Net;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace Summaries
 {
@@ -47,8 +48,64 @@ namespace Summaries
                 {
                     using (var client = new WebClient())
                     {
-                        client.DownloadFile(userStorage.inUseDomain + "/restricted/licenses.txt", Path.GetTempPath() + "\\licenses.txt");
+                        client.DownloadFile(inUseDomain + "/summaries/resources/licenses.txt", Path.GetTempPath() + "\\licenses.txt");
                     }
+
+                    string downloadURL = "";
+                    Version newVersion = null;
+                    string xmlURL = inUseDomain + "/summaries/updater.xml";
+                    XmlTextReader reader = null;
+
+                    reader = new XmlTextReader(xmlURL);
+                    reader.MoveToContent();
+                    string elementName = "";
+
+                    try
+                    {
+                        if ((reader.NodeType == XmlNodeType.Element) && (reader.Name == "summariesapp"))
+                        {
+                            while (reader.Read())
+                            {
+                                if (reader.NodeType == XmlNodeType.Element)
+                                {
+                                    elementName = reader.Name;
+                                }
+                                else
+                                {
+                                    if ((reader.NodeType == XmlNodeType.Text) && (reader.HasValue))
+                                    {
+                                        switch (elementName)
+                                        {
+                                            case "version":
+                                                newVersion = new Version(reader.Value);
+                                                break;
+                                            case "downloadurl":
+                                                downloadURL = reader.Value;
+                                                break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    catch(Exception exec)
+                    {
+                        throw new Exception("Failed to check for updates: " + exec.Message);
+                    }
+                    finally
+                    {
+                        if(reader != null)
+                        {
+                            reader.Close();
+                        }
+                    }
+
+                    Version appVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+                    if(appVersion.CompareTo(newVersion) < 0)
+                    {
+                        MessageBox.Show("A new version is available. Would you like to update now?");
+                    }
+
                 }catch(Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Cannot load all needed resources", MessageBoxButtons.OK, MessageBoxIcon.Error);
