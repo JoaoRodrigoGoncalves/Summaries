@@ -65,7 +65,7 @@
             this.administrationTabMenu.Location = new System.Drawing.Point(0, 0);
             this.administrationTabMenu.Name = "administrationTabMenu";
             this.administrationTabMenu.SelectedIndex = 0;
-            this.administrationTabMenu.Size = new System.Drawing.Size(800, 450);
+            this.administrationTabMenu.Size = new System.Drawing.Size(911, 450);
             this.administrationTabMenu.TabIndex = 1;
             // 
             // usersTab
@@ -78,7 +78,7 @@
             this.usersTab.Location = new System.Drawing.Point(4, 22);
             this.usersTab.Name = "usersTab";
             this.usersTab.Padding = new System.Windows.Forms.Padding(3);
-            this.usersTab.Size = new System.Drawing.Size(792, 424);
+            this.usersTab.Size = new System.Drawing.Size(903, 424);
             this.usersTab.TabIndex = 0;
             this.usersTab.Text = "Users";
             this.usersTab.UseVisualStyleBackColor = true;
@@ -89,9 +89,9 @@
             this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.refreshBTN});
-            this.toolStrip1.Location = new System.Drawing.Point(368, 396);
+            this.toolStrip1.Location = new System.Drawing.Point(468, 396);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(421, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(432, 25);
             this.toolStrip1.TabIndex = 10;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -106,9 +106,9 @@
             // 
             // newUserBTN
             // 
-            this.newUserBTN.Location = new System.Drawing.Point(375, 7);
+            this.newUserBTN.Location = new System.Drawing.Point(474, 6);
             this.newUserBTN.Name = "newUserBTN";
-            this.newUserBTN.Size = new System.Drawing.Size(75, 23);
+            this.newUserBTN.Size = new System.Drawing.Size(76, 23);
             this.newUserBTN.TabIndex = 9;
             this.newUserBTN.Text = "Add User";
             this.newUserBTN.UseVisualStyleBackColor = true;
@@ -118,7 +118,7 @@
             // 
             this.groupBox1.Controls.Add(this.deleteUserBTN);
             this.groupBox1.Controls.Add(this.resetPWBTN);
-            this.groupBox1.Location = new System.Drawing.Point(368, 189);
+            this.groupBox1.Location = new System.Drawing.Point(474, 189);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(424, 204);
             this.groupBox1.TabIndex = 8;
@@ -158,15 +158,16 @@
             this.infoGBox.Controls.Add(this.usernameBox);
             this.infoGBox.Controls.Add(this.label1);
             this.infoGBox.Controls.Add(this.saveBTN);
-            this.infoGBox.Location = new System.Drawing.Point(368, 36);
+            this.infoGBox.Location = new System.Drawing.Point(473, 36);
             this.infoGBox.Name = "infoGBox";
-            this.infoGBox.Size = new System.Drawing.Size(421, 357);
+            this.infoGBox.Size = new System.Drawing.Size(422, 357);
             this.infoGBox.TabIndex = 1;
             this.infoGBox.TabStop = false;
             this.infoGBox.Text = "Editing User ";
             // 
             // classBox
             // 
+            this.classBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.classBox.FormattingEnabled = true;
             this.classBox.Location = new System.Drawing.Point(96, 79);
             this.classBox.Name = "classBox";
@@ -254,9 +255,11 @@
             this.userDataGrid.MultiSelect = false;
             this.userDataGrid.Name = "userDataGrid";
             this.userDataGrid.ReadOnly = true;
-            this.userDataGrid.Size = new System.Drawing.Size(365, 418);
+            this.userDataGrid.Size = new System.Drawing.Size(465, 418);
             this.userDataGrid.TabIndex = 0;
+            this.userDataGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.userDataGrid_CellClick);
             this.userDataGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.userDataGrid_CellClick);
+            this.userDataGrid.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.userDataGrid_CellClick);
             // 
             // classesTab
             // 
@@ -272,9 +275,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(911, 450);
             this.Controls.Add(this.administrationTabMenu);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(927, 489);
+            this.MinimumSize = new System.Drawing.Size(927, 489);
             this.Name = "AdministrationPanel";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Administration Panel";

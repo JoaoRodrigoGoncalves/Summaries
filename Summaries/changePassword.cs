@@ -29,6 +29,7 @@ namespace Summaries
             userID = userid;
             username = UserName;
             displayName = DisplayName;
+            inUseDomain = InUseDomain;
         }
 
         private void changePassword_Shown(object sender, EventArgs e)

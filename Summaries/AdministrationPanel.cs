@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Windows.Forms;
@@ -79,6 +80,7 @@ namespace Summaries
 
                 if (response.status && classServer.status)
                 {
+                    classBox.Items.Clear();
                     userDataGrid.Rows.Clear();
                     userDataGrid.Refresh();
                     userDataGrid.ColumnCount = 6;
@@ -105,10 +107,12 @@ namespace Summaries
                     userDataGrid.AllowUserToResizeColumns = true;
                     userDataGrid.MultiSelect = false; //just to reinforce
 
+
+
                     var rows = new List<string[]>();
                     foreach (Content content in response.contents)
                     {
-                        string[] row1 = new string[] { content.userid.ToString(), content.user.ToString(), content.displayName.ToString(), content.className.ToString(), content.isAdmin.ToString(), content.isDeletionProtected.ToString() };
+                        string[] row1 = new string[] { content.userid.ToString(), content.user.ToString(), content.displayName.ToString(), classServer.contents.Find(x => x.classID == Convert.ToInt32(content.className)).className, content.isAdmin.ToString(), content.isDeletionProtected.ToString() };
                         rows.Add(row1);
                     }
 
@@ -117,9 +121,15 @@ namespace Summaries
                         userDataGrid.Rows.Add(rowArray);
                     }
 
+                    foreach (classContent classContent in classServer.contents)
+                    {
+                        classBox.Items.Add(classContent.className);
+                    }
+
                     DataGridViewRow selectedRow = userDataGrid.Rows[0];
                     usernameBox.Text = selectedRow.Cells["username"].Value.ToString();
                     displayNameBox.Text = selectedRow.Cells["displayName"].Value.ToString();
+                    classBox.SelectedItem = selectedRow.Cells["class"].Value.ToString();
                     if (selectedRow.Cells["isAdmin"].Value.ToString() == "True")
                     {
                         adminPrivBox.Checked = true;
@@ -140,11 +150,6 @@ namespace Summaries
 
                     resetPWBTN.Enabled = true;
                     deleteUserBTN.Enabled = true;
-
-                    foreach(classContent classContent in classServer.contents)
-                    {
-                        classBox.Items.Add(classContent.className);
-                    }
 
                 }
                 else
@@ -199,6 +204,7 @@ namespace Summaries
                 currentSelectedrow = selectedrowindex;
                 usernameBox.Text = selectedRow.Cells["username"].Value.ToString();
                 displayNameBox.Text = selectedRow.Cells["displayName"].Value.ToString();
+                classBox.SelectedItem = selectedRow.Cells["class"].Value.ToString();
                 if (selectedRow.Cells["isAdmin"].Value.ToString() == "True")
                 {
                     adminPrivBox.Checked = true;
@@ -341,7 +347,7 @@ namespace Summaries
         {
             try
             {
-                if (usernameBox.TextLength < 1 || displayNameBox.TextLength < 1)
+                if (usernameBox.TextLength < 1 || displayNameBox.TextLength < 1 || classBox.Text.Length < 1)
                 {
                     MessageBox.Show("Please fill all the fields before continue.", "Blank fileds", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
@@ -350,13 +356,17 @@ namespace Summaries
                     var functions = new codeResources.functions();
                     string username = functions.HashPW(usernameBox.Text);
                     string displayName = functions.HashPW(displayNameBox.Text);
-                    string className = functions.HashPW(classBox.SelectedItem.ToString());
+                    string classGiven = classBox.Text;
+                    var digits = classGiven.SkipWhile(c => !Char.IsDigit(c))
+                        .TakeWhile(Char.IsDigit)
+                        .ToArray();
+                    string classNum = functions.HashPW(new string(digits));
                     string isAdmin = adminPrivBox.Checked.ToString();
                     string isDeletionProtected = accidentalDeletionBox.Checked.ToString();
                     if (addingUser)
                     {
                         string POSTdata = "API=1f984e2ed1545f287fe473c890266fea901efcd63d07967ae6d2f09f4566ddde930923ee9212ea815186b0c11a620a5cc85e";
-                        POSTdata += "&username=" + username + "&displayName=" + displayName + "&className=" + className + "&admin=" + isAdmin + "&deletionProtection=" + isDeletionProtected;
+                        POSTdata += "&username=" + username + "&displayName=" + displayName + "&classID=" + classNum + "&admin=" + isAdmin + "&deletionProtection=" + isDeletionProtected;
                         var data = Encoding.UTF8.GetBytes(POSTdata);
                         var request = WebRequest.CreateHttp(inUseDomain + "/summaries/api/changeUser.php");
                         request.Method = "POST";
@@ -381,7 +391,6 @@ namespace Summaries
                         }
 
                         simpleServerResponse serverResponse;
-
                         serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(finalData);
 
                         if (serverResponse.status)
@@ -401,7 +410,7 @@ namespace Summaries
                         DataGridViewRow selectedRow = userDataGrid.Rows[selectedrowindex];
                         int userToUpdate = Convert.ToInt32(selectedRow.Cells["userID"].Value.ToString());
                         string POSTdata = "API=1f984e2ed1545f287fe473c890266fea901efcd63d07967ae6d2f09f4566ddde930923ee9212ea815186b0c11a620a5cc85e";
-                        POSTdata += "&userID=" + userToUpdate + "&username=" + username + "&displayName=" + displayName + "&className=" + className + "&admin=" + isAdmin + "&deletionProtection=" + isDeletionProtected;
+                        POSTdata += "&userID=" + userToUpdate + "&username=" + username + "&displayName=" + displayName + "&classID=" + classNum + "&admin=" + isAdmin + "&deletionProtection=" + isDeletionProtected;
                         var data = Encoding.UTF8.GetBytes(POSTdata);
                         var request = WebRequest.CreateHttp(inUseDomain + "/summaries/api/changeUser.php");
                         request.Method = "POST";
@@ -426,7 +435,6 @@ namespace Summaries
                         }
 
                         simpleServerResponse serverResponse;
-
                         serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(finalData);
 
                         if (serverResponse.status)
@@ -458,55 +466,76 @@ namespace Summaries
 
         private void deleteUserBTN_Click(object sender, EventArgs e)
         {
-            try
+            int selectedrowindex = userDataGrid.SelectedCells[0].RowIndex;
+            DataGridViewRow selectedRow = userDataGrid.Rows[selectedrowindex];
+
+            if (userID == Convert.ToInt32(selectedRow.Cells["userID"].Value))
             {
-                int selectedrowindex = userDataGrid.SelectedCells[0].RowIndex;
-                DataGridViewRow selectedRow = userDataGrid.Rows[selectedrowindex];
-                int userToDelete = Convert.ToInt32(selectedRow.Cells["userID"].Value.ToString());
-                string POSTdata = "API=1f984e2ed1545f287fe473c890266fea901efcd63d07967ae6d2f09f4566ddde930923ee9212ea815186b0c11a620a5cc85e";
-                POSTdata += "&userID=" + userToDelete;
-                var data = Encoding.UTF8.GetBytes(POSTdata);
-                var request = WebRequest.CreateHttp(inUseDomain + "/summaries/api/requestUserDelete.php");
-                request.Method = "POST";
-                request.ContentType = "application/x-www-form-urlencoded";
-                request.ContentLength = data.Length;
-                request.UserAgent = "app";
-                //writes the post data to the stream
-                using (var stream = request.GetRequestStream())
-                {
-                    stream.Write(data, 0, data.Length);
-                    stream.Close();
-                }
-                //ler a resposta
-                string finalData = "";
-                using (var response = request.GetResponse())
-                {
-                    var dataStream = response.GetResponseStream();
-                    StreamReader reader = new StreamReader(dataStream);
-                    finalData = reader.ReadToEnd();
-                    dataStream.Close();
-                    response.Close();
-                }
-
-                simpleServerResponse serverResponse;
-
-                serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(finalData);
-
-                if (serverResponse.status)
-                {
-                    MessageBox.Show("User Deleted Successfully!", "User Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    AdministrationPanel_Load(sender, e);
-                }
-                else
-                {
-                    MessageBox.Show("A critical error occurred. " + serverResponse.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    this.Close();
-                }
+                MessageBox.Show("Cannot delete the current user being used", "Unable to delete the user", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show("A critical error occurred. " + ex.Message, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                this.Close();
+                var res = MessageBox.Show("Are you sure you want to permanently delete " + selectedRow.Cells["displayName"].Value.ToString(), "Delete user", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (res == DialogResult.Yes)
+                {
+                    MessageBox.Show(selectedRow.Cells["isProtected"].Value.ToString());
+                    if (selectedRow.Cells["isProtected"].Value.ToString() == "True")
+                    {
+                        try
+                        {
+
+                            int userToDelete = Convert.ToInt32(selectedRow.Cells["userID"].Value.ToString());
+                            string POSTdata = "API=1f984e2ed1545f287fe473c890266fea901efcd63d07967ae6d2f09f4566ddde930923ee9212ea815186b0c11a620a5cc85e";
+                            POSTdata += "&userID=" + userToDelete;
+                            var data = Encoding.UTF8.GetBytes(POSTdata);
+                            var request = WebRequest.CreateHttp(inUseDomain + "/summaries/api/requestUserDelete.php");
+                            request.Method = "POST";
+                            request.ContentType = "application/x-www-form-urlencoded";
+                            request.ContentLength = data.Length;
+                            request.UserAgent = "app";
+                            //writes the post data to the stream
+                            using (var stream = request.GetRequestStream())
+                            {
+                                stream.Write(data, 0, data.Length);
+                                stream.Close();
+                            }
+                            //ler a resposta
+                            string finalData = "";
+                            using (var response = request.GetResponse())
+                            {
+                                var dataStream = response.GetResponseStream();
+                                StreamReader reader = new StreamReader(dataStream);
+                                finalData = reader.ReadToEnd();
+                                dataStream.Close();
+                                response.Close();
+                            }
+
+                            simpleServerResponse serverResponse;
+
+                            serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(finalData);
+
+                            if (serverResponse.status)
+                            {
+                                MessageBox.Show("User Deleted Successfully!", "User Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                AdministrationPanel_Load(sender, e);
+                            }
+                            else
+                            {
+                                MessageBox.Show("A critical error occurred. " + serverResponse.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                this.Close();
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("A critical error occurred. " + ex.Message, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            this.Close();
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("The user is protected against deletion and cannot be deleted.", "Protected against deletion", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
             }
         }
     }
