@@ -36,7 +36,11 @@
             this.dateBox = new System.Windows.Forms.DateTimePicker();
             this.contentsBox = new System.Windows.Forms.RichTextBox();
             this.cancelBTN = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.fileUpload = new System.Windows.Forms.OpenFileDialog();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.summaryNumberBox)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // saveBTN
@@ -112,12 +116,37 @@
             this.cancelBTN.Text = "Cancel";
             this.cancelBTN.UseVisualStyleBackColor = true;
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.button1);
+            this.panel1.Location = new System.Drawing.Point(461, 13);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(212, 320);
+            this.panel1.TabIndex = 6;
+            // 
+            // fileUpload
+            // 
+            this.fileUpload.Filter = "All files (*.*)|*.*";
+            this.fileUpload.Multiselect = true;
+            this.fileUpload.Title = "Select a file to be uploaded...";
+            // 
+            // button1
+            // 
+            this.button1.BackgroundImage = global::Summaries.Properties.Resources.addSummary;
+            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button1.Location = new System.Drawing.Point(188, 296);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(25, 25);
+            this.button1.TabIndex = 0;
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // newSummary
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelBTN;
-            this.ClientSize = new System.Drawing.Size(467, 345);
+            this.ClientSize = new System.Drawing.Size(685, 345);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.cancelBTN);
             this.Controls.Add(this.contentsBox);
             this.Controls.Add(this.dateBox);
@@ -132,6 +161,7 @@
             this.Text = "Add a new summary";
             this.Load += new System.EventHandler(this.newSummary_Load);
             ((System.ComponentModel.ISupportInitialize)(this.summaryNumberBox)).EndInit();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -146,5 +176,8 @@
         private System.Windows.Forms.DateTimePicker dateBox;
         private System.Windows.Forms.RichTextBox contentsBox;
         private System.Windows.Forms.Button cancelBTN;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.OpenFileDialog fileUpload;
+        private System.Windows.Forms.Button button1;
     }
 }
