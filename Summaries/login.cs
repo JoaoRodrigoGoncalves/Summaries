@@ -10,17 +10,9 @@ namespace Summaries
 {
     public partial class login : Form
     {
-
-        private string inUseDomain;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="InUseDomain">The domain used to make API calls</param>
-        public login(string InUseDomain)
+        public login()
         {
             InitializeComponent();
-            inUseDomain = InUseDomain;
         }
 
         private void resetBTN_Click(object sender, EventArgs e)
@@ -49,13 +41,19 @@ namespace Summaries
             
             string username = usernameBox.Text;
             string password = passwordBox.Text;
-            string jsonResponse = LoginValidation(username, password, inUseDomain);
+            string jsonResponse = LoginValidation(username, password);
             response = JsonConvert.DeserializeObject<simpleServerResponse>(jsonResponse);
 
             if (response.status)
             {
                 userInfo = JsonConvert.DeserializeObject<userInfo>(jsonResponse);
-                main form = new main(userInfo.userID, userInfo.username, userInfo.displayName, inUseDomain, userInfo.adminControl);
+
+                Properties.Settings.Default.userID = userInfo.userID;
+                Properties.Settings.Default.username = userInfo.username;
+                Properties.Settings.Default.displayName = userInfo.displayName;
+                Properties.Settings.Default.isAdmin = userInfo.adminControl;
+
+                main form = new main();
                 this.Hide();
                 form.Show();
             }
@@ -78,12 +76,11 @@ namespace Summaries
         /// <param name="username">The username given by the user to login</param>
         /// <param name="password">The password given by the user to login</param>
         /// <returns></returns>
-        public static string LoginValidation(string username, string password, string inUseDomain)
+        public static string LoginValidation(string username, string password)
         {
-            string POSTdata = "API=1f984e2ed1545f287fe473c890266fea901efcd63d07967ae6d2f09f4566ddde930923ee9212ea815186b0c11a620a5cc85e";
-            POSTdata += "&usrnm=" + username + "&psswd=" + password;
+            string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&usrnm=" + username + "&psswd=" + password;
             var data = Encoding.UTF8.GetBytes(POSTdata);
-            var request = WebRequest.CreateHttp(inUseDomain + "/summaries/api/loginvalidator.php");
+            var request = WebRequest.CreateHttp(Properties.Settings.Default.inUseDomain + "/summaries/api/loginvalidator.php");
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";
             request.ContentLength = data.Length;

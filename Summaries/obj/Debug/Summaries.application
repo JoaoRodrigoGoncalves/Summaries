@@ -7,14 +7,14 @@
     <framework targetVersion="4.7.2" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="Summaries.exe.manifest" size="5727">
+    <dependentAssembly dependencyType="install" codebase="Summaries.exe.manifest" size="5728">
       <assemblyIdentity name="Summaries.exe" version="1.0.0.0" publicKeyToken="0000000000000000" language="en" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>8tsKyGZmMm0Sv7xLDU8ucXhxOdTem2muq1Ihlxms9cM=</dsig:DigestValue>
+        <dsig:DigestValue>TFTqdHErJ7Pi87BVnKrJPfBztc1weYzbGNGak8ztOc0=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

@@ -8,8 +8,6 @@ namespace Summaries
 {
     public partial class loading : Form
     {
-        private string inUseDomain;
-
         public loading()
         {
             InitializeComponent();
@@ -35,25 +33,25 @@ namespace Summaries
                     }
                     else
                     {
-                        inUseDomain = "https://joaogoncalves.myftp.org";
+                        Properties.Settings.Default.inUseDomain = "https://joaogoncalves.myftp.org";
                     }
 
                 }
                 else
                 {
-                    inUseDomain = "https://joaogoncalves.eu";
+                    Properties.Settings.Default.inUseDomain = "https://joaogoncalves.eu";
                 }
 
                 try
                 {
                     using (var client = new WebClient())
                     {
-                        client.DownloadFile(inUseDomain + "/summaries/resources/licenses.txt", Path.GetTempPath() + "\\licenses.txt");
+                        client.DownloadFile(Properties.Settings.Default.inUseDomain + "/summaries/resources/licenses.txt", Path.GetTempPath() + "\\licenses.txt");
                     }
 
                     string downloadURL = "";
                     Version newVersion = null;
-                    string xmlURL = inUseDomain + "/summaries/updater.xml";
+                    string xmlURL = Properties.Settings.Default.inUseDomain + "/summaries/updater.xml";
                     XmlTextReader reader = null;
 
                     reader = new XmlTextReader(xmlURL);
@@ -121,7 +119,7 @@ namespace Summaries
                     MessageBox.Show(ex.Message, "Cannot load all needed resources", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Application.Exit();
                 }
-                login loginForm = new login(inUseDomain);
+                login loginForm = new login();
                 this.Close();
                 loginForm.Show();
             }

@@ -10,32 +10,15 @@ namespace Summaries
 {
     public partial class changePassword : Form
     {
-
-        private int userID;
-        private string username;
-        private string displayName;
-        private string inUseDomain;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="userid">The current userID</param>
-        /// <param name="UserName">The current username</param>
-        /// <param name="DisplayName">The current user displayname</param>
-        /// <param name="InUseDomain">The domain used to make API calls</param>
-        public changePassword(int userid, string UserName, string DisplayName, string InUseDomain)
+        public changePassword()
         {
             InitializeComponent();
-            userID = userid;
-            username = UserName;
-            displayName = DisplayName;
-            inUseDomain = InUseDomain;
         }
 
         private void changePassword_Shown(object sender, EventArgs e)
         {
-            this.Text += displayName;
-            usernameBox.Text = username;
+            this.Text += Properties.Settings.Default.displayName;
+            usernameBox.Text = Properties.Settings.Default.username;
         }
 
         private void resetFields()
@@ -61,7 +44,7 @@ namespace Summaries
                         try
                         {
                             var functions = new codeResources.functions();
-                            jsonResponse = ChangePassword(userID, inUseDomain, functions.HashPW(currentPasswordBox.Text), functions.HashPW(newPasswordBox.Text));
+                            jsonResponse = ChangePassword(Properties.Settings.Default.userID, functions.HashPW(currentPasswordBox.Text), functions.HashPW(newPasswordBox.Text));
                             simpleServerResponse response;
                             response = JsonConvert.DeserializeObject<simpleServerResponse>(jsonResponse);
 
@@ -110,12 +93,11 @@ namespace Summaries
         /// <param name="oldPassword">The old user's password (in BASE64)</param>
         /// <param name="newPassword">The new password to change to (in BASE64)</param>
         /// <returns></returns>
-        public static string ChangePassword(int userID, string inUseDomain, string oldPassword, string newPassword)
+        public static string ChangePassword(int userID, string oldPassword, string newPassword)
         {
-            string POSTdata = "API=1f984e2ed1545f287fe473c890266fea901efcd63d07967ae6d2f09f4566ddde930923ee9212ea815186b0c11a620a5cc85e";
-            POSTdata += "&userID=" + userID + "&oldpsswd=" + oldPassword + "&newpsswd=" + newPassword;
+            string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&userID=" + userID + "&oldpsswd=" + oldPassword + "&newpsswd=" + newPassword;
             var data = Encoding.UTF8.GetBytes(POSTdata);
-            var request = WebRequest.CreateHttp(inUseDomain + "/summaries/api/changePassword.php");
+            var request = WebRequest.CreateHttp(Properties.Settings.Default.inUseDomain + "/summaries/api/changePassword.php");
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";
             request.ContentLength = data.Length;

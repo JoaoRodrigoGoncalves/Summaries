@@ -12,26 +12,13 @@ namespace Summaries
 {
     public partial class AdministrationPanel : Form
     {
-
-        private int userID;
-        private string inUseDomain;
-
-        //***************************//
-
         private int currentSelectedrow = 0;
         private int previousSelectedrow = 0;
         private bool addingUser = false;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="userid">The current userid</param>
-        /// <param name="InUseDomain">The domain used to make API calls</param>
-        public AdministrationPanel(int userid, string InUseDomain)
+        public AdministrationPanel()
         {
             InitializeComponent();
-            userID = userid;
-            inUseDomain = InUseDomain;
         }
 
         public class Content
@@ -68,12 +55,12 @@ namespace Summaries
         {
             try
             {
-                string jsonResponse = RequestUserList(inUseDomain);
+                string jsonResponse = RequestUserList();
                 serverResponse response;
                 response = JsonConvert.DeserializeObject<serverResponse>(jsonResponse);
                 classServerResponse classServer;
                 codeResources.functions funct = new codeResources.functions();
-                string classJsonResponse = funct.RequestClassesList(inUseDomain);
+                string classJsonResponse = funct.RequestClassesList();
                 classServer = JsonConvert.DeserializeObject<classServerResponse>(classJsonResponse);
 
 
@@ -167,11 +154,11 @@ namespace Summaries
 
         }
 
-        public static string RequestUserList(string inUseDomain)
+        public static string RequestUserList()
         {
-            string POSTdata = "API=1f984e2ed1545f287fe473c890266fea901efcd63d07967ae6d2f09f4566ddde930923ee9212ea815186b0c11a620a5cc85e";
+            string POSTdata = "API=" + Properties.Settings.Default.APIkey;
             var data = Encoding.UTF8.GetBytes(POSTdata);
-            var request = WebRequest.CreateHttp(inUseDomain + "/summaries/api/userListRequest.php");
+            var request = WebRequest.CreateHttp(Properties.Settings.Default.inUseDomain + "/summaries/api/userListRequest.php");
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";
             request.ContentLength = data.Length;
@@ -295,10 +282,9 @@ namespace Summaries
                         }
                         else
                         {
-                            string POSTdata = "API=1f984e2ed1545f287fe473c890266fea901efcd63d07967ae6d2f09f4566ddde930923ee9212ea815186b0c11a620a5cc85e";
-                            POSTdata += "&userID=" + userToReset + "&reset=true";
+                            string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&userID=" + userToReset + "&reset=true";
                             var data = Encoding.UTF8.GetBytes(POSTdata);
-                            var request = WebRequest.CreateHttp(inUseDomain + "/summaries/api/changePassword.php");
+                            var request = WebRequest.CreateHttp(Properties.Settings.Default.inUseDomain + "/summaries/api/changePassword.php");
                             request.Method = "POST";
                             request.ContentType = "application/x-www-form-urlencoded";
                             request.ContentLength = data.Length;
@@ -365,10 +351,10 @@ namespace Summaries
                     string isDeletionProtected = accidentalDeletionBox.Checked.ToString();
                     if (addingUser)
                     {
-                        string POSTdata = "API=1f984e2ed1545f287fe473c890266fea901efcd63d07967ae6d2f09f4566ddde930923ee9212ea815186b0c11a620a5cc85e";
+                        string POSTdata = "API=" + Properties.Settings.Default.APIkey;
                         POSTdata += "&username=" + username + "&displayName=" + displayName + "&classID=" + classNum + "&admin=" + isAdmin + "&deletionProtection=" + isDeletionProtected;
                         var data = Encoding.UTF8.GetBytes(POSTdata);
-                        var request = WebRequest.CreateHttp(inUseDomain + "/summaries/api/changeUser.php");
+                        var request = WebRequest.CreateHttp(Properties.Settings.Default.inUseDomain + "/summaries/api/changeUser.php");
                         request.Method = "POST";
                         request.ContentType = "application/x-www-form-urlencoded";
                         request.ContentLength = data.Length;
@@ -409,10 +395,9 @@ namespace Summaries
                         int selectedrowindex = userDataGrid.SelectedCells[0].RowIndex;
                         DataGridViewRow selectedRow = userDataGrid.Rows[selectedrowindex];
                         int userToUpdate = Convert.ToInt32(selectedRow.Cells["userID"].Value.ToString());
-                        string POSTdata = "API=1f984e2ed1545f287fe473c890266fea901efcd63d07967ae6d2f09f4566ddde930923ee9212ea815186b0c11a620a5cc85e";
-                        POSTdata += "&userID=" + userToUpdate + "&username=" + username + "&displayName=" + displayName + "&classID=" + classNum + "&admin=" + isAdmin + "&deletionProtection=" + isDeletionProtected;
+                        string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&userID=" + userToUpdate + "&username=" + username + "&displayName=" + displayName + "&classID=" + classNum + "&admin=" + isAdmin + "&deletionProtection=" + isDeletionProtected;
                         var data = Encoding.UTF8.GetBytes(POSTdata);
-                        var request = WebRequest.CreateHttp(inUseDomain + "/summaries/api/changeUser.php");
+                        var request = WebRequest.CreateHttp(Properties.Settings.Default.inUseDomain + "/summaries/api/changeUser.php");
                         request.Method = "POST";
                         request.ContentType = "application/x-www-form-urlencoded";
                         request.ContentLength = data.Length;
@@ -469,7 +454,7 @@ namespace Summaries
             int selectedrowindex = userDataGrid.SelectedCells[0].RowIndex;
             DataGridViewRow selectedRow = userDataGrid.Rows[selectedrowindex];
 
-            if (userID == Convert.ToInt32(selectedRow.Cells["userID"].Value))
+            if (Properties.Settings.Default.userID == Convert.ToInt32(selectedRow.Cells["userID"].Value))
             {
                 MessageBox.Show("Cannot delete the current user being used", "Unable to delete the user", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -479,16 +464,15 @@ namespace Summaries
                 if (res == DialogResult.Yes)
                 {
                     MessageBox.Show(selectedRow.Cells["isProtected"].Value.ToString());
-                    if (selectedRow.Cells["isProtected"].Value.ToString() == "True")
+                    if (selectedRow.Cells["isProtected"].Value.ToString() == "False")
                     {
                         try
                         {
 
                             int userToDelete = Convert.ToInt32(selectedRow.Cells["userID"].Value.ToString());
-                            string POSTdata = "API=1f984e2ed1545f287fe473c890266fea901efcd63d07967ae6d2f09f4566ddde930923ee9212ea815186b0c11a620a5cc85e";
-                            POSTdata += "&userID=" + userToDelete;
+                            string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&userID=" + userToDelete;
                             var data = Encoding.UTF8.GetBytes(POSTdata);
-                            var request = WebRequest.CreateHttp(inUseDomain + "/summaries/api/requestUserDelete.php");
+                            var request = WebRequest.CreateHttp(Properties.Settings.Default.inUseDomain + "/summaries/api/requestUserDelete.php");
                             request.Method = "POST";
                             request.ContentType = "application/x-www-form-urlencoded";
                             request.ContentLength = data.Length;

@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Net;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using static Summaries.codeResources.functions;
 
@@ -12,18 +14,16 @@ namespace Summaries
 {
     public partial class newSummary : Form
     {
-
-        private int userID;
-        private string inUseDomain;
-
-        //*********************//
-
         private bool isEdit = false;
         private string originalText = null;
         private string originalDate = null;
         private int originalSummaryID = 0;
         private int dbRow = 0;
         private int summaryID = 0;
+
+        //*********************//
+
+        private string[] filesToUpload = null;
 
         public class Content
         {
@@ -43,24 +43,16 @@ namespace Summaries
 
         serverResponse response;
 
-        /// <summary>
-        /// Main function for the newSummary form.
-        /// </summary>
-        /// <param name="userid">The userID</param>
-        /// <param name="InUseDomain">The userID</param>
-        /// <param name="summaryid">(Optional) ID of the summary to be edited.</param>
-        public newSummary(int userid, string InUseDomain, int summaryid = 0)
+        public newSummary(int summaryid = 0)
         {
             InitializeComponent();
-            userID = userid;
-            inUseDomain = InUseDomain;
             summaryID = summaryid;
         }
 
         private void newSummary_Load(object sender, EventArgs e)
         {
             var functions = new codeResources.functions();
-            string jsonResponse = summariesList.summaryListRequest(userID, inUseDomain);
+            string jsonResponse = summariesList.summaryListRequest(Properties.Settings.Default.userID);
 
             response = JsonConvert.DeserializeObject<serverResponse>(jsonResponse);
             if (response.status)
@@ -207,17 +199,17 @@ namespace Summaries
         private bool UpdateDB(int summaryID, string date, string text, int dbRowID = 0)
         {
             var functions = new codeResources.functions();
-            string POSTdata = "API=1f984e2ed1545f287fe473c890266fea901efcd63d07967ae6d2f09f4566ddde930923ee9212ea815186b0c11a620a5cc85e";
+            string POSTdata = "API=" + Properties.Settings.Default.APIkey;
             if(dbRowID > 0)
             {
-                POSTdata += "&userID=" + userID + "&dbrowID=" + dbRowID + "&summaryID=" + summaryID + "&date=" + functions.HashPW(date) + "&contents=" + functions.HashPW(text);
+                POSTdata += "&userID=" + Properties.Settings.Default.userID + "&dbrowID=" + dbRowID + "&summaryID=" + summaryID + "&date=" + functions.HashPW(date) + "&contents=" + functions.HashPW(text);
             }
             else
             {
-                POSTdata += "&userID=" + userID + "&summaryID=" + summaryID + "&date=" + functions.HashPW(date) + "&contents=" + functions.HashPW(text);
+                POSTdata += "&userID=" + Properties.Settings.Default.userID + "&summaryID=" + summaryID + "&date=" + functions.HashPW(date) + "&contents=" + functions.HashPW(text);
             }
             var data = Encoding.UTF8.GetBytes(POSTdata);
-            var request = WebRequest.CreateHttp(inUseDomain + "/summaries/api/summaryUpdateRequest.php");
+            var request = WebRequest.CreateHttp(Properties.Settings.Default.inUseDomain + "/summaries/api/summaryUpdateRequest.php");
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";
             request.ContentLength = data.Length;
@@ -254,6 +246,146 @@ namespace Summaries
                 MessageBox.Show("Error: " + serverResponse.errors + "\n " + jsonResponse, "Critital backend error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             return serverResponse.status;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="paramString"></param>
+        /// <param name="paramFileStream"></param>
+        /// <param name="paramFileBytes"></param>
+        /// <returns></returns>
+        private async Task<Stream> Upload(string paramString, Stream paramFileStream, byte[] paramFileBytes)
+        {
+            HttpContent stringContent = new StringContent(paramString);
+            HttpContent fileStreamContent = new StreamContent(paramFileStream);
+            HttpContent bytesContent = new ByteArrayContent(paramFileBytes);
+            using (var client = new HttpClient())
+            using (var formData = new MultipartFormDataContent())
+            {
+                formData.Add(stringContent, "param1", "param1");
+                formData.Add(fileStreamContent, "file1", "file1");
+                formData.Add(bytesContent, "file2", "file2");
+                var response = await client.PostAsync(Properties.Settings.Default.inUseDomain + "/summaries/api/summaryUpdateRequest.php", formData);
+                if (!response.IsSuccessStatusCode)
+                {
+                    return null;
+                }
+                return await response.Content.ReadAsStreamAsync();
+            }
+        }
+
+        /// <summary>
+        /// Opens a OpenFileDialog screen and sets the file to be uploaded into the array
+        /// </summary>
+        /// <param name="index">The index where the file will be stored on the one-demensional array</param>
+        /// <returns>The name of the file selected by the user</returns>
+        private string loadFileFromComputer(int index)
+        {
+            try
+            {
+                fileUpload.Multiselect = false;
+                fileUpload.Title = "Select files to upload...";
+                fileUpload.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                fileUpload.Filter = "Images (*.BMP;*.JPG;*.JPEG;*.GIF,*.PNG,*.TIFF)|*.BMP;*.JPG;*.GIF;*.PNG;*.TIFF|" + "All files (*.*)|*.*";
+                fileUpload.CheckFileExists = true;
+                fileUpload.CheckPathExists = true;
+                fileUpload.FilterIndex = 2;
+                fileUpload.RestoreDirectory = true;
+                fileUpload.ReadOnlyChecked = true;
+                fileUpload.ShowReadOnly = true;
+
+                if (fileUpload.ShowDialog() == DialogResult.OK)
+                {
+                    filesToUpload.SetValue(fileUpload.FileName, index);
+                    return fileUpload.FileName;
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
+            catch (Exception ex)
+            { 
+                MessageBox.Show("Critial error: " + ex.Message, "Critical Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return string.Empty;
+            }
+
+        }
+
+        private void selectFile_Click(object sender, EventArgs e)
+        {
+            fileBox.Text = loadFileFromComputer(0);
+            removeFile.Visible = true;
+            removeFile.Enabled = true;
+        }
+
+        private void selectFile2_Click(object sender, EventArgs e)
+        {
+            fileBox2.Text = loadFileFromComputer(1);
+            removeFile2.Visible = true;
+            removeFile2.Enabled = true;
+        }
+
+        private void selectFile3_Click(object sender, EventArgs e)
+        {
+            fileBox3.Text = loadFileFromComputer(2);
+            removeFile3.Visible = true;
+            removeFile3.Enabled = true;
+        }
+
+        private void removeFile_Click(object sender, EventArgs e)
+        {
+            filesToUpload.SetValue(string.Empty, 0);
+            fileBox.Text = string.Empty;
+            removeFile.Enabled = false;
+            removeFile.Visible = false;
+        }
+
+        private void removeFile2_Click(object sender, EventArgs e)
+        {
+            filesToUpload.SetValue(string.Empty, 1);
+            fileBox2.Text = string.Empty;
+            removeFile2.Enabled = false;
+            removeFile2.Visible = false;
+        }
+
+        private void removeFile3_Click(object sender, EventArgs e)
+        {
+            filesToUpload.SetValue(string.Empty, 2);
+            fileBox3.Text = string.Empty;
+            removeFile3.Enabled = false;
+            removeFile3.Visible = false;
+        }
+
+        private void fileBox_MouseClick(object sender, MouseEventArgs e)
+        {
+            //
+        }
+
+        private void fileBox2_MouseClick(object sender, MouseEventArgs e)
+        {
+            //
+        }
+
+        private void fileBox3_MouseClick(object sender, MouseEventArgs e)
+        {
+            //
+        }
+
+        private void fileBox_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            fileBox_MouseClick(sender, e);
+        }
+
+        private void fileBox2_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            fileBox2_MouseClick(sender, e);
+        }
+
+        private void fileBox3_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            fileBox3_MouseClick(sender, e);
         }
     }
 }

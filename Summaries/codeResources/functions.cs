@@ -18,7 +18,7 @@ namespace Summaries.codeResources
         /// Uses BASE64 to hash the given string
         /// </summary>
         /// <param name="text">String to hash</param>
-        /// <returns></returns>
+        /// <returns>The string in BASE64</returns>
         public string HashPW(string text)
         {
             var plainTextBytes = Encoding.UTF8.GetBytes(text);
@@ -29,7 +29,7 @@ namespace Summaries.codeResources
         /// Checks if it is possible to reach the specified link
         /// </summary>
         /// <param name="link">The link to the website or page</param>
-        /// <returns></returns>
+        /// <returns>True if there is an internet connection</returns>
         public bool CheckForInternetConnection(string link)
         {
             try
@@ -44,11 +44,15 @@ namespace Summaries.codeResources
             }
         }
 
-        public string RequestClassesList(string inUseDomain)
+        /// <summary>
+        /// Requests all the registered classes from the database
+        /// </summary>
+        /// <returns>JSON string</returns>
+        public string RequestClassesList()
         {
-            string POSTdata = "API=1f984e2ed1545f287fe473c890266fea901efcd63d07967ae6d2f09f4566ddde930923ee9212ea815186b0c11a620a5cc85e";
+            string POSTdata = "API=" + Properties.Settings.Default.APIkey;
             var data = Encoding.UTF8.GetBytes(POSTdata);
-            var request = WebRequest.CreateHttp(inUseDomain + "/summaries/api/classListRequest.php");
+            var request = WebRequest.CreateHttp(Properties.Settings.Default.inUseDomain + "/summaries/api/classListRequest.php");
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";
             request.ContentLength = data.Length;

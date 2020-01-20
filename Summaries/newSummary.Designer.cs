@@ -36,18 +36,24 @@
             this.dateBox = new System.Windows.Forms.DateTimePicker();
             this.contentsBox = new System.Windows.Forms.RichTextBox();
             this.cancelBTN = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.fileUpload = new System.Windows.Forms.OpenFileDialog();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.selectedAttachments = new System.Windows.Forms.DataGridView();
+            this.attachmentsGroup = new System.Windows.Forms.GroupBox();
+            this.selectFile3 = new System.Windows.Forms.Button();
+            this.removeFile3 = new System.Windows.Forms.Button();
+            this.fileBox3 = new System.Windows.Forms.TextBox();
+            this.selectFile2 = new System.Windows.Forms.Button();
+            this.removeFile2 = new System.Windows.Forms.Button();
+            this.fileBox2 = new System.Windows.Forms.TextBox();
+            this.selectFile = new System.Windows.Forms.Button();
+            this.removeFile = new System.Windows.Forms.Button();
+            this.fileBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.summaryNumberBox)).BeginInit();
-            this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.selectedAttachments)).BeginInit();
+            this.attachmentsGroup.SuspendLayout();
             this.SuspendLayout();
             // 
             // saveBTN
             // 
-            this.saveBTN.Location = new System.Drawing.Point(380, 310);
+            this.saveBTN.Location = new System.Drawing.Point(380, 428);
             this.saveBTN.Name = "saveBTN";
             this.saveBTN.Size = new System.Drawing.Size(75, 23);
             this.saveBTN.TabIndex = 4;
@@ -111,22 +117,12 @@
             // cancelBTN
             // 
             this.cancelBTN.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelBTN.Location = new System.Drawing.Point(299, 310);
+            this.cancelBTN.Location = new System.Drawing.Point(299, 428);
             this.cancelBTN.Name = "cancelBTN";
             this.cancelBTN.Size = new System.Drawing.Size(75, 23);
             this.cancelBTN.TabIndex = 5;
             this.cancelBTN.Text = "Cancel";
             this.cancelBTN.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            this.button1.BackgroundImage = global::Summaries.Properties.Resources.addSummary;
-            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button1.Location = new System.Drawing.Point(186, 294);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(25, 25);
-            this.button1.TabIndex = 0;
-            this.button1.UseVisualStyleBackColor = true;
             // 
             // fileUpload
             // 
@@ -134,35 +130,130 @@
             this.fileUpload.Multiselect = true;
             this.fileUpload.Title = "Select a file to be uploaded...";
             // 
-            // groupBox1
+            // attachmentsGroup
             // 
-            this.groupBox1.Controls.Add(this.selectedAttachments);
-            this.groupBox1.Controls.Add(this.button1);
-            this.groupBox1.Location = new System.Drawing.Point(461, 12);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(212, 321);
-            this.groupBox1.TabIndex = 6;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Attachments";
+            this.attachmentsGroup.Controls.Add(this.selectFile3);
+            this.attachmentsGroup.Controls.Add(this.removeFile3);
+            this.attachmentsGroup.Controls.Add(this.fileBox3);
+            this.attachmentsGroup.Controls.Add(this.selectFile2);
+            this.attachmentsGroup.Controls.Add(this.removeFile2);
+            this.attachmentsGroup.Controls.Add(this.fileBox2);
+            this.attachmentsGroup.Controls.Add(this.selectFile);
+            this.attachmentsGroup.Controls.Add(this.removeFile);
+            this.attachmentsGroup.Controls.Add(this.fileBox);
+            this.attachmentsGroup.Location = new System.Drawing.Point(15, 311);
+            this.attachmentsGroup.Name = "attachmentsGroup";
+            this.attachmentsGroup.Size = new System.Drawing.Size(439, 111);
+            this.attachmentsGroup.TabIndex = 6;
+            this.attachmentsGroup.TabStop = false;
+            this.attachmentsGroup.Text = "Attachments";
             // 
-            // selectedAttachments
+            // selectFile3
             // 
-            this.selectedAttachments.AllowUserToAddRows = false;
-            this.selectedAttachments.AllowUserToDeleteRows = false;
-            this.selectedAttachments.AllowUserToResizeRows = false;
-            this.selectedAttachments.CausesValidation = false;
-            this.selectedAttachments.Location = new System.Drawing.Point(6, 19);
-            this.selectedAttachments.Name = "selectedAttachments";
-            this.selectedAttachments.Size = new System.Drawing.Size(200, 269);
-            this.selectedAttachments.TabIndex = 1;
+            this.selectFile3.Location = new System.Drawing.Point(379, 68);
+            this.selectFile3.Name = "selectFile3";
+            this.selectFile3.Size = new System.Drawing.Size(26, 23);
+            this.selectFile3.TabIndex = 8;
+            this.selectFile3.Text = "...";
+            this.selectFile3.UseVisualStyleBackColor = true;
+            this.selectFile3.Click += new System.EventHandler(this.selectFile3_Click);
+            // 
+            // removeFile3
+            // 
+            this.removeFile3.Enabled = false;
+            this.removeFile3.Location = new System.Drawing.Point(411, 68);
+            this.removeFile3.Name = "removeFile3";
+            this.removeFile3.Size = new System.Drawing.Size(22, 23);
+            this.removeFile3.TabIndex = 7;
+            this.removeFile3.Text = "X";
+            this.removeFile3.UseVisualStyleBackColor = true;
+            this.removeFile3.Visible = false;
+            this.removeFile3.Click += new System.EventHandler(this.removeFile3_Click);
+            // 
+            // fileBox3
+            // 
+            this.fileBox3.CausesValidation = false;
+            this.fileBox3.Location = new System.Drawing.Point(6, 70);
+            this.fileBox3.Name = "fileBox3";
+            this.fileBox3.ReadOnly = true;
+            this.fileBox3.Size = new System.Drawing.Size(367, 20);
+            this.fileBox3.TabIndex = 6;
+            this.fileBox3.MouseClick += new System.Windows.Forms.MouseEventHandler(this.fileBox3_MouseClick);
+            this.fileBox3.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.fileBox3_MouseDoubleClick);
+            // 
+            // selectFile2
+            // 
+            this.selectFile2.Location = new System.Drawing.Point(379, 42);
+            this.selectFile2.Name = "selectFile2";
+            this.selectFile2.Size = new System.Drawing.Size(26, 23);
+            this.selectFile2.TabIndex = 5;
+            this.selectFile2.Text = "...";
+            this.selectFile2.UseVisualStyleBackColor = true;
+            this.selectFile2.Click += new System.EventHandler(this.selectFile2_Click);
+            // 
+            // removeFile2
+            // 
+            this.removeFile2.Enabled = false;
+            this.removeFile2.Location = new System.Drawing.Point(411, 42);
+            this.removeFile2.Name = "removeFile2";
+            this.removeFile2.Size = new System.Drawing.Size(22, 23);
+            this.removeFile2.TabIndex = 4;
+            this.removeFile2.Text = "X";
+            this.removeFile2.UseVisualStyleBackColor = true;
+            this.removeFile2.Visible = false;
+            this.removeFile2.Click += new System.EventHandler(this.removeFile2_Click);
+            // 
+            // fileBox2
+            // 
+            this.fileBox2.CausesValidation = false;
+            this.fileBox2.Location = new System.Drawing.Point(6, 44);
+            this.fileBox2.Name = "fileBox2";
+            this.fileBox2.ReadOnly = true;
+            this.fileBox2.Size = new System.Drawing.Size(367, 20);
+            this.fileBox2.TabIndex = 3;
+            this.fileBox2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.fileBox2_MouseClick);
+            this.fileBox2.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.fileBox2_MouseDoubleClick);
+            // 
+            // selectFile
+            // 
+            this.selectFile.Location = new System.Drawing.Point(379, 16);
+            this.selectFile.Name = "selectFile";
+            this.selectFile.Size = new System.Drawing.Size(26, 23);
+            this.selectFile.TabIndex = 2;
+            this.selectFile.Text = "...";
+            this.selectFile.UseVisualStyleBackColor = true;
+            this.selectFile.Click += new System.EventHandler(this.selectFile_Click);
+            // 
+            // removeFile
+            // 
+            this.removeFile.Enabled = false;
+            this.removeFile.Location = new System.Drawing.Point(411, 16);
+            this.removeFile.Name = "removeFile";
+            this.removeFile.Size = new System.Drawing.Size(22, 23);
+            this.removeFile.TabIndex = 1;
+            this.removeFile.Text = "X";
+            this.removeFile.UseVisualStyleBackColor = true;
+            this.removeFile.Visible = false;
+            this.removeFile.Click += new System.EventHandler(this.removeFile_Click);
+            // 
+            // fileBox
+            // 
+            this.fileBox.CausesValidation = false;
+            this.fileBox.Location = new System.Drawing.Point(6, 18);
+            this.fileBox.Name = "fileBox";
+            this.fileBox.ReadOnly = true;
+            this.fileBox.Size = new System.Drawing.Size(367, 20);
+            this.fileBox.TabIndex = 0;
+            this.fileBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.fileBox_MouseClick);
+            this.fileBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.fileBox_MouseDoubleClick);
             // 
             // newSummary
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelBTN;
-            this.ClientSize = new System.Drawing.Size(685, 345);
-            this.Controls.Add(this.groupBox1);
+            this.ClientSize = new System.Drawing.Size(466, 463);
+            this.Controls.Add(this.attachmentsGroup);
             this.Controls.Add(this.cancelBTN);
             this.Controls.Add(this.contentsBox);
             this.Controls.Add(this.dateBox);
@@ -177,8 +268,8 @@
             this.Text = "Add a new summary";
             this.Load += new System.EventHandler(this.newSummary_Load);
             ((System.ComponentModel.ISupportInitialize)(this.summaryNumberBox)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.selectedAttachments)).EndInit();
+            this.attachmentsGroup.ResumeLayout(false);
+            this.attachmentsGroup.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -194,8 +285,15 @@
         private System.Windows.Forms.RichTextBox contentsBox;
         private System.Windows.Forms.Button cancelBTN;
         private System.Windows.Forms.OpenFileDialog fileUpload;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.DataGridView selectedAttachments;
+        private System.Windows.Forms.GroupBox attachmentsGroup;
+        private System.Windows.Forms.Button selectFile3;
+        private System.Windows.Forms.Button removeFile3;
+        private System.Windows.Forms.TextBox fileBox3;
+        private System.Windows.Forms.Button selectFile2;
+        private System.Windows.Forms.Button removeFile2;
+        private System.Windows.Forms.TextBox fileBox2;
+        private System.Windows.Forms.Button selectFile;
+        private System.Windows.Forms.Button removeFile;
+        private System.Windows.Forms.TextBox fileBox;
     }
 }
