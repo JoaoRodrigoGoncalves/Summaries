@@ -286,25 +286,44 @@ namespace Summaries
             return serverResponse.status;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="paramString"></param>
-        /// <param name="paramFileStream"></param>
-        /// <param name="paramFileBytes"></param>
-        /// <returns></returns>
-        private async Task<Stream> Upload(string paramString, Stream paramFileStream, byte[] paramFileBytes)
+        // Perform the equivalent of posting a form with a filename and two files, in HTML:
+        // <form action="{url}" method="post" enctype="multipart/form-data">
+        //     <input type="text" name="filename" />
+        //     <input type="file" name="file1" />
+        //     <input type="file" name="file2" />
+        // </form>
+        private async Task<Stream> UploadAsync(string url, string filename, Stream fileStream, byte[] fileBytes)
         {
-            HttpContent stringContent = new StringContent(paramString);
-            HttpContent fileStreamContent = new StreamContent(paramFileStream);
-            HttpContent bytesContent = new ByteArrayContent(paramFileBytes);
+            // Convert each of the three inputs into HttpContent objects
+
+            HttpContent stringContent = new StringContent(filename);
+            // examples of converting both Stream and byte [] to HttpContent objects
+            // representing input type file
+            HttpContent fileStreamContent = new StreamContent(fileStream);
+            HttpContent bytesContent = new ByteArrayContent(fileBytes);
+
+            // Submit the form using HttpClient and 
+            // create form data as Multipart (enctype="multipart/form-data")
+
             using (var client = new HttpClient())
             using (var formData = new MultipartFormDataContent())
             {
-                formData.Add(stringContent, "param1", "param1");
+                // Add the HttpContent objects to the form data
+
+                // <input type="text" name="filename" />
+                formData.Add(stringContent, "filename", "filename");
+                // <input type="file" name="file1" />
                 formData.Add(fileStreamContent, "file1", "file1");
+                // <input type="file" name="file2" />
                 formData.Add(bytesContent, "file2", "file2");
-                var response = await client.PostAsync(Properties.Settings.Default.inUseDomain + "/summaries/api/summaryUpdateRequest.php", formData);
+
+                // Invoke the request to the server
+
+                // equivalent to pressing the submit button on
+                // a form with attributes (action="{url}" method="post")
+                var response = await client.PostAsync(url, formData);
+
+                // ensure the request was a success
                 if (!response.IsSuccessStatusCode)
                 {
                     return null;
