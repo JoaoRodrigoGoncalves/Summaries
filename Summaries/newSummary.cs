@@ -23,7 +23,13 @@ namespace Summaries
 
         //*********************//
 
-        private string[] filesToUpload = null;
+        private string[] filesToUpload;
+
+        public class Attachments
+        {
+            public string filename { get; set; }
+            public string path { get; set; }
+        }
 
         public class Content
         {
@@ -32,6 +38,7 @@ namespace Summaries
             public string date { get; set; }
             public int summaryNumber { get; set; }
             public string contents { get; set; }
+            public List<Attachments> attachments { get; set; }
         }
 
         public class serverResponse
@@ -54,47 +61,78 @@ namespace Summaries
             var functions = new codeResources.functions();
             string jsonResponse = summariesList.summaryListRequest(Properties.Settings.Default.userID);
 
-            response = JsonConvert.DeserializeObject<serverResponse>(jsonResponse);
-            if (response.status)
+            try
             {
-                //******* just to reinforce
-                dateBox.CustomFormat = "yyyy-MM-dd";
-                dateBox.Format = DateTimePickerFormat.Custom;
-                //******* just to reinforce
-                if (summaryID != 0)
+                response = JsonConvert.DeserializeObject<serverResponse>(jsonResponse);
+                if (response.status)
                 {
-                    isEdit = true;
-                }
+                    //******* just to reinforce
+                    dateBox.CustomFormat = "yyyy-MM-dd";
+                    dateBox.Format = DateTimePickerFormat.Custom;
+                    //******* just to reinforce
+                    if (summaryID != 0)
+                    {
+                        isEdit = true;
+                    }
 
-                if (isEdit)
-                {
-                    this.Text = "Edit Summary";
-                    summaryNumberBox.Value = summaryID;
-                    dateBox.Value = DateTime.ParseExact(response.contents[summaryID - 1].date, "yyyy-MM-dd", new CultureInfo("pt"));
-                    contentsBox.Text = response.contents[summaryID - 1].contents;
-                    originalText = functions.HashPW(response.contents[summaryID - 1].contents);
-                    originalDate = response.contents[summaryID - 1].date;
-                    originalSummaryID = summaryID;
-                    dbRow = response.contents[summaryID - 1].id;
+                    if (isEdit)
+                    {
+                        this.Text = "Edit Summary";
+                        removeFile.Visible = true;
+                        removeFile.Enabled = true;
+                        removeFile2.Visible = true;
+                        removeFile2.Enabled = true;
+                        removeFile3.Visible = true;
+                        removeFile3.Enabled = true;
+                        summaryNumberBox.Value = summaryID;
+                        dateBox.Value = DateTime.ParseExact(response.contents[summaryID - 1].date, "yyyy-MM-dd", new CultureInfo("pt"));
+                        contentsBox.Text = response.contents[summaryID - 1].contents;
+                        originalText = functions.HashPW(response.contents[summaryID - 1].contents);
+                        originalDate = response.contents[summaryID - 1].date;
+                        originalSummaryID = summaryID;
+                        dbRow = response.contents[summaryID - 1].id;
+                        int i = 0;
+                        foreach (var attach in response.contents[summaryID - 1].attachments)
+                        {
+                            switch (i)
+                            {
+                                case 0:
+                                    fileBox.Text = attach.filename;
+                                    break;
+
+                                case 1:
+                                    fileBox2.Text = attach.filename;
+                                    break;
+
+                                case 2:
+                                    fileBox3.Text = attach.filename;
+                                    break;
+                            }
+                            i++;
+                        }
+                    }
+                    else
+                    {
+                        try
+                        {
+                            var lastSummary = response.contents[response.contents.Count - 1];
+                            summaryNumberBox.Value = lastSummary.summaryNumber + 1;
+                        }
+                        catch
+                        {
+                            summaryNumberBox.Value = 1;
+                        }
+
+                        dateBox.Value = DateTime.ParseExact(DateTime.Today.ToString("yyyy-MM-dd"), "yyyy-MM-dd", new CultureInfo("pt"));
+                    }
                 }
                 else
                 {
-                    try
-                    {
-                        var lastSummary = response.contents[response.contents.Count - 1];
-                        summaryNumberBox.Value = lastSummary.summaryNumber + 1;
-                    }
-                    catch
-                    {
-                        summaryNumberBox.Value = 1;
-                    }
-                    
-                    dateBox.Value = DateTime.ParseExact(DateTime.Today.ToString("yyyy-MM-dd"), "yyyy-MM-dd", new CultureInfo("pt"));
+                    MessageBox.Show("Error: " + response.errors, "Critical error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-            }
-            else
+            }catch(Exception ex)
             {
-                MessageBox.Show("Error: " + response.errors, "Critical error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Critical error. " + ex.Message + "\n" + jsonResponse, "Critical Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -315,23 +353,36 @@ namespace Summaries
 
         private void selectFile_Click(object sender, EventArgs e)
         {
-            fileBox.Text = loadFileFromComputer(0);
-            removeFile.Visible = true;
-            removeFile.Enabled = true;
+            var response = loadFileFromComputer(0);
+            if (!string.IsNullOrEmpty(response))
+            {
+                fileBox.Text = response;
+                removeFile.Visible = true;
+                removeFile.Enabled = true;
+            }
+            
         }
 
         private void selectFile2_Click(object sender, EventArgs e)
         {
-            fileBox2.Text = loadFileFromComputer(1);
-            removeFile2.Visible = true;
-            removeFile2.Enabled = true;
+            var response = loadFileFromComputer(1);
+            if (!string.IsNullOrEmpty(response))
+            {
+                fileBox2.Text = response;
+                removeFile2.Visible = true;
+                removeFile2.Enabled = true;
+            }
         }
 
         private void selectFile3_Click(object sender, EventArgs e)
         {
-            fileBox3.Text = loadFileFromComputer(2);
-            removeFile3.Visible = true;
-            removeFile3.Enabled = true;
+            var response = loadFileFromComputer(2);
+            if (!string.IsNullOrEmpty(response))
+            {
+                fileBox3.Text = response;
+                removeFile3.Visible = true;
+                removeFile3.Enabled = true;
+            }
         }
 
         private void removeFile_Click(object sender, EventArgs e)
@@ -360,17 +411,26 @@ namespace Summaries
 
         private void fileBox_MouseClick(object sender, MouseEventArgs e)
         {
-            //
+            if (isEdit)
+            {
+                System.Diagnostics.Process.Start(Properties.Settings.Default.inUseDomain + "/summaries/resources/userContent/" + response.contents[summaryID - 1].attachments[0].path);
+            }
         }
 
         private void fileBox2_MouseClick(object sender, MouseEventArgs e)
         {
-            //
+            if (isEdit)
+            {
+                System.Diagnostics.Process.Start(Properties.Settings.Default.inUseDomain + "/summaries/resources/userContent/" + response.contents[summaryID - 1].attachments[1].path);
+            }
         }
 
         private void fileBox3_MouseClick(object sender, MouseEventArgs e)
         {
-            //
+            if (isEdit)
+            {
+                System.Diagnostics.Process.Start(Properties.Settings.Default.inUseDomain + "/summaries/resources/userContent/" + response.contents[summaryID - 1].attachments[2].path);
+            }
         }
 
         private void fileBox_MouseDoubleClick(object sender, MouseEventArgs e)

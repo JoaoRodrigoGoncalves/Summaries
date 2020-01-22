@@ -463,12 +463,10 @@ namespace Summaries
                 var res = MessageBox.Show("Are you sure you want to permanently delete " + selectedRow.Cells["displayName"].Value.ToString(), "Delete user", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (res == DialogResult.Yes)
                 {
-                    MessageBox.Show(selectedRow.Cells["isProtected"].Value.ToString());
                     if (selectedRow.Cells["isProtected"].Value.ToString() == "False")
                     {
                         try
                         {
-
                             int userToDelete = Convert.ToInt32(selectedRow.Cells["userID"].Value.ToString());
                             string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&userID=" + userToDelete;
                             var data = Encoding.UTF8.GetBytes(POSTdata);

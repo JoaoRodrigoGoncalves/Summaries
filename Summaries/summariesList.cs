@@ -23,6 +23,7 @@ namespace Summaries
         /// <returns></returns>
         public static string summaryListRequest(int userid)
         {
+            string finalData = "";
             try
             {
                 string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&userid=" + userid;
@@ -39,7 +40,6 @@ namespace Summaries
                     stream.Close();
                 }
                 //ler a resposta
-                string finalData = "";
                 using (var response = request.GetResponse())
                 {
                     var dataStream = response.GetResponseStream();
@@ -59,7 +59,7 @@ namespace Summaries
                 }
                 else
                 {
-                    MessageBox.Show("Critical error: " + ex.Message, "Critical error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Critical error: " + ex.Message + "\nResponse: " + finalData, "Critical error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 return string.Empty;
             }
@@ -136,7 +136,7 @@ namespace Summaries
                 }
                 else
                 {
-                    MessageBox.Show("Critical error: " + ex.Message, "Critical error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Critical error: " + ex.Message + "\n" + jsonResponse, "Critical error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
 
