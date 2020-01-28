@@ -59,7 +59,7 @@ namespace Summaries
         private void newSummary_Load(object sender, EventArgs e)
         {
             var functions = new codeResources.functions();
-            string jsonResponse = summariesList.summaryListRequest(Properties.Settings.Default.userID);
+            string jsonResponse = summariesList.summaryListRequest(Properties.Settings.Default.userID, Properties.Settings.Default.currentWorkspaceID);
 
             try
             {

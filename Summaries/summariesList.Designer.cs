@@ -35,9 +35,9 @@
             this.editSummary = new System.Windows.Forms.ToolStripButton();
             this.deleteSummary = new System.Windows.Forms.ToolStripButton();
             this.refreshList = new System.Windows.Forms.ToolStripButton();
+            this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.workspaceComboBox = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             this.toolStrip.SuspendLayout();
             this.SuspendLayout();
@@ -109,6 +109,13 @@
             this.refreshList.Text = "Refresh";
             this.refreshList.Click += new System.EventHandler(this.refreshList_Click);
             // 
+            // toolStripLabel2
+            // 
+            this.toolStripLabel2.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripLabel2.Name = "toolStripLabel2";
+            this.toolStripLabel2.Size = new System.Drawing.Size(13, 22);
+            this.toolStripLabel2.Text = "  ";
+            // 
             // workspaceComboBox
             // 
             this.workspaceComboBox.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
@@ -117,7 +124,7 @@
             this.workspaceComboBox.Name = "workspaceComboBox";
             this.workspaceComboBox.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             this.workspaceComboBox.Size = new System.Drawing.Size(200, 23);
-            this.workspaceComboBox.DropDownStyleChanged += new System.EventHandler(this.workspaceComboBox_DropDownStyleChanged);
+            this.workspaceComboBox.SelectedIndexChanged += new System.EventHandler(this.workspaceComboBox_SelectedIndexChanged);
             // 
             // toolStripLabel1
             // 
@@ -125,13 +132,6 @@
             this.toolStripLabel1.Name = "toolStripLabel1";
             this.toolStripLabel1.Size = new System.Drawing.Size(68, 22);
             this.toolStripLabel1.Text = "Workspace:";
-            // 
-            // toolStripLabel2
-            // 
-            this.toolStripLabel2.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(13, 22);
-            this.toolStripLabel2.Text = "  ";
             // 
             // summariesList
             // 

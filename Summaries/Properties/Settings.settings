@@ -20,5 +20,8 @@
     <Setting Name="APIkey" Type="System.String" Scope="Application">
       <Value Profile="(Default)">1f984e2ed1545f287fe473c890266fea901efcd63d07967ae6d2f09f4566ddde930923ee9212ea815186b0c11a620a5cc85e</Value>
     </Setting>
+    <Setting Name="currentWorkspaceID" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

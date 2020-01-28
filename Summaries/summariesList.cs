@@ -21,12 +21,12 @@ namespace Summaries
         /// </summary>
         /// <param name="userid">The id of the user to get the summaries from</param>
         /// <returns></returns>
-        public static string summaryListRequest(int userid)
+        public static string summaryListRequest(int userid, int workspace)
         {
             string finalData = "";
             try
             {
-                string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&userid=" + userid;
+                string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&userid=" + userid + "&workspace=" + workspace;
                 var data = Encoding.UTF8.GetBytes(POSTdata);
                 var request = WebRequest.CreateHttp(Properties.Settings.Default.inUseDomain + "/summaries/api/summaryListRequest.php");
                 request.Method = "POST";
@@ -82,100 +82,70 @@ namespace Summaries
             public List<Content> contents { get; set; }
         }
 
-        private void summariesList_Load(object sender, EventArgs e)
+        public class workspacesContent
         {
-            workspaceComboBox_DropDownStyleChanged(sender, e);
+            public int id { get; set; }
+            public string name { get; set; }
+            public bool read { get; set; }
+            public bool write { get; set; }
         }
 
-        private void deleteSummary_Click(object sender, EventArgs e)
+        public class workspacesServerResponse
         {
+            public bool status { get; set; }
+            public string errors { get; set; }
+            public List<workspacesContent> contents { get; set; }
+        }
+
+
+        codeResources.functions functions = new codeResources.functions();
+
+        private void summariesList_Load(object sender, EventArgs e)
+        {
+            loadWorkspace();
+        }
+
+        private void loadWorkspace(string workspaceName = null)
+        {
+            workspacesServerResponse workspaceResponse;
+            string jsonResponse = "";
+            int workspaceSelectedID = 0;
+
             try
             {
-                if (dataGrid.SelectedRows.Count > 0 || dataGrid.SelectedCells.Count > 0)
+                jsonResponse = functions.RequestAllWorkspaces();
+                workspaceResponse = JsonConvert.DeserializeObject<workspacesServerResponse>(jsonResponse);
+                if (workspaceResponse.status)
                 {
-                    DialogResult boxResponse = MessageBox.Show("Are you sure you want to delete the summary?", "Delete a summary", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if (boxResponse == DialogResult.Yes)
+                    workspaceComboBox.Items.Clear();
+                    foreach (workspacesContent row in workspaceResponse.contents)
                     {
-                        int selectedrowindex = dataGrid.SelectedCells[0].RowIndex;
-                        DataGridViewRow selectedRow = dataGrid.Rows[selectedrowindex];
-                        int selectedSummary = Convert.ToInt32(selectedRow.Cells["summaryNumber"].Value);
-
-                        string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&userid=" + Properties.Settings.Default.userID + "&summaryID=" + selectedSummary;
-                        var data = Encoding.UTF8.GetBytes(POSTdata);
-                        var request = WebRequest.CreateHttp(Properties.Settings.Default.inUseDomain + "/summaries/api/summaryDeleteRequest.php");
-                        request.Method = "POST";
-                        request.ContentType = "application/x-www-form-urlencoded";
-                        request.ContentLength = data.Length;
-                        request.UserAgent = "app";
-                        //writes the post data to the stream
-                        using (var stream = request.GetRequestStream())
+                        if (row.read)
                         {
-                            stream.Write(data, 0, data.Length);
-                            stream.Close();
-                        }
-                        //ler a resposta
-                        string finalData = "";
-                        using (var response = request.GetResponse())
-                        {
-                            var dataStream = response.GetResponseStream();
-                            StreamReader reader = new StreamReader(dataStream);
-                            finalData = reader.ReadToEnd();
-                            dataStream.Close();
-                            response.Close();
-                        }
-
-                        string jsonResponse = finalData;
-
-                        simpleServerResponse serverResponse;
-
-                        serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(jsonResponse);
-
-                        if (serverResponse.status)
-                        {
-                            summariesList_Load(sender, e);
-                        }
-                        else
-                        {
-                            if (serverResponse.errors == null || serverResponse.errors.Length < 1)
-                            {
-                                MessageBox.Show("The row you are trying to remove does not exist in the database! ", "Row does not exist", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                summariesList_Load(sender, e);
-                            }
-                            else
-                            {
-                                MessageBox.Show("Error: " + serverResponse.errors, "Critital Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
+                            workspaceComboBox.Items.Add(row.name);
                         }
                     }
-                }
-            }catch(Exception ex)
-            {
-                codeResources.functions functions = new codeResources.functions();
-                if (!functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
-                {
-                    MessageBox.Show("Connection to the server lost. Please try again later.", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    workspaceComboBox.SelectedIndex = 0;
+
+                    if (workspaceName == null || workspaceName == string.Empty || workspaceName == "")
+                    {
+                        MessageBox.Show("null");
+                        workspaceSelectedID = workspaceResponse.contents[0].id;
+                    }
+                    else
+                    {
+                        MessageBox.Show("not null: " + workspaceName);
+                        workspaceSelectedID = workspaceResponse.contents[workspaceResponse.contents.FindIndex(x => x.name == workspaceName)].id;
+                    }
+
+                    Properties.Settings.Default.currentWorkspaceID = workspaceSelectedID;
+                    loadInfo();
                 }
                 else
                 {
-                    MessageBox.Show("Critical error: " + ex.Message, "Critical error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            
-        }
-
-        private void editSummary_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (dataGrid.SelectedRows.Count > 0 || dataGrid.SelectedCells.Count > 0)
-                {
-                    int selectedrowindex = dataGrid.SelectedCells[0].RowIndex;
-                    DataGridViewRow selectedRow = dataGrid.Rows[selectedrowindex];
-                    int selectedSummary = Convert.ToInt32(selectedRow.Cells["summaryNumber"].Value);
-
-                    newSummary editSummary = new newSummary(selectedSummary);
-                    editSummary.ShowDialog();
-                    summariesList_Load(sender, e);
+                    MessageBox.Show("A critical error occurred. " + workspaceResponse.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.Close();
                 }
             }
             catch(Exception ex)
@@ -187,43 +157,18 @@ namespace Summaries
                 }
                 else
                 {
-                    MessageBox.Show("Critical error: " + ex.Message, "Critical error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Critical error: " + ex.Message + "\n" + jsonResponse + "\n" + ex.StackTrace, "Critical error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
 
-        private void addSummary_Click(object sender, EventArgs e)
+        private void loadInfo()
         {
-            codeResources.functions functions = new codeResources.functions();
-            if (!functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
-            {
-                MessageBox.Show("Connection to the server lost. Please try again later.", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else
-            {
-                newSummary newSummary = new newSummary();
-                newSummary.ShowDialog();
-                summariesList_Load(sender, e);
-            }
-            
-        }
-
-        private void refreshList_Click(object sender, EventArgs e)
-        {
-            summariesList_Load(sender, e);
-        }
-
-        private void dataGrid_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            editSummary_Click(sender, e);
-        }
-
-        private void workspaceComboBox_DropDownStyleChanged(object sender, EventArgs e)
-        {
-            var workspaceSelected = workspaceComboBox.Selected;
-            string jsonResponse = summaryListRequest(Properties.Settings.Default.userID);
+            string jsonResponse = "";
+            int workspaceSelectedID = 0;
             try
             {
+                jsonResponse = summaryListRequest(Properties.Settings.Default.userID, workspaceSelectedID);
                 serverResponse response;
                 response = JsonConvert.DeserializeObject<serverResponse>(jsonResponse);
 
@@ -274,9 +219,145 @@ namespace Summaries
                 }
                 else
                 {
-                    MessageBox.Show("Critical error: " + ex.Message + "\n" + jsonResponse, "Critical error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Critical error: " + ex.Message + "\n" + jsonResponse + "\n" + ex.StackTrace, "Critical error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void deleteSummary_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dataGrid.SelectedRows.Count > 0 || dataGrid.SelectedCells.Count > 0)
+                {
+                    DialogResult boxResponse = MessageBox.Show("Are you sure you want to delete the summary?", "Delete a summary", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (boxResponse == DialogResult.Yes)
+                    {
+                        int selectedrowindex = dataGrid.SelectedCells[0].RowIndex;
+                        DataGridViewRow selectedRow = dataGrid.Rows[selectedrowindex];
+                        int selectedSummary = Convert.ToInt32(selectedRow.Cells["summaryNumber"].Value);
+
+                        string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&userid=" + Properties.Settings.Default.userID + "&summaryID=" + selectedSummary;
+                        var data = Encoding.UTF8.GetBytes(POSTdata);
+                        var request = WebRequest.CreateHttp(Properties.Settings.Default.inUseDomain + "/summaries/api/summaryDeleteRequest.php");
+                        request.Method = "POST";
+                        request.ContentType = "application/x-www-form-urlencoded";
+                        request.ContentLength = data.Length;
+                        request.UserAgent = "app";
+                        //writes the post data to the stream
+                        using (var stream = request.GetRequestStream())
+                        {
+                            stream.Write(data, 0, data.Length);
+                            stream.Close();
+                        }
+                        //ler a resposta
+                        string finalData = "";
+                        using (var response = request.GetResponse())
+                        {
+                            var dataStream = response.GetResponseStream();
+                            StreamReader reader = new StreamReader(dataStream);
+                            finalData = reader.ReadToEnd();
+                            dataStream.Close();
+                            response.Close();
+                        }
+
+                        string jsonResponse = finalData;
+
+                        simpleServerResponse serverResponse;
+
+                        serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(jsonResponse);
+
+                        if (serverResponse.status)
+                        {
+                            loadInfo();
+                        }
+                        else
+                        {
+                            if (serverResponse.errors == null || serverResponse.errors.Length < 1)
+                            {
+                                MessageBox.Show("The row you are trying to remove does not exist in the database! ", "Row does not exist", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                loadInfo();
+                            }
+                            else
+                            {
+                                MessageBox.Show("Error: " + serverResponse.errors, "Critital Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+                    }
+                }
+            }catch(Exception ex)
+            {
+                codeResources.functions functions = new codeResources.functions();
+                if (!functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+                {
+                    MessageBox.Show("Connection to the server lost. Please try again later.", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    MessageBox.Show("Critical error: " + ex.Message, "Critical error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            
+        }
+
+        private void editSummary_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dataGrid.SelectedRows.Count > 0 || dataGrid.SelectedCells.Count > 0)
+                {
+                    int selectedrowindex = dataGrid.SelectedCells[0].RowIndex;
+                    DataGridViewRow selectedRow = dataGrid.Rows[selectedrowindex];
+                    int selectedSummary = Convert.ToInt32(selectedRow.Cells["summaryNumber"].Value);
+
+                    newSummary editSummary = new newSummary(selectedSummary);
+                    editSummary.ShowDialog();
+                    loadInfo();
+                }
+            }
+            catch(Exception ex)
+            {
+                codeResources.functions functions = new codeResources.functions();
+                if (!functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+                {
+                    MessageBox.Show("Connection to the server lost. Please try again later.", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    MessageBox.Show("Critical error: " + ex.Message, "Critical error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void addSummary_Click(object sender, EventArgs e)
+        {
+            codeResources.functions functions = new codeResources.functions();
+            if (!functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+            {
+                MessageBox.Show("Connection to the server lost. Please try again later.", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                newSummary newSummary = new newSummary();
+                newSummary.ShowDialog();
+                loadInfo();
+            }
+            
+        }
+
+        private void refreshList_Click(object sender, EventArgs e)
+        {
+            loadInfo();
+        }
+
+        private void dataGrid_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            editSummary_Click(sender, e);
+        }
+
+        private void workspaceComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            loadInfo();
         }
     }
 }
