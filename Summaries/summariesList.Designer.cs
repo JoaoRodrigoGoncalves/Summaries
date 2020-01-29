@@ -124,7 +124,7 @@
             this.workspaceComboBox.Name = "workspaceComboBox";
             this.workspaceComboBox.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             this.workspaceComboBox.Size = new System.Drawing.Size(200, 23);
-            this.workspaceComboBox.SelectedIndexChanged += new System.EventHandler(this.workspaceComboBox_SelectedIndexChanged);
+            this.workspaceComboBox.DropDownClosed += new System.EventHandler(this.workspaceComboBox_DropDownClosed);
             // 
             // toolStripLabel1
             // 

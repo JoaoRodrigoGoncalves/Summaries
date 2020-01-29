@@ -11,6 +11,10 @@ namespace Summaries
 {
     public partial class summariesList : Form
     {
+
+        bool didLoadThrow = true;
+        string workspaceName = null;
+
         public summariesList()
         {
             InitializeComponent();
@@ -102,11 +106,6 @@ namespace Summaries
 
         private void summariesList_Load(object sender, EventArgs e)
         {
-            loadWorkspace();
-        }
-
-        private void loadWorkspace(string workspaceName = null)
-        {
             workspacesServerResponse workspaceResponse;
             string jsonResponse = "";
             int workspaceSelectedID = 0;
@@ -126,88 +125,82 @@ namespace Summaries
                         }
                     }
 
-                    workspaceComboBox.SelectedIndex = 0;
-
                     if (workspaceName == null || workspaceName == string.Empty || workspaceName == "")
                     {
-                        MessageBox.Show("null");
                         workspaceSelectedID = workspaceResponse.contents[0].id;
+                        workspaceName = workspaceResponse.contents[0].name;
+                        workspaceComboBox.SelectedItem = workspaceName;
                     }
                     else
                     {
-                        MessageBox.Show("not null: " + workspaceName);
                         workspaceSelectedID = workspaceResponse.contents[workspaceResponse.contents.FindIndex(x => x.name == workspaceName)].id;
+                        workspaceComboBox.SelectedItem = workspaceName;
                     }
 
                     Properties.Settings.Default.currentWorkspaceID = workspaceSelectedID;
-                    loadInfo();
+
+                    try
+                    {
+                        jsonResponse = summaryListRequest(Properties.Settings.Default.userID, workspaceSelectedID);
+                        serverResponse response;
+                        response = JsonConvert.DeserializeObject<serverResponse>(jsonResponse);
+
+                        if (response.status)
+                        {
+                            dataGrid.Rows.Clear();
+                            dataGrid.Refresh();
+                            if (response.contents != null)
+                            {
+                                dataGrid.ColumnCount = 3;
+                                dataGrid.Columns[0].Name = "date";
+                                dataGrid.Columns[0].HeaderText = "Date";
+                                dataGrid.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                                dataGrid.Columns[1].Name = "summaryNumber";
+                                dataGrid.Columns[1].HeaderText = "#";
+                                dataGrid.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                                dataGrid.Columns[2].Name = "contents";
+                                dataGrid.Columns[2].HeaderText = "Summary";
+                                dataGrid.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                                dataGrid.AllowUserToDeleteRows = false;
+                                dataGrid.AllowUserToAddRows = false;
+                                dataGrid.MultiSelect = false; //just to reinforce
+
+                                var rows = new List<string[]>();
+                                foreach (Content content in response.contents)
+                                {
+                                    string[] row1 = new string[] { content.date.ToString(), content.summaryNumber.ToString(), content.contents.ToString() };
+                                    rows.Add(row1);
+                                }
+
+                                foreach (string[] rowArray in rows)
+                                {
+                                    dataGrid.Rows.Add(rowArray);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Error: " + response.errors, "Critical error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        codeResources.functions functions = new codeResources.functions();
+                        if (!functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+                        {
+                            MessageBox.Show("Connection to the server lost. Please try again later.", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Critical error: " + ex.Message + "\n" + jsonResponse + "\n" + ex.StackTrace, "Critical error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+
                 }
                 else
                 {
                     MessageBox.Show("A critical error occurred. " + workspaceResponse.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     this.Close();
-                }
-            }
-            catch(Exception ex)
-            {
-                codeResources.functions functions = new codeResources.functions();
-                if (!functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
-                {
-                    MessageBox.Show("Connection to the server lost. Please try again later.", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                else
-                {
-                    MessageBox.Show("Critical error: " + ex.Message + "\n" + jsonResponse + "\n" + ex.StackTrace, "Critical error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        private void loadInfo()
-        {
-            string jsonResponse = "";
-            int workspaceSelectedID = 0;
-            try
-            {
-                jsonResponse = summaryListRequest(Properties.Settings.Default.userID, workspaceSelectedID);
-                serverResponse response;
-                response = JsonConvert.DeserializeObject<serverResponse>(jsonResponse);
-
-                if (response.status)
-                {
-                    dataGrid.Rows.Clear();
-                    dataGrid.Refresh();
-                    if (response.contents != null)
-                    {
-                        dataGrid.ColumnCount = 3;
-                        dataGrid.Columns[0].Name = "date";
-                        dataGrid.Columns[0].HeaderText = "Date";
-                        dataGrid.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        dataGrid.Columns[1].Name = "summaryNumber";
-                        dataGrid.Columns[1].HeaderText = "#";
-                        dataGrid.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        dataGrid.Columns[2].Name = "contents";
-                        dataGrid.Columns[2].HeaderText = "Summary";
-                        dataGrid.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                        dataGrid.AllowUserToDeleteRows = false;
-                        dataGrid.AllowUserToAddRows = false;
-                        dataGrid.MultiSelect = false; //just to reinforce
-
-                        var rows = new List<string[]>();
-                        foreach (Content content in response.contents)
-                        {
-                            string[] row1 = new string[] { content.date.ToString(), content.summaryNumber.ToString(), content.contents.ToString() };
-                            rows.Add(row1);
-                        }
-
-                        foreach (string[] rowArray in rows)
-                        {
-                            dataGrid.Rows.Add(rowArray);
-                        }
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Error: " + response.errors, "Critical error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
@@ -269,14 +262,14 @@ namespace Summaries
 
                         if (serverResponse.status)
                         {
-                            loadInfo();
+                            summariesList_Load(sender, e);
                         }
                         else
                         {
                             if (serverResponse.errors == null || serverResponse.errors.Length < 1)
                             {
                                 MessageBox.Show("The row you are trying to remove does not exist in the database! ", "Row does not exist", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                loadInfo();
+                                summariesList_Load(sender, e);
                             }
                             else
                             {
@@ -312,7 +305,7 @@ namespace Summaries
 
                     newSummary editSummary = new newSummary(selectedSummary);
                     editSummary.ShowDialog();
-                    loadInfo();
+                    summariesList_Load(sender, e);
                 }
             }
             catch(Exception ex)
@@ -340,14 +333,14 @@ namespace Summaries
             {
                 newSummary newSummary = new newSummary();
                 newSummary.ShowDialog();
-                loadInfo();
+                summariesList_Load(sender, e);
             }
             
         }
 
         private void refreshList_Click(object sender, EventArgs e)
         {
-            loadInfo();
+            summariesList_Load(sender, e);
         }
 
         private void dataGrid_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -355,9 +348,10 @@ namespace Summaries
             editSummary_Click(sender, e);
         }
 
-        private void workspaceComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void workspaceComboBox_DropDownClosed(object sender, EventArgs e)
         {
-            loadInfo();
+            workspaceName = workspaceComboBox.SelectedItem.ToString();
+            summariesList_Load(sender, e);
         }
     }
 }
