@@ -230,7 +230,7 @@ namespace Summaries
                         DataGridViewRow selectedRow = dataGrid.Rows[selectedrowindex];
                         int selectedSummary = Convert.ToInt32(selectedRow.Cells["summaryNumber"].Value);
 
-                        string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&userid=" + Properties.Settings.Default.userID + "&summaryID=" + selectedSummary;
+                        string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&userid=" + Properties.Settings.Default.userID + "&workspace=" + Properties.Settings.Default.currentWorkspaceID + "&summaryID=" + selectedSummary;
                         var data = Encoding.UTF8.GetBytes(POSTdata);
                         var request = WebRequest.CreateHttp(Properties.Settings.Default.inUseDomain + "/summaries/api/summaryDeleteRequest.php");
                         request.Method = "POST";

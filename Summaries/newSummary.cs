@@ -18,12 +18,13 @@ namespace Summaries
         private string originalText = null;
         private string originalDate = null;
         private int originalSummaryID = 0;
+        private int originalWorkspaceID = 0;
         private int dbRow = 0;
         private int summaryID = 0;
 
         //*********************//
 
-        private string[] filesToUpload;
+        private List<string> filesToUpload = new List<string>();
 
         public class Attachments
         {
@@ -37,6 +38,7 @@ namespace Summaries
             public int userid { get; set; }
             public string date { get; set; }
             public int summaryNumber { get; set; }
+            public int workspace { get; set; }
             public string contents { get; set; }
             public List<Attachments> attachments { get; set; }
         }
@@ -48,7 +50,23 @@ namespace Summaries
             public List<Content> contents { get; set; }
         }
 
+        public class workspacesContent
+        {
+            public int id { get; set; }
+            public string name { get; set; }
+            public bool read { get; set; }
+            public bool write { get; set; }
+        }
+
+        public class workspacesServerResponse
+        {
+            public bool status { get; set; }
+            public string errors { get; set; }
+            public List<workspacesContent> contents { get; set; }
+        }
+
         serverResponse response;
+        workspacesServerResponse workspaces;
 
         public newSummary(int summaryid = 0)
         {
@@ -59,6 +77,47 @@ namespace Summaries
         private void newSummary_Load(object sender, EventArgs e)
         {
             var functions = new codeResources.functions();
+
+            string jsonWorkspace = "";
+            try
+            {
+                jsonWorkspace = functions.RequestAllWorkspaces();
+                workspaces = JsonConvert.DeserializeObject<workspacesServerResponse>(jsonWorkspace);
+
+                foreach (workspacesContent content in workspaces.contents)
+                {
+                    workspaceComboBox.Items.Add(content.name);
+                }
+
+                workspaceComboBox.SelectedIndex = 0;
+
+            }
+            catch (Exception ex)
+            {
+                if (!functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+                {
+                    MessageBox.Show("Connection to the server lost. Please try again later.", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    MessageBox.Show("Critical error: " + ex.Message + "\n" + jsonWorkspace + "\n" + ex.StackTrace, "Critical error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+
+            if (Properties.Settings.Default.currentWorkspaceID == 0)
+            {
+                // Workspace not defined yet
+                workspaceComboBox.SelectedIndex = 0;
+            }
+            else
+            {
+                // Clears the combo box, adds the current workspace to the list, selects it and disables the use of the combobox
+                workspaceComboBox.Items.Clear();
+                workspaceComboBox.Items.Add(workspaces.contents[workspaces.contents.FindIndex(x => x.id == Properties.Settings.Default.currentWorkspaceID)].name);
+                workspaceComboBox.SelectedIndex = 0;
+                workspaceComboBox.Enabled = false;
+            }
+
             string jsonResponse = summariesList.summaryListRequest(Properties.Settings.Default.userID, Properties.Settings.Default.currentWorkspaceID);
 
             try
@@ -78,37 +137,17 @@ namespace Summaries
                     if (isEdit)
                     {
                         this.Text = "Edit Summary";
-                        removeFile.Visible = true;
-                        removeFile.Enabled = true;
-                        removeFile2.Visible = true;
-                        removeFile2.Enabled = true;
-                        removeFile3.Visible = true;
-                        removeFile3.Enabled = true;
                         summaryNumberBox.Value = summaryID;
                         dateBox.Value = DateTime.ParseExact(response.contents[summaryID - 1].date, "yyyy-MM-dd", new CultureInfo("pt"));
                         contentsBox.Text = response.contents[summaryID - 1].contents;
                         originalText = functions.HashPW(response.contents[summaryID - 1].contents);
                         originalDate = response.contents[summaryID - 1].date;
+                        originalWorkspaceID = response.contents[summaryID - 1].workspace;
                         originalSummaryID = summaryID;
                         dbRow = response.contents[summaryID - 1].id;
-                        int i = 0;
                         foreach (var attach in response.contents[summaryID - 1].attachments)
                         {
-                            switch (i)
-                            {
-                                case 0:
-                                    fileBox.Text = attach.filename;
-                                    break;
-
-                                case 1:
-                                    fileBox2.Text = attach.filename;
-                                    break;
-
-                                case 2:
-                                    fileBox3.Text = attach.filename;
-                                    break;
-                            }
-                            i++;
+                            filesToUpload.Add(attach.path);
                         }
                     }
                     else
@@ -149,8 +188,25 @@ namespace Summaries
                 bool isDateUsed = false;
                 try
                 {
-                    isInList = response.contents.Exists(x => x.summaryNumber == Convert.ToInt32(summaryNumberBox.Value));
-                    isDateUsed = response.contents.Exists(y => y.date == dateBox.Value.ToString("yyyy-MM-dd"));
+                    //checks if summary number is in use on this workspace
+                    foreach(Content content in response.contents)
+                    {
+                        if (content.workspace == workspaces.contents[workspaces.contents.FindIndex(x => x.name == workspaceComboBox.SelectedItem.ToString())].id)
+                        {
+                            if (content.summaryNumber == Convert.ToInt32(summaryNumberBox.Value))
+                            {
+                                isInList = true;
+                            }
+
+                            if (content.date == dateBox.Value.ToString("yyyy-MM-dd"))
+                            {
+                                isDateUsed = true;
+                            }
+                        }
+                    }
+
+                    //isInList = response.contents.Exists(x => x.summaryNumber == Convert.ToInt32(summaryNumberBox.Value));
+                    //isDateUsed = response.contents.Exists(y => y.date == dateBox.Value.ToString("yyyy-MM-dd"));
                 }
                 catch (NullReferenceException)
                 {
@@ -196,7 +252,7 @@ namespace Summaries
                 {
                     if ((originalText != functions.HashPW(contentsBox.Text)) || (originalDate != dateBox.Value.ToString("yyyy-MM-dd")) || (originalSummaryID != summaryNumberBox.Value))
                     {
-                        if (UpdateDB(Convert.ToInt32(summaryNumberBox.Value), dateBox.Value.ToString("yyyy-MM-dd"), contentsBox.Text, dbRow))
+                        if (UpdateDB(Convert.ToInt32(summaryNumberBox.Value), dateBox.Value.ToString("yyyy-MM-dd"), contentsBox.Text, workspaces.contents[workspaces.contents.FindIndex(x => x.name == workspaceComboBox.SelectedItem.ToString())].id, dbRow))
                         {
                             MessageBox.Show("Changes saved successfully!", "Summaries", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             this.Close();
@@ -213,7 +269,7 @@ namespace Summaries
                 }
                 else
                 {
-                    if (UpdateDB(Convert.ToInt32(summaryNumberBox.Value), dateBox.Value.ToString("yyyy-MM-dd"), contentsBox.Text))
+                    if (UpdateDB(Convert.ToInt32(summaryNumberBox.Value), dateBox.Value.ToString("yyyy-MM-dd"), contentsBox.Text, workspaces.contents[workspaces.contents.FindIndex(x => x.name == workspaceComboBox.SelectedItem.ToString())].id))
                     {
                         MessageBox.Show("Summary saved successfully!", "Summaries", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         this.Close();
@@ -234,17 +290,17 @@ namespace Summaries
         /// <param name="text">The text of the summary</param>
         /// <param name="dbRowID">(Optional) The row in the database to be updated</param>
         /// <returns></returns>
-        private bool UpdateDB(int summaryID, string date, string text, int dbRowID = 0)
+        private bool UpdateDB(int summaryID, string date, string text, int workspaceID, int dbRowID = 0)
         {
             var functions = new codeResources.functions();
             string POSTdata = "API=" + Properties.Settings.Default.APIkey;
             if(dbRowID > 0)
             {
-                POSTdata += "&userID=" + Properties.Settings.Default.userID + "&dbrowID=" + dbRowID + "&summaryID=" + summaryID + "&date=" + functions.HashPW(date) + "&contents=" + functions.HashPW(text);
+                POSTdata += "&userID=" + Properties.Settings.Default.userID + "&workspace=" + workspaceID + "&dbrowID=" + dbRowID + "&summaryID=" + summaryID + "&date=" + functions.HashPW(date) + "&contents=" + functions.HashPW(text);
             }
             else
             {
-                POSTdata += "&userID=" + Properties.Settings.Default.userID + "&summaryID=" + summaryID + "&date=" + functions.HashPW(date) + "&contents=" + functions.HashPW(text);
+                POSTdata += "&userID=" + Properties.Settings.Default.userID + "&workspace=" + workspaceID + "&summaryID=" + summaryID + "&date=" + functions.HashPW(date) + "&contents=" + functions.HashPW(text);
             }
             var data = Encoding.UTF8.GetBytes(POSTdata);
             var request = WebRequest.CreateHttp(Properties.Settings.Default.inUseDomain + "/summaries/api/summaryUpdateRequest.php");
@@ -354,7 +410,7 @@ namespace Summaries
 
                 if (fileUpload.ShowDialog() == DialogResult.OK)
                 {
-                    filesToUpload.SetValue(fileUpload.FileName, index);
+                    //filesToUpload.SetValue(fileUpload.FileName, index);
                     return fileUpload.FileName;
                 }
                 else
@@ -370,101 +426,9 @@ namespace Summaries
 
         }
 
-        private void selectFile_Click(object sender, EventArgs e)
+        private void selectfileBTN_Click(object sender, EventArgs e)
         {
-            var response = loadFileFromComputer(0);
-            if (!string.IsNullOrEmpty(response))
-            {
-                fileBox.Text = response;
-                removeFile.Visible = true;
-                removeFile.Enabled = true;
-            }
-            
-        }
 
-        private void selectFile2_Click(object sender, EventArgs e)
-        {
-            var response = loadFileFromComputer(1);
-            if (!string.IsNullOrEmpty(response))
-            {
-                fileBox2.Text = response;
-                removeFile2.Visible = true;
-                removeFile2.Enabled = true;
-            }
-        }
-
-        private void selectFile3_Click(object sender, EventArgs e)
-        {
-            var response = loadFileFromComputer(2);
-            if (!string.IsNullOrEmpty(response))
-            {
-                fileBox3.Text = response;
-                removeFile3.Visible = true;
-                removeFile3.Enabled = true;
-            }
-        }
-
-        private void removeFile_Click(object sender, EventArgs e)
-        {
-            filesToUpload.SetValue(string.Empty, 0);
-            fileBox.Text = string.Empty;
-            removeFile.Enabled = false;
-            removeFile.Visible = false;
-        }
-
-        private void removeFile2_Click(object sender, EventArgs e)
-        {
-            filesToUpload.SetValue(string.Empty, 1);
-            fileBox2.Text = string.Empty;
-            removeFile2.Enabled = false;
-            removeFile2.Visible = false;
-        }
-
-        private void removeFile3_Click(object sender, EventArgs e)
-        {
-            filesToUpload.SetValue(string.Empty, 2);
-            fileBox3.Text = string.Empty;
-            removeFile3.Enabled = false;
-            removeFile3.Visible = false;
-        }
-
-        private void fileBox_MouseClick(object sender, MouseEventArgs e)
-        {
-            if (isEdit)
-            {
-                System.Diagnostics.Process.Start(Properties.Settings.Default.inUseDomain + "/summaries/resources/userContent/" + response.contents[summaryID - 1].attachments[0].path);
-            }
-        }
-
-        private void fileBox2_MouseClick(object sender, MouseEventArgs e)
-        {
-            if (isEdit)
-            {
-                System.Diagnostics.Process.Start(Properties.Settings.Default.inUseDomain + "/summaries/resources/userContent/" + response.contents[summaryID - 1].attachments[1].path);
-            }
-        }
-
-        private void fileBox3_MouseClick(object sender, MouseEventArgs e)
-        {
-            if (isEdit)
-            {
-                System.Diagnostics.Process.Start(Properties.Settings.Default.inUseDomain + "/summaries/resources/userContent/" + response.contents[summaryID - 1].attachments[2].path);
-            }
-        }
-
-        private void fileBox_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            fileBox_MouseClick(sender, e);
-        }
-
-        private void fileBox2_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            fileBox2_MouseClick(sender, e);
-        }
-
-        private void fileBox3_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            fileBox3_MouseClick(sender, e);
         }
     }
 }

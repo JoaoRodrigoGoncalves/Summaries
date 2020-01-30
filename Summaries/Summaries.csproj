@@ -207,6 +207,13 @@
     <None Include="assets\addSummary.png" />
     <None Include="assets\refresh.png" />
     <None Include="assets\administrationPanel.png" />
+    <None Include="assets\excelFile.png" />
+    <None Include="assets\noFileSelected.png" />
+    <None Include="assets\pdfFile.png" />
+    <None Include="assets\powerpointFile.png" />
+    <None Include="assets\txtFile.png" />
+    <None Include="assets\wordFile.png" />
+    <None Include="assets\zipFile.png" />
     <Content Include="icon.ico" />
   </ItemGroup>
   <ItemGroup />
