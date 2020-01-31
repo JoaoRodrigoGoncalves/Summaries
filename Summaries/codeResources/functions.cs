@@ -8,7 +8,6 @@ namespace Summaries.codeResources
 {
     public class functions
     {
-
         public class simpleServerResponse
         {
             public bool status { get; set; }

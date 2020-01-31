@@ -202,6 +202,7 @@
             this.workspaceComboBox.Name = "workspaceComboBox";
             this.workspaceComboBox.Size = new System.Drawing.Size(184, 21);
             this.workspaceComboBox.TabIndex = 1;
+            this.workspaceComboBox.DropDownClosed += new System.EventHandler(this.workspaceComboBox_DropDownClosed);
             // 
             // label3
             // 

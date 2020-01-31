@@ -77,10 +77,10 @@ namespace Summaries
         private void newSummary_Load(object sender, EventArgs e)
         {
             var functions = new codeResources.functions();
-
             string jsonWorkspace = "";
             try
             {
+
                 jsonWorkspace = functions.RequestAllWorkspaces();
                 workspaces = JsonConvert.DeserializeObject<workspacesServerResponse>(jsonWorkspace);
 
@@ -111,11 +111,14 @@ namespace Summaries
             }
             else
             {
-                // Clears the combo box, adds the current workspace to the list, selects it and disables the use of the combobox
-                workspaceComboBox.Items.Clear();
-                workspaceComboBox.Items.Add(workspaces.contents[workspaces.contents.FindIndex(x => x.id == Properties.Settings.Default.currentWorkspaceID)].name);
+                // 
                 workspaceComboBox.SelectedIndex = 0;
-                workspaceComboBox.Enabled = false;
+                List<Content> tempList = new List<Content>();
+                foreach(Content row in response.contents)
+                {
+                    tempList.Add(row);
+                }
+                summaryNumberBox.Value = response.contents[response.contents.FindLastIndex(tempList)].summaryNumber + 1;
             }
 
             string jsonResponse = summariesList.summaryListRequest(Properties.Settings.Default.userID, Properties.Settings.Default.currentWorkspaceID);
@@ -177,7 +180,7 @@ namespace Summaries
 
         private void saveBTN_Click(object sender, EventArgs e)
         {
-            if(contentsBox.Text == "" || contentsBox.TextLength < 1)
+            if(contentsBox.Text == "" || contentsBox.TextLength < 1 || contentsBox.Text == string.Empty)
             {
                 this.Close();
             }
@@ -429,6 +432,12 @@ namespace Summaries
         private void selectfileBTN_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void workspaceComboBox_DropDownClosed(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.currentWorkspaceID = workspaces.contents[workspaces.contents.FindIndex(x => x.name == workspaceComboBox.SelectedItem.ToString())].id;
+            newSummary_Load(sender, e);        
         }
     }
 }
