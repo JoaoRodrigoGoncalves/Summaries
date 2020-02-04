@@ -95,12 +95,11 @@ namespace Summaries
                     workspaceComboBox.Items.Add(content.name);
                 }
 
-                workspaceComboBox.SelectedIndex = 0;
-
                 if (Properties.Settings.Default.currentWorkspaceID == 0)
                 {
                     // Workspace not defined yet
                     workspaceComboBox.SelectedIndex = 0;
+                
                 }
                 else
                 {
@@ -450,8 +449,12 @@ namespace Summaries
 
         private void workspaceComboBox_DropDownClosed(object sender, EventArgs e)
         {
-            Properties.Settings.Default.currentWorkspaceID = workspaces.contents[workspaces.contents.FindIndex(x => x.name == workspaceComboBox.SelectedItem.ToString())].id;
-            newSummary_Load(sender, e);        
+            int newWorkspaceID = workspaces.contents[workspaces.contents.FindIndex(x => x.name == workspaceComboBox.SelectedItem.ToString())].id;
+            if(newWorkspaceID != Properties.Settings.Default.currentWorkspaceID)
+            {
+                Properties.Settings.Default.currentWorkspaceID = newWorkspaceID;
+                newSummary_Load(sender, e);
+            }
         }
     }
 }
