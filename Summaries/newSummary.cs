@@ -70,19 +70,25 @@ namespace Summaries
 
         public newSummary(int summaryid = 0)
         {
+            // this does not require any workspace parameter because the Properties.Settings.Default.currentWorkspaceID were either loaded on the summaries
+            // list window, or will be addressed later on this code
             InitializeComponent();
             summaryID = summaryid;
         }
 
         private void newSummary_Load(object sender, EventArgs e)
         {
+            workspaceComboBox.Items.Clear();
             var functions = new codeResources.functions();
             string jsonWorkspace = "";
+            string jsonResponse = "";
             try
             {
-
                 jsonWorkspace = functions.RequestAllWorkspaces();
                 workspaces = JsonConvert.DeserializeObject<workspacesServerResponse>(jsonWorkspace);
+                jsonResponse = summariesList.summaryListRequest(Properties.Settings.Default.userID);
+                response = JsonConvert.DeserializeObject<serverResponse>(jsonResponse);
+                
 
                 foreach (workspacesContent content in workspaces.contents)
                 {
@@ -90,6 +96,33 @@ namespace Summaries
                 }
 
                 workspaceComboBox.SelectedIndex = 0;
+
+                if (Properties.Settings.Default.currentWorkspaceID == 0)
+                {
+                    // Workspace not defined yet
+                    workspaceComboBox.SelectedIndex = 0;
+                }
+                else
+                {
+                    workspaceComboBox.SelectedItem = workspaces.contents[workspaces.contents.FindIndex(c => c.id == Properties.Settings.Default.currentWorkspaceID)].name;
+                    List<Content> workspaceRelated = new List<Content>();
+                    foreach (Content row in response.contents)
+                    {
+                        if (row.workspace == Properties.Settings.Default.currentWorkspaceID)
+                        {
+                            workspaceRelated.Add(row);
+                        }
+                    }
+
+                    if(workspaceRelated.Count > 0)
+                    {
+                        summaryNumberBox.Value = workspaceRelated[workspaceRelated.Count - 1].summaryNumber + 1;
+                    }
+                    else
+                    {
+                        summaryNumberBox.Value = 1;
+                    }                       
+                }
 
             }
             catch (Exception ex)
@@ -100,32 +133,13 @@ namespace Summaries
                 }
                 else
                 {
-                    MessageBox.Show("Critical error: " + ex.Message + "\n" + jsonWorkspace + "\n" + ex.StackTrace, "Critical error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Critical error: " + ex.Message + "\n" + jsonWorkspace + "\n" + ex.StackTrace + "\n" + ex.InnerException, "Critical error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-
-            if (Properties.Settings.Default.currentWorkspaceID == 0)
-            {
-                // Workspace not defined yet
-                workspaceComboBox.SelectedIndex = 0;
-            }
-            else
-            {
-                // 
-                workspaceComboBox.SelectedIndex = 0;
-                List<Content> tempList = new List<Content>();
-                foreach(Content row in response.contents)
-                {
-                    tempList.Add(row);
-                }
-                summaryNumberBox.Value = response.contents[response.contents.FindLastIndex(tempList)].summaryNumber + 1;
-            }
-
-            string jsonResponse = summariesList.summaryListRequest(Properties.Settings.Default.userID, Properties.Settings.Default.currentWorkspaceID);
 
             try
             {
-                response = JsonConvert.DeserializeObject<serverResponse>(jsonResponse);
+                
                 if (response.status)
                 {
                     //******* just to reinforce

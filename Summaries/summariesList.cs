@@ -11,8 +11,6 @@ namespace Summaries
 {
     public partial class summariesList : Form
     {
-
-        bool didLoadThrow = true;
         string workspaceName = null;
 
         public summariesList()
@@ -25,7 +23,7 @@ namespace Summaries
         /// </summary>
         /// <param name="userid">The id of the user to get the summaries from</param>
         /// <returns></returns>
-        public static string summaryListRequest(int userid, int workspace)
+        public static string summaryListRequest(int userid, int workspace = 0)
         {
             string finalData = "";
             try
@@ -76,6 +74,7 @@ namespace Summaries
             public int userid { get; set; }
             public string date { get; set; }
             public int summaryNumber { get; set; }
+            public int workspace { get; set; }
             public string contents { get; set; }
         }
 
