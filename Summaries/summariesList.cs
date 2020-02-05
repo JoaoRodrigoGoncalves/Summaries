@@ -352,5 +352,15 @@ namespace Summaries
             workspaceName = workspaceComboBox.SelectedItem.ToString();
             summariesList_Load(sender, e);
         }
+
+        private void dataGrid_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            /*if(e.KeyChar == Keys.Delete)
+            {
+
+            }
+            deleteSummary_Click(sender, e);*/
+            MessageBox.Show("" + e.KeyChar);
+        }
     }
 }

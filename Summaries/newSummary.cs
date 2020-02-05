@@ -21,6 +21,7 @@ namespace Summaries
         private int originalWorkspaceID = 0;
         private int dbRow = 0;
         private int summaryID = 0;
+        private int newWorkspaceID = 0;
 
         //*********************//
 
@@ -94,35 +95,6 @@ namespace Summaries
                 {
                     workspaceComboBox.Items.Add(content.name);
                 }
-
-                if (Properties.Settings.Default.currentWorkspaceID == 0)
-                {
-                    // Workspace not defined yet
-                    workspaceComboBox.SelectedIndex = 0;
-                
-                }
-                else
-                {
-                    workspaceComboBox.SelectedItem = workspaces.contents[workspaces.contents.FindIndex(c => c.id == Properties.Settings.Default.currentWorkspaceID)].name;
-                    List<Content> workspaceRelated = new List<Content>();
-                    foreach (Content row in response.contents)
-                    {
-                        if (row.workspace == Properties.Settings.Default.currentWorkspaceID)
-                        {
-                            workspaceRelated.Add(row);
-                        }
-                    }
-
-                    if(workspaceRelated.Count > 0)
-                    {
-                        summaryNumberBox.Value = workspaceRelated[workspaceRelated.Count - 1].summaryNumber + 1;
-                    }
-                    else
-                    {
-                        summaryNumberBox.Value = 1;
-                    }                       
-                }
-
             }
             catch (Exception ex)
             {
@@ -168,16 +140,33 @@ namespace Summaries
                     }
                     else
                     {
-                        try
-                        {
-                            var lastSummary = response.contents[response.contents.Count - 1];
-                            summaryNumberBox.Value = lastSummary.summaryNumber + 1;
-                        }
-                        catch
-                        {
-                            summaryNumberBox.Value = 1;
-                        }
 
+                        if (Properties.Settings.Default.currentWorkspaceID == 0)
+                        {
+                            // Workspace not defined yet
+                            workspaceComboBox.SelectedIndex = 0;
+                        }
+                        else
+                        {
+                            workspaceComboBox.SelectedItem = workspaces.contents[workspaces.contents.FindIndex(c => c.id == Properties.Settings.Default.currentWorkspaceID)].name;
+                            List<Content> workspaceRelated = new List<Content>();
+                            foreach (Content row in response.contents)
+                            {
+                                if (row.workspace == Properties.Settings.Default.currentWorkspaceID)
+                                {
+                                    workspaceRelated.Add(row);
+                                }
+                            }
+
+                            if (workspaceRelated.Count > 0)
+                            {
+                                summaryNumberBox.Value = workspaceRelated[workspaceRelated.Count - 1].summaryNumber + 1;
+                            }
+                            else
+                            {
+                                summaryNumberBox.Value = 1;
+                            }
+                        }
                         dateBox.Value = DateTime.ParseExact(DateTime.Today.ToString("yyyy-MM-dd"), "yyyy-MM-dd", new CultureInfo("pt"));
                     }
                 }
@@ -449,9 +438,9 @@ namespace Summaries
 
         private void workspaceComboBox_DropDownClosed(object sender, EventArgs e)
         {
-            int newWorkspaceID = workspaces.contents[workspaces.contents.FindIndex(x => x.name == workspaceComboBox.SelectedItem.ToString())].id;
             if(newWorkspaceID != Properties.Settings.Default.currentWorkspaceID)
             {
+                newWorkspaceID = workspaces.contents[workspaces.contents.FindIndex(x => x.name == workspaceComboBox.SelectedItem.ToString())].id;
                 Properties.Settings.Default.currentWorkspaceID = newWorkspaceID;
                 newSummary_Load(sender, e);
             }
