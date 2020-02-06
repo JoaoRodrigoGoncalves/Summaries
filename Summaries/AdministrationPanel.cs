@@ -520,5 +520,10 @@ namespace Summaries
                 }
             }
         }
+
+        private void saveWorkspaceBTN_Click(object sender, EventArgs e)
+        {
+            
+        }
     }
 }

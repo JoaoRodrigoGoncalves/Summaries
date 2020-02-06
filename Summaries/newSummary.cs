@@ -149,23 +149,32 @@ namespace Summaries
                         else
                         {
                             workspaceComboBox.SelectedItem = workspaces.contents[workspaces.contents.FindIndex(c => c.id == Properties.Settings.Default.currentWorkspaceID)].name;
-                            List<Content> workspaceRelated = new List<Content>();
-                            foreach (Content row in response.contents)
+                            
+                            if(response.contents != null)
                             {
-                                if (row.workspace == Properties.Settings.Default.currentWorkspaceID)
+                                List<Content> workspaceRelated = new List<Content>();
+                                foreach (Content row in response.contents)
                                 {
-                                    workspaceRelated.Add(row);
+                                    if (row.workspace == Properties.Settings.Default.currentWorkspaceID)
+                                    {
+                                        workspaceRelated.Add(row);
+                                    }
                                 }
-                            }
 
-                            if (workspaceRelated.Count > 0)
-                            {
-                                summaryNumberBox.Value = workspaceRelated[workspaceRelated.Count - 1].summaryNumber + 1;
+                                if (workspaceRelated.Count > 0)
+                                {
+                                    summaryNumberBox.Value = workspaceRelated[workspaceRelated.Count - 1].summaryNumber + 1;
+                                }
+                                else
+                                {
+                                    summaryNumberBox.Value = 1;
+                                }
                             }
                             else
                             {
                                 summaryNumberBox.Value = 1;
                             }
+
                         }
                         dateBox.Value = DateTime.ParseExact(DateTime.Today.ToString("yyyy-MM-dd"), "yyyy-MM-dd", new CultureInfo("pt"));
                     }
@@ -176,7 +185,7 @@ namespace Summaries
                 }
             }catch(Exception ex)
             {
-                MessageBox.Show("Critical error. " + ex.Message + "\n" + jsonResponse, "Critical Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Critical error. " + ex.Message + "\n" + ex.StackTrace + "\n" + jsonResponse, "Critical Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -438,9 +447,9 @@ namespace Summaries
 
         private void workspaceComboBox_DropDownClosed(object sender, EventArgs e)
         {
-            if(newWorkspaceID != Properties.Settings.Default.currentWorkspaceID)
+            newWorkspaceID = workspaces.contents[workspaces.contents.FindIndex(x => x.name == workspaceComboBox.SelectedItem.ToString())].id;
+            if (newWorkspaceID != Properties.Settings.Default.currentWorkspaceID)
             {
-                newWorkspaceID = workspaces.contents[workspaces.contents.FindIndex(x => x.name == workspaceComboBox.SelectedItem.ToString())].id;
                 Properties.Settings.Default.currentWorkspaceID = newWorkspaceID;
                 newSummary_Load(sender, e);
             }
