@@ -14,11 +14,29 @@ namespace Summaries
     {
         private int currentSelectedrow = 0;
         private int previousSelectedrow = 0;
+        private int selectedTab = 0;
         private bool addingUser = false;
+        private bool addingClass = false;
+        private bool addingWorkspace = false;
 
         public AdministrationPanel()
         {
             InitializeComponent();
+        }
+
+        public class workspacesContent
+        {
+            public int id { get; set; }
+            public string workspaceName { get; set; }
+            public bool read { get; set; }
+            public bool write { get; set; }
+        }
+
+        public class workspacesResponse
+        {
+            public bool status { get; set; }
+            public string errors { get; set; }
+            public List<workspacesContent> contents { get; set; }
         }
 
         public class Content
@@ -64,7 +82,6 @@ namespace Summaries
                 classServer = JsonConvert.DeserializeObject<classServerResponse>(classJsonResponse);
 
 
-
                 if (response.status && classServer.status)
                 {
                     classBox.Items.Clear();
@@ -93,7 +110,6 @@ namespace Summaries
                     userDataGrid.AllowUserToAddRows = false;
                     userDataGrid.AllowUserToResizeColumns = true;
                     userDataGrid.MultiSelect = false; //just to reinforce
-
 
 
                     var rows = new List<string[]>();
@@ -144,6 +160,10 @@ namespace Summaries
                     MessageBox.Show("A critical error occurred. " + response.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     this.Close();
                 }
+
+                workspacesResponse workspacesResponse;
+                workspacesResponse = JsonConvert.DeserializeObject<workspacesResponse>(funct.RequestAllWorkspaces());
+
             }
             catch (Exception ex)
             {
@@ -151,7 +171,7 @@ namespace Summaries
                 this.Close();
             }
 
-
+            administrationTabMenu.SelectedIndex = selectedTab;
         }
 
         public static string RequestUserList()
@@ -249,11 +269,10 @@ namespace Summaries
             }
             else
             {
-                addingUser = true;
-                previousSelectedrow = currentSelectedrow;
-                currentSelectedrow = 0;
-                usernameBox.Clear();
-                displayNameBox.Clear();
+                addingWorkspace = true;
+                //previousSelectedrow = currentSelectedrow;
+                //currentSelectedrow = 0;
+                workspaceBOX.Clear();
                 classBox.SelectedIndex = 0;
                 adminPrivBox.Checked = false;
                 accidentalDeletionBox.Checked = false;
@@ -523,7 +542,55 @@ namespace Summaries
 
         private void saveWorkspaceBTN_Click(object sender, EventArgs e)
         {
-            
+            AdministrationPanel_Load(sender, e);
+        }
+
+        private void administrationTabMenu_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            selectedTab = administrationTabMenu.SelectedIndex;
+        }
+
+        private void addWorkspaceBTN_Click(object sender, EventArgs e)
+        {
+            if (addingWorkspace)
+            {
+                addingWorkspace = false;
+                addWorkspaceBTN.Text = "Add Workspace";
+                //currentSelectedrow = previousSelectedrow;
+                workspaceGRPBOX.Text = "Editing Workspace ";
+                resetPWBTN.Enabled = true;
+                deleteUserBTN.Enabled = true;
+                workspacesDataGrid.Enabled = true;
+                if (userDataGrid.Rows[currentSelectedrow].Cells["isAdmin"].Value.ToString() == "True")
+                {
+                    adminPrivBox.Checked = true;
+                }
+                else
+                {
+                    adminPrivBox.Checked = false;
+                }
+                if (userDataGrid.Rows[currentSelectedrow].Cells["isProtected"].Value.ToString() == "True")
+                {
+                    accidentalDeletionBox.Checked = true;
+                }
+                else
+                {
+                    accidentalDeletionBox.Checked = false;
+                }
+            }
+            else
+            {
+                addingUser = true;
+                previousSelectedrow = currentSelectedrow;
+                currentSelectedrow = 0;
+                usernameBox.Clear();
+                displayNameBox.Clear();
+                readCheckBox.Checked = true;
+                writeCheckBox.Checked = true;
+                workspacesDataGrid.Enabled = false;
+                addWorkspaceBTN.Text = "Cancel";
+                workspaceGRPBOX.Text = "Adding User";
+            }
         }
     }
 }

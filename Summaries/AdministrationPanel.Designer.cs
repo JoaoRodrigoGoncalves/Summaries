@@ -50,7 +50,6 @@
             this.userDataGrid = new System.Windows.Forms.DataGridView();
             this.classesTab = new System.Windows.Forms.TabPage();
             this.workspacesTab = new System.Windows.Forms.TabPage();
-            this.workspacesDataGrid = new System.Windows.Forms.DataGridView();
             this.toolStripWorkspaces = new System.Windows.Forms.ToolStrip();
             this.workspaceRefreshBTN = new System.Windows.Forms.ToolStripButton();
             this.addWorkspaceBTN = new System.Windows.Forms.Button();
@@ -60,6 +59,10 @@
             this.workspaceBOX = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.saveWorkspaceBTN = new System.Windows.Forms.Button();
+            this.workspacesDataGrid = new System.Windows.Forms.DataGridView();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.administrationTabMenu.SuspendLayout();
             this.usersTab.SuspendLayout();
             this.toolStripUsers.SuspendLayout();
@@ -67,9 +70,10 @@
             this.infoGBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.userDataGrid)).BeginInit();
             this.workspacesTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.workspacesDataGrid)).BeginInit();
             this.toolStripWorkspaces.SuspendLayout();
             this.workspaceGRPBOX.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.workspacesDataGrid)).BeginInit();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // administrationTabMenu
@@ -83,6 +87,7 @@
             this.administrationTabMenu.SelectedIndex = 0;
             this.administrationTabMenu.Size = new System.Drawing.Size(911, 450);
             this.administrationTabMenu.TabIndex = 1;
+            this.administrationTabMenu.SelectedIndexChanged += new System.EventHandler(this.administrationTabMenu_SelectedIndexChanged);
             // 
             // usersTab
             // 
@@ -301,15 +306,6 @@
             this.workspacesTab.Text = "Workspaces";
             this.workspacesTab.UseVisualStyleBackColor = true;
             // 
-            // workspacesDataGrid
-            // 
-            this.workspacesDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.workspacesDataGrid.Dock = System.Windows.Forms.DockStyle.Left;
-            this.workspacesDataGrid.Location = new System.Drawing.Point(3, 3);
-            this.workspacesDataGrid.Name = "workspacesDataGrid";
-            this.workspacesDataGrid.Size = new System.Drawing.Size(465, 418);
-            this.workspacesDataGrid.TabIndex = 0;
-            // 
             // toolStripWorkspaces
             // 
             this.toolStripWorkspaces.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -338,9 +334,11 @@
             this.addWorkspaceBTN.TabIndex = 12;
             this.addWorkspaceBTN.Text = "Add Workspace";
             this.addWorkspaceBTN.UseVisualStyleBackColor = true;
+            this.addWorkspaceBTN.Click += new System.EventHandler(this.addWorkspaceBTN_Click);
             // 
             // workspaceGRPBOX
             // 
+            this.workspaceGRPBOX.Controls.Add(this.groupBox2);
             this.workspaceGRPBOX.Controls.Add(this.writeCheckBox);
             this.workspaceGRPBOX.Controls.Add(this.readCheckBox);
             this.workspaceGRPBOX.Controls.Add(this.workspaceBOX);
@@ -403,6 +401,44 @@
             this.saveWorkspaceBTN.UseVisualStyleBackColor = true;
             this.saveWorkspaceBTN.Click += new System.EventHandler(this.saveWorkspaceBTN_Click);
             // 
+            // workspacesDataGrid
+            // 
+            this.workspacesDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.workspacesDataGrid.Dock = System.Windows.Forms.DockStyle.Left;
+            this.workspacesDataGrid.Location = new System.Drawing.Point(3, 3);
+            this.workspacesDataGrid.Name = "workspacesDataGrid";
+            this.workspacesDataGrid.Size = new System.Drawing.Size(465, 418);
+            this.workspacesDataGrid.TabIndex = 0;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.button2);
+            this.groupBox2.Controls.Add(this.button1);
+            this.groupBox2.Location = new System.Drawing.Point(1, 129);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(421, 228);
+            this.groupBox2.TabIndex = 7;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Advanced Workspace Options";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(275, 19);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(139, 23);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "Flush Summaries";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(275, 48);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(139, 23);
+            this.button2.TabIndex = 1;
+            this.button2.Text = "Delete Workspace";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
             // AdministrationPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -428,11 +464,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.userDataGrid)).EndInit();
             this.workspacesTab.ResumeLayout(false);
             this.workspacesTab.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.workspacesDataGrid)).EndInit();
             this.toolStripWorkspaces.ResumeLayout(false);
             this.toolStripWorkspaces.PerformLayout();
             this.workspaceGRPBOX.ResumeLayout(false);
             this.workspaceGRPBOX.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.workspacesDataGrid)).EndInit();
+            this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -470,5 +507,8 @@
         private System.Windows.Forms.TextBox workspaceBOX;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button saveWorkspaceBTN;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button1;
     }
 }
