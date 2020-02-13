@@ -808,64 +808,65 @@ namespace Summaries
             int selectedWorkspaceIndex = workspacesDataGrid.SelectedCells[0].RowIndex;
             DataGridViewRow selectedWorkspaceRow = workspacesDataGrid.Rows[selectedWorkspaceIndex];
 
-            var res = MessageBox.Show("Are you sure you want to permanently delete the workspace " + selectedWorkspaceRow.Cells["name"].Value.ToString(), "Delete workspace", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (res == DialogResult.Yes)
+            codeResources.confirmByTyping writtenConfirmation = new codeResources.confirmByTyping(selectedWorkspaceRow.Cells["name"].Value.ToString());
+            Properties.Settings.Default.typeTestSuccessfull = false; // just to be sure
+            writtenConfirmation.ShowDialog();
+
+            if (Properties.Settings.Default.typeTestSuccessfull)
             {
-                if (selectedWorkspaceRow.Cells["isProtected"].Value.ToString() == "False")
+                Properties.Settings.Default.typeTestSuccessfull = false;
+                try
                 {
-                    try
+                    string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&workspaceID=" + Convert.ToInt32(selectedWorkspaceRow.Cells["id"].Value.ToString());
+                    var data = Encoding.UTF8.GetBytes(POSTdata);
+                    var request = WebRequest.CreateHttp(Properties.Settings.Default.inUseDomain + "/summaries/api/requestWorkspaceDelete.php");
+                    request.Method = "POST";
+                    request.ContentType = "application/x-www-form-urlencoded";
+                    request.ContentLength = data.Length;
+                    request.UserAgent = "app";
+                    //writes the post data to the stream
+                    using (var stream = request.GetRequestStream())
                     {
-                        int userToDelete = Convert.ToInt32(selectedRow.Cells["userID"].Value.ToString());
-                        string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&userID=" + userToDelete;
-                        var data = Encoding.UTF8.GetBytes(POSTdata);
-                        var request = WebRequest.CreateHttp(Properties.Settings.Default.inUseDomain + "/summaries/api/requestUserDelete.php");
-                        request.Method = "POST";
-                        request.ContentType = "application/x-www-form-urlencoded";
-                        request.ContentLength = data.Length;
-                        request.UserAgent = "app";
-                        //writes the post data to the stream
-                        using (var stream = request.GetRequestStream())
-                        {
-                            stream.Write(data, 0, data.Length);
-                            stream.Close();
-                        }
-                        //ler a resposta
-                        string finalData = "";
-                        using (var response = request.GetResponse())
-                        {
-                            var dataStream = response.GetResponseStream();
-                            StreamReader reader = new StreamReader(dataStream);
-                            finalData = reader.ReadToEnd();
-                            dataStream.Close();
-                            response.Close();
-                        }
-
-                        simpleServerResponse serverResponse;
-
-                        serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(finalData);
-
-                        if (serverResponse.status)
-                        {
-                            MessageBox.Show("User Deleted Successfully!", "User Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            AdministrationPanel_Load(sender, e);
-                        }
-                        else
-                        {
-                            MessageBox.Show("A critical error occurred. " + serverResponse.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            this.Close();
-                        }
+                        stream.Write(data, 0, data.Length);
+                        stream.Close();
                     }
-                    catch (Exception ex)
+                    //ler a resposta
+                    string finalData = "";
+                    using (var response = request.GetResponse())
                     {
-                        MessageBox.Show("A critical error occurred. " + ex.Message, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        var dataStream = response.GetResponseStream();
+                        StreamReader reader = new StreamReader(dataStream);
+                        finalData = reader.ReadToEnd();
+                        dataStream.Close();
+                        response.Close();
+                    }
+
+                    simpleServerResponse serverResponse;
+
+                    serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(finalData);
+
+                    if (serverResponse.status)
+                    {
+                        MessageBox.Show("Workspace Deleted Successfully!", "Workspace Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        AdministrationPanel_Load(sender, e);
+                    }
+                    else
+                    {
+                        MessageBox.Show("A critical error occurred. " + serverResponse.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         this.Close();
                     }
                 }
-                else
+                catch (Exception ex)
                 {
-                    MessageBox.Show("The user is protected against deletion and cannot be deleted.", "Protected against deletion", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("A critical error occurred. " + ex.Message + "\n" + ex.StackTrace, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.Close();
                 }
             }
+        }
+
+        private void workspaceRefreshBTN_Click(object sender, EventArgs e)
+        {
+            AdministrationPanel_Load(sender, e);
         }
     }
 }

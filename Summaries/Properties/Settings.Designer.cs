@@ -104,5 +104,17 @@ namespace Summaries.Properties {
                 this["currentWorkspaceID"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool typeTestSuccessfull {
+            get {
+                return ((bool)(this["typeTestSuccessfull"]));
+            }
+            set {
+                this["typeTestSuccessfull"] = value;
+            }
+        }
     }
 }

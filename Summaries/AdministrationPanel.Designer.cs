@@ -325,6 +325,7 @@
             this.workspaceRefreshBTN.Name = "workspaceRefreshBTN";
             this.workspaceRefreshBTN.Size = new System.Drawing.Size(66, 22);
             this.workspaceRefreshBTN.Text = "Refresh";
+            this.workspaceRefreshBTN.Click += new System.EventHandler(this.workspaceRefreshBTN_Click);
             // 
             // addWorkspaceBTN
             // 

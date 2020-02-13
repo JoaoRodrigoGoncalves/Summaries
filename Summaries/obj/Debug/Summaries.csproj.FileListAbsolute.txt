@@ -46,3 +46,4 @@ C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summari
 C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.exe
 C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.pdb
 D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.csprojAssemblyReference.cache
+D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.codeResources.confirmByTyping.resources
