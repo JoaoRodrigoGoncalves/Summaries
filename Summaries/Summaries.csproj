@@ -110,6 +110,12 @@
     <Compile Include="changePassword.Designer.cs">
       <DependentUpon>changePassword.cs</DependentUpon>
     </Compile>
+    <Compile Include="codeResources\confirmByTyping.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="codeResources\confirmByTyping.Designer.cs">
+      <DependentUpon>confirmByTyping.cs</DependentUpon>
+    </Compile>
     <Compile Include="codeResources\functions.cs" />
     <Compile Include="load_screen.cs">
       <SubType>Form</SubType>
@@ -157,6 +163,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="changePassword.resx">
       <DependentUpon>changePassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="codeResources\confirmByTyping.resx">
+      <DependentUpon>confirmByTyping.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="load_screen.resx">
       <DependentUpon>load_screen.cs</DependentUpon>
