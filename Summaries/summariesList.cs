@@ -91,6 +91,7 @@ namespace Summaries
             public string name { get; set; }
             public bool read { get; set; }
             public bool write { get; set; }
+            public int totalSummaries { get; set; }
         }
 
         public class workspacesServerResponse

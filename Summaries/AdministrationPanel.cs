@@ -32,6 +32,7 @@ namespace Summaries
             public string name { get; set; }
             public bool read { get; set; }
             public bool write { get; set; }
+            public int totalSummaries { get; set; }
         }
 
         public class workspacesResponse
@@ -169,7 +170,7 @@ namespace Summaries
                 if (workspacesResponse.status)
                 {
                     workspacesDataGrid.Rows.Clear();
-                    workspacesDataGrid.ColumnCount = 4;
+                    workspacesDataGrid.ColumnCount = 5;
                     workspacesDataGrid.Columns[0].Name = "id";
                     workspacesDataGrid.Columns[0].HeaderText = "#";
                     workspacesDataGrid.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
@@ -182,6 +183,9 @@ namespace Summaries
                     workspacesDataGrid.Columns[3].Name = "writeMode";
                     workspacesDataGrid.Columns[3].HeaderText = "Write?";
                     workspacesDataGrid.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                    workspacesDataGrid.Columns[4].Name = "registeredSummaries";
+                    workspacesDataGrid.Columns[4].HeaderText = "Registered Summaries";
+                    workspacesDataGrid.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                     workspacesDataGrid.AllowUserToDeleteRows = false;
                     workspacesDataGrid.AllowUserToAddRows = false;
                     workspacesDataGrid.AllowUserToResizeColumns = true;
@@ -190,7 +194,7 @@ namespace Summaries
                     var workspaceRows = new List<string[]>();
                     foreach (workspacesContent workspaceContent in workspacesResponse.contents)
                     {
-                        string[] nextRow = new string[] { workspaceContent.id.ToString(), workspaceContent.name.ToString(), workspaceContent.read.ToString(), workspaceContent.write.ToString() };
+                        string[] nextRow = new string[] { workspaceContent.id.ToString(), workspaceContent.name.ToString(), workspaceContent.read.ToString(), workspaceContent.write.ToString(), workspaceContent.totalSummaries.ToString() };
                         workspaceRows.Add(nextRow);
                     }
 
@@ -720,47 +724,55 @@ namespace Summaries
 
         private void addWorkspaceBTN_Click(object sender, EventArgs e)
         {
-            if (addingWorkspace)
+            try
             {
-                addingWorkspace = false;
-                addWorkspaceBTN.Text = "Add Workspace";
-                currentSelectedWorkspace = previousSelectedWorkspace;
-                workspaceGRPBOX.Text = "Editing Workspace ";
-                workspaceBOX.Text = workspacesDataGrid.Rows[currentSelectedWorkspace].Cells["name"].Value.ToString();
-                flushSummariesBTN.Enabled = true;
-                deleteWorkspaceBTN.Enabled = true;
-                workspacesDataGrid.Enabled = true;
-                if (workspacesDataGrid.Rows[currentSelectedWorkspace].Cells["readMode"].Value.ToString() == "True")
+                if (addingWorkspace)
                 {
+                    addingWorkspace = false;
+                    addWorkspaceBTN.Text = "Add Workspace";
+                    currentSelectedWorkspace = previousSelectedWorkspace;
+                    workspaceGRPBOX.Text = "Editing Workspace " + workspacesDataGrid.Rows[currentSelectedWorkspace].Cells["name"].Value.ToString();
+                    workspaceBOX.Text = workspacesDataGrid.Rows[currentSelectedWorkspace].Cells["name"].Value.ToString();
+                    flushSummariesBTN.Enabled = true;
+                    deleteWorkspaceBTN.Enabled = true;
+                    workspacesDataGrid.Enabled = true;
+                    if (workspacesDataGrid.Rows[currentSelectedWorkspace].Cells["readMode"].Value.ToString() == "True")
+                    {
+                        readCheckBox.Checked = true;
+                    }
+                    else
+                    {
+                        readCheckBox.Checked = false;
+                    }
+                    if (workspacesDataGrid.Rows[currentSelectedWorkspace].Cells["writeMode"].Value.ToString() == "True")
+                    {
+                        writeCheckBox.Checked = true;
+                    }
+                    else
+                    {
+                        writeCheckBox.Checked = false;
+                    }
+                }
+                else
+                {
+                    addingWorkspace = true;
+                    previousSelectedWorkspace = currentSelectedWorkspace;
+                    currentSelectedWorkspace = 0;
+                    workspaceBOX.Clear();
                     readCheckBox.Checked = true;
-                }
-                else
-                {
-                    readCheckBox.Checked = false;
-                }
-                if (workspacesDataGrid.Rows[currentSelectedWorkspace].Cells["writeMode"].Value.ToString() == "True")
-                {
                     writeCheckBox.Checked = true;
+                    workspacesDataGrid.Enabled = false;
+                    flushSummariesBTN.Enabled = false;
+                    deleteWorkspaceBTN.Enabled = false;
+                    addWorkspaceBTN.Text = "Cancel";
+                    workspaceGRPBOX.Text = "Adding Workspace";
                 }
-                else
-                {
-                    writeCheckBox.Checked = false;
-                }
-            }
-            else
+            }catch(Exception ex)
             {
-                addingWorkspace = true;
-                previousSelectedWorkspace = currentSelectedWorkspace;
-                currentSelectedWorkspace = 0;
-                workspaceBOX.Clear();
-                readCheckBox.Checked = true;
-                writeCheckBox.Checked = true;
-                workspacesDataGrid.Enabled = false;
-                flushSummariesBTN.Enabled = false;
-                deleteWorkspaceBTN.Enabled = false;
-                addWorkspaceBTN.Text = "Cancel";
-                workspaceGRPBOX.Text = "Adding Workspace";
+                MessageBox.Show("A critical error occurred. " + ex.Message + "\n" + ex.StackTrace, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
             }
+            
         }
 
         private void workspacesDataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -770,6 +782,7 @@ namespace Summaries
                 int selectedWorkwspaceRowIndex = workspacesDataGrid.SelectedCells[0].RowIndex;
                 DataGridViewRow selectedWorkspaceRow = workspacesDataGrid.Rows[selectedWorkwspaceRowIndex];
                 currentSelectedWorkspace = selectedWorkwspaceRowIndex;
+                workspaceGRPBOX.Text = "Editing Workspace " + selectedWorkspaceRow.Cells["name"].Value.ToString();
                 workspaceBOX.Text = selectedWorkspaceRow.Cells["name"].Value.ToString();
                 if (selectedWorkspaceRow.Cells["readMode"].Value.ToString() == "True")
                 {
@@ -867,6 +880,67 @@ namespace Summaries
         private void workspaceRefreshBTN_Click(object sender, EventArgs e)
         {
             AdministrationPanel_Load(sender, e);
+        }
+
+        private void flushSummariesBTN_Click(object sender, EventArgs e)
+        {
+            int selectedWorkspaceIndex = workspacesDataGrid.SelectedCells[0].RowIndex;
+            DataGridViewRow selectedWorkspaceRow = workspacesDataGrid.Rows[selectedWorkspaceIndex];
+
+            codeResources.confirmByTyping writtenConfirmation = new codeResources.confirmByTyping(selectedWorkspaceRow.Cells["name"].Value.ToString());
+            Properties.Settings.Default.typeTestSuccessfull = false; // just to be sure
+            writtenConfirmation.ShowDialog();
+
+            if (Properties.Settings.Default.typeTestSuccessfull)
+            {
+                Properties.Settings.Default.typeTestSuccessfull = false;
+                try
+                {
+                    string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&workspaceID=" + Convert.ToInt32(selectedWorkspaceRow.Cells["id"].Value.ToString());
+                    var data = Encoding.UTF8.GetBytes(POSTdata);
+                    var request = WebRequest.CreateHttp(Properties.Settings.Default.inUseDomain + "/summaries/api/requestWorkspaceFlush.php");
+                    request.Method = "POST";
+                    request.ContentType = "application/x-www-form-urlencoded";
+                    request.ContentLength = data.Length;
+                    request.UserAgent = "app";
+                    //writes the post data to the stream
+                    using (var stream = request.GetRequestStream())
+                    {
+                        stream.Write(data, 0, data.Length);
+                        stream.Close();
+                    }
+                    //ler a resposta
+                    string finalData = "";
+                    using (var response = request.GetResponse())
+                    {
+                        var dataStream = response.GetResponseStream();
+                        StreamReader reader = new StreamReader(dataStream);
+                        finalData = reader.ReadToEnd();
+                        dataStream.Close();
+                        response.Close();
+                    }
+
+                    simpleServerResponse serverResponse;
+
+                    serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(finalData);
+
+                    if (serverResponse.status)
+                    {
+                        MessageBox.Show("Workspace Flushed Successfully!", "Workspace Flushed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        AdministrationPanel_Load(sender, e);
+                    }
+                    else
+                    {
+                        MessageBox.Show("A critical error occurred. " + serverResponse.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        this.Close();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("A critical error occurred. " + ex.Message + "\n" + ex.StackTrace, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.Close();
+                }
+            }
         }
     }
 }

@@ -381,6 +381,7 @@
             this.flushSummariesBTN.TabIndex = 0;
             this.flushSummariesBTN.Text = "Flush Summaries";
             this.flushSummariesBTN.UseVisualStyleBackColor = true;
+            this.flushSummariesBTN.Click += new System.EventHandler(this.flushSummariesBTN_Click);
             // 
             // writeCheckBox
             // 
