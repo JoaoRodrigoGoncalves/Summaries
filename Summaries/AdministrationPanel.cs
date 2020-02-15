@@ -14,11 +14,13 @@ namespace Summaries
     {
         private int currentSelectedrow = 0;
         private int currentSelectedWorkspace = 0;
+        private int currentSelectedClass = 0;
         private int previousSelectedrow = 0;
         private int previousSelectedWorkspace = 0;
+        private int previousSelectedClass = 0;
         private int selectedTab = 0;
         private bool addingUser = false;
-        //private bool addingClass = false;
+        private bool addingClass = false;
         private bool addingWorkspace = false;
 
         public AdministrationPanel()
@@ -63,6 +65,7 @@ namespace Summaries
         {
             public int classID { get; set; }
             public string className { get; set; }
+            public int totalUsers { get; set; }
         }
 
         public class classServerResponse
@@ -231,6 +234,45 @@ namespace Summaries
                     MessageBox.Show("A critical error occurred. " + workspacesResponse.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     this.Close();
                 }
+
+                if (classServer.status)
+                {
+                    classesDataGrid.Rows.Clear();
+                    classesDataGrid.ColumnCount = 3;
+                    classesDataGrid.Columns[0].Name = "classID";
+                    classesDataGrid.Columns[0].HeaderText = "#";
+                    classesDataGrid.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                    classesDataGrid.Columns[1].Name = "className";
+                    classesDataGrid.Columns[1].HeaderText = "Class Name";
+                    classesDataGrid.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                    classesDataGrid.Columns[2].Name = "registeredUsers";
+                    classesDataGrid.Columns[2].HeaderText = "Total of Registered Users";
+                    classesDataGrid.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                    classesDataGrid.AllowUserToDeleteRows = false;
+                    classesDataGrid.AllowUserToAddRows = false;
+                    classesDataGrid.AllowUserToResizeColumns = true;
+                    classesDataGrid.MultiSelect = false; //just to reinforce
+
+                    var classRows = new List<string[]>();
+                    foreach (classContent classContent in classServer.contents)
+                    {
+                        string[] nextClassRow = new string[] { classContent.classID.ToString(), classContent.className.ToString(), classContent.totalUsers.ToString() };
+                        classRows.Add(nextClassRow);
+                    }
+
+                    foreach (string[] wrowArray in classRows)
+                    {
+                        classesDataGrid.Rows.Add(wrowArray);
+                    }
+
+                    DataGridViewRow selectedClasssRow = classesDataGrid.Rows[0];
+                    finalNameBOX.Text = selectedClasssRow.Cells["className"].Value.ToString();
+                    classNumberBOX.Value = Convert.ToInt32(selectedClasssRow.Cells["classId"].Value);
+
+
+                    deleteClassBTN.Enabled = true;
+                }
+
 
             }
             catch (Exception ex)
@@ -941,6 +983,11 @@ namespace Summaries
                     this.Close();
                 }
             }
+        }
+
+        private void classesRefreshBTN_Click(object sender, EventArgs e)
+        {
+            AdministrationPanel_Load(sender, e);
         }
     }
 }
