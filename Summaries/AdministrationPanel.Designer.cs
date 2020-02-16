@@ -49,6 +49,16 @@
             this.saveBTN = new System.Windows.Forms.Button();
             this.userDataGrid = new System.Windows.Forms.DataGridView();
             this.classesTab = new System.Windows.Forms.TabPage();
+            this.toolStripClass = new System.Windows.Forms.ToolStrip();
+            this.classesRefreshBTN = new System.Windows.Forms.ToolStripButton();
+            this.classesDataGrid = new System.Windows.Forms.DataGridView();
+            this.addClassBTN = new System.Windows.Forms.Button();
+            this.classGRP = new System.Windows.Forms.GroupBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.deleteClassBTN = new System.Windows.Forms.Button();
+            this.classNameBOX = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.classSave = new System.Windows.Forms.Button();
             this.workspacesTab = new System.Windows.Forms.TabPage();
             this.toolStripWorkspaces = new System.Windows.Forms.ToolStrip();
             this.workspaceRefreshBTN = new System.Windows.Forms.ToolStripButton();
@@ -63,21 +73,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.saveWorkspaceBTN = new System.Windows.Forms.Button();
             this.workspacesDataGrid = new System.Windows.Forms.DataGridView();
-            this.addClassBTN = new System.Windows.Forms.Button();
-            this.classGRP = new System.Windows.Forms.GroupBox();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.deleteClassBTN = new System.Windows.Forms.Button();
-            this.accidentalDeletionCheck = new System.Windows.Forms.CheckBox();
-            this.classNameBOX = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.classSave = new System.Windows.Forms.Button();
-            this.classesDataGrid = new System.Windows.Forms.DataGridView();
-            this.classNumberBOX = new System.Windows.Forms.NumericUpDown();
-            this.label5 = new System.Windows.Forms.Label();
-            this.finalNameBOX = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.toolStripClass = new System.Windows.Forms.ToolStrip();
-            this.classesRefreshBTN = new System.Windows.Forms.ToolStripButton();
             this.administrationTabMenu.SuspendLayout();
             this.usersTab.SuspendLayout();
             this.toolStripUsers.SuspendLayout();
@@ -85,16 +80,15 @@
             this.infoGBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.userDataGrid)).BeginInit();
             this.classesTab.SuspendLayout();
+            this.toolStripClass.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.classesDataGrid)).BeginInit();
+            this.classGRP.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.workspacesTab.SuspendLayout();
             this.toolStripWorkspaces.SuspendLayout();
             this.workspaceGRPBOX.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.workspacesDataGrid)).BeginInit();
-            this.classGRP.SuspendLayout();
-            this.groupBox4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.classesDataGrid)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.classNumberBOX)).BeginInit();
-            this.toolStripClass.SuspendLayout();
             this.SuspendLayout();
             // 
             // administrationTabMenu
@@ -160,9 +154,9 @@
             // 
             this.groupBox1.Controls.Add(this.deleteUserBTN);
             this.groupBox1.Controls.Add(this.resetPWBTN);
-            this.groupBox1.Location = new System.Drawing.Point(474, 189);
+            this.groupBox1.Location = new System.Drawing.Point(474, 218);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(424, 204);
+            this.groupBox1.Size = new System.Drawing.Size(424, 175);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Advanced User Options";
@@ -279,7 +273,7 @@
             // 
             // saveBTN
             // 
-            this.saveBTN.Location = new System.Drawing.Point(340, 106);
+            this.saveBTN.Location = new System.Drawing.Point(340, 153);
             this.saveBTN.Name = "saveBTN";
             this.saveBTN.Size = new System.Drawing.Size(75, 23);
             this.saveBTN.TabIndex = 0;
@@ -316,6 +310,110 @@
             this.classesTab.TabIndex = 1;
             this.classesTab.Text = "Classes";
             this.classesTab.UseVisualStyleBackColor = true;
+            // 
+            // toolStripClass
+            // 
+            this.toolStripClass.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.toolStripClass.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStripClass.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.classesRefreshBTN});
+            this.toolStripClass.Location = new System.Drawing.Point(468, 396);
+            this.toolStripClass.Name = "toolStripClass";
+            this.toolStripClass.Size = new System.Drawing.Size(432, 25);
+            this.toolStripClass.TabIndex = 18;
+            this.toolStripClass.Text = "toolStrip2";
+            // 
+            // classesRefreshBTN
+            // 
+            this.classesRefreshBTN.Image = global::Summaries.Properties.Resources.refresh;
+            this.classesRefreshBTN.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.classesRefreshBTN.Name = "classesRefreshBTN";
+            this.classesRefreshBTN.Size = new System.Drawing.Size(66, 22);
+            this.classesRefreshBTN.Text = "Refresh";
+            this.classesRefreshBTN.Click += new System.EventHandler(this.classesRefreshBTN_Click);
+            // 
+            // classesDataGrid
+            // 
+            this.classesDataGrid.AllowUserToAddRows = false;
+            this.classesDataGrid.AllowUserToDeleteRows = false;
+            this.classesDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.classesDataGrid.Dock = System.Windows.Forms.DockStyle.Left;
+            this.classesDataGrid.Location = new System.Drawing.Point(3, 3);
+            this.classesDataGrid.MultiSelect = false;
+            this.classesDataGrid.Name = "classesDataGrid";
+            this.classesDataGrid.ReadOnly = true;
+            this.classesDataGrid.Size = new System.Drawing.Size(465, 418);
+            this.classesDataGrid.TabIndex = 17;
+            this.classesDataGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.classesDataGrid_CellClick);
+            // 
+            // addClassBTN
+            // 
+            this.addClassBTN.Location = new System.Drawing.Point(474, 4);
+            this.addClassBTN.Name = "addClassBTN";
+            this.addClassBTN.Size = new System.Drawing.Size(99, 23);
+            this.addClassBTN.TabIndex = 15;
+            this.addClassBTN.Text = "Add Class";
+            this.addClassBTN.UseVisualStyleBackColor = true;
+            this.addClassBTN.Click += new System.EventHandler(this.addClassBTN_Click);
+            // 
+            // classGRP
+            // 
+            this.classGRP.Controls.Add(this.groupBox4);
+            this.classGRP.Controls.Add(this.classNameBOX);
+            this.classGRP.Controls.Add(this.label4);
+            this.classGRP.Controls.Add(this.classSave);
+            this.classGRP.Location = new System.Drawing.Point(473, 34);
+            this.classGRP.Name = "classGRP";
+            this.classGRP.Size = new System.Drawing.Size(422, 357);
+            this.classGRP.TabIndex = 14;
+            this.classGRP.TabStop = false;
+            this.classGRP.Text = "Editing Class";
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.deleteClassBTN);
+            this.groupBox4.Location = new System.Drawing.Point(1, 74);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(421, 283);
+            this.groupBox4.TabIndex = 7;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Advanced Class Options";
+            // 
+            // deleteClassBTN
+            // 
+            this.deleteClassBTN.Location = new System.Drawing.Point(276, 19);
+            this.deleteClassBTN.Name = "deleteClassBTN";
+            this.deleteClassBTN.Size = new System.Drawing.Size(139, 23);
+            this.deleteClassBTN.TabIndex = 1;
+            this.deleteClassBTN.Text = "Delete Class";
+            this.deleteClassBTN.UseVisualStyleBackColor = true;
+            this.deleteClassBTN.Click += new System.EventHandler(this.deleteClassBTN_Click);
+            // 
+            // classNameBOX
+            // 
+            this.classNameBOX.Location = new System.Drawing.Point(106, 19);
+            this.classNameBOX.Name = "classNameBOX";
+            this.classNameBOX.Size = new System.Drawing.Size(310, 20);
+            this.classNameBOX.TabIndex = 2;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(37, 22);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(63, 13);
+            this.label4.TabIndex = 1;
+            this.label4.Text = "Class Name";
+            // 
+            // classSave
+            // 
+            this.classSave.Location = new System.Drawing.Point(341, 45);
+            this.classSave.Name = "classSave";
+            this.classSave.Size = new System.Drawing.Size(75, 23);
+            this.classSave.TabIndex = 0;
+            this.classSave.Text = "Save";
+            this.classSave.UseVisualStyleBackColor = true;
+            this.classSave.Click += new System.EventHandler(this.classSave_Click);
             // 
             // workspacesTab
             // 
@@ -473,155 +571,6 @@
             this.workspacesDataGrid.TabIndex = 0;
             this.workspacesDataGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.workspacesDataGrid_CellClick);
             // 
-            // addClassBTN
-            // 
-            this.addClassBTN.Location = new System.Drawing.Point(474, 4);
-            this.addClassBTN.Name = "addClassBTN";
-            this.addClassBTN.Size = new System.Drawing.Size(99, 23);
-            this.addClassBTN.TabIndex = 15;
-            this.addClassBTN.Text = "Add Class";
-            this.addClassBTN.UseVisualStyleBackColor = true;
-            // 
-            // classGRP
-            // 
-            this.classGRP.Controls.Add(this.finalNameBOX);
-            this.classGRP.Controls.Add(this.label7);
-            this.classGRP.Controls.Add(this.label5);
-            this.classGRP.Controls.Add(this.classNumberBOX);
-            this.classGRP.Controls.Add(this.groupBox4);
-            this.classGRP.Controls.Add(this.accidentalDeletionCheck);
-            this.classGRP.Controls.Add(this.classNameBOX);
-            this.classGRP.Controls.Add(this.label4);
-            this.classGRP.Controls.Add(this.classSave);
-            this.classGRP.Location = new System.Drawing.Point(473, 34);
-            this.classGRP.Name = "classGRP";
-            this.classGRP.Size = new System.Drawing.Size(422, 357);
-            this.classGRP.TabIndex = 14;
-            this.classGRP.TabStop = false;
-            this.classGRP.Text = "Editing Class";
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.deleteClassBTN);
-            this.groupBox4.Location = new System.Drawing.Point(1, 150);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(421, 207);
-            this.groupBox4.TabIndex = 7;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Advanced Class Options";
-            // 
-            // deleteClassBTN
-            // 
-            this.deleteClassBTN.Location = new System.Drawing.Point(276, 19);
-            this.deleteClassBTN.Name = "deleteClassBTN";
-            this.deleteClassBTN.Size = new System.Drawing.Size(139, 23);
-            this.deleteClassBTN.TabIndex = 1;
-            this.deleteClassBTN.Text = "Delete Class";
-            this.deleteClassBTN.UseVisualStyleBackColor = true;
-            // 
-            // accidentalDeletionCheck
-            // 
-            this.accidentalDeletionCheck.AutoSize = true;
-            this.accidentalDeletionCheck.Location = new System.Drawing.Point(100, 100);
-            this.accidentalDeletionCheck.Name = "accidentalDeletionCheck";
-            this.accidentalDeletionCheck.Size = new System.Drawing.Size(236, 17);
-            this.accidentalDeletionCheck.TabIndex = 5;
-            this.accidentalDeletionCheck.Text = "Protect Account Against Accidental Deletion";
-            this.accidentalDeletionCheck.UseVisualStyleBackColor = true;
-            // 
-            // classNameBOX
-            // 
-            this.classNameBOX.Location = new System.Drawing.Point(100, 48);
-            this.classNameBOX.Name = "classNameBOX";
-            this.classNameBOX.Size = new System.Drawing.Size(310, 20);
-            this.classNameBOX.TabIndex = 2;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(31, 51);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(63, 13);
-            this.label4.TabIndex = 1;
-            this.label4.Text = "Class Name";
-            // 
-            // classSave
-            // 
-            this.classSave.Location = new System.Drawing.Point(335, 121);
-            this.classSave.Name = "classSave";
-            this.classSave.Size = new System.Drawing.Size(75, 23);
-            this.classSave.TabIndex = 0;
-            this.classSave.Text = "Save";
-            this.classSave.UseVisualStyleBackColor = true;
-            // 
-            // classesDataGrid
-            // 
-            this.classesDataGrid.AllowUserToAddRows = false;
-            this.classesDataGrid.AllowUserToDeleteRows = false;
-            this.classesDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.classesDataGrid.Dock = System.Windows.Forms.DockStyle.Left;
-            this.classesDataGrid.Location = new System.Drawing.Point(3, 3);
-            this.classesDataGrid.MultiSelect = false;
-            this.classesDataGrid.Name = "classesDataGrid";
-            this.classesDataGrid.ReadOnly = true;
-            this.classesDataGrid.Size = new System.Drawing.Size(465, 418);
-            this.classesDataGrid.TabIndex = 17;
-            // 
-            // classNumberBOX
-            // 
-            this.classNumberBOX.Location = new System.Drawing.Point(100, 74);
-            this.classNumberBOX.Name = "classNumberBOX";
-            this.classNumberBOX.Size = new System.Drawing.Size(49, 20);
-            this.classNumberBOX.TabIndex = 8;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(22, 76);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(72, 13);
-            this.label5.TabIndex = 9;
-            this.label5.Text = "Class Number";
-            // 
-            // finalNameBOX
-            // 
-            this.finalNameBOX.Enabled = false;
-            this.finalNameBOX.Location = new System.Drawing.Point(100, 22);
-            this.finalNameBOX.Name = "finalNameBOX";
-            this.finalNameBOX.ReadOnly = true;
-            this.finalNameBOX.Size = new System.Drawing.Size(310, 20);
-            this.finalNameBOX.TabIndex = 11;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 25);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(88, 13);
-            this.label7.TabIndex = 10;
-            this.label7.Text = "Final Class Name";
-            // 
-            // toolStripClass
-            // 
-            this.toolStripClass.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.toolStripClass.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStripClass.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.classesRefreshBTN});
-            this.toolStripClass.Location = new System.Drawing.Point(468, 396);
-            this.toolStripClass.Name = "toolStripClass";
-            this.toolStripClass.Size = new System.Drawing.Size(432, 25);
-            this.toolStripClass.TabIndex = 18;
-            this.toolStripClass.Text = "toolStrip2";
-            // 
-            // classesRefreshBTN
-            // 
-            this.classesRefreshBTN.Image = global::Summaries.Properties.Resources.refresh;
-            this.classesRefreshBTN.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.classesRefreshBTN.Name = "classesRefreshBTN";
-            this.classesRefreshBTN.Size = new System.Drawing.Size(66, 22);
-            this.classesRefreshBTN.Text = "Refresh";
-            this.classesRefreshBTN.Click += new System.EventHandler(this.classesRefreshBTN_Click);
-            // 
             // AdministrationPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -647,6 +596,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.userDataGrid)).EndInit();
             this.classesTab.ResumeLayout(false);
             this.classesTab.PerformLayout();
+            this.toolStripClass.ResumeLayout(false);
+            this.toolStripClass.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.classesDataGrid)).EndInit();
+            this.classGRP.ResumeLayout(false);
+            this.classGRP.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
             this.workspacesTab.ResumeLayout(false);
             this.workspacesTab.PerformLayout();
             this.toolStripWorkspaces.ResumeLayout(false);
@@ -655,13 +610,6 @@
             this.workspaceGRPBOX.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.workspacesDataGrid)).EndInit();
-            this.classGRP.ResumeLayout(false);
-            this.classGRP.PerformLayout();
-            this.groupBox4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.classesDataGrid)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.classNumberBOX)).EndInit();
-            this.toolStripClass.ResumeLayout(false);
-            this.toolStripClass.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -707,14 +655,9 @@
         private System.Windows.Forms.GroupBox classGRP;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Button deleteClassBTN;
-        private System.Windows.Forms.CheckBox accidentalDeletionCheck;
         private System.Windows.Forms.TextBox classNameBOX;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button classSave;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.NumericUpDown classNumberBOX;
-        private System.Windows.Forms.TextBox finalNameBOX;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ToolStrip toolStripClass;
         private System.Windows.Forms.ToolStripButton classesRefreshBTN;
     }

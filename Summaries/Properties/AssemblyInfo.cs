@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Summaries - Summary Control Software")]
-[assembly: AssemblyDescription("Summaries is a software designed to help students from Torres Novas Professional School to write and keep up with their summaries.")]
+[assembly: AssemblyDescription("Summaries is a software designed to help students to write and keep up with their internship summaries.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("João Rodrigo Gonçalves")]
 [assembly: AssemblyProduct("Summaries - Summary Control Software")]

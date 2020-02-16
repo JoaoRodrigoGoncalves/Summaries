@@ -7,8 +7,6 @@ namespace Summaries
 {
     public partial class main : Form
     {
-        private bool isHidden = false;
-
         public main()
         {
             InitializeComponent();
@@ -33,20 +31,6 @@ namespace Summaries
         {
             changePassword password = new changePassword();
             password.ShowDialog();
-        }
-
-        private void trayIcon_Click(object sender, EventArgs e)
-        {
-            if (isHidden)
-            {
-                this.Show();
-                isHidden = false;
-            }
-            else
-            {
-                this.Hide();
-                isHidden = true;
-            }
         }
 
         private void menuAboutLicenses_Click(object sender, EventArgs e)

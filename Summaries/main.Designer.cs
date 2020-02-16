@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(main));
             this.menu = new System.Windows.Forms.MenuStrip();
             this.menuOptions = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,7 +44,6 @@
             this.menuAboutSummaries = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.sessionLabel = new System.Windows.Forms.Label();
-            this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.menu.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -124,7 +122,7 @@
             // 
             this.menuSummaryNew.Image = global::Summaries.Properties.Resources.newSummary;
             this.menuSummaryNew.Name = "menuSummaryNew";
-            this.menuSummaryNew.Size = new System.Drawing.Size(180, 22);
+            this.menuSummaryNew.Size = new System.Drawing.Size(154, 22);
             this.menuSummaryNew.Text = "&New Summary";
             this.menuSummaryNew.Click += new System.EventHandler(this.menuSummaryNew_Click);
             // 
@@ -132,7 +130,7 @@
             // 
             this.menuSummaryList.Image = global::Summaries.Properties.Resources.summariesList;
             this.menuSummaryList.Name = "menuSummaryList";
-            this.menuSummaryList.Size = new System.Drawing.Size(180, 22);
+            this.menuSummaryList.Size = new System.Drawing.Size(154, 22);
             this.menuSummaryList.Text = "Summaries &List";
             this.menuSummaryList.Click += new System.EventHandler(this.menuSummaryList_Click);
             // 
@@ -149,7 +147,7 @@
             // 
             this.menuAboutLicenses.Image = global::Summaries.Properties.Resources.licenses;
             this.menuAboutLicenses.Name = "menuAboutLicenses";
-            this.menuAboutLicenses.Size = new System.Drawing.Size(180, 22);
+            this.menuAboutLicenses.Size = new System.Drawing.Size(169, 22);
             this.menuAboutLicenses.Text = "Li&censes";
             this.menuAboutLicenses.Click += new System.EventHandler(this.menuAboutLicenses_Click);
             // 
@@ -157,7 +155,7 @@
             // 
             this.menuAboutSummaries.Image = global::Summaries.Properties.Resources.aboutSummaries;
             this.menuAboutSummaries.Name = "menuAboutSummaries";
-            this.menuAboutSummaries.Size = new System.Drawing.Size(180, 22);
+            this.menuAboutSummaries.Size = new System.Drawing.Size(169, 22);
             this.menuAboutSummaries.Text = "A&bout Summaries";
             this.menuAboutSummaries.Click += new System.EventHandler(this.menuAboutSummaries_Click);
             // 
@@ -181,13 +179,6 @@
             this.sessionLabel.TabIndex = 0;
             this.sessionLabel.Text = "Logged in as";
             this.sessionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // trayIcon
-            // 
-            this.trayIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("trayIcon.Icon")));
-            this.trayIcon.Text = "Summaries Software";
-            this.trayIcon.Visible = true;
-            this.trayIcon.Click += new System.EventHandler(this.trayIcon_Click);
             // 
             // main
             // 
@@ -230,7 +221,6 @@
         private System.Windows.Forms.ToolStripMenuItem menuOptionsChange_Password;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label sessionLabel;
-        private System.Windows.Forms.NotifyIcon trayIcon;
         private System.Windows.Forms.ToolStripMenuItem menuSummaryNew;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem menuOptionsAdministration_Panel;

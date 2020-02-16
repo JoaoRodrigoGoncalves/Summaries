@@ -52,7 +52,7 @@
             // 
             // saveBTN
             // 
-            this.saveBTN.Location = new System.Drawing.Point(715, 310);
+            this.saveBTN.Location = new System.Drawing.Point(380, 309);
             this.saveBTN.Name = "saveBTN";
             this.saveBTN.Size = new System.Drawing.Size(75, 23);
             this.saveBTN.TabIndex = 9;
@@ -72,6 +72,11 @@
             // summaryNumberBox
             // 
             this.summaryNumberBox.Location = new System.Drawing.Point(108, 39);
+            this.summaryNumberBox.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
             this.summaryNumberBox.Minimum = new decimal(new int[] {
             1,
             0,
@@ -116,7 +121,7 @@
             // cancelBTN
             // 
             this.cancelBTN.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelBTN.Location = new System.Drawing.Point(634, 310);
+            this.cancelBTN.Location = new System.Drawing.Point(299, 309);
             this.cancelBTN.Name = "cancelBTN";
             this.cancelBTN.Size = new System.Drawing.Size(75, 23);
             this.cancelBTN.TabIndex = 10;
@@ -218,7 +223,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelBTN;
-            this.ClientSize = new System.Drawing.Size(802, 344);
+            this.ClientSize = new System.Drawing.Size(461, 344);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.workspaceComboBox);
             this.Controls.Add(this.groupBox1);

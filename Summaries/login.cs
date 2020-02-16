@@ -1,8 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.IO;
-using System.Net;
-using System.Text;
 using System.Windows.Forms;
 using static Summaries.codeResources.functions;
 
@@ -41,7 +38,9 @@ namespace Summaries
             
             string username = usernameBox.Text;
             string password = passwordBox.Text;
-            string jsonResponse = LoginValidation(username, password);
+            string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&usrnm=" + username + "&psswd=" + password;
+            var functions = new codeResources.functions();
+            string jsonResponse = functions.APIRequest(POSTdata, "loginvalidator.php");
             response = JsonConvert.DeserializeObject<simpleServerResponse>(jsonResponse);
 
             if (response.status)
@@ -68,40 +67,6 @@ namespace Summaries
                     MessageBox.Show("Error: " + response.errors, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-        }
-
-        /// <summary>
-        /// Sends a login request to the server through HTTPS
-        /// </summary>
-        /// <param name="username">The username given by the user to login</param>
-        /// <param name="password">The password given by the user to login</param>
-        /// <returns></returns>
-        public static string LoginValidation(string username, string password)
-        {
-            string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&usrnm=" + username + "&psswd=" + password;
-            var data = Encoding.UTF8.GetBytes(POSTdata);
-            var request = WebRequest.CreateHttp(Properties.Settings.Default.inUseDomain + "/summaries/api/loginvalidator.php");
-            request.Method = "POST";
-            request.ContentType = "application/x-www-form-urlencoded";
-            request.ContentLength = data.Length;
-            request.UserAgent = "app";
-            //writes the post data to the stream
-            using (var stream = request.GetRequestStream())
-            {
-                stream.Write(data, 0, data.Length);
-                stream.Close();
-            }
-            //ler a resposta
-            string finalData = "";
-            using (var response = request.GetResponse())
-            {
-                var dataStream = response.GetResponseStream();
-                StreamReader reader = new StreamReader(dataStream);
-                finalData = reader.ReadToEnd();
-                dataStream.Close();
-                response.Close();
-            }
-            return finalData;
         }
 
         private void passwordBox_KeyDown(object sender, KeyEventArgs e)

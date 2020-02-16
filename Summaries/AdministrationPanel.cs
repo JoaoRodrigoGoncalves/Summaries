@@ -75,16 +75,17 @@ namespace Summaries
             public List<classContent> contents { get; set; }
         }
 
+        classServerResponse classServer;
+
         private void AdministrationPanel_Load(object sender, EventArgs e)
         {
             try
             {
-                string jsonResponse = RequestUserList();
+                var functions = new codeResources.functions();
+                string jsonResponse = functions.APIRequest("API=" + Properties.Settings.Default.APIkey, "userListRequest.php");
                 serverResponse response;
                 response = JsonConvert.DeserializeObject<serverResponse>(jsonResponse);
-                classServerResponse classServer;
-                codeResources.functions funct = new codeResources.functions();
-                string classJsonResponse = funct.RequestClassesList();
+                string classJsonResponse = functions.APIRequest("API=" + Properties.Settings.Default.APIkey, "classListRequest.php");
                 classServer = JsonConvert.DeserializeObject<classServerResponse>(classJsonResponse);
 
 
@@ -168,11 +169,15 @@ namespace Summaries
                 }
 
                 workspacesResponse workspacesResponse;
-                workspacesResponse = JsonConvert.DeserializeObject<workspacesResponse>(funct.RequestAllWorkspaces());
+                workspacesResponse = JsonConvert.DeserializeObject<workspacesResponse>(functions.APIRequest("API=" + Properties.Settings.Default.APIkey, "workspaceListRequest.php"));
 
                 if (workspacesResponse.status)
                 {
                     workspacesDataGrid.Rows.Clear();
+                    workspaceBOX.Clear();
+                    writeCheckBox.Checked = true;
+                    readCheckBox.Checked = true;
+                    workspacesDataGrid.Enabled = true;
                     workspacesDataGrid.ColumnCount = 5;
                     workspacesDataGrid.Columns[0].Name = "id";
                     workspacesDataGrid.Columns[0].HeaderText = "#";
@@ -195,39 +200,59 @@ namespace Summaries
                     workspacesDataGrid.MultiSelect = false; //just to reinforce
 
                     var workspaceRows = new List<string[]>();
-                    foreach (workspacesContent workspaceContent in workspacesResponse.contents)
+                    if(workspacesResponse.contents != null)
                     {
-                        string[] nextRow = new string[] { workspaceContent.id.ToString(), workspaceContent.name.ToString(), workspaceContent.read.ToString(), workspaceContent.write.ToString(), workspaceContent.totalSummaries.ToString() };
-                        workspaceRows.Add(nextRow);
-                    }
+                        workspaceBOX.Enabled = true;
+                        writeCheckBox.Enabled = true;
+                        readCheckBox.Enabled = true;
+                        saveWorkspaceBTN.Enabled = true;
+                        flushSummariesBTN.Enabled = true;
+                        deleteWorkspaceBTN.Enabled = true;
 
-                    foreach (string[] wrowArray in workspaceRows)
-                    {
-                        workspacesDataGrid.Rows.Add(wrowArray);
-                    }
+                        foreach (workspacesContent workspaceContent in workspacesResponse.contents)
+                        {
+                            string[] nextRow = new string[] { workspaceContent.id.ToString(), workspaceContent.name.ToString(), workspaceContent.read.ToString(), workspaceContent.write.ToString(), workspaceContent.totalSummaries.ToString() };
+                            workspaceRows.Add(nextRow);
+                        }
 
-                    DataGridViewRow selectedWorkspaceRow = workspacesDataGrid.Rows[0];
-                    workspaceBOX.Text = selectedWorkspaceRow.Cells["name"].Value.ToString();
-                    if (selectedWorkspaceRow.Cells["readMode"].Value.ToString() == "True")
-                    {
-                        readCheckBox.Checked = true;
+                        foreach (string[] wrowArray in workspaceRows)
+                        {
+                            workspacesDataGrid.Rows.Add(wrowArray);
+                        }
+
+                        DataGridViewRow selectedWorkspaceRow = workspacesDataGrid.Rows[0];
+                        workspaceBOX.Text = selectedWorkspaceRow.Cells["name"].Value.ToString();
+                        if (selectedWorkspaceRow.Cells["readMode"].Value.ToString() == "True")
+                        {
+                            readCheckBox.Checked = true;
+                        }
+                        else
+                        {
+                            readCheckBox.Checked = false;
+                        }
+
+                        if (selectedWorkspaceRow.Cells["writeMode"].Value.ToString() == "True")
+                        {
+                            writeCheckBox.Checked = true;
+                        }
+                        else
+                        {
+                            writeCheckBox.Checked = false;
+                        }
+
+                        flushSummariesBTN.Enabled = true;
+                        deleteUserBTN.Enabled = true;
                     }
                     else
                     {
-                        readCheckBox.Checked = false;
+                        workspaceBOX.Enabled = false;
+                        writeCheckBox.Enabled = false;
+                        readCheckBox.Enabled = false;
+                        saveWorkspaceBTN.Enabled = false;
+                        flushSummariesBTN.Enabled = false;
+                        deleteWorkspaceBTN.Enabled = false;
                     }
-
-                    if (selectedWorkspaceRow.Cells["writeMode"].Value.ToString() == "True")
-                    {
-                        writeCheckBox.Checked = true;
-                    }
-                    else
-                    {
-                        writeCheckBox.Checked = false;
-                    }
-
-                    flushSummariesBTN.Enabled = true;
-                    deleteUserBTN.Enabled = true;
+                    
                 }
                 else
                 {
@@ -238,6 +263,7 @@ namespace Summaries
                 if (classServer.status)
                 {
                     classesDataGrid.Rows.Clear();
+                    classNameBOX.Clear();
                     classesDataGrid.ColumnCount = 3;
                     classesDataGrid.Columns[0].Name = "classID";
                     classesDataGrid.Columns[0].HeaderText = "#";
@@ -266,9 +292,7 @@ namespace Summaries
                     }
 
                     DataGridViewRow selectedClasssRow = classesDataGrid.Rows[0];
-                    finalNameBOX.Text = selectedClasssRow.Cells["className"].Value.ToString();
-                    classNumberBOX.Value = Convert.ToInt32(selectedClasssRow.Cells["classId"].Value);
-
+                    classNameBOX.Text = selectedClasssRow.Cells["className"].Value.ToString();
 
                     deleteClassBTN.Enabled = true;
                 }
@@ -282,34 +306,6 @@ namespace Summaries
             }
 
             administrationTabMenu.SelectedIndex = selectedTab;
-        }
-
-        public static string RequestUserList()
-        {
-            string POSTdata = "API=" + Properties.Settings.Default.APIkey;
-            var data = Encoding.UTF8.GetBytes(POSTdata);
-            var request = WebRequest.CreateHttp(Properties.Settings.Default.inUseDomain + "/summaries/api/userListRequest.php");
-            request.Method = "POST";
-            request.ContentType = "application/x-www-form-urlencoded";
-            request.ContentLength = data.Length;
-            request.UserAgent = "app";
-            //writes the post data to the stream
-            using (var stream = request.GetRequestStream())
-            {
-                stream.Write(data, 0, data.Length);
-                stream.Close();
-            }
-            //ler a resposta
-            string finalData = "";
-            using (var response = request.GetResponse())
-            {
-                var dataStream = response.GetResponseStream();
-                StreamReader reader = new StreamReader(dataStream);
-                finalData = reader.ReadToEnd();
-                dataStream.Close();
-                response.Close();
-            }
-            return finalData;
         }
 
         private void userDataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -412,31 +408,12 @@ namespace Summaries
                         }
                         else
                         {
+                            var functions = new codeResources.functions();
                             string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&userID=" + userToReset + "&reset=true";
                             var data = Encoding.UTF8.GetBytes(POSTdata);
-                            var request = WebRequest.CreateHttp(Properties.Settings.Default.inUseDomain + "/summaries/api/changePassword.php");
-                            request.Method = "POST";
-                            request.ContentType = "application/x-www-form-urlencoded";
-                            request.ContentLength = data.Length;
-                            request.UserAgent = "app";
-                            //writes the post data to the stream
-                            using (var stream = request.GetRequestStream())
-                            {
-                                stream.Write(data, 0, data.Length);
-                                stream.Close();
-                            }
-                            //ler a resposta
-                            string finalData = "";
-                            using (var response = request.GetResponse())
-                            {
-                                var dataStream = response.GetResponseStream();
-                                StreamReader reader = new StreamReader(dataStream);
-                                finalData = reader.ReadToEnd();
-                                dataStream.Close();
-                                response.Close();
-                            }
+                            
                             simpleServerResponse serverResponse;
-                            serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(finalData);
+                            serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(functions.APIRequest(POSTdata, "changePassword.php"));
 
                             if (serverResponse.status)
                             {
@@ -463,6 +440,7 @@ namespace Summaries
         {
             try
             {
+                
                 if (usernameBox.TextLength < 1 || displayNameBox.TextLength < 1 || classBox.Text.Length < 1)
                 {
                     MessageBox.Show("Please fill all the fields before continue.", "Blank fileds", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -470,44 +448,19 @@ namespace Summaries
                 else
                 {
                     var functions = new codeResources.functions();
-                    string username = functions.HashPW(usernameBox.Text);
-                    string displayName = functions.HashPW(displayNameBox.Text);
+                    string username = functions.Hash(usernameBox.Text);
+                    string displayName = functions.Hash(displayNameBox.Text);
                     string classGiven = classBox.Text;
-                    var digits = classGiven.SkipWhile(c => !Char.IsDigit(c))
-                        .TakeWhile(Char.IsDigit)
-                        .ToArray();
-                    string classNum = functions.HashPW(new string(digits));
+                    string classNum = functions.Hash(classServer.contents[classServer.contents.FindIndex(x => x.className == classBox.Text)].classID.ToString());
                     string isAdmin = adminPrivBox.Checked.ToString();
                     string isDeletionProtected = accidentalDeletionBox.Checked.ToString();
                     if (addingUser)
                     {
                         string POSTdata = "API=" + Properties.Settings.Default.APIkey;
                         POSTdata += "&username=" + username + "&displayName=" + displayName + "&classID=" + classNum + "&admin=" + isAdmin + "&deletionProtection=" + isDeletionProtected;
-                        var data = Encoding.UTF8.GetBytes(POSTdata);
-                        var request = WebRequest.CreateHttp(Properties.Settings.Default.inUseDomain + "/summaries/api/changeUser.php");
-                        request.Method = "POST";
-                        request.ContentType = "application/x-www-form-urlencoded";
-                        request.ContentLength = data.Length;
-                        request.UserAgent = "app";
-                        //writes the post data to the stream
-                        using (var stream = request.GetRequestStream())
-                        {
-                            stream.Write(data, 0, data.Length);
-                            stream.Close();
-                        }
-                        //ler a resposta
-                        string finalData = "";
-                        using (var response = request.GetResponse())
-                        {
-                            var dataStream = response.GetResponseStream();
-                            StreamReader reader = new StreamReader(dataStream);
-                            finalData = reader.ReadToEnd();
-                            dataStream.Close();
-                            response.Close();
-                        }
 
                         simpleServerResponse serverResponse;
-                        serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(finalData);
+                        serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(functions.APIRequest(POSTdata, "changeUser.php"));
 
                         if (serverResponse.status)
                         {
@@ -526,28 +479,7 @@ namespace Summaries
                         DataGridViewRow selectedRow = userDataGrid.Rows[selectedrowindex];
                         int userToUpdate = Convert.ToInt32(selectedRow.Cells["userID"].Value.ToString());
                         string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&userID=" + userToUpdate + "&username=" + username + "&displayName=" + displayName + "&classID=" + classNum + "&admin=" + isAdmin + "&deletionProtection=" + isDeletionProtected;
-                        var data = Encoding.UTF8.GetBytes(POSTdata);
-                        var request = WebRequest.CreateHttp(Properties.Settings.Default.inUseDomain + "/summaries/api/changeUser.php");
-                        request.Method = "POST";
-                        request.ContentType = "application/x-www-form-urlencoded";
-                        request.ContentLength = data.Length;
-                        request.UserAgent = "app";
-                        //writes the post data to the stream
-                        using (var stream = request.GetRequestStream())
-                        {
-                            stream.Write(data, 0, data.Length);
-                            stream.Close();
-                        }
-                        //ler a resposta
-                        string finalData = "";
-                        using (var response = request.GetResponse())
-                        {
-                            var dataStream = response.GetResponseStream();
-                            StreamReader reader = new StreamReader(dataStream);
-                            finalData = reader.ReadToEnd();
-                            dataStream.Close();
-                            response.Close();
-                        }
+                        string finalData = functions.APIRequest(POSTdata, "changeUser.php");
 
                         simpleServerResponse serverResponse;
                         serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(finalData);
@@ -568,7 +500,7 @@ namespace Summaries
             }
             catch (Exception ex)
             {
-                MessageBox.Show("A critical error occurred. " + ex.Message, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("A critical error occurred. " + ex.Message + "\n" + ex.StackTrace, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.Close();
             }
 
@@ -597,34 +529,12 @@ namespace Summaries
                     {
                         try
                         {
+                            var functions = new codeResources.functions();
                             int userToDelete = Convert.ToInt32(selectedRow.Cells["userID"].Value.ToString());
                             string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&userID=" + userToDelete;
-                            var data = Encoding.UTF8.GetBytes(POSTdata);
-                            var request = WebRequest.CreateHttp(Properties.Settings.Default.inUseDomain + "/summaries/api/requestUserDelete.php");
-                            request.Method = "POST";
-                            request.ContentType = "application/x-www-form-urlencoded";
-                            request.ContentLength = data.Length;
-                            request.UserAgent = "app";
-                            //writes the post data to the stream
-                            using (var stream = request.GetRequestStream())
-                            {
-                                stream.Write(data, 0, data.Length);
-                                stream.Close();
-                            }
-                            //ler a resposta
-                            string finalData = "";
-                            using (var response = request.GetResponse())
-                            {
-                                var dataStream = response.GetResponseStream();
-                                StreamReader reader = new StreamReader(dataStream);
-                                finalData = reader.ReadToEnd();
-                                dataStream.Close();
-                                response.Close();
-                            }
 
                             simpleServerResponse serverResponse;
-
-                            serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(finalData);
+                            serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(functions.APIRequest(POSTdata, "requestUserDelete.php"));
 
                             if (serverResponse.status)
                             {
@@ -662,43 +572,21 @@ namespace Summaries
                 else
                 {
                     var functions = new codeResources.functions();
-                    string workspaceName = functions.HashPW(workspaceBOX.Text);
+                    string workspaceName = functions.Hash(workspaceBOX.Text);
                     string readMode = readCheckBox.Checked.ToString();
                     string writeMode = writeCheckBox.Checked.ToString();
                     if (addingWorkspace)
                     {
                         string POSTdata = "API=" + Properties.Settings.Default.APIkey;
                         POSTdata += "&name=" + workspaceName + "&readMode=" + readMode + "&writeMode=" + writeMode;
-                        var data = Encoding.UTF8.GetBytes(POSTdata);
-                        var request = WebRequest.CreateHttp(Properties.Settings.Default.inUseDomain + "/summaries/api/changeWorkspace.php");
-                        request.Method = "POST";
-                        request.ContentType = "application/x-www-form-urlencoded";
-                        request.ContentLength = data.Length;
-                        request.UserAgent = "app";
-                        //writes the post data to the stream
-                        using (var stream = request.GetRequestStream())
-                        {
-                            stream.Write(data, 0, data.Length);
-                            stream.Close();
-                        }
-                        //ler a resposta
-                        string finalData = "";
-                        using (var response = request.GetResponse())
-                        {
-                            var dataStream = response.GetResponseStream();
-                            StreamReader reader = new StreamReader(dataStream);
-                            finalData = reader.ReadToEnd();
-                            dataStream.Close();
-                            response.Close();
-                        }
 
                         simpleServerResponse serverResponse;
-                        serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(finalData);
+                        serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(functions.APIRequest(POSTdata, "changeWorkspace.php"));
 
                         if (serverResponse.status)
                         {
                             MessageBox.Show("New workspace " + workspaceBOX.Text + " created successfully!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            newUserBTN_Click(sender, e);
+                            addWorkspaceBTN_Click(sender, e);
                         }
                         else
                         {
@@ -709,38 +597,17 @@ namespace Summaries
                     else
                     {
                         int selectedWorkwspaceIndex = workspacesDataGrid.SelectedCells[0].RowIndex;
-                        DataGridViewRow selectedWorkspaceRow = userDataGrid.Rows[selectedWorkwspaceIndex];
+                        DataGridViewRow selectedWorkspaceRow = workspacesDataGrid.Rows[selectedWorkwspaceIndex];
                         int workspaceToUpdate = Convert.ToInt32(selectedWorkspaceRow.Cells["id"].Value.ToString());
-                        string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&workspaceID=" + workspaceToUpdate + "&name=" + workspaceBOX.Text + "&readMode=" + readMode + "&writeMode=" + writeMode;
-                        var data = Encoding.UTF8.GetBytes(POSTdata);
-                        var request = WebRequest.CreateHttp(Properties.Settings.Default.inUseDomain + "/summaries/api/changeWorkspace.php");
-                        request.Method = "POST";
-                        request.ContentType = "application/x-www-form-urlencoded";
-                        request.ContentLength = data.Length;
-                        request.UserAgent = "app";
-                        //writes the post data to the stream
-                        using (var stream = request.GetRequestStream())
-                        {
-                            stream.Write(data, 0, data.Length);
-                            stream.Close();
-                        }
-                        //ler a resposta
-                        string finalData = "";
-                        using (var response = request.GetResponse())
-                        {
-                            var dataStream = response.GetResponseStream();
-                            StreamReader reader = new StreamReader(dataStream);
-                            finalData = reader.ReadToEnd();
-                            dataStream.Close();
-                            response.Close();
-                        }
+                        string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&workspaceID=" + workspaceToUpdate + "&name=" + functions.Hash(workspaceBOX.Text) + "&readMode=" + readMode + "&writeMode=" + writeMode;
 
                         simpleServerResponse serverResponse;
-                        serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(finalData);
+                        serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(functions.APIRequest(POSTdata, "changeWorkspace.php"));
 
                         if (serverResponse.status)
                         {
                             MessageBox.Show("Edited workspace " + workspaceBOX.Text + " successfully!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            addWorkspaceBTN_Click(sender, e);
                         }
                         else
                         {
@@ -754,7 +621,7 @@ namespace Summaries
             }
             catch (Exception ex)
             {
-                MessageBox.Show("A critical error occurred. " + ex.Message, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("A critical error occurred. " + ex.Message + "\n" + ex.StackTrace, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.Close();
             }
         }
@@ -773,27 +640,40 @@ namespace Summaries
                     addingWorkspace = false;
                     addWorkspaceBTN.Text = "Add Workspace";
                     currentSelectedWorkspace = previousSelectedWorkspace;
-                    workspaceGRPBOX.Text = "Editing Workspace " + workspacesDataGrid.Rows[currentSelectedWorkspace].Cells["name"].Value.ToString();
-                    workspaceBOX.Text = workspacesDataGrid.Rows[currentSelectedWorkspace].Cells["name"].Value.ToString();
-                    flushSummariesBTN.Enabled = true;
-                    deleteWorkspaceBTN.Enabled = true;
-                    workspacesDataGrid.Enabled = true;
-                    if (workspacesDataGrid.Rows[currentSelectedWorkspace].Cells["readMode"].Value.ToString() == "True")
+                    workspaceGRPBOX.Text = "Editing Workspace";
+                    if(workspacesDataGrid.Rows.Count > 0)
                     {
-                        readCheckBox.Checked = true;
+                        workspaceBOX.Text = workspacesDataGrid.Rows[currentSelectedWorkspace].Cells["name"].Value.ToString();
+                        flushSummariesBTN.Enabled = true;
+                        deleteWorkspaceBTN.Enabled = true;
+                        workspacesDataGrid.Enabled = true;
+                        if (workspacesDataGrid.Rows[currentSelectedWorkspace].Cells["readMode"].Value.ToString() == "True")
+                        {
+                            readCheckBox.Checked = true;
+                        }
+                        else
+                        {
+                            readCheckBox.Checked = false;
+                        }
+                        if (workspacesDataGrid.Rows[currentSelectedWorkspace].Cells["writeMode"].Value.ToString() == "True")
+                        {
+                            writeCheckBox.Checked = true;
+                        }
+                        else
+                        {
+                            writeCheckBox.Checked = false;
+                        }
                     }
                     else
                     {
-                        readCheckBox.Checked = false;
+                        workspaceBOX.Clear();
+                        workspaceBOX.Enabled = false;
+                        flushSummariesBTN.Enabled = false;
+                        deleteWorkspaceBTN.Enabled = false;
+                        readCheckBox.Enabled = false;
+                        writeCheckBox.Enabled = false;
                     }
-                    if (workspacesDataGrid.Rows[currentSelectedWorkspace].Cells["writeMode"].Value.ToString() == "True")
-                    {
-                        writeCheckBox.Checked = true;
-                    }
-                    else
-                    {
-                        writeCheckBox.Checked = false;
-                    }
+                    
                 }
                 else
                 {
@@ -801,8 +681,12 @@ namespace Summaries
                     previousSelectedWorkspace = currentSelectedWorkspace;
                     currentSelectedWorkspace = 0;
                     workspaceBOX.Clear();
+                    workspaceBOX.Enabled = true;
+                    readCheckBox.Enabled = true;
                     readCheckBox.Checked = true;
                     writeCheckBox.Checked = true;
+                    writeCheckBox.Enabled = true;
+                    saveWorkspaceBTN.Enabled = true;
                     workspacesDataGrid.Enabled = false;
                     flushSummariesBTN.Enabled = false;
                     deleteWorkspaceBTN.Enabled = false;
@@ -824,7 +708,7 @@ namespace Summaries
                 int selectedWorkwspaceRowIndex = workspacesDataGrid.SelectedCells[0].RowIndex;
                 DataGridViewRow selectedWorkspaceRow = workspacesDataGrid.Rows[selectedWorkwspaceRowIndex];
                 currentSelectedWorkspace = selectedWorkwspaceRowIndex;
-                workspaceGRPBOX.Text = "Editing Workspace " + selectedWorkspaceRow.Cells["name"].Value.ToString();
+                workspaceGRPBOX.Text = "Editing Workspace";
                 workspaceBOX.Text = selectedWorkspaceRow.Cells["name"].Value.ToString();
                 if (selectedWorkspaceRow.Cells["readMode"].Value.ToString() == "True")
                 {
@@ -872,33 +756,12 @@ namespace Summaries
                 Properties.Settings.Default.typeTestSuccessfull = false;
                 try
                 {
+                    var functions = new codeResources.functions();
                     string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&workspaceID=" + Convert.ToInt32(selectedWorkspaceRow.Cells["id"].Value.ToString());
-                    var data = Encoding.UTF8.GetBytes(POSTdata);
-                    var request = WebRequest.CreateHttp(Properties.Settings.Default.inUseDomain + "/summaries/api/requestWorkspaceDelete.php");
-                    request.Method = "POST";
-                    request.ContentType = "application/x-www-form-urlencoded";
-                    request.ContentLength = data.Length;
-                    request.UserAgent = "app";
-                    //writes the post data to the stream
-                    using (var stream = request.GetRequestStream())
-                    {
-                        stream.Write(data, 0, data.Length);
-                        stream.Close();
-                    }
-                    //ler a resposta
-                    string finalData = "";
-                    using (var response = request.GetResponse())
-                    {
-                        var dataStream = response.GetResponseStream();
-                        StreamReader reader = new StreamReader(dataStream);
-                        finalData = reader.ReadToEnd();
-                        dataStream.Close();
-                        response.Close();
-                    }
 
                     simpleServerResponse serverResponse;
 
-                    serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(finalData);
+                    serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(functions.APIRequest(POSTdata, "requestWorkspaceDelete.php"));
 
                     if (serverResponse.status)
                     {
@@ -938,33 +801,12 @@ namespace Summaries
                 Properties.Settings.Default.typeTestSuccessfull = false;
                 try
                 {
+                    var functions = new codeResources.functions();
                     string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&workspaceID=" + Convert.ToInt32(selectedWorkspaceRow.Cells["id"].Value.ToString());
-                    var data = Encoding.UTF8.GetBytes(POSTdata);
-                    var request = WebRequest.CreateHttp(Properties.Settings.Default.inUseDomain + "/summaries/api/requestWorkspaceFlush.php");
-                    request.Method = "POST";
-                    request.ContentType = "application/x-www-form-urlencoded";
-                    request.ContentLength = data.Length;
-                    request.UserAgent = "app";
-                    //writes the post data to the stream
-                    using (var stream = request.GetRequestStream())
-                    {
-                        stream.Write(data, 0, data.Length);
-                        stream.Close();
-                    }
-                    //ler a resposta
-                    string finalData = "";
-                    using (var response = request.GetResponse())
-                    {
-                        var dataStream = response.GetResponseStream();
-                        StreamReader reader = new StreamReader(dataStream);
-                        finalData = reader.ReadToEnd();
-                        dataStream.Close();
-                        response.Close();
-                    }
 
                     simpleServerResponse serverResponse;
 
-                    serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(finalData);
+                    serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(functions.APIRequest(POSTdata, "requestWorkspaceFlush.php"));
 
                     if (serverResponse.status)
                     {
@@ -988,6 +830,150 @@ namespace Summaries
         private void classesRefreshBTN_Click(object sender, EventArgs e)
         {
             AdministrationPanel_Load(sender, e);
+        }
+
+        private void classSave_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (classNameBOX.TextLength < 1)
+                {
+                    MessageBox.Show("Please fill all the fields before continue.", "Blank fileds", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else
+                {
+                    var functions = new codeResources.functions();
+                    if (addingClass)
+                    {
+                        string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&name=" + functions.Hash(classNameBOX.Text);
+                        simpleServerResponse serverResponse;
+                        serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(functions.APIRequest(POSTdata, "changeClass.php"));
+
+                        if (serverResponse.status)
+                        {
+                            MessageBox.Show("New class " + classNameBOX.Text + " created successfully!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            addClassBTN_Click(sender, e);
+                        }
+                        else
+                        {
+                            MessageBox.Show("A critical error occurred. " + serverResponse.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            this.Close();
+                        }
+                    }
+                    else
+                    {
+                        int selectedClassIndex = classesDataGrid.SelectedCells[0].RowIndex;
+                        DataGridViewRow selectedClassRow = classesDataGrid.Rows[selectedClassIndex];
+                        int classToUpdate = Convert.ToInt32(selectedClassRow.Cells["classID"].Value.ToString());
+                        string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&classID=" + classToUpdate + "&name=" + functions.Hash(classNameBOX.Text);
+
+                        simpleServerResponse serverResponse;
+                        serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(functions.APIRequest(POSTdata, "changeClass.php"));
+
+                        if (serverResponse.status)
+                        {
+                            MessageBox.Show("Edited class " + classNameBOX.Text + " successfully!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("A critical error occurred. " + serverResponse.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            this.Close();
+                        }
+
+                    }
+                }
+                AdministrationPanel_Load(sender, e);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("A critical error occurred. " + ex.Message, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
+            }
+        }
+
+        private void deleteClassBTN_Click(object sender, EventArgs e)
+        {
+            int selectedClassIndex = classesDataGrid.SelectedCells[0].RowIndex;
+            DataGridViewRow selectedClassRow = classesDataGrid.Rows[selectedClassIndex];
+
+            if(Convert.ToInt32(selectedClassRow.Cells["classID"].Value) == 0)
+            {
+                MessageBox.Show("That class cannot be deleted!", "Code level protection", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                codeResources.confirmByTyping writtenConfirmation = new codeResources.confirmByTyping(selectedClassRow.Cells["className"].Value.ToString());
+                Properties.Settings.Default.typeTestSuccessfull = false; // just to be sure
+                writtenConfirmation.ShowDialog();
+
+                if (Properties.Settings.Default.typeTestSuccessfull)
+                {
+                    Properties.Settings.Default.typeTestSuccessfull = false;
+                    try
+                    {
+                        var functions = new codeResources.functions();
+                        string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&classID=" + Convert.ToInt32(selectedClassRow.Cells["classID"].Value.ToString());
+
+                        simpleServerResponse serverResponse;
+
+                        serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(functions.APIRequest(POSTdata, "deleteClassRequest.php"));
+
+                        if (serverResponse.status)
+                        {
+                            MessageBox.Show("Class Deleted Successfully!", "Class Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            AdministrationPanel_Load(sender, e);
+                        }
+                        else
+                        {
+                            MessageBox.Show("A critical error occurred. " + serverResponse.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            this.Close();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("A critical error occurred. " + ex.Message + "\n" + ex.StackTrace, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        this.Close();
+                    }
+                }
+            }
+        }
+
+        private void addClassBTN_Click(object sender, EventArgs e)
+        {
+            if (addingClass)
+            {
+                addingClass = false;
+                addClassBTN.Text = "Add Class";
+                currentSelectedClass = previousSelectedClass;
+                infoGBox.Text = "Editing Class " + classesDataGrid.Rows[currentSelectedClass].Cells["className"].Value.ToString();
+                deleteClassBTN.Enabled = true;
+                classesDataGrid.Enabled = true;
+                classNameBOX.Text = classesDataGrid.Rows[currentSelectedClass].Cells["className"].Value.ToString();
+            }
+            else
+            {
+                addingClass = true;
+                previousSelectedClass = currentSelectedClass;
+                currentSelectedClass = 0;
+                classNameBOX.Clear();
+                deleteClassBTN.Enabled = false;
+                classesDataGrid.Enabled = false;
+                addClassBTN.Text = "Cancel";
+                classGRP.Text = "Adding Class";
+            }
+        }
+
+        private void classesDataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (classesDataGrid.SelectedRows.Count > 0 || classesDataGrid.SelectedCells.Count > 0)
+            {
+                int selectedClassRowIndex = classesDataGrid.SelectedCells[0].RowIndex;
+                DataGridViewRow selectedClassRow = classesDataGrid.Rows[selectedClassRowIndex];
+                currentSelectedrow = selectedClassRowIndex;
+                classNameBOX.Text = selectedClassRow.Cells["className"].Value.ToString();
+
+                deleteClassBTN.Enabled = true;
+            }
         }
     }
 }

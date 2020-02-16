@@ -44,7 +44,8 @@ namespace Summaries
                         try
                         {
                             var functions = new codeResources.functions();
-                            jsonResponse = ChangePassword(Properties.Settings.Default.userID, functions.HashPW(currentPasswordBox.Text), functions.HashPW(newPasswordBox.Text));
+                            string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&userID=" + Properties.Settings.Default.userID + "&oldpsswd=" + functions.Hash(currentPasswordBox.Text) + "&newpsswd=" + functions.Hash(newPasswordBox.Text);
+                            jsonResponse = functions.APIRequest(POSTdata, "changePassword.php");
                             simpleServerResponse response;
                             response = JsonConvert.DeserializeObject<simpleServerResponse>(jsonResponse);
 
@@ -84,41 +85,6 @@ namespace Summaries
                     MessageBox.Show("The new passwords don't match. Please try again.", "The passwords don't match", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-        }
-
-        /// <summary>
-        /// Sends a request to the server to change the password of the user
-        /// </summary>
-        /// <param name="userID">The id of the user wich password should be changed</param>
-        /// <param name="oldPassword">The old user's password (in BASE64)</param>
-        /// <param name="newPassword">The new password to change to (in BASE64)</param>
-        /// <returns></returns>
-        public static string ChangePassword(int userID, string oldPassword, string newPassword)
-        {
-            string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&userID=" + userID + "&oldpsswd=" + oldPassword + "&newpsswd=" + newPassword;
-            var data = Encoding.UTF8.GetBytes(POSTdata);
-            var request = WebRequest.CreateHttp(Properties.Settings.Default.inUseDomain + "/summaries/api/changePassword.php");
-            request.Method = "POST";
-            request.ContentType = "application/x-www-form-urlencoded";
-            request.ContentLength = data.Length;
-            request.UserAgent = "app";
-            //writes the post data to the stream
-            using (var stream = request.GetRequestStream())
-            {
-                stream.Write(data, 0, data.Length);
-                stream.Close();
-            }
-            //ler a resposta
-            string finalData = "";
-            using (var response = request.GetResponse())
-            {
-                var dataStream = response.GetResponseStream();
-                StreamReader reader = new StreamReader(dataStream);
-                finalData = reader.ReadToEnd();
-                dataStream.Close();
-                response.Close();
-            }
-            return finalData;
         }
 
         private void currentPasswordBox_KeyPress(object sender, KeyPressEventArgs e)

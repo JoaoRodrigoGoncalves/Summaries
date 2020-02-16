@@ -19,7 +19,7 @@ namespace Summaries.codeResources
         /// </summary>
         /// <param name="text">String to hash</param>
         /// <returns>The string in BASE64</returns>
-        public string HashPW(string text)
+        public string Hash(string text)
         {
             var plainTextBytes = Encoding.UTF8.GetBytes(text);
             return Convert.ToBase64String(plainTextBytes);
@@ -45,46 +45,15 @@ namespace Summaries.codeResources
         }
 
         /// <summary>
-        /// Requests all the registered classes from the database
+        /// Calls the given function on the API with the provided POST data
         /// </summary>
-        /// <returns>JSON string</returns>
-        public string RequestClassesList()
+        /// <param name="POSTdata">The Information required to send to the web server</param>
+        /// <param name="APIFile">The API File on the web server to get the info from</param>
+        /// <returns>Returns a JSON string with que server response</returns>
+        public string APIRequest(string POSTdata, string APIFile)
         {
-            string POSTdata = "API=" + Properties.Settings.Default.APIkey;
             var data = Encoding.UTF8.GetBytes(POSTdata);
-            var request = WebRequest.CreateHttp(Properties.Settings.Default.inUseDomain + "/summaries/api/classListRequest.php");
-            request.Method = "POST";
-            request.ContentType = "application/x-www-form-urlencoded";
-            request.ContentLength = data.Length;
-            request.UserAgent = "app";
-            //writes the post data to the stream
-            using (var stream = request.GetRequestStream())
-            {
-                stream.Write(data, 0, data.Length);
-                stream.Close();
-            }
-            //ler a resposta
-            string finalData = "";
-            using (var response = request.GetResponse())
-            {
-                var dataStream = response.GetResponseStream();
-                StreamReader reader = new StreamReader(dataStream);
-                finalData = reader.ReadToEnd();
-                dataStream.Close();
-                response.Close();
-            }
-            return finalData;
-        }
-
-        /// <summary>
-        /// Requests all registered workspaces
-        /// </summary>
-        /// <returns>Returns a JSON string with all the workspaces and their information</returns>
-        public string RequestAllWorkspaces()
-        {
-            string POSTdata = "API=" + Properties.Settings.Default.APIkey;
-            var data = Encoding.UTF8.GetBytes(POSTdata);
-            var request = WebRequest.CreateHttp(Properties.Settings.Default.inUseDomain + "/summaries/api/workspaceListRequest.php");
+            var request = WebRequest.CreateHttp(Properties.Settings.Default.inUseDomain + "/summaries/api/" + APIFile);
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";
             request.ContentLength = data.Length;
