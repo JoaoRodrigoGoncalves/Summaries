@@ -52,27 +52,40 @@ namespace Summaries.codeResources
         /// <returns>Returns a JSON string with que server response</returns>
         public string APIRequest(string POSTdata, string APIFile)
         {
-            var data = Encoding.UTF8.GetBytes(POSTdata);
-            var request = WebRequest.CreateHttp(Properties.Settings.Default.inUseDomain + "/summaries/api/" + APIFile);
-            request.Method = "POST";
-            request.ContentType = "application/x-www-form-urlencoded";
-            request.ContentLength = data.Length;
-            request.UserAgent = "app";
-            //writes the post data to the stream
-            using (var stream = request.GetRequestStream())
-            {
-                stream.Write(data, 0, data.Length);
-                stream.Close();
-            }
-            //ler a resposta
             string finalData = "";
-            using (var response = request.GetResponse())
+            try
             {
-                var dataStream = response.GetResponseStream();
-                StreamReader reader = new StreamReader(dataStream);
-                finalData = reader.ReadToEnd();
-                dataStream.Close();
-                response.Close();
+                var data = Encoding.UTF8.GetBytes(POSTdata);
+                var request = WebRequest.CreateHttp(Properties.Settings.Default.inUseDomain + "/summaries/api/" + APIFile);
+                request.Method = "POST";
+                request.ContentType = "application/x-www-form-urlencoded";
+                request.ContentLength = data.Length;
+                request.UserAgent = "app";
+                //writes the post data to the stream
+                using (var stream = request.GetRequestStream())
+                {
+                    stream.Write(data, 0, data.Length);
+                    stream.Close();
+                }
+                //ler a resposta
+                using (var response = request.GetResponse())
+                {
+                    var dataStream = response.GetResponseStream();
+                    StreamReader reader = new StreamReader(dataStream);
+                    finalData = reader.ReadToEnd();
+                    dataStream.Close();
+                    response.Close();
+                }
+                
+            }
+            catch(Exception ex)
+            {
+                if (CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+                {
+                    finalData = "{\"status\":\"false\", \"errors\":\"" + ex.Message + "\"}";  
+                }else{
+                    finalData = "{\"status\":\"false\", \"errors\":\"Erro ao aceder á internet\"}";
+                }
             }
             return finalData;
         }
