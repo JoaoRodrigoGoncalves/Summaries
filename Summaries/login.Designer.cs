@@ -36,6 +36,7 @@
             this.passwordBox = new System.Windows.Forms.TextBox();
             this.loginBTN = new System.Windows.Forms.Button();
             this.resetBTN = new System.Windows.Forms.Button();
+            this.credentialsWarningLB = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -85,7 +86,7 @@
             // 
             // loginBTN
             // 
-            this.loginBTN.Location = new System.Drawing.Point(275, 86);
+            this.loginBTN.Location = new System.Drawing.Point(275, 96);
             this.loginBTN.Name = "loginBTN";
             this.loginBTN.Size = new System.Drawing.Size(75, 23);
             this.loginBTN.TabIndex = 3;
@@ -96,7 +97,7 @@
             // resetBTN
             // 
             this.resetBTN.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.resetBTN.Location = new System.Drawing.Point(176, 86);
+            this.resetBTN.Location = new System.Drawing.Point(181, 96);
             this.resetBTN.Name = "resetBTN";
             this.resetBTN.Size = new System.Drawing.Size(75, 23);
             this.resetBTN.TabIndex = 4;
@@ -104,12 +105,24 @@
             this.resetBTN.UseVisualStyleBackColor = true;
             this.resetBTN.Click += new System.EventHandler(this.resetBTN_Click);
             // 
+            // credentialsWarningLB
+            // 
+            this.credentialsWarningLB.AutoSize = true;
+            this.credentialsWarningLB.ForeColor = System.Drawing.Color.Red;
+            this.credentialsWarningLB.Location = new System.Drawing.Point(71, 80);
+            this.credentialsWarningLB.Name = "credentialsWarningLB";
+            this.credentialsWarningLB.Size = new System.Drawing.Size(200, 13);
+            this.credentialsWarningLB.TabIndex = 5;
+            this.credentialsWarningLB.Text = "The Username or Password are incorrect";
+            this.credentialsWarningLB.Visible = false;
+            // 
             // login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.resetBTN;
-            this.ClientSize = new System.Drawing.Size(490, 122);
+            this.ClientSize = new System.Drawing.Size(490, 131);
+            this.Controls.Add(this.credentialsWarningLB);
             this.Controls.Add(this.resetBTN);
             this.Controls.Add(this.loginBTN);
             this.Controls.Add(this.passwordBox);
@@ -138,5 +151,6 @@
         private System.Windows.Forms.TextBox passwordBox;
         private System.Windows.Forms.Button loginBTN;
         private System.Windows.Forms.Button resetBTN;
+        private System.Windows.Forms.Label credentialsWarningLB;
     }
 }

@@ -94,7 +94,7 @@ namespace Summaries
                     {
                         if ((response.errors == null) || (response.errors.Length < 1))
                         {
-                            MessageBox.Show("Username or Password are incorrect.", "Wrong credentials", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            credentialsWarningLB.Visible = true;
                         }
                         else
                         {

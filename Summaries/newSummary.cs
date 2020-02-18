@@ -68,6 +68,11 @@ namespace Summaries
 
         serverResponse response;
         workspacesServerResponse workspaces;
+        string jsonWorkspace = "";
+        string jsonResponse = "";
+        string jsonSaveResponse = "";
+        string savePOSTdata = "API=" + Properties.Settings.Default.APIkey;
+        bool shouldAbortLoad = false;
 
         public newSummary(int summaryid = 0)
         {
@@ -77,145 +82,174 @@ namespace Summaries
             summaryID = summaryid;
         }
 
-        private void newSummary_Load(object sender, EventArgs e)
+        private void APICalls()
         {
-            workspaceComboBox.Items.Clear();
             var functions = new codeResources.functions();
-            string jsonWorkspace = "";
-            string jsonResponse = "";
-            try
+            if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
             {
                 jsonWorkspace = functions.APIRequest("API=" + Properties.Settings.Default.APIkey, "workspaceListRequest.php");
                 workspaces = JsonConvert.DeserializeObject<workspacesServerResponse>(jsonWorkspace);
                 string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&userid=" + Properties.Settings.Default.userID + "&workspace=0";
                 jsonResponse = functions.APIRequest(POSTdata, "summaryListRequest.php");
-                response = JsonConvert.DeserializeObject<serverResponse>(jsonResponse);
+            }
+            else
+            {
+                shouldAbortLoad = true;
+                MessageBox.Show("Lost connection to ther server. Please try again.", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
-                if (workspaces.contents == null)
+        private void APISave()
+        {
+            var functions = new codeResources.functions();
+            jsonSaveResponse = functions.APIRequest(savePOSTdata, "summaryUpdateRequest.php");
+        }
+
+        private void newSummary_Load(object sender, EventArgs e)
+        {
+            workspaceComboBox.Items.Clear();
+            var functions = new codeResources.functions();
+            using(codeResources.loadingForm form = new codeResources.loadingForm(APICalls))
+            {
+                form.ShowDialog();
+            }
+
+            if (shouldAbortLoad)
+            {
+                this.Close();
+            }
+            else
+            {
+                try
                 {
-                    MessageBox.Show("Cannot create summaries because there are no available workspaces!", "No available workspaces", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    this.Close();
-                }
-                else
-                {
-                    foreach (workspacesContent content in workspaces.contents)
+                    response = JsonConvert.DeserializeObject<serverResponse>(jsonResponse);
+
+                    if (workspaces.contents == null)
                     {
-                        if (content.read)
-                        {
-                            workspaceComboBox.Items.Add(content.name);
-                        }
+                        MessageBox.Show("Cannot create summaries because there are no available workspaces!", "No available workspaces", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        this.Close();
                     }
-
-                    try
+                    else
                     {
-
-                        if (response.status)
+                        foreach (workspacesContent content in workspaces.contents)
                         {
-                            //******* just to reinforce
-                            dateBox.CustomFormat = "yyyy-MM-dd";
-                            dateBox.Format = DateTimePickerFormat.Custom;
-                            //******* just to reinforce
-                            if (summaryID != 0)
+                            if (content.read)
                             {
-                                isEdit = true;
+                                workspaceComboBox.Items.Add(content.name);
                             }
+                        }
 
-                            if (isEdit)
+                        try
+                        {
+
+                            if (response.status)
                             {
-                                this.Text = "Edit Summary";
-                                summaryNumberBox.Value = summaryID;
-                                dateBox.Value = DateTime.ParseExact(response.contents[summaryID - 1].date, "yyyy-MM-dd", new CultureInfo("pt"));
-                                contentsBox.Text = response.contents[summaryID - 1].contents;
-                                originalText = functions.Hash(response.contents[summaryID - 1].contents);
-                                originalDate = response.contents[summaryID - 1].date;
-                                originalWorkspaceID = response.contents[summaryID - 1].workspace;
-                                originalSummaryID = summaryID;
-                                dbRow = response.contents[summaryID - 1].id;
-                                if (response.contents[summaryID - 1].attachments != null)
+                                //******* just to reinforce
+                                dateBox.CustomFormat = "yyyy-MM-dd";
+                                dateBox.Format = DateTimePickerFormat.Custom;
+                                //******* just to reinforce
+                                if (summaryID != 0)
                                 {
-                                    foreach (var attach in response.contents[summaryID - 1].attachments)
-                                    {
-                                        filesToUpload.Add(attach.path);
-                                    }
+                                    isEdit = true;
                                 }
 
-                            }
-                            else
-                            {
-
-                                if (Properties.Settings.Default.currentWorkspaceID == 0)
+                                if (isEdit)
                                 {
-                                    // Workspace not defined yet
-                                    workspaceComboBox.SelectedIndex = 0;
-                                    Properties.Settings.Default.currentWorkspaceID = workspaces.contents[workspaces.contents.FindIndex(z => z.name == workspaceComboBox.Text)].id;
+                                    this.Text = "Edit Summary";
+                                    summaryNumberBox.Value = summaryID;
+                                    dateBox.Value = DateTime.ParseExact(response.contents[summaryID - 1].date, "yyyy-MM-dd", new CultureInfo("pt"));
+                                    contentsBox.Text = response.contents[summaryID - 1].contents;
+                                    originalText = functions.Hash(response.contents[summaryID - 1].contents);
+                                    originalDate = response.contents[summaryID - 1].date;
+                                    originalWorkspaceID = response.contents[summaryID - 1].workspace;
+                                    originalSummaryID = summaryID;
+                                    dbRow = response.contents[summaryID - 1].id;
+                                    if (response.contents[summaryID - 1].attachments != null)
+                                    {
+                                        foreach (var attach in response.contents[summaryID - 1].attachments)
+                                        {
+                                            filesToUpload.Add(attach.path);
+                                        }
+                                    }
+
                                 }
                                 else
                                 {
-                                    workspaceComboBox.SelectedItem = workspaces.contents[workspaces.contents.FindIndex(c => c.id == Properties.Settings.Default.currentWorkspaceID)].name;
 
-                                    if (response.contents != null)
+                                    if (Properties.Settings.Default.currentWorkspaceID == 0)
                                     {
-                                        List<Content> workspaceRelated = new List<Content>();
-                                        foreach (Content row in response.contents)
-                                        {
-                                            if (row.workspace == Properties.Settings.Default.currentWorkspaceID)
-                                            {
-                                                workspaceRelated.Add(row);
-                                            }
-                                        }
+                                        // Workspace not defined yet
+                                        workspaceComboBox.SelectedIndex = 0;
+                                        Properties.Settings.Default.currentWorkspaceID = workspaces.contents[workspaces.contents.FindIndex(z => z.name == workspaceComboBox.Text)].id;
+                                    }
+                                    else
+                                    {
+                                        workspaceComboBox.SelectedItem = workspaces.contents[workspaces.contents.FindIndex(c => c.id == Properties.Settings.Default.currentWorkspaceID)].name;
 
-                                        if (workspaceRelated.Count > 0)
+                                        if (response.contents != null)
                                         {
-                                            summaryNumberBox.Value = workspaceRelated[workspaceRelated.Count - 1].summaryNumber + 1;
+                                            List<Content> workspaceRelated = new List<Content>();
+                                            foreach (Content row in response.contents)
+                                            {
+                                                if (row.workspace == Properties.Settings.Default.currentWorkspaceID)
+                                                {
+                                                    workspaceRelated.Add(row);
+                                                }
+                                            }
+
+                                            if (workspaceRelated.Count > 0)
+                                            {
+                                                summaryNumberBox.Value = workspaceRelated[workspaceRelated.Count - 1].summaryNumber + 1;
+                                            }
+                                            else
+                                            {
+                                                summaryNumberBox.Value = 1;
+                                            }
                                         }
                                         else
                                         {
                                             summaryNumberBox.Value = 1;
                                         }
-                                    }
-                                    else
-                                    {
-                                        summaryNumberBox.Value = 1;
-                                    }
 
+                                    }
+                                    dateBox.Value = DateTime.ParseExact(DateTime.Today.ToString("yyyy-MM-dd"), "yyyy-MM-dd", new CultureInfo("pt"));
                                 }
-                                dateBox.Value = DateTime.ParseExact(DateTime.Today.ToString("yyyy-MM-dd"), "yyyy-MM-dd", new CultureInfo("pt"));
-                            }
 
-                            if (!workspaces.contents[workspaces.contents.FindIndex(x => x.id == Properties.Settings.Default.currentWorkspaceID)].write)
+                                if (!workspaces.contents[workspaces.contents.FindIndex(x => x.id == Properties.Settings.Default.currentWorkspaceID)].write)
+                                {
+                                    workspaceComboBox.Enabled = false;
+                                    summaryNumberBox.Enabled = false;
+                                    dateBox.Enabled = false;
+                                    contentsBox.ReadOnly = true;
+                                    saveBTN.Enabled = false;
+                                    removeCurrentBTN.Enabled = false;
+                                    selectfileBTN.Enabled = false;
+                                }
+
+                            }
+                            else
                             {
-                                workspaceComboBox.Enabled = false;
-                                summaryNumberBox.Enabled = false;
-                                dateBox.Enabled = false;
-                                contentsBox.ReadOnly = true;
-                                saveBTN.Enabled = false;
-                                removeCurrentBTN.Enabled = false;
-                                selectfileBTN.Enabled = false;
+                                MessageBox.Show("Error: " + response.errors, "Critical error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
-
                         }
-                        else
+                        catch (Exception ex)
                         {
-                            MessageBox.Show("Error: " + response.errors, "Critical error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Critical error. " + ex.Message + "\n" + ex.StackTrace + "\n" + jsonResponse, "Critical Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
+
                     }
-                    catch (Exception ex)
+
+                }
+                catch (Exception ex)
+                {
+                    if (!functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
                     {
-                        MessageBox.Show("Critical error. " + ex.Message + "\n" + ex.StackTrace + "\n" + jsonResponse, "Critical Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Connection to the server lost. Please try again later.", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-
-                }
-
-            }
-            catch (Exception ex)
-            {
-                if (!functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
-                {
-                    MessageBox.Show("Connection to the server lost. Please try again later.", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                else
-                {
-                    MessageBox.Show("Critical error: " + ex.Message + "\n" + jsonWorkspace + "\n" + ex.StackTrace + "\n" + ex.InnerException, "Critical error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    else
+                    {
+                        MessageBox.Show("Critical error: " + ex.Message + "\n" + jsonWorkspace + "\n" + ex.StackTrace + "\n" + ex.InnerException, "Critical error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
         }
@@ -226,6 +260,7 @@ namespace Summaries
             {
                 this.Close();
             }
+
             bool shouldAbort = false;
             if (!isEdit)
             {
@@ -249,9 +284,6 @@ namespace Summaries
                             }
                         }
                     }
-
-                    //isInList = response.contents.Exists(x => x.summaryNumber == Convert.ToInt32(summaryNumberBox.Value));
-                    //isDateUsed = response.contents.Exists(y => y.date == dateBox.Value.ToString("yyyy-MM-dd"));
                 }
                 catch (NullReferenceException)
                 {
@@ -338,30 +370,32 @@ namespace Summaries
         private bool UpdateDB(int summaryID, string date, string text, int workspaceID, int dbRowID = 0)
         {
             var functions = new codeResources.functions();
-            string POSTdata = "API=" + Properties.Settings.Default.APIkey;
             if(dbRowID > 0)
             {
-                POSTdata += "&userID=" + Properties.Settings.Default.userID + "&workspace=" + workspaceID + "&dbrowID=" + dbRowID + "&summaryID=" + summaryID + "&date=" + functions.Hash(date) + "&contents=" + functions.Hash(text);
+                savePOSTdata += "&userID=" + Properties.Settings.Default.userID + "&workspace=" + workspaceID + "&dbrowID=" + dbRowID + "&summaryID=" + summaryID + "&date=" + functions.Hash(date) + "&contents=" + functions.Hash(text);
             }
             else
             {
-                POSTdata += "&userID=" + Properties.Settings.Default.userID + "&workspace=" + workspaceID + "&summaryID=" + summaryID + "&date=" + functions.Hash(date) + "&contents=" + functions.Hash(text);
+                savePOSTdata += "&userID=" + Properties.Settings.Default.userID + "&workspace=" + workspaceID + "&summaryID=" + summaryID + "&date=" + functions.Hash(date) + "&contents=" + functions.Hash(text);
             }
-            string jsonResponse = functions.APIRequest(POSTdata, "summaryUpdateRequest.php");
-            
+
+            using (codeResources.loadingForm loadForm = new codeResources.loadingForm(APISave)) {
+                loadForm.ShowDialog();
+            }
+
             simpleServerResponse serverResponse;
             try
             {
-                serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(jsonResponse);
+                serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(jsonSaveResponse);
             }catch(Exception ex)
             {
-                MessageBox.Show("Error: " + ex.Message + "\n " + jsonResponse, "Critital Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error: " + ex.Message + "\n " + jsonSaveResponse, "Critital Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             
             if(!serverResponse.status && (serverResponse.errors != null || serverResponse.errors.Length > 0))
             {
-                MessageBox.Show("Error: " + serverResponse.errors + "\n " + jsonResponse, "Critital backend error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error: " + serverResponse.errors, "Critital backend error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             return serverResponse.status;
         }

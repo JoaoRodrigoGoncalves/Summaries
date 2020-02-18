@@ -84,7 +84,7 @@ namespace Summaries.codeResources
                 {
                     finalData = "{\"status\":\"false\", \"errors\":\"" + ex.Message + "\"}";  
                 }else{
-                    finalData = "{\"status\":\"false\", \"errors\":\"Erro ao aceder á internet\"}";
+                    finalData = "{\"status\":\"false\", \"errors\":\"Lost Connection to the Server\"}";
                 }
             }
             return finalData;

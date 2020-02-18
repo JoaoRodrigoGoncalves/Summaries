@@ -1,8 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.IO;
-using System.Net;
-using System.Text;
 using System.Windows.Forms;
 using static Summaries.codeResources.functions;
 
@@ -15,8 +12,35 @@ namespace Summaries
             InitializeComponent();
         }
 
-        private void changePassword_Shown(object sender, EventArgs e)
+        simpleServerResponse response;
+        string jsonResponse = "";
+        string POSTdata = string.Empty;
+        bool shouldAbort = false;
+
+        //https://stackoverflow.com/questions/10775367/cross-thread-operation-not-valid-control-textbox1-accessed-from-a-thread-othe/10775421#comment43031144_10775421
+
+        delegate void closeCallBack();
+        private void checkConnection()
         {
+            var functions = new codeResources.functions();
+            if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+            { 
+                POSTdata = "API=" + Properties.Settings.Default.APIkey + "&userID=" + Properties.Settings.Default.userID + "&oldpsswd=" + functions.Hash(currentPasswordBox.Text) + "&newpsswd=" + functions.Hash(newPasswordBox.Text);
+                jsonResponse = functions.APIRequest(POSTdata, "changePassword.php");
+            }
+            else
+            {
+                shouldAbort = true;
+                MessageBox.Show("Lost Connection to the server. Please try again later!", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void changePassword_Load(object sender, EventArgs e)
+        {
+            using (codeResources.loadingForm form = new codeResources.loadingForm(checkConnection))
+            {
+                form.ShowDialog();
+            }
             this.Text += Properties.Settings.Default.displayName;
             usernameBox.Text = Properties.Settings.Default.username;
         }
@@ -25,7 +49,6 @@ namespace Summaries
         {
             currentPasswordBox.Clear();
             newPasswordBox.Clear();
-            confirmPasswordBox.Clear();
         }
 
         private void changeBTN_Click(object sender, EventArgs e)
@@ -40,37 +63,44 @@ namespace Summaries
                 {
                     if (newPasswordBox.Text != currentPasswordBox.Text)
                     {
-                        string jsonResponse = "";
+                        var functions = new codeResources.functions();
                         try
                         {
-                            var functions = new codeResources.functions();
-                            string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&userID=" + Properties.Settings.Default.userID + "&oldpsswd=" + functions.Hash(currentPasswordBox.Text) + "&newpsswd=" + functions.Hash(newPasswordBox.Text);
-                            jsonResponse = functions.APIRequest(POSTdata, "changePassword.php");
-                            simpleServerResponse response;
-                            response = JsonConvert.DeserializeObject<simpleServerResponse>(jsonResponse);
-
-                            if (!response.status)
+                            using (codeResources.loadingForm form = new codeResources.loadingForm(checkConnection))
                             {
-                                if ((response.errors == null) || (response.errors.Length < 1))
-                                {
-                                    currentPasswordBox.Clear();
-                                    MessageBox.Show("The given 'Current Password' is incorrect. Please try again.", "Password Incorrect", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                }
-                                else
-                                {
-                                    MessageBox.Show("Error: " + response.errors, "Critital Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                }
+                                form.ShowDialog();
+                            }
+
+                            if (shouldAbort)
+                            {
+                                this.Close();
                             }
                             else
                             {
-                                MessageBox.Show("Password Changed Successfully!", "Password Changed", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                this.Close();
+                                response = JsonConvert.DeserializeObject<simpleServerResponse>(jsonResponse);
+
+                                if (!response.status)
+                                {
+                                    if ((response.errors == null) || (response.errors.Length < 1))
+                                    {
+                                        currentPasswordBox.Clear();
+                                        MessageBox.Show("The given 'Current Password' is incorrect. Please try again.", "Password Incorrect", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("Error: " + response.errors, "Critital Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    }
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Password Changed Successfully!", "Password Changed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    this.Close();
+                                }
                             }
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show(ex.Message, "Critital Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            MessageBox.Show(jsonResponse, "Critical Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(ex.Message + "\n" + ex.StackTrace + "\n" + jsonResponse, "Critital Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                     else
@@ -129,43 +159,6 @@ namespace Summaries
         private void cancelBTN_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        //https://stackoverflow.com/questions/10775367/cross-thread-operation-not-valid-control-textbox1-accessed-from-a-thread-othe/10775421#comment43031144_10775421
-
-        delegate void closeCallBack();
-        
-        private void CloseForm()
-        {
-            // InvokeRequired required compares the thread ID of the
-            // calling thread to the thread ID of the creating thread.
-            // If these threads are different, it returns true.
-            if (this.InvokeRequired)
-            {
-                closeCallBack form = new closeCallBack(CloseForm);
-                this.Invoke(form);
-            }
-            else
-            {
-                this.Close();
-            }
-        }
-
-        private void checkConnection()
-        {
-            var functions = new codeResources.functions();
-            if (!functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain)){
-                MessageBox.Show("Lost Connection to the server. Please try again later!", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                CloseForm();
-            }
-        }
-
-        private void changePassword_Load(object sender, EventArgs e)
-        {
-            using (codeResources.loadingForm form = new codeResources.loadingForm(checkConnection))
-            {
-                form.ShowDialog();
-            }
         }
     }
 }

@@ -49,3 +49,4 @@ D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.csprojAssemblyRefere
 D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.codeResources.confirmByTyping.resources
 C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.codeResources.confirmByTyping.resources
 D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.codeResources.loadingForm.resources
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.codeResources.loadingForm.resources

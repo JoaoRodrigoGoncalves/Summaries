@@ -76,102 +76,132 @@ namespace Summaries
         }
 
         classServerResponse classServer;
+        serverResponse response;
+        workspacesResponse workspacesServerResponse;
+        bool shouldAbort = false;
+        string jsonResponse = "";
+        string classJsonResponse = "";
+        string workspaceJsonResponse = "";
+
+        private void APICalls()
+        {
+            var functions = new codeResources.functions();
+            if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+            {
+                jsonResponse = functions.APIRequest("API=" + Properties.Settings.Default.APIkey, "userListRequest.php");
+                classJsonResponse = functions.APIRequest("API=" + Properties.Settings.Default.APIkey, "classListRequest.php");
+                workspaceJsonResponse = functions.APIRequest("API=" + Properties.Settings.Default.APIkey, "workspaceListRequest.php");
+            }
+            else
+            {
+                shouldAbort = true;
+                MessageBox.Show("Lost connection to the server. Please try again.", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
         private void AdministrationPanel_Load(object sender, EventArgs e)
         {
             try
             {
                 var functions = new codeResources.functions();
-                string jsonResponse = functions.APIRequest("API=" + Properties.Settings.Default.APIkey, "userListRequest.php");
-                serverResponse response;
-                response = JsonConvert.DeserializeObject<serverResponse>(jsonResponse);
-                string classJsonResponse = functions.APIRequest("API=" + Properties.Settings.Default.APIkey, "classListRequest.php");
-                classServer = JsonConvert.DeserializeObject<classServerResponse>(classJsonResponse);
-
-
-                if (response.status && classServer.status)
+                using(codeResources.loadingForm form = new codeResources.loadingForm(APICalls))
                 {
-                    classBox.Items.Clear();
-                    userDataGrid.Rows.Clear();
-                    userDataGrid.Refresh();
-                    userDataGrid.ColumnCount = 6;
-                    userDataGrid.Columns[0].Name = "userID";
-                    userDataGrid.Columns[0].HeaderText = "#";
-                    userDataGrid.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                    userDataGrid.Columns[1].Name = "username";
-                    userDataGrid.Columns[1].HeaderText = "Login Name";
-                    userDataGrid.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                    userDataGrid.Columns[2].Name = "displayName";
-                    userDataGrid.Columns[2].HeaderText = "Display Name";
-                    userDataGrid.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                    userDataGrid.Columns[3].Name = "class";
-                    userDataGrid.Columns[3].HeaderText = "Class";
-                    userDataGrid.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                    userDataGrid.Columns[4].Name = "isAdmin";
-                    userDataGrid.Columns[4].HeaderText = "Admin?";
-                    userDataGrid.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                    userDataGrid.Columns[5].Name = "isProtected";
-                    userDataGrid.Columns[5].HeaderText = "Deletion Protected?";
-                    userDataGrid.Columns[5].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                    userDataGrid.AllowUserToDeleteRows = false;
-                    userDataGrid.AllowUserToAddRows = false;
-                    userDataGrid.AllowUserToResizeColumns = true;
-                    userDataGrid.MultiSelect = false; //just to reinforce
+                    form.ShowDialog();
+                }
 
-
-                    var rows = new List<string[]>();
-                    foreach (Content content in response.contents)
-                    {
-                        string[] row1 = new string[] { content.userid.ToString(), content.user.ToString(), content.displayName.ToString(), classServer.contents.Find(x => x.classID == Convert.ToInt32(content.className)).className, content.isAdmin.ToString(), content.isDeletionProtected.ToString() };
-                        rows.Add(row1);
-                    }
-
-                    foreach (string[] rowArray in rows)
-                    {
-                        userDataGrid.Rows.Add(rowArray);
-                    }
-
-                    foreach (classContent classContent in classServer.contents)
-                    {
-                        classBox.Items.Add(classContent.className);
-                    }
-
-                    DataGridViewRow selectedRow = userDataGrid.Rows[0];
-                    usernameBox.Text = selectedRow.Cells["username"].Value.ToString();
-                    displayNameBox.Text = selectedRow.Cells["displayName"].Value.ToString();
-                    classBox.SelectedItem = selectedRow.Cells["class"].Value.ToString();
-                    if (selectedRow.Cells["isAdmin"].Value.ToString() == "True")
-                    {
-                        adminPrivBox.Checked = true;
-                    }
-                    else
-                    {
-                        adminPrivBox.Checked = false;
-                    }
-
-                    if (selectedRow.Cells["isProtected"].Value.ToString() == "True")
-                    {
-                        accidentalDeletionBox.Checked = true;
-                    }
-                    else
-                    {
-                        accidentalDeletionBox.Checked = false;
-                    }
-
-                    resetPWBTN.Enabled = true;
-                    deleteUserBTN.Enabled = true;
-
+                if (shouldAbort)
+                {
+                    this.Close();
                 }
                 else
                 {
-                    MessageBox.Show("A critical error occurred. " + response.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    this.Close();
+                    response = JsonConvert.DeserializeObject<serverResponse>(jsonResponse);
+                    classServer = JsonConvert.DeserializeObject<classServerResponse>(classJsonResponse);
+
+
+                    if (response.status && classServer.status)
+                    {
+                        classBox.Items.Clear();
+                        userDataGrid.Rows.Clear();
+                        userDataGrid.Refresh();
+                        userDataGrid.ColumnCount = 6;
+                        userDataGrid.Columns[0].Name = "userID";
+                        userDataGrid.Columns[0].HeaderText = "#";
+                        userDataGrid.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        userDataGrid.Columns[1].Name = "username";
+                        userDataGrid.Columns[1].HeaderText = "Login Name";
+                        userDataGrid.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        userDataGrid.Columns[2].Name = "displayName";
+                        userDataGrid.Columns[2].HeaderText = "Display Name";
+                        userDataGrid.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        userDataGrid.Columns[3].Name = "class";
+                        userDataGrid.Columns[3].HeaderText = "Class";
+                        userDataGrid.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        userDataGrid.Columns[4].Name = "isAdmin";
+                        userDataGrid.Columns[4].HeaderText = "Admin?";
+                        userDataGrid.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        userDataGrid.Columns[5].Name = "isProtected";
+                        userDataGrid.Columns[5].HeaderText = "Deletion Protected?";
+                        userDataGrid.Columns[5].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        userDataGrid.AllowUserToDeleteRows = false;
+                        userDataGrid.AllowUserToAddRows = false;
+                        userDataGrid.AllowUserToResizeColumns = true;
+                        userDataGrid.MultiSelect = false; //just to reinforce
+
+
+                        var rows = new List<string[]>();
+                        foreach (Content content in response.contents)
+                        {
+                            string[] row1 = new string[] { content.userid.ToString(), content.user.ToString(), content.displayName.ToString(), classServer.contents.Find(x => x.classID == Convert.ToInt32(content.className)).className, content.isAdmin.ToString(), content.isDeletionProtected.ToString() };
+                            rows.Add(row1);
+                        }
+
+                        foreach (string[] rowArray in rows)
+                        {
+                            userDataGrid.Rows.Add(rowArray);
+                        }
+
+                        foreach (classContent classContent in classServer.contents)
+                        {
+                            classBox.Items.Add(classContent.className);
+                        }
+
+                        DataGridViewRow selectedRow = userDataGrid.Rows[0];
+                        usernameBox.Text = selectedRow.Cells["username"].Value.ToString();
+                        displayNameBox.Text = selectedRow.Cells["displayName"].Value.ToString();
+                        classBox.SelectedItem = selectedRow.Cells["class"].Value.ToString();
+                        if (selectedRow.Cells["isAdmin"].Value.ToString() == "True")
+                        {
+                            adminPrivBox.Checked = true;
+                        }
+                        else
+                        {
+                            adminPrivBox.Checked = false;
+                        }
+
+                        if (selectedRow.Cells["isProtected"].Value.ToString() == "True")
+                        {
+                            accidentalDeletionBox.Checked = true;
+                        }
+                        else
+                        {
+                            accidentalDeletionBox.Checked = false;
+                        }
+
+                        resetPWBTN.Enabled = true;
+                        deleteUserBTN.Enabled = true;
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("A critical error occurred. " + response.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        this.Close();
+                    }
                 }
 
-                workspacesResponse workspacesResponse;
-                workspacesResponse = JsonConvert.DeserializeObject<workspacesResponse>(functions.APIRequest("API=" + Properties.Settings.Default.APIkey, "workspaceListRequest.php"));
+                workspacesServerResponse = JsonConvert.DeserializeObject<workspacesResponse>(workspaceJsonResponse);
 
-                if (workspacesResponse.status)
+                if (workspacesServerResponse.status)
                 {
                     workspacesDataGrid.Rows.Clear();
                     workspaceBOX.Clear();
@@ -200,7 +230,7 @@ namespace Summaries
                     workspacesDataGrid.MultiSelect = false; //just to reinforce
 
                     var workspaceRows = new List<string[]>();
-                    if(workspacesResponse.contents != null)
+                    if(workspacesServerResponse.contents != null)
                     {
                         workspaceBOX.Enabled = true;
                         writeCheckBox.Enabled = true;
@@ -209,7 +239,7 @@ namespace Summaries
                         flushSummariesBTN.Enabled = true;
                         deleteWorkspaceBTN.Enabled = true;
 
-                        foreach (workspacesContent workspaceContent in workspacesResponse.contents)
+                        foreach (workspacesContent workspaceContent in workspacesServerResponse.contents)
                         {
                             string[] nextRow = new string[] { workspaceContent.id.ToString(), workspaceContent.name.ToString(), workspaceContent.read.ToString(), workspaceContent.write.ToString(), workspaceContent.totalSummaries.ToString() };
                             workspaceRows.Add(nextRow);
@@ -256,7 +286,7 @@ namespace Summaries
                 }
                 else
                 {
-                    MessageBox.Show("A critical error occurred. " + workspacesResponse.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("A critical error occurred. " + workspacesServerResponse.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     this.Close();
                 }
 
