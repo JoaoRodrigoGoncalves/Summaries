@@ -54,123 +54,168 @@ namespace Summaries
 
         codeResources.functions functions = new codeResources.functions();
         workspacesServerResponse workspaceResponse;
+        bool shouldAbort = false;
+        int workspaceSelectedID = 0;
+
+        //https://www.youtube.com/watch?v=yZYAaScEsc0
+
+        string jsonResponse = "";
+
+        private void requestWorkpaceList()
+        {
+            var functions = new codeResources.functions();
+            if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+            {
+                jsonResponse = functions.APIRequest("API=" + Properties.Settings.Default.APIkey, "workspaceListRequest.php");
+            }
+            else
+            {
+                shouldAbort = true;
+                MessageBox.Show("Lost Connection to the server. Please try again later!", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void requestSummaryList()
+        {
+            var functions = new codeResources.functions();
+            if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+            {
+                string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&userid=" + Properties.Settings.Default.userID + "&workspace=" + workspaceSelectedID;
+                jsonResponse = functions.APIRequest(POSTdata, "summaryListRequest.php");
+            }
+            else
+            {
+                shouldAbort = true;
+                MessageBox.Show("Lost Connection to the server. Please try again later!", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
         private void summariesList_Load(object sender, EventArgs e)
         {
-            string jsonResponse = "";
-            int workspaceSelectedID = 0;
+            // Requests the Workspace list, showing the loading screen to the user
+            using (codeResources.loadingForm form = new codeResources.loadingForm(requestWorkpaceList)) {
+                form.ShowDialog();
+            }
 
-            try
+            if (shouldAbort)
             {
-                jsonResponse = functions.APIRequest("API=" + Properties.Settings.Default.APIkey, "workspaceListRequest.php");
-                workspaceResponse = JsonConvert.DeserializeObject<workspacesServerResponse>(jsonResponse);
-                if (workspaceResponse.status)
+                this.Close();
+            }
+            else
+            {
+                try
                 {
-                    if(workspaceResponse.contents == null)
+                    workspaceResponse = JsonConvert.DeserializeObject<workspacesServerResponse>(jsonResponse);
+                    if (workspaceResponse.status)
                     {
-                        MessageBox.Show("Cannot list any summaries because there are no available workspaces!", "No available workspaces", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                        this.Close();
-                    }
-                    else
-                    {
-                        workspaceComboBox.Items.Clear();
-                        foreach (workspacesContent row in workspaceResponse.contents)
+                        if (workspaceResponse.contents == null)
                         {
-                            if (row.read)
-                            {
-                                workspaceComboBox.Items.Add(row.name);
-                            }
-                        }
-
-                        if (workspaceName == null || workspaceName == string.Empty || workspaceName == "")
-                        {
-                            workspaceSelectedID = workspaceResponse.contents[0].id;
-                            workspaceName = workspaceResponse.contents[0].name;
-                            workspaceComboBox.SelectedItem = workspaceName;
+                            MessageBox.Show("Cannot list any summaries because there are no available workspaces!", "No available workspaces", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            this.Close();
                         }
                         else
                         {
-                            workspaceSelectedID = workspaceResponse.contents[workspaceResponse.contents.FindIndex(x => x.name == workspaceName)].id;
-                            workspaceComboBox.SelectedItem = workspaceName;
-                        }
-
-                        Properties.Settings.Default.currentWorkspaceID = workspaceSelectedID;
-
-                        try
-                        {
-                            string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&userid=" + Properties.Settings.Default.userID + "&workspace=" + workspaceSelectedID;
-                            jsonResponse = functions.APIRequest(POSTdata, "summaryListRequest.php");
-                            serverResponse response;
-                            response = JsonConvert.DeserializeObject<serverResponse>(jsonResponse);
-
-                            if (response.status)
+                            workspaceComboBox.Items.Clear();
+                            foreach (workspacesContent row in workspaceResponse.contents)
                             {
-                                dataGrid.Rows.Clear();
-                                dataGrid.Refresh();
-                                if (response.contents != null)
+                                if (row.read)
                                 {
-                                    dataGrid.ColumnCount = 3;
-                                    dataGrid.Columns[0].Name = "date";
-                                    dataGrid.Columns[0].HeaderText = "Date";
-                                    dataGrid.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                                    dataGrid.Columns[1].Name = "summaryNumber";
-                                    dataGrid.Columns[1].HeaderText = "#";
-                                    dataGrid.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                                    dataGrid.Columns[2].Name = "contents";
-                                    dataGrid.Columns[2].HeaderText = "Summary";
-                                    dataGrid.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                                    dataGrid.AllowUserToDeleteRows = false;
-                                    dataGrid.AllowUserToAddRows = false;
-                                    dataGrid.MultiSelect = false; //just to reinforce
-
-                                    var rows = new List<string[]>();
-                                    foreach (Content content in response.contents)
-                                    {
-                                        string[] row1 = new string[] { content.date.ToString(), content.summaryNumber.ToString(), content.contents.ToString() };
-                                        rows.Add(row1);
-                                    }
-
-                                    foreach (string[] rowArray in rows)
-                                    {
-                                        dataGrid.Rows.Add(rowArray);
-                                    }
+                                    workspaceComboBox.Items.Add(row.name);
                                 }
                             }
-                            else
+
+                            if (workspaceName == null || workspaceName == string.Empty || workspaceName == "")
                             {
-                                MessageBox.Show("Error: " + response.errors, "Critical error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            codeResources.functions functions = new codeResources.functions();
-                            if (!functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
-                            {
-                                MessageBox.Show("Connection to the server lost. Please try again later.", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                workspaceSelectedID = workspaceResponse.contents[0].id;
+                                workspaceName = workspaceResponse.contents[0].name;
+                                workspaceComboBox.SelectedItem = workspaceName;
                             }
                             else
                             {
-                                MessageBox.Show("Critical error: " + ex.Message + "\n" + jsonResponse + "\n" + ex.StackTrace, "Critical error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                workspaceSelectedID = workspaceResponse.contents[workspaceResponse.contents.FindIndex(x => x.name == workspaceName)].id;
+                                workspaceComboBox.SelectedItem = workspaceName;
+                            }
+
+                            Properties.Settings.Default.currentWorkspaceID = workspaceSelectedID;
+
+                            try
+                            {
+                                using (codeResources.loadingForm form = new codeResources.loadingForm(requestSummaryList)) {
+                                    form.ShowDialog();
+                                }
+
+                                serverResponse response;
+                                response = JsonConvert.DeserializeObject<serverResponse>(jsonResponse);
+
+                                if (response.status)
+                                {
+                                    dataGrid.Rows.Clear();
+                                    dataGrid.Refresh();
+                                    if (response.contents != null)
+                                    {
+                                        dataGrid.ColumnCount = 3;
+                                        dataGrid.Columns[0].Name = "date";
+                                        dataGrid.Columns[0].HeaderText = "Date";
+                                        dataGrid.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                                        dataGrid.Columns[1].Name = "summaryNumber";
+                                        dataGrid.Columns[1].HeaderText = "#";
+                                        dataGrid.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                                        dataGrid.Columns[2].Name = "contents";
+                                        dataGrid.Columns[2].HeaderText = "Summary";
+                                        dataGrid.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                                        dataGrid.AllowUserToDeleteRows = false;
+                                        dataGrid.AllowUserToAddRows = false;
+                                        dataGrid.MultiSelect = false; //just to reinforce
+
+                                        var rows = new List<string[]>();
+                                        foreach (Content content in response.contents)
+                                        {
+                                            string[] row1 = new string[] { content.date.ToString(), content.summaryNumber.ToString(), content.contents.ToString() };
+                                            rows.Add(row1);
+                                        }
+
+                                        foreach (string[] rowArray in rows)
+                                        {
+                                            dataGrid.Rows.Add(rowArray);
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Error: " + response.errors, "Critical error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                codeResources.functions functions = new codeResources.functions();
+                                if (!functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+                                {
+                                    MessageBox.Show("Connection to the server lost. Please try again later.", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Critical error: " + ex.Message + "\n" + jsonResponse + "\n" + ex.StackTrace, "Critical error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
                             }
                         }
                     }
+                    else
+                    {
+                        MessageBox.Show("A critical error occurred. " + workspaceResponse.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        this.Close();
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    MessageBox.Show("A critical error occurred. " + workspaceResponse.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    this.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                codeResources.functions functions = new codeResources.functions();
-                if (!functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
-                {
-                    MessageBox.Show("Connection to the server lost. Please try again later.", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                else
-                {
-                    MessageBox.Show("Critical error: " + ex.Message + "\n" + jsonResponse + "\n" + ex.StackTrace, "Critical error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    codeResources.functions functions = new codeResources.functions();
+                    if (!functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+                    {
+                        MessageBox.Show("Connection to the server lost. Please try again later.", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Critical error: " + ex.Message + "\n" + jsonResponse + "\n" + ex.StackTrace, "Critical error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
         }

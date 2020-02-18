@@ -117,6 +117,12 @@
       <DependentUpon>confirmByTyping.cs</DependentUpon>
     </Compile>
     <Compile Include="codeResources\functions.cs" />
+    <Compile Include="codeResources\loadingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="codeResources\loadingForm.Designer.cs">
+      <DependentUpon>loadingForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="load_screen.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -166,6 +172,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="codeResources\confirmByTyping.resx">
       <DependentUpon>confirmByTyping.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="codeResources\loadingForm.resx">
+      <DependentUpon>loadingForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="load_screen.resx">
       <DependentUpon>load_screen.cs</DependentUpon>

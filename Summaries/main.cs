@@ -41,11 +41,26 @@ namespace Summaries
             }
             catch (System.ComponentModel.Win32Exception)
             {
-                using (var client = new WebClient())
+                try
                 {
-                    client.DownloadFile(Properties.Settings.Default.inUseDomain + "/summaries/resources/licenses.txt", Path.GetTempPath() + "\\licenses.txt");
+                    using (var client = new WebClient())
+                    {
+                        client.DownloadFile(Properties.Settings.Default.inUseDomain + "/summaries/resources/licenses.txt", Path.GetTempPath() + "\\licenses.txt");
+                    }
+                    menuAboutLicenses_Click(sender, e);
+                }catch(Exception ex)
+                {
+                    var functions = new codeResources.functions();
+                    if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+                    {
+                        MessageBox.Show("Critical Error: " + ex.Message + "\n" + ex.StackTrace, "Critical Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Lost Connection to the server. Please try again later!", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
-                menuAboutLicenses_Click(sender, e);
+                
             }
         }
 
@@ -57,14 +72,32 @@ namespace Summaries
 
         private void menuSummaryNew_Click(object sender, EventArgs e)
         {
-            newSummary newSummary = new newSummary();
-            newSummary.ShowDialog();
+            var functions = new codeResources.functions();
+            if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+            {
+                newSummary newSummary = new newSummary();
+                newSummary.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Lost Connection to the server. Please try again later!", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            
         }
 
         private void menuSummaryList_Click(object sender, EventArgs e)
         {
-            summariesList summaries = new summariesList();
-            summaries.ShowDialog();
+            var functions = new codeResources.functions();
+            if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+            {
+                summariesList summaries = new summariesList();
+                summaries.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Lost Connection to the server. Please try again later!", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            
         }
 
         private void main_Load(object sender, EventArgs e)
@@ -78,8 +111,17 @@ namespace Summaries
 
         private void menuOptionsAdministration_Panel_Click(object sender, EventArgs e)
         {
-            AdministrationPanel panel = new AdministrationPanel();
-            panel.ShowDialog();
+            var functions = new codeResources.functions();
+            if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+            {
+                AdministrationPanel panel = new AdministrationPanel();
+                panel.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Lost Connection to the server. Please try again later!", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            
         }
     }
 }

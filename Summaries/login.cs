@@ -31,40 +31,89 @@ namespace Summaries
             public bool adminControl { get; set; }
         }
 
+        //https://www.youtube.com/watch?v=yZYAaScEsc0
+
+        string jsonResponse = "";
+        string POSTdata = "";
+        bool shouldAbort = false;
+
+        private void getInformation()
+        {
+            var functions = new codeResources.functions();
+            if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+            {
+                jsonResponse = functions.APIRequest(POSTdata, "loginvalidator.php");
+            }
+            else
+            {
+                shouldAbort = true;
+                MessageBox.Show("Lost Connection to the server. Please try again later!", "Connection Lost!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
         private void loginBTN_Click(object sender, EventArgs e)
         {
             simpleServerResponse response;
             userInfo userInfo;
-            
-            string username = usernameBox.Text;
-            string password = passwordBox.Text;
-            string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&usrnm=" + username + "&psswd=" + password;
-            var functions = new codeResources.functions();
-            string jsonResponse = functions.APIRequest(POSTdata, "loginvalidator.php");
-            response = JsonConvert.DeserializeObject<simpleServerResponse>(jsonResponse);
 
-            if (response.status)
+            try
             {
-                userInfo = JsonConvert.DeserializeObject<userInfo>(jsonResponse);
+                string username = usernameBox.Text;
+                string password = passwordBox.Text;
+                POSTdata = "API=" + Properties.Settings.Default.APIkey + "&usrnm=" + username + "&psswd=" + password;
+                var functions = new codeResources.functions();
 
-                Properties.Settings.Default.userID = userInfo.userID;
-                Properties.Settings.Default.username = userInfo.username;
-                Properties.Settings.Default.displayName = userInfo.displayName;
-                Properties.Settings.Default.isAdmin = userInfo.adminControl;
-
-                main form = new main();
-                this.Hide();
-                form.Show();
-            }
-            else
-            {
-                if((response.errors == null) || (response.errors.Length < 1))
+                using (codeResources.loadingForm loading = new codeResources.loadingForm(getInformation))
                 {
-                    MessageBox.Show("Username or Password are incorrect.", "Wrong credentials", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    loading.ShowDialog();
+                }
+
+                if (shouldAbort)
+                {
+                    passwordBox.Clear();
+                    password = "";
                 }
                 else
                 {
-                    MessageBox.Show("Error: " + response.errors, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    response = JsonConvert.DeserializeObject<simpleServerResponse>(jsonResponse);
+
+                    if (response.status)
+                    {
+                        userInfo = JsonConvert.DeserializeObject<userInfo>(jsonResponse);
+                        Properties.Settings.Default.userID = userInfo.userID;
+                        Properties.Settings.Default.username = userInfo.username;
+                        Properties.Settings.Default.displayName = userInfo.displayName;
+                        Properties.Settings.Default.isAdmin = userInfo.adminControl;
+
+                        main form = new main();
+                        this.Hide();
+                        form.Show();
+                    }
+                    else
+                    {
+                        if ((response.errors == null) || (response.errors.Length < 1))
+                        {
+                            MessageBox.Show("Username or Password are incorrect.", "Wrong credentials", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Error: " + response.errors, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+
+                
+            }catch(Exception ex)
+            {
+                var functions = new codeResources.functions();
+                if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+                {
+                    MessageBox.Show("Critial Error: " + ex.Message + "\n" + ex.StackTrace, "Critical Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    MessageBox.Show("Lost Connection to the server. Please try again!", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

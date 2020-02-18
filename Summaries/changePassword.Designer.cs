@@ -157,6 +157,7 @@
             this.Name = "changePassword";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Change Password - ";
+            this.Load += new System.EventHandler(this.changePassword_Load);
             this.Shown += new System.EventHandler(this.changePassword_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();

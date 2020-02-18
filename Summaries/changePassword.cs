@@ -130,5 +130,42 @@ namespace Summaries
         {
             this.Close();
         }
+
+        //https://stackoverflow.com/questions/10775367/cross-thread-operation-not-valid-control-textbox1-accessed-from-a-thread-othe/10775421#comment43031144_10775421
+
+        delegate void closeCallBack();
+        
+        private void CloseForm()
+        {
+            // InvokeRequired required compares the thread ID of the
+            // calling thread to the thread ID of the creating thread.
+            // If these threads are different, it returns true.
+            if (this.InvokeRequired)
+            {
+                closeCallBack form = new closeCallBack(CloseForm);
+                this.Invoke(form);
+            }
+            else
+            {
+                this.Close();
+            }
+        }
+
+        private void checkConnection()
+        {
+            var functions = new codeResources.functions();
+            if (!functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain)){
+                MessageBox.Show("Lost Connection to the server. Please try again later!", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                CloseForm();
+            }
+        }
+
+        private void changePassword_Load(object sender, EventArgs e)
+        {
+            using (codeResources.loadingForm form = new codeResources.loadingForm(checkConnection))
+            {
+                form.ShowDialog();
+            }
+        }
     }
 }
