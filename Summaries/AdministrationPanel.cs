@@ -82,6 +82,11 @@ namespace Summaries
         string jsonResponse = "";
         string classJsonResponse = "";
         string workspaceJsonResponse = "";
+        object currentSenderObject;
+        EventArgs currentEventArgs;
+
+        private delegate void SaveUserCallback(string username, string displayName, string className, bool isAdmin, bool isDeletionProtected);
+        private delegate void DeleteUserCallback(int selectedRowIndex, DataGridViewRow selectedRow);
 
         private void APICalls()
         {
@@ -96,6 +101,420 @@ namespace Summaries
             {
                 shouldAbort = true;
                 MessageBox.Show("Lost connection to the server. Please try again.", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void SaveUser()
+        {
+            try
+            {
+
+                if (usernameBox.TextLength < 1 || displayNameBox.TextLength < 1 || classBox.Text.Length < 1)
+                {
+                    MessageBox.Show("Please fill all the fields before continue.", "Blank fileds", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else
+                {
+                    var functions = new codeResources.functions();
+                    string username = functions.Hash(usernameBox.Text);
+                    string displayName = functions.Hash(displayNameBox.Text);
+                    string classGiven = classBox.Text;
+                    string classNum = functions.Hash(classServer.contents[classServer.contents.FindIndex(x => x.className == classBox.Text)].classID.ToString());
+                    string isAdmin = adminPrivBox.Checked.ToString();
+                    string isDeletionProtected = accidentalDeletionBox.Checked.ToString();
+                    if (addingUser)
+                    {
+                        string POSTdata = "API=" + Properties.Settings.Default.APIkey;
+                        POSTdata += "&username=" + username + "&displayName=" + displayName + "&classID=" + classNum + "&admin=" + isAdmin + "&deletionProtection=" + isDeletionProtected;
+
+                        simpleServerResponse serverResponse;
+                        serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(functions.APIRequest(POSTdata, "changeUser.php"));
+
+                        if (serverResponse.status)
+                        {
+                            MessageBox.Show("New user " + displayNameBox.Text + " created successfully!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            newUserBTN_Click(currentSenderObject, currentEventArgs);
+                        }
+                        else
+                        {
+                            MessageBox.Show("A critical error occurred. " + serverResponse.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            this.Close();
+                        }
+                    }
+                    else
+                    {
+                        int selectedrowindex = userDataGrid.SelectedCells[0].RowIndex;
+                        DataGridViewRow selectedRow = userDataGrid.Rows[selectedrowindex];
+                        int userToUpdate = Convert.ToInt32(selectedRow.Cells["userID"].Value.ToString());
+                        string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&userID=" + userToUpdate + "&username=" + username + "&displayName=" + displayName + "&classID=" + classNum + "&admin=" + isAdmin + "&deletionProtection=" + isDeletionProtected;
+                        string finalData = functions.APIRequest(POSTdata, "changeUser.php");
+
+                        simpleServerResponse serverResponse;
+                        serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(finalData);
+
+                        if (serverResponse.status)
+                        {
+                            MessageBox.Show("Edited user " + displayNameBox.Text + " successfully!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("A critical error occurred. " + serverResponse.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            this.Close();
+                        }
+
+                    }
+                }
+                AdministrationPanel_Load(currentSenderObject, currentEventArgs);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("A critical error occurred. " + ex.Message + "\n" + ex.StackTrace, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
+            }
+        }
+
+        private void DeleteUser()
+        {
+            int selectedrowindex = userDataGrid.SelectedCells[0].RowIndex;
+            DataGridViewRow selectedRow = userDataGrid.Rows[selectedrowindex];
+
+            if (Properties.Settings.Default.userID == Convert.ToInt32(selectedRow.Cells["userID"].Value))
+            {
+                MessageBox.Show("Cannot delete the current user being used", "Unable to delete the user", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                var res = MessageBox.Show("Are you sure you want to permanently delete " + selectedRow.Cells["displayName"].Value.ToString(), "Delete user", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (res == DialogResult.Yes)
+                {
+                    if (selectedRow.Cells["isProtected"].Value.ToString() == "False")
+                    {
+                        try
+                        {
+                            var functions = new codeResources.functions();
+                            int userToDelete = Convert.ToInt32(selectedRow.Cells["userID"].Value.ToString());
+                            string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&userID=" + userToDelete;
+
+                            simpleServerResponse serverResponse;
+                            serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(functions.APIRequest(POSTdata, "requestUserDelete.php"));
+
+                            if (serverResponse.status)
+                            {
+                                MessageBox.Show("User Deleted Successfully!", "User Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                AdministrationPanel_Load(currentSenderObject, currentEventArgs);
+                            }
+                            else
+                            {
+                                MessageBox.Show("A critical error occurred. " + serverResponse.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                this.Close();
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("A critical error occurred. " + ex.Message, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            this.Close();
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("The user is protected against deletion and cannot be deleted.", "Protected against deletion", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+            }
+        }
+
+        private void ResetUser()
+        {
+            try
+            {
+                if (!addingUser)
+                {
+                    if (userDataGrid.SelectedRows.Count > 0 || userDataGrid.SelectedCells.Count > 0)
+                    {
+                        int selectedrowindex = userDataGrid.SelectedCells[0].RowIndex;
+                        DataGridViewRow selectedRow = userDataGrid.Rows[selectedrowindex];
+                        int userToReset = Convert.ToInt32(selectedRow.Cells["userID"].Value.ToString());
+                        if (userDataGrid.Rows[currentSelectedrow].Cells["isProtected"].Value.ToString() == "True")
+                        {
+                            MessageBox.Show("Cannot reset this user's password because the account is protected against accidental deletion!", "Protection Against Accidental Deletion Alert!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        }
+                        else
+                        {
+                            var functions = new codeResources.functions();
+                            string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&userID=" + userToReset + "&reset=true";
+                            var data = Encoding.UTF8.GetBytes(POSTdata);
+
+                            simpleServerResponse serverResponse;
+                            serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(functions.APIRequest(POSTdata, "changePassword.php"));
+
+                            if (serverResponse.status)
+                            {
+                                MessageBox.Show("Password Reseted Successfully to \"defaultPW\"!", "Password Reset", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            else
+                            {
+                                MessageBox.Show("A critical error occurred. " + serverResponse.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                this.Close();
+                            }
+
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("A critical error occurred. " + ex.Message, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
+            }
+        }
+
+        private void SaveClass()
+        {
+            try
+            {
+                if (classNameBOX.TextLength < 1)
+                {
+                    MessageBox.Show("Please fill all the fields before continue.", "Blank fileds", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else
+                {
+                    var functions = new codeResources.functions();
+                    if (addingClass)
+                    {
+                        string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&name=" + functions.Hash(classNameBOX.Text);
+                        simpleServerResponse serverResponse;
+                        serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(functions.APIRequest(POSTdata, "changeClass.php"));
+
+                        if (serverResponse.status)
+                        {
+                            MessageBox.Show("New class " + classNameBOX.Text + " created successfully!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            addClassBTN_Click(currentSenderObject, currentEventArgs);
+                        }
+                        else
+                        {
+                            MessageBox.Show("A critical error occurred. " + serverResponse.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            this.Close();
+                        }
+                    }
+                    else
+                    {
+                        int selectedClassIndex = classesDataGrid.SelectedCells[0].RowIndex;
+                        DataGridViewRow selectedClassRow = classesDataGrid.Rows[selectedClassIndex];
+                        int classToUpdate = Convert.ToInt32(selectedClassRow.Cells["classID"].Value.ToString());
+                        string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&classID=" + classToUpdate + "&name=" + functions.Hash(classNameBOX.Text);
+
+                        simpleServerResponse serverResponse;
+                        serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(functions.APIRequest(POSTdata, "changeClass.php"));
+
+                        if (serverResponse.status)
+                        {
+                            MessageBox.Show("Edited class " + classNameBOX.Text + " successfully!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("A critical error occurred. " + serverResponse.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            this.Close();
+                        }
+
+                    }
+                }
+                AdministrationPanel_Load(currentSenderObject, currentEventArgs);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("A critical error occurred. " + ex.Message, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
+            }
+        }
+
+        private void DeleteClass()
+        {
+            int selectedClassIndex = classesDataGrid.SelectedCells[0].RowIndex;
+            DataGridViewRow selectedClassRow = classesDataGrid.Rows[selectedClassIndex];
+
+            if (Convert.ToInt32(selectedClassRow.Cells["classID"].Value) == 0)
+            {
+                MessageBox.Show("That class cannot be deleted!", "Code level protection", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                codeResources.confirmByTyping writtenConfirmation = new codeResources.confirmByTyping(selectedClassRow.Cells["className"].Value.ToString());
+                Properties.Settings.Default.typeTestSuccessfull = false; // just to be sure
+                writtenConfirmation.ShowDialog();
+
+                if (Properties.Settings.Default.typeTestSuccessfull)
+                {
+                    Properties.Settings.Default.typeTestSuccessfull = false;
+                    try
+                    {
+                        var functions = new codeResources.functions();
+                        string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&classID=" + Convert.ToInt32(selectedClassRow.Cells["classID"].Value.ToString());
+
+                        simpleServerResponse serverResponse;
+
+                        serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(functions.APIRequest(POSTdata, "deleteClassRequest.php"));
+
+                        if (serverResponse.status)
+                        {
+                            MessageBox.Show("Class Deleted Successfully!", "Class Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            AdministrationPanel_Load(currentSenderObject, currentEventArgs);
+                        }
+                        else
+                        {
+                            MessageBox.Show("A critical error occurred. " + serverResponse.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            this.Close();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("A critical error occurred. " + ex.Message + "\n" + ex.StackTrace, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        this.Close();
+                    }
+                }
+            }
+        }
+
+        private void SaveWorkspace() {
+            try
+            {
+                if (workspaceBOX.TextLength < 1)
+                {
+                    MessageBox.Show("Please fill all the fields before continue.", "Blank fileds", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else
+                {
+                    var functions = new codeResources.functions();
+                    string workspaceName = functions.Hash(workspaceBOX.Text);
+                    string readMode = readCheckBox.Checked.ToString();
+                    string writeMode = writeCheckBox.Checked.ToString();
+                    if (addingWorkspace)
+                    {
+                        string POSTdata = "API=" + Properties.Settings.Default.APIkey;
+                        POSTdata += "&name=" + workspaceName + "&readMode=" + readMode + "&writeMode=" + writeMode;
+
+                        simpleServerResponse serverResponse;
+                        serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(functions.APIRequest(POSTdata, "changeWorkspace.php"));
+
+                        if (serverResponse.status)
+                        {
+                            MessageBox.Show("New workspace " + workspaceBOX.Text + " created successfully!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            addWorkspaceBTN_Click(currentSenderObject, currentEventArgs);
+                        }
+                        else
+                        {
+                            MessageBox.Show("A critical error occurred. " + serverResponse.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            this.Close();
+                        }
+                    }
+                    else
+                    {
+                        int selectedWorkwspaceIndex = workspacesDataGrid.SelectedCells[0].RowIndex;
+                        DataGridViewRow selectedWorkspaceRow = workspacesDataGrid.Rows[selectedWorkwspaceIndex];
+                        int workspaceToUpdate = Convert.ToInt32(selectedWorkspaceRow.Cells["id"].Value.ToString());
+                        string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&workspaceID=" + workspaceToUpdate + "&name=" + functions.Hash(workspaceBOX.Text) + "&readMode=" + readMode + "&writeMode=" + writeMode;
+
+                        simpleServerResponse serverResponse;
+                        serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(functions.APIRequest(POSTdata, "changeWorkspace.php"));
+
+                        if (serverResponse.status)
+                        {
+                            MessageBox.Show("Edited workspace " + workspaceBOX.Text + " successfully!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            addWorkspaceBTN_Click(currentSenderObject, currentEventArgs);
+                        }
+                        else
+                        {
+                            MessageBox.Show("A critical error occurred. " + serverResponse.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            this.Close();
+                        }
+
+                    }
+                }
+                AdministrationPanel_Load(currentSenderObject, currentEventArgs);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("A critical error occurred. " + ex.Message + "\n" + ex.StackTrace, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
+            }
+        }
+
+        private void DeleteWorkspace()
+        {
+            int selectedWorkspaceIndex = workspacesDataGrid.SelectedCells[0].RowIndex;
+            DataGridViewRow selectedWorkspaceRow = workspacesDataGrid.Rows[selectedWorkspaceIndex];
+
+            codeResources.confirmByTyping writtenConfirmation = new codeResources.confirmByTyping(selectedWorkspaceRow.Cells["name"].Value.ToString());
+            Properties.Settings.Default.typeTestSuccessfull = false; // just to be sure
+            writtenConfirmation.ShowDialog();
+
+            if (Properties.Settings.Default.typeTestSuccessfull)
+            {
+                Properties.Settings.Default.typeTestSuccessfull = false;
+                try
+                {
+                    var functions = new codeResources.functions();
+                    string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&workspaceID=" + Convert.ToInt32(selectedWorkspaceRow.Cells["id"].Value.ToString());
+
+                    simpleServerResponse serverResponse;
+
+                    serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(functions.APIRequest(POSTdata, "requestWorkspaceDelete.php"));
+
+                    if (serverResponse.status)
+                    {
+                        MessageBox.Show("Workspace Deleted Successfully!", "Workspace Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        AdministrationPanel_Load(currentSenderObject, currentEventArgs);
+                    }
+                    else
+                    {
+                        MessageBox.Show("A critical error occurred. " + serverResponse.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        this.Close();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("A critical error occurred. " + ex.Message + "\n" + ex.StackTrace, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.Close();
+                }
+            }
+        }
+
+        private void FlushWorkspace()
+        {
+            int selectedWorkspaceIndex = workspacesDataGrid.SelectedCells[0].RowIndex;
+            DataGridViewRow selectedWorkspaceRow = workspacesDataGrid.Rows[selectedWorkspaceIndex];
+
+            codeResources.confirmByTyping writtenConfirmation = new codeResources.confirmByTyping(selectedWorkspaceRow.Cells["name"].Value.ToString());
+            Properties.Settings.Default.typeTestSuccessfull = false; // just to be sure
+            writtenConfirmation.ShowDialog();
+
+            if (Properties.Settings.Default.typeTestSuccessfull)
+            {
+                Properties.Settings.Default.typeTestSuccessfull = false;
+                try
+                {
+                    var functions = new codeResources.functions();
+                    string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&workspaceID=" + Convert.ToInt32(selectedWorkspaceRow.Cells["id"].Value.ToString());
+
+                    simpleServerResponse serverResponse;
+
+                    serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(functions.APIRequest(POSTdata, "requestWorkspaceFlush.php"));
+
+                    if (serverResponse.status)
+                    {
+                        MessageBox.Show("Workspace Flushed Successfully!", "Workspace Flushed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        AdministrationPanel_Load(currentSenderObject, currentEventArgs);
+                    }
+                    else
+                    {
+                        MessageBox.Show("A critical error occurred. " + serverResponse.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        this.Close();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("A critical error occurred. " + ex.Message + "\n" + ex.StackTrace, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.Close();
+                }
             }
         }
 
@@ -423,117 +842,26 @@ namespace Summaries
 
         private void resetPWBTN_Click(object sender, EventArgs e)
         {
-            try
-            {
-                if (!addingUser)
-                {
-                    if (userDataGrid.SelectedRows.Count > 0 || userDataGrid.SelectedCells.Count > 0)
-                    {
-                        int selectedrowindex = userDataGrid.SelectedCells[0].RowIndex;
-                        DataGridViewRow selectedRow = userDataGrid.Rows[selectedrowindex];
-                        int userToReset = Convert.ToInt32(selectedRow.Cells["userID"].Value.ToString());
-                        if (userDataGrid.Rows[currentSelectedrow].Cells["isProtected"].Value.ToString() == "True")
-                        {
-                            MessageBox.Show("Cannot reset this user's password because the account is protected against accidental deletion!", "Protection Against Accidental Deletion Alert!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                        }
-                        else
-                        {
-                            var functions = new codeResources.functions();
-                            string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&userID=" + userToReset + "&reset=true";
-                            var data = Encoding.UTF8.GetBytes(POSTdata);
-                            
-                            simpleServerResponse serverResponse;
-                            serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(functions.APIRequest(POSTdata, "changePassword.php"));
+            // Send this operation to another thread while showing the loading (please wait) screen
 
-                            if (serverResponse.status)
-                            {
-                                MessageBox.Show("Password Reseted Successfully to \"defaultPW\"!", "Password Reset", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            }
-                            else
-                            {
-                                MessageBox.Show("A critical error occurred. " + serverResponse.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                this.Close();
-                            }
-
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
+            // Sets the current sender and evnt agrs for future use even though they are not needed for this function
+            currentSenderObject = sender;
+            currentEventArgs = e;
+            using(codeResources.loadingForm form = new codeResources.loadingForm(ResetUser))
             {
-                MessageBox.Show("A critical error occurred. " + ex.Message, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                this.Close();
+                form.ShowDialog();
             }
         }
 
         private void saveBTN_Click(object sender, EventArgs e)
         {
-            try
+            // Send this operation to another thread while showing the loading (please wait) screen
+            currentSenderObject = sender;
+            currentEventArgs = e;
+            using (codeResources.loadingForm form = new codeResources.loadingForm(SaveUser))
             {
-                
-                if (usernameBox.TextLength < 1 || displayNameBox.TextLength < 1 || classBox.Text.Length < 1)
-                {
-                    MessageBox.Show("Please fill all the fields before continue.", "Blank fileds", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-                else
-                {
-                    var functions = new codeResources.functions();
-                    string username = functions.Hash(usernameBox.Text);
-                    string displayName = functions.Hash(displayNameBox.Text);
-                    string classGiven = classBox.Text;
-                    string classNum = functions.Hash(classServer.contents[classServer.contents.FindIndex(x => x.className == classBox.Text)].classID.ToString());
-                    string isAdmin = adminPrivBox.Checked.ToString();
-                    string isDeletionProtected = accidentalDeletionBox.Checked.ToString();
-                    if (addingUser)
-                    {
-                        string POSTdata = "API=" + Properties.Settings.Default.APIkey;
-                        POSTdata += "&username=" + username + "&displayName=" + displayName + "&classID=" + classNum + "&admin=" + isAdmin + "&deletionProtection=" + isDeletionProtected;
-
-                        simpleServerResponse serverResponse;
-                        serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(functions.APIRequest(POSTdata, "changeUser.php"));
-
-                        if (serverResponse.status)
-                        {
-                            MessageBox.Show("New user " + displayNameBox.Text + " created successfully!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            newUserBTN_Click(sender, e);
-                        }
-                        else
-                        {
-                            MessageBox.Show("A critical error occurred. " + serverResponse.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            this.Close();
-                        }
-                    }
-                    else
-                    {
-                        int selectedrowindex = userDataGrid.SelectedCells[0].RowIndex;
-                        DataGridViewRow selectedRow = userDataGrid.Rows[selectedrowindex];
-                        int userToUpdate = Convert.ToInt32(selectedRow.Cells["userID"].Value.ToString());
-                        string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&userID=" + userToUpdate + "&username=" + username + "&displayName=" + displayName + "&classID=" + classNum + "&admin=" + isAdmin + "&deletionProtection=" + isDeletionProtected;
-                        string finalData = functions.APIRequest(POSTdata, "changeUser.php");
-
-                        simpleServerResponse serverResponse;
-                        serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(finalData);
-
-                        if (serverResponse.status)
-                        {
-                            MessageBox.Show("Edited user " + displayNameBox.Text + " successfully!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                        else
-                        {
-                            MessageBox.Show("A critical error occurred. " + serverResponse.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            this.Close();
-                        }
-
-                    }
-                }
-                AdministrationPanel_Load(sender, e);
+                form.ShowDialog();
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("A critical error occurred. " + ex.Message + "\n" + ex.StackTrace, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                this.Close();
-            }
-
         }
 
         private void refreshBTN_Click(object sender, EventArgs e)
@@ -543,116 +871,23 @@ namespace Summaries
 
         private void deleteUserBTN_Click(object sender, EventArgs e)
         {
-            int selectedrowindex = userDataGrid.SelectedCells[0].RowIndex;
-            DataGridViewRow selectedRow = userDataGrid.Rows[selectedrowindex];
-
-            if (Properties.Settings.Default.userID == Convert.ToInt32(selectedRow.Cells["userID"].Value))
+            // Send this operation to another thread while showing the loading (please wait) screen
+            currentSenderObject = sender;
+            currentEventArgs = e;
+            using (codeResources.loadingForm form = new codeResources.loadingForm(DeleteUser))
             {
-                MessageBox.Show("Cannot delete the current user being used", "Unable to delete the user", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else
-            {
-                var res = MessageBox.Show("Are you sure you want to permanently delete " + selectedRow.Cells["displayName"].Value.ToString(), "Delete user", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (res == DialogResult.Yes)
-                {
-                    if (selectedRow.Cells["isProtected"].Value.ToString() == "False")
-                    {
-                        try
-                        {
-                            var functions = new codeResources.functions();
-                            int userToDelete = Convert.ToInt32(selectedRow.Cells["userID"].Value.ToString());
-                            string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&userID=" + userToDelete;
-
-                            simpleServerResponse serverResponse;
-                            serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(functions.APIRequest(POSTdata, "requestUserDelete.php"));
-
-                            if (serverResponse.status)
-                            {
-                                MessageBox.Show("User Deleted Successfully!", "User Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                AdministrationPanel_Load(sender, e);
-                            }
-                            else
-                            {
-                                MessageBox.Show("A critical error occurred. " + serverResponse.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                this.Close();
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("A critical error occurred. " + ex.Message, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            this.Close();
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("The user is protected against deletion and cannot be deleted.", "Protected against deletion", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                }
+                form.ShowDialog();
             }
         }
 
         private void saveWorkspaceBTN_Click(object sender, EventArgs e)
         {
-            try
+            // Send this operation to another thread while showing the loading (please wait) screen
+            currentSenderObject = sender;
+            currentEventArgs = e;
+            using (codeResources.loadingForm form = new codeResources.loadingForm(SaveWorkspace))
             {
-                if (workspaceBOX.TextLength < 1)
-                {
-                    MessageBox.Show("Please fill all the fields before continue.", "Blank fileds", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-                else
-                {
-                    var functions = new codeResources.functions();
-                    string workspaceName = functions.Hash(workspaceBOX.Text);
-                    string readMode = readCheckBox.Checked.ToString();
-                    string writeMode = writeCheckBox.Checked.ToString();
-                    if (addingWorkspace)
-                    {
-                        string POSTdata = "API=" + Properties.Settings.Default.APIkey;
-                        POSTdata += "&name=" + workspaceName + "&readMode=" + readMode + "&writeMode=" + writeMode;
-
-                        simpleServerResponse serverResponse;
-                        serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(functions.APIRequest(POSTdata, "changeWorkspace.php"));
-
-                        if (serverResponse.status)
-                        {
-                            MessageBox.Show("New workspace " + workspaceBOX.Text + " created successfully!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            addWorkspaceBTN_Click(sender, e);
-                        }
-                        else
-                        {
-                            MessageBox.Show("A critical error occurred. " + serverResponse.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            this.Close();
-                        }
-                    }
-                    else
-                    {
-                        int selectedWorkwspaceIndex = workspacesDataGrid.SelectedCells[0].RowIndex;
-                        DataGridViewRow selectedWorkspaceRow = workspacesDataGrid.Rows[selectedWorkwspaceIndex];
-                        int workspaceToUpdate = Convert.ToInt32(selectedWorkspaceRow.Cells["id"].Value.ToString());
-                        string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&workspaceID=" + workspaceToUpdate + "&name=" + functions.Hash(workspaceBOX.Text) + "&readMode=" + readMode + "&writeMode=" + writeMode;
-
-                        simpleServerResponse serverResponse;
-                        serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(functions.APIRequest(POSTdata, "changeWorkspace.php"));
-
-                        if (serverResponse.status)
-                        {
-                            MessageBox.Show("Edited workspace " + workspaceBOX.Text + " successfully!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            addWorkspaceBTN_Click(sender, e);
-                        }
-                        else
-                        {
-                            MessageBox.Show("A critical error occurred. " + serverResponse.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            this.Close();
-                        }
-
-                    }
-                }
-                AdministrationPanel_Load(sender, e);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("A critical error occurred. " + ex.Message + "\n" + ex.StackTrace, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                this.Close();
+                form.ShowDialog();
             }
         }
 
@@ -774,41 +1009,12 @@ namespace Summaries
 
         private void deleteWorkspaceBTN_Click(object sender, EventArgs e)
         {
-            int selectedWorkspaceIndex = workspacesDataGrid.SelectedCells[0].RowIndex;
-            DataGridViewRow selectedWorkspaceRow = workspacesDataGrid.Rows[selectedWorkspaceIndex];
-
-            codeResources.confirmByTyping writtenConfirmation = new codeResources.confirmByTyping(selectedWorkspaceRow.Cells["name"].Value.ToString());
-            Properties.Settings.Default.typeTestSuccessfull = false; // just to be sure
-            writtenConfirmation.ShowDialog();
-
-            if (Properties.Settings.Default.typeTestSuccessfull)
+            // Send this operation to another thread while showing the loading (please wait) screen
+            currentSenderObject = sender;
+            currentEventArgs = e;
+            using (codeResources.loadingForm form = new codeResources.loadingForm(DeleteWorkspace))
             {
-                Properties.Settings.Default.typeTestSuccessfull = false;
-                try
-                {
-                    var functions = new codeResources.functions();
-                    string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&workspaceID=" + Convert.ToInt32(selectedWorkspaceRow.Cells["id"].Value.ToString());
-
-                    simpleServerResponse serverResponse;
-
-                    serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(functions.APIRequest(POSTdata, "requestWorkspaceDelete.php"));
-
-                    if (serverResponse.status)
-                    {
-                        MessageBox.Show("Workspace Deleted Successfully!", "Workspace Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        AdministrationPanel_Load(sender, e);
-                    }
-                    else
-                    {
-                        MessageBox.Show("A critical error occurred. " + serverResponse.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        this.Close();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("A critical error occurred. " + ex.Message + "\n" + ex.StackTrace, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    this.Close();
-                }
+                form.ShowDialog();
             }
         }
 
@@ -819,41 +1025,12 @@ namespace Summaries
 
         private void flushSummariesBTN_Click(object sender, EventArgs e)
         {
-            int selectedWorkspaceIndex = workspacesDataGrid.SelectedCells[0].RowIndex;
-            DataGridViewRow selectedWorkspaceRow = workspacesDataGrid.Rows[selectedWorkspaceIndex];
-
-            codeResources.confirmByTyping writtenConfirmation = new codeResources.confirmByTyping(selectedWorkspaceRow.Cells["name"].Value.ToString());
-            Properties.Settings.Default.typeTestSuccessfull = false; // just to be sure
-            writtenConfirmation.ShowDialog();
-
-            if (Properties.Settings.Default.typeTestSuccessfull)
+            // Send this operation to another thread while showing the loading (please wait) screen
+            currentSenderObject = sender;
+            currentEventArgs = e;
+            using (codeResources.loadingForm form = new codeResources.loadingForm(FlushWorkspace))
             {
-                Properties.Settings.Default.typeTestSuccessfull = false;
-                try
-                {
-                    var functions = new codeResources.functions();
-                    string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&workspaceID=" + Convert.ToInt32(selectedWorkspaceRow.Cells["id"].Value.ToString());
-
-                    simpleServerResponse serverResponse;
-
-                    serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(functions.APIRequest(POSTdata, "requestWorkspaceFlush.php"));
-
-                    if (serverResponse.status)
-                    {
-                        MessageBox.Show("Workspace Flushed Successfully!", "Workspace Flushed", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        AdministrationPanel_Load(sender, e);
-                    }
-                    else
-                    {
-                        MessageBox.Show("A critical error occurred. " + serverResponse.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        this.Close();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("A critical error occurred. " + ex.Message + "\n" + ex.StackTrace, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    this.Close();
-                }
+                form.ShowDialog();
             }
         }
 
@@ -864,107 +1041,23 @@ namespace Summaries
 
         private void classSave_Click(object sender, EventArgs e)
         {
-            try
+            // Send this operation to another thread while showing the loading (please wait) screen
+            currentSenderObject = sender;
+            currentEventArgs = e;
+            using (codeResources.loadingForm form = new codeResources.loadingForm(SaveClass))
             {
-                if (classNameBOX.TextLength < 1)
-                {
-                    MessageBox.Show("Please fill all the fields before continue.", "Blank fileds", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-                else
-                {
-                    var functions = new codeResources.functions();
-                    if (addingClass)
-                    {
-                        string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&name=" + functions.Hash(classNameBOX.Text);
-                        simpleServerResponse serverResponse;
-                        serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(functions.APIRequest(POSTdata, "changeClass.php"));
-
-                        if (serverResponse.status)
-                        {
-                            MessageBox.Show("New class " + classNameBOX.Text + " created successfully!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            addClassBTN_Click(sender, e);
-                        }
-                        else
-                        {
-                            MessageBox.Show("A critical error occurred. " + serverResponse.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            this.Close();
-                        }
-                    }
-                    else
-                    {
-                        int selectedClassIndex = classesDataGrid.SelectedCells[0].RowIndex;
-                        DataGridViewRow selectedClassRow = classesDataGrid.Rows[selectedClassIndex];
-                        int classToUpdate = Convert.ToInt32(selectedClassRow.Cells["classID"].Value.ToString());
-                        string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&classID=" + classToUpdate + "&name=" + functions.Hash(classNameBOX.Text);
-
-                        simpleServerResponse serverResponse;
-                        serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(functions.APIRequest(POSTdata, "changeClass.php"));
-
-                        if (serverResponse.status)
-                        {
-                            MessageBox.Show("Edited class " + classNameBOX.Text + " successfully!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                        else
-                        {
-                            MessageBox.Show("A critical error occurred. " + serverResponse.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            this.Close();
-                        }
-
-                    }
-                }
-                AdministrationPanel_Load(sender, e);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("A critical error occurred. " + ex.Message, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                this.Close();
+                form.ShowDialog();
             }
         }
 
         private void deleteClassBTN_Click(object sender, EventArgs e)
         {
-            int selectedClassIndex = classesDataGrid.SelectedCells[0].RowIndex;
-            DataGridViewRow selectedClassRow = classesDataGrid.Rows[selectedClassIndex];
-
-            if(Convert.ToInt32(selectedClassRow.Cells["classID"].Value) == 0)
+            // Send this operation to another thread while showing the loading (please wait) screen
+            currentSenderObject = sender;
+            currentEventArgs = e;
+            using (codeResources.loadingForm form = new codeResources.loadingForm(DeleteClass))
             {
-                MessageBox.Show("That class cannot be deleted!", "Code level protection", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else
-            {
-                codeResources.confirmByTyping writtenConfirmation = new codeResources.confirmByTyping(selectedClassRow.Cells["className"].Value.ToString());
-                Properties.Settings.Default.typeTestSuccessfull = false; // just to be sure
-                writtenConfirmation.ShowDialog();
-
-                if (Properties.Settings.Default.typeTestSuccessfull)
-                {
-                    Properties.Settings.Default.typeTestSuccessfull = false;
-                    try
-                    {
-                        var functions = new codeResources.functions();
-                        string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&classID=" + Convert.ToInt32(selectedClassRow.Cells["classID"].Value.ToString());
-
-                        simpleServerResponse serverResponse;
-
-                        serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(functions.APIRequest(POSTdata, "deleteClassRequest.php"));
-
-                        if (serverResponse.status)
-                        {
-                            MessageBox.Show("Class Deleted Successfully!", "Class Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            AdministrationPanel_Load(sender, e);
-                        }
-                        else
-                        {
-                            MessageBox.Show("A critical error occurred. " + serverResponse.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            this.Close();
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("A critical error occurred. " + ex.Message + "\n" + ex.StackTrace, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        this.Close();
-                    }
-                }
+                form.ShowDialog();
             }
         }
 

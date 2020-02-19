@@ -55,14 +55,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Summaries.exe" size="1560048">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Summaries.exe" size="1560560">
       <assemblyIdentity name="Summaries" version="3.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>g0zu29eWNRb1G0icyG0zmL/VFOdE6L3OgoMJ8JWUwLE=</dsig:DigestValue>
+        <dsig:DigestValue>iLmGO45Qx2PJo2RcNsyRAcBALZmHvd62MzVzkTaoiec=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

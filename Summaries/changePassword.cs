@@ -17,9 +17,7 @@ namespace Summaries
         string POSTdata = string.Empty;
         bool shouldAbort = false;
 
-        //https://stackoverflow.com/questions/10775367/cross-thread-operation-not-valid-control-textbox1-accessed-from-a-thread-othe/10775421#comment43031144_10775421
-
-        delegate void closeCallBack();
+        //https://www.youtube.com/watch?v=yZYAaScEsc0
         private void checkConnection()
         {
             var functions = new codeResources.functions();
