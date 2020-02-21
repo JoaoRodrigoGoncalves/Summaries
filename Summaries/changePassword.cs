@@ -1,44 +1,52 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.IO;
-using System.Net;
-using System.Text;
 using System.Windows.Forms;
+using static Summaries.codeResources.functions;
 
 namespace Summaries
 {
     public partial class changePassword : Form
     {
-
-        private int userID;
-        private string user;
-        private string displayName;
-
-        /// <summary>
-        /// Main function from the changePassword form.
-        /// </summary>
-        /// <param name="id">The user id retrived from the database</param>
-        /// <param name="username">The username retrived from the database (login name)</param>
-        /// <param name="display">The name to be displayed that was retrived from the database</param>
-        public changePassword(int id, string username, string display)
+        public changePassword()
         {
             InitializeComponent();
-            userID = id;
-            user = username;
-            displayName = display;
         }
 
-        private void changePassword_Shown(object sender, EventArgs e)
+        simpleServerResponse response;
+        string jsonResponse = "";
+        string POSTdata = string.Empty;
+        bool shouldAbort = false;
+
+        //https://www.youtube.com/watch?v=yZYAaScEsc0
+        private void checkConnection()
         {
-            this.Text += displayName;
-            usernameBox.Text = user;
+            var functions = new codeResources.functions();
+            if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+            { 
+                POSTdata = "API=" + Properties.Settings.Default.APIkey + "&userID=" + Properties.Settings.Default.userID + "&oldpsswd=" + functions.Hash(currentPasswordBox.Text) + "&newpsswd=" + functions.Hash(newPasswordBox.Text);
+                jsonResponse = functions.APIRequest(POSTdata, "changePassword.php");
+            }
+            else
+            {
+                shouldAbort = true;
+                MessageBox.Show("Lost Connection to the server. Please try again later!", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void changePassword_Load(object sender, EventArgs e)
+        {
+            using (codeResources.loadingForm form = new codeResources.loadingForm(checkConnection))
+            {
+                form.ShowDialog();
+            }
+            this.Text += Properties.Settings.Default.displayName;
+            usernameBox.Text = Properties.Settings.Default.username;
         }
 
         private void resetFields()
         {
             currentPasswordBox.Clear();
             newPasswordBox.Clear();
-            confirmPasswordBox.Clear();
         }
 
         private void changeBTN_Click(object sender, EventArgs e)
@@ -53,35 +61,44 @@ namespace Summaries
                 {
                     if (newPasswordBox.Text != currentPasswordBox.Text)
                     {
-                        string jsonResponse = "";
+                        var functions = new codeResources.functions();
                         try
                         {
-                            jsonResponse = ChangePassword(userID, HashPW(currentPasswordBox.Text), HashPW(newPasswordBox.Text));
-                            serverResponse response;
-                            response = JsonConvert.DeserializeObject<serverResponse>(jsonResponse);
-
-                            if (!response.status)
+                            using (codeResources.loadingForm form = new codeResources.loadingForm(checkConnection))
                             {
-                                if ((response.errors == null) || (response.errors.Length < 1))
-                                {
-                                    currentPasswordBox.Clear();
-                                    MessageBox.Show("The given 'Current Password' is incorrect. Please try again.", "Password Incorrect", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                }
-                                else
-                                {
-                                    MessageBox.Show("Error: " + response.errors, "Critital Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                }
+                                form.ShowDialog();
+                            }
+
+                            if (shouldAbort)
+                            {
+                                this.Close();
                             }
                             else
                             {
-                                MessageBox.Show("Password Changed Successfully!", "Password Changed", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                this.Close();
+                                response = JsonConvert.DeserializeObject<simpleServerResponse>(jsonResponse);
+
+                                if (!response.status)
+                                {
+                                    if ((response.errors == null) || (response.errors.Length < 1))
+                                    {
+                                        currentPasswordBox.Clear();
+                                        MessageBox.Show("The given 'Current Password' is incorrect. Please try again.", "Password Incorrect", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("Error: " + response.errors, "Critital Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    }
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Password Changed Successfully!", "Password Changed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    this.Close();
+                                }
                             }
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show(ex.Message, "Critital Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            MessageBox.Show(jsonResponse, "Critical Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(ex.Message + "\n" + ex.StackTrace + "\n" + jsonResponse, "Critital Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                     else
@@ -96,59 +113,6 @@ namespace Summaries
                     MessageBox.Show("The new passwords don't match. Please try again.", "The passwords don't match", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-        }
-
-        private class serverResponse
-        {
-            public bool status { get; set; }
-            public string errors { get; set; }
-        }
-
-
-        /// <summary>
-        /// Uses BASE64 to hash the given string
-        /// </summary>
-        /// <param name="text">String to hash</param>
-        /// <returns></returns>
-        private string HashPW(string text)
-        {
-            var plainTextBytes = Encoding.UTF8.GetBytes(text);
-            return Convert.ToBase64String(plainTextBytes);
-        }
-
-        /// <summary>
-        /// Sends a request to the server to change the password of the user
-        /// </summary>
-        /// <param name="userID">The id of the user wich password should be changed</param>
-        /// <param name="oldPassword">The old user's password (in BASE64)</param>
-        /// <param name="newPassword">The new password to change to (in BASE64)</param>
-        /// <returns></returns>
-        public static string ChangePassword(int userID, string oldPassword, string newPassword)
-        {
-            string POSTdata = "userID=" + userID + "&oldpsswd=" + oldPassword + "&newpsswd=" + newPassword;
-            var data = Encoding.UTF8.GetBytes(POSTdata);
-            var request = WebRequest.CreateHttp("https://joaogoncalves.myftp.org/restricted/api/changePassword.php");
-            request.Method = "POST";
-            request.ContentType = "application/x-www-form-urlencoded";
-            request.ContentLength = data.Length;
-            request.UserAgent = "app";
-            //writes the post data to the stream
-            using (var stream = request.GetRequestStream())
-            {
-                stream.Write(data, 0, data.Length);
-                stream.Close();
-            }
-            //ler a resposta
-            string finalData = "";
-            using (var response = request.GetResponse())
-            {
-                var dataStream = response.GetResponseStream();
-                StreamReader reader = new StreamReader(dataStream);
-                finalData = reader.ReadToEnd();
-                dataStream.Close();
-                response.Close();
-            }
-            return finalData;
         }
 
         private void currentPasswordBox_KeyPress(object sender, KeyPressEventArgs e)

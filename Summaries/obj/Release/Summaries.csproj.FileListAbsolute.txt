@@ -28,7 +28,6 @@ C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\bin\Release\Summa
 C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\bin\Release\Summaries.pdb
 C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\bin\Release\Newtonsoft.Json.dll
 C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\bin\Release\Newtonsoft.Json.xml
-C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.csprojAssemblyReference.cache
 C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.aboutSummaries.resources
 C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.AdministrationPanel.resources
 C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.changePassword.resources
@@ -45,3 +44,9 @@ C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Release\Summa
 C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.csproj.CopyComplete
 C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.exe
 C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.pdb
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.codeResources.confirmByTyping.resources
+D:\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.AdministrationPanel.resources
+D:\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.codeResources.confirmByTyping.resources
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.codeResources.loadingForm.resources
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.csprojAssemblyReference.cache
+D:\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.codeResources.loadingForm.resources

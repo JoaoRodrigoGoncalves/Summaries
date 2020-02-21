@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Summaries - Summary Control Software")]
-[assembly: AssemblyDescription("Summaries is a software designed to help students from Torres Novas Professional School to write and keep up with their summaries.")]
+[assembly: AssemblyDescription("Summaries is a software designed to help students to write and keep up with their internship summaries.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("João Rodrigo Gonçalves")]
 [assembly: AssemblyProduct("Summaries - Summary Control Software")]
@@ -33,6 +33,6 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.0.0.1")]
-[assembly: AssemblyFileVersion("2.0.0.1")]
+[assembly: AssemblyVersion("3.0.0.0")]
+[assembly: AssemblyFileVersion("3.0.0.0")]
 [assembly: NeutralResourcesLanguage("en")]

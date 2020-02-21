@@ -35,6 +35,9 @@
             this.editSummary = new System.Windows.Forms.ToolStripButton();
             this.deleteSummary = new System.Windows.Forms.ToolStripButton();
             this.refreshList = new System.Windows.Forms.ToolStripButton();
+            this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
+            this.workspaceComboBox = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             this.toolStrip.SuspendLayout();
             this.SuspendLayout();
@@ -50,6 +53,7 @@
             this.dataGrid.ReadOnly = true;
             this.dataGrid.Size = new System.Drawing.Size(776, 402);
             this.dataGrid.TabIndex = 0;
+            this.dataGrid.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrid_CellDoubleClick);
             // 
             // toolStrip
             // 
@@ -59,7 +63,10 @@
             this.addSummary,
             this.editSummary,
             this.deleteSummary,
-            this.refreshList});
+            this.refreshList,
+            this.toolStripLabel2,
+            this.workspaceComboBox,
+            this.toolStripLabel1});
             this.toolStrip.Location = new System.Drawing.Point(0, 425);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Size = new System.Drawing.Size(800, 25);
@@ -102,6 +109,30 @@
             this.refreshList.Text = "Refresh";
             this.refreshList.Click += new System.EventHandler(this.refreshList_Click);
             // 
+            // toolStripLabel2
+            // 
+            this.toolStripLabel2.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripLabel2.Name = "toolStripLabel2";
+            this.toolStripLabel2.Size = new System.Drawing.Size(13, 22);
+            this.toolStripLabel2.Text = "  ";
+            // 
+            // workspaceComboBox
+            // 
+            this.workspaceComboBox.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.workspaceComboBox.AutoSize = false;
+            this.workspaceComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.workspaceComboBox.Name = "workspaceComboBox";
+            this.workspaceComboBox.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
+            this.workspaceComboBox.Size = new System.Drawing.Size(200, 23);
+            this.workspaceComboBox.DropDownClosed += new System.EventHandler(this.workspaceComboBox_DropDownClosed);
+            // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(68, 22);
+            this.toolStripLabel1.Text = "Workspace:";
+            // 
             // summariesList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -133,5 +164,8 @@
         private System.Windows.Forms.ToolStripButton editSummary;
         private System.Windows.Forms.ToolStripButton deleteSummary;
         private System.Windows.Forms.ToolStripButton refreshList;
+        private System.Windows.Forms.ToolStripComboBox workspaceComboBox;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel2;
     }
 }

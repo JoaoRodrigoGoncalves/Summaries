@@ -7,26 +7,9 @@ namespace Summaries
 {
     public partial class main : Form
     {
-        private int userID;
-        private string user;
-        private string displayName;
-        private bool isAdmin = false;
-
-        private bool isHidden = false;
-
-        /// <summary>
-        /// Main function from the dashboard form.
-        /// </summary>
-        /// <param name="id">The user id retrived from the database</param>
-        /// <param name="username">The username retrived from the database (login name)</param>
-        /// <param name="display">The name to be displayed that was retrived from the database</param>
-        public main(int id, string username, string display, bool adminControl)
+        public main()
         {
             InitializeComponent();
-            userID = id;
-            user = username;
-            displayName = display;
-            isAdmin = adminControl;
         }
 
         private void menuOptionsExit_Click(object sender, EventArgs e)
@@ -36,7 +19,7 @@ namespace Summaries
 
         private void main_Shown(object sender, EventArgs e)
         {
-            sessionLabel.Text += " " + displayName;
+            sessionLabel.Text += " " + Properties.Settings.Default.displayName;
         }
 
         private void main_FormClosed(object sender, FormClosedEventArgs e)
@@ -46,22 +29,8 @@ namespace Summaries
 
         private void menuOptionsChange_Password_Click(object sender, EventArgs e)
         {
-            changePassword password = new changePassword(userID, user, displayName);
+            changePassword password = new changePassword();
             password.ShowDialog();
-        }
-
-        private void trayIcon_Click(object sender, EventArgs e)
-        {
-            if (isHidden)
-            {
-                this.Show();
-                isHidden = false;
-            }
-            else
-            {
-                this.Hide();
-                isHidden = true;
-            }
         }
 
         private void menuAboutLicenses_Click(object sender, EventArgs e)
@@ -72,11 +41,26 @@ namespace Summaries
             }
             catch (System.ComponentModel.Win32Exception)
             {
-                using (var client = new WebClient())
+                try
                 {
-                    client.DownloadFile("https://joaogoncalves.myftp.org/restricted/licenses.txt", Path.GetTempPath() + "\\licenses.txt");
+                    using (var client = new WebClient())
+                    {
+                        client.DownloadFile(Properties.Settings.Default.inUseDomain + "/summaries/resources/licenses.txt", Path.GetTempPath() + "\\licenses.txt");
+                    }
+                    menuAboutLicenses_Click(sender, e);
+                }catch(Exception ex)
+                {
+                    var functions = new codeResources.functions();
+                    if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+                    {
+                        MessageBox.Show("Critical Error: " + ex.Message + "\n" + ex.StackTrace, "Critical Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Lost Connection to the server. Please try again later!", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
-                menuAboutLicenses_Click(sender, e);
+                
             }
         }
 
@@ -88,19 +72,37 @@ namespace Summaries
 
         private void menuSummaryNew_Click(object sender, EventArgs e)
         {
-            newSummary newSummary = new newSummary(userID);
-            newSummary.ShowDialog();
+            var functions = new codeResources.functions();
+            if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+            {
+                newSummary newSummary = new newSummary();
+                newSummary.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Lost Connection to the server. Please try again later!", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            
         }
 
         private void menuSummaryList_Click(object sender, EventArgs e)
         {
-            summariesList summaries = new summariesList(userID);
-            summaries.ShowDialog();
+            var functions = new codeResources.functions();
+            if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+            {
+                summariesList summaries = new summariesList();
+                summaries.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Lost Connection to the server. Please try again later!", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            
         }
 
         private void main_Load(object sender, EventArgs e)
         {
-            if (isAdmin)
+            if (Properties.Settings.Default.isAdmin)
             {
                 menuOptionsAdministration_Panel.Visible = true;
                 menuOptionsAdministration_PanelStrip.Visible = true;
@@ -109,8 +111,17 @@ namespace Summaries
 
         private void menuOptionsAdministration_Panel_Click(object sender, EventArgs e)
         {
-            AdministrationPanel panel = new AdministrationPanel(userID);
-            panel.ShowDialog();
+            var functions = new codeResources.functions();
+            if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+            {
+                AdministrationPanel panel = new AdministrationPanel();
+                panel.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Lost Connection to the server. Please try again later!", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            
         }
     }
 }

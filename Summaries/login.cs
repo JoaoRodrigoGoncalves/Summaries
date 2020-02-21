@@ -1,10 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.IO;
-using System.Net;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using static Summaries.codeResources.functions;
 
 namespace Summaries
 {
@@ -26,82 +23,99 @@ namespace Summaries
             Application.Exit();
         }
 
-        private void loginBTN_Click(object sender, EventArgs e)
-        {
-            serverResponse response;
-            userSession session;
-
-            string username = usernameBox.Text;
-            string password = passwordBox.Text;
-            string jsonResponse = LoginValidation(username, password);
-            response = JsonConvert.DeserializeObject<serverResponse>(jsonResponse);
-
-            if (response.status)
-            {
-                session = JsonConvert.DeserializeObject<userSession>(jsonResponse);
-                main form = new main(session.userID, session.user, session.displayName, session.adminControl);
-                this.Hide();
-                form.Show();
-            }
-            else
-            {
-                if((response.errors == null) || (response.errors.Length < 1))
-                {
-                    MessageBox.Show("Username or Password are incorrect.", "Wrong credentials", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                else
-                {
-                    MessageBox.Show("Error: " + response.errors, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        private class userSession
+        private class userInfo
         {
             public int userID { get; set; }
-            public string user { get; set; }
+            public string username { get; set; }
             public string displayName { get; set; }
             public bool adminControl { get; set; }
         }
 
-        private class serverResponse
+        //https://www.youtube.com/watch?v=yZYAaScEsc0
+
+        string jsonResponse = "";
+        string POSTdata = "";
+        bool shouldAbort = false;
+
+        private void getInformation()
         {
-            public bool status { get; set; }
-            public string errors { get; set; }
+            var functions = new codeResources.functions();
+            if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+            {
+                jsonResponse = functions.APIRequest(POSTdata, "loginvalidator.php");
+            }
+            else
+            {
+                shouldAbort = true;
+                MessageBox.Show("Lost Connection to the server. Please try again later!", "Connection Lost!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        /// <summary>
-        /// Sends a login request to the server through HTTPS
-        /// </summary>
-        /// <param name="username">The username given by the user to login</param>
-        /// <param name="password">The password given by the user to login</param>
-        /// <returns></returns>
-        public static string LoginValidation(string username, string password)
+
+        private void loginBTN_Click(object sender, EventArgs e)
         {
-            string POSTdata = "usrnm=" + username + "&psswd=" + password;
-            var data = Encoding.UTF8.GetBytes(POSTdata);
-            var request = WebRequest.CreateHttp("https://joaogoncalves.myftp.org/restricted/loginvalidator.php");
-            request.Method = "POST";
-            request.ContentType = "application/x-www-form-urlencoded";
-            request.ContentLength = data.Length;
-            request.UserAgent = "app";
-            //writes the post data to the stream
-            using (var stream = request.GetRequestStream())
+            simpleServerResponse response;
+            userInfo userInfo;
+
+            try
             {
-                stream.Write(data, 0, data.Length);
-                stream.Close();
-            }
-            //ler a resposta
-            string finalData = "";
-            using (var response = request.GetResponse())
+                string username = usernameBox.Text;
+                string password = passwordBox.Text;
+                POSTdata = "API=" + Properties.Settings.Default.APIkey + "&usrnm=" + username + "&psswd=" + password;
+                var functions = new codeResources.functions();
+
+                using (codeResources.loadingForm loading = new codeResources.loadingForm(getInformation))
+                {
+                    loading.ShowDialog();
+                }
+
+                if (shouldAbort)
+                {
+                    passwordBox.Clear();
+                    password = "";
+                }
+                else
+                {
+                    response = JsonConvert.DeserializeObject<simpleServerResponse>(jsonResponse);
+
+                    if (response.status)
+                    {
+                        userInfo = JsonConvert.DeserializeObject<userInfo>(jsonResponse);
+                        Properties.Settings.Default.userID = userInfo.userID;
+                        Properties.Settings.Default.username = userInfo.username;
+                        Properties.Settings.Default.displayName = userInfo.displayName;
+                        Properties.Settings.Default.isAdmin = userInfo.adminControl;
+
+                        main form = new main();
+                        this.Hide();
+                        form.Show();
+                    }
+                    else
+                    {
+                        if ((response.errors == null) || (response.errors.Length < 1))
+                        {
+                            credentialsWarningLB.Visible = true;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Error: " + response.errors, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+
+                
+            }catch(Exception ex)
             {
-                var dataStream = response.GetResponseStream();
-                StreamReader reader = new StreamReader(dataStream);
-                finalData = reader.ReadToEnd();
-                dataStream.Close();
-                response.Close();
+                var functions = new codeResources.functions();
+                if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+                {
+                    MessageBox.Show("Critial Error: " + ex.Message + "\n" + ex.StackTrace, "Critical Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    MessageBox.Show("Lost Connection to the server. Please try again!", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            return finalData;
         }
 
         private void passwordBox_KeyDown(object sender, KeyEventArgs e)
