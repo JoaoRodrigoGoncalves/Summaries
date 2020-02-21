@@ -82,7 +82,7 @@ namespace Summaries.codeResources
             {
                 if (CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
                 {
-                    finalData = "{\"status\":\"false\", \"errors\":\"" + ex.Message + "\"}";  
+                    finalData = "{\"status\":\"false\", \"errors\":\"" + ex.Message + "\n" + APIFile + "\"}";  
                 }else{
                     finalData = "{\"status\":\"false\", \"errors\":\"Lost Connection to the Server\"}";
                 }
