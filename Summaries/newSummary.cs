@@ -126,6 +126,7 @@ namespace Summaries
 
                     if (workspaces.contents == null)
                     {
+                        Properties.Settings.Default.currentWorkspaceID = 0;
                         MessageBox.Show("Cannot create summaries because there are no available workspaces!", "No available workspaces", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         this.Close();
                     }
@@ -175,7 +176,6 @@ namespace Summaries
                                 }
                                 else
                                 {
-
                                     if (Properties.Settings.Default.currentWorkspaceID == 0)
                                     {
                                         // Workspace not defined yet

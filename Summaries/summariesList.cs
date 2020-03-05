@@ -110,6 +110,7 @@ namespace Summaries
                     {
                         if (workspaceResponse.contents == null)
                         {
+                            Properties.Settings.Default.currentWorkspaceID = 0;
                             MessageBox.Show("Cannot list any summaries because there are no available workspaces!", "No available workspaces", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                             this.Close();
                         }
