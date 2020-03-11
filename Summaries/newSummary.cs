@@ -3,9 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static Summaries.codeResources.functions;
@@ -24,8 +22,6 @@ namespace Summaries
         private int newWorkspaceID = 0;
 
         //*********************//
-
-        private List<string> filesToUpload = new List<string>();
 
         public class Attachments
         {
@@ -66,8 +62,26 @@ namespace Summaries
             public List<workspacesContent> contents { get; set; }
         }
 
+        public class fileInfo
+        {
+            public string name { get; set; }
+            public string path { get; set; }
+        }
+
+        public class filesAttached
+        {
+            public int total {
+                get
+                {
+                    return contents.Count;
+                }
+            }
+            public List<fileInfo> contents { get; set; }
+        }
+        
         serverResponse response;
         workspacesServerResponse workspaces;
+        filesAttached attachedFiles;
         string jsonWorkspace = "";
         string jsonResponse = "";
         string jsonSaveResponse = "";
@@ -169,7 +183,7 @@ namespace Summaries
                                     {
                                         foreach (var attach in response.contents[summaryID - 1].attachments)
                                         {
-                                            filesToUpload.Add(attach.path);
+                                            //filesToUpload.Add(attach.path);
                                         }
                                     }
 
@@ -222,8 +236,6 @@ namespace Summaries
                                     dateBox.Enabled = false;
                                     contentsBox.ReadOnly = true;
                                     saveBTN.Enabled = false;
-                                    removeCurrentBTN.Enabled = false;
-                                    selectfileBTN.Enabled = false;
                                 }
 
                             }
@@ -446,49 +458,6 @@ namespace Summaries
             }
         }
 
-        /// <summary>
-        /// Opens a OpenFileDialog screen and sets the file to be uploaded into the array
-        /// </summary>
-        /// <param name="index">The index where the file will be stored on the one-demensional array</param>
-        /// <returns>The name of the file selected by the user</returns>
-        private string loadFileFromComputer(int index)
-        {
-            try
-            {
-                fileUpload.Multiselect = false;
-                fileUpload.Title = "Select files to upload...";
-                fileUpload.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                fileUpload.Filter = "Images (*.BMP;*.JPG;*.JPEG;*.GIF,*.PNG,*.TIFF)|*.BMP;*.JPG;*.GIF;*.PNG;*.TIFF|" + "All files (*.*)|*.*";
-                fileUpload.CheckFileExists = true;
-                fileUpload.CheckPathExists = true;
-                fileUpload.FilterIndex = 2;
-                fileUpload.RestoreDirectory = true;
-                fileUpload.ReadOnlyChecked = true;
-                fileUpload.ShowReadOnly = true;
-
-                if (fileUpload.ShowDialog() == DialogResult.OK)
-                {
-                    //filesToUpload.SetValue(fileUpload.FileName, index);
-                    return fileUpload.FileName;
-                }
-                else
-                {
-                    return string.Empty;
-                }
-            }
-            catch (Exception ex)
-            { 
-                MessageBox.Show("Critial error: " + ex.Message, "Critical Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return string.Empty;
-            }
-
-        }
-
-        private void selectfileBTN_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void workspaceComboBox_DropDownClosed(object sender, EventArgs e)
         {
             newWorkspaceID = workspaces.contents[workspaces.contents.FindIndex(x => x.name == workspaceComboBox.SelectedItem.ToString())].id;
@@ -497,6 +466,68 @@ namespace Summaries
                 Properties.Settings.Default.currentWorkspaceID = newWorkspaceID;
                 newSummary_Load(sender, e);
             }
+        }
+
+        private void newSummary_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }
+        }
+
+        private void newSummary_DragDrop(object sender, DragEventArgs e)
+        {
+            addToFileTable((string[])e.Data.GetData(DataFormats.FileDrop));
+        }
+
+        private void addToFileTable(string[] files)
+        {
+            foreach (var file in files)
+            {
+                string fileName = file.Split('\\')[file.Split('\\').Length - 1];
+                attachmentsGridView.Rows.Add(fileName, "Remove");
+            }
+        }
+
+        private void attachmentsGridView_DragEnter(object sender, DragEventArgs e)
+        {
+            newSummary_DragEnter(sender, e);
+        }
+
+        private void attachmentsGridView_DragDrop(object sender, DragEventArgs e)
+        {
+            newSummary_DragDrop(sender, e);
+        }
+
+        private void attachmentsGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                // https://stackoverflow.com/questions/3577297/how-to-handle-click-event-in-button-column-in-datagridview
+
+                var senderGrid = (DataGridView)sender;
+
+                if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
+                {
+                    attachmentsGridView.Rows.RemoveAt(e.RowIndex);
+                    
+                }
+            }
+            catch { }
+            
+        }
+
+        private void addAttachmentBTN_Click(object sender, EventArgs e)
+        {
+            DialogResult result;
+            fileUpload.FileName = "";
+            result = fileUpload.ShowDialog();
+            addToFileTable(fileUpload.FileNames);
         }
     }
 }
