@@ -50,3 +50,4 @@ D:\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.codeResources.conf
 C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.codeResources.loadingForm.resources
 D:\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.codeResources.loadingForm.resources
 C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.csprojAssemblyReference.cache
+D:\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.csproj.CoreCompileInputs.cache

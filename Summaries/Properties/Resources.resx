@@ -151,28 +151,4 @@
   <data name="icon1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="excelFile" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\assets\excelFile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="noFileSelected" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\assets\noFileSelected.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="pdfFile" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\assets\pdfFile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="powerpointFile" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\assets\powerpointFile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="txtFile" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\assets\txtFile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="wordFile" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\assets\wordFile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="zipFile" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\assets\zipFile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="noFileSelected1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\assets\noFileSelected.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
 </root>

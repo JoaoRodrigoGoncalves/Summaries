@@ -50,3 +50,4 @@ D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.codeResources.confir
 C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.codeResources.confirmByTyping.resources
 D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.codeResources.loadingForm.resources
 C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.codeResources.loadingForm.resources
+D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.csproj.CoreCompileInputs.cache

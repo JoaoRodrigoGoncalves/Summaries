@@ -38,12 +38,12 @@
             this.cancelBTN = new System.Windows.Forms.Button();
             this.fileUpload = new System.Windows.Forms.OpenFileDialog();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.workspaceComboBox = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.attachmentsGridView = new System.Windows.Forms.DataGridView();
             this.addAttachmentBTN = new System.Windows.Forms.Button();
+            this.attachmentsGridView = new System.Windows.Forms.DataGridView();
             this.fileName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.deleteFileBTN = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.workspaceComboBox = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.summaryNumberBox)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.attachmentsGridView)).BeginInit();
@@ -144,24 +144,15 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Attachements";
             // 
-            // workspaceComboBox
+            // addAttachmentBTN
             // 
-            this.workspaceComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.workspaceComboBox.FormattingEnabled = true;
-            this.workspaceComboBox.Location = new System.Drawing.Point(108, 12);
-            this.workspaceComboBox.Name = "workspaceComboBox";
-            this.workspaceComboBox.Size = new System.Drawing.Size(184, 21);
-            this.workspaceComboBox.TabIndex = 1;
-            this.workspaceComboBox.DropDownClosed += new System.EventHandler(this.workspaceComboBox_DropDownClosed);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(40, 15);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(62, 13);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "Workspace";
+            this.addAttachmentBTN.Location = new System.Drawing.Point(362, 19);
+            this.addAttachmentBTN.Name = "addAttachmentBTN";
+            this.addAttachmentBTN.Size = new System.Drawing.Size(75, 23);
+            this.addAttachmentBTN.TabIndex = 6;
+            this.addAttachmentBTN.Text = "Attach File...";
+            this.addAttachmentBTN.UseVisualStyleBackColor = true;
+            this.addAttachmentBTN.Click += new System.EventHandler(this.addAttachmentBTN_Click);
             // 
             // attachmentsGridView
             // 
@@ -187,16 +178,6 @@
             this.attachmentsGridView.DragDrop += new System.Windows.Forms.DragEventHandler(this.attachmentsGridView_DragDrop);
             this.attachmentsGridView.DragEnter += new System.Windows.Forms.DragEventHandler(this.attachmentsGridView_DragEnter);
             // 
-            // addAttachmentBTN
-            // 
-            this.addAttachmentBTN.Location = new System.Drawing.Point(362, 19);
-            this.addAttachmentBTN.Name = "addAttachmentBTN";
-            this.addAttachmentBTN.Size = new System.Drawing.Size(75, 23);
-            this.addAttachmentBTN.TabIndex = 6;
-            this.addAttachmentBTN.Text = "Attach File...";
-            this.addAttachmentBTN.UseVisualStyleBackColor = true;
-            this.addAttachmentBTN.Click += new System.EventHandler(this.addAttachmentBTN_Click);
-            // 
             // fileName
             // 
             this.fileName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
@@ -215,6 +196,25 @@
             this.deleteFileBTN.ReadOnly = true;
             this.deleteFileBTN.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.deleteFileBTN.Text = "Remove";
+            // 
+            // workspaceComboBox
+            // 
+            this.workspaceComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.workspaceComboBox.FormattingEnabled = true;
+            this.workspaceComboBox.Location = new System.Drawing.Point(108, 12);
+            this.workspaceComboBox.Name = "workspaceComboBox";
+            this.workspaceComboBox.Size = new System.Drawing.Size(184, 21);
+            this.workspaceComboBox.TabIndex = 1;
+            this.workspaceComboBox.DropDownClosed += new System.EventHandler(this.workspaceComboBox_DropDownClosed);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(40, 15);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(62, 13);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "Workspace";
             // 
             // newSummary
             // 
