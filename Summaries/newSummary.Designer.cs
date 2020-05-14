@@ -235,6 +235,10 @@
             this.Controls.Add(this.saveBTN);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(489, 522);
+            this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(489, 522);
             this.Name = "newSummary";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Add a new summary";

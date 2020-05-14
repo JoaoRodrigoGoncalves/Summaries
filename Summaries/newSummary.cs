@@ -25,7 +25,8 @@ namespace Summaries
         string jsonSaveResponse = "";
         string savePOSTdata = "API=" + Properties.Settings.Default.APIkey;
         bool shouldAbortLoad = false;
-        List<String> filesToAdopt = new List<string>();
+        List<String> filesToAdd = new List<string>();
+        List<String> filesToRemove = new List<string>();
 
         //*********************//
 
@@ -68,33 +69,15 @@ namespace Summaries
             public List<workspacesContent> contents { get; set; }
         }
 
-        public class fileInfo
-        {
-            public string name { get; set; }
-            public string path { get; set; }
-        }
-
-        public class filesAttached
-        {
-            public int total {
-                get
-                {
-                    return contents.Count;
-                }
-            }
-            public List<fileInfo> contents { get; set; }
-        }
-
         public class uploadInfo
         {
             public bool status { get; set; }
             public string errors { get; set; }
-            public string fileToAdopt { get; set; }
+            public string rowID { get; set; }
         }
         
         serverResponse response;
         workspacesServerResponse workspaces;
-        filesAttached attachedFiles;
         uploadInfo uploadResults;
 
         public newSummary(int summaryid = 0)
@@ -278,7 +261,7 @@ namespace Summaries
 
         private void saveBTN_Click(object sender, EventArgs e)
         {
-            if(contentsBox.Text == "" || contentsBox.TextLength < 1 || contentsBox.Text == string.Empty || filesToAdopt.Count < 1)
+            if(contentsBox.Text == "" || contentsBox.TextLength < 1 || contentsBox.Text == string.Empty || filesToAdd.Count < 1 || filesToRemove.Count < 1)
             {
                 this.Close();
             }
@@ -349,16 +332,57 @@ namespace Summaries
             {
                 if (isEdit)
                 {
-                    if ((originalText != functions.Hash(contentsBox.Text)) || (originalDate != dateBox.Value.ToString("yyyy-MM-dd")) || (originalSummaryID != summaryNumberBox.Value))
+                    if ((originalText != functions.Hash(contentsBox.Text)) || (originalDate != dateBox.Value.ToString("yyyy-MM-dd")) || (originalSummaryID != summaryNumberBox.Value) || filesToAdd.Count > 0 || filesToRemove.Count > 0)
                     {
-                        if (UpdateDB(Convert.ToInt32(summaryNumberBox.Value), dateBox.Value.ToString("yyyy-MM-dd"), contentsBox.Text, workspaces.contents[workspaces.contents.FindIndex(x => x.name == workspaceComboBox.SelectedItem.ToString())].id, dbRow))
+                        if(filesToAdd.Count > 0 || filesToRemove.Count > 0) // Checks if there are files to add or remove
                         {
-                            MessageBox.Show("Changes saved successfully!", "Summaries", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            this.Close();
+                            if(filesToAdd.Count > 0)
+                            {
+                                List<string> filesToAdopt = new List<string>();
+                                filesToAdopt = UploadFiles(filesToAdd);
+                                if (filesToAdopt != null && filesToAdopt.Count > 0)
+                                {
+                                    // Here it saves the basic info about the current summary and uploads the files to the server
+                                    if (UpdateDB(Convert.ToInt32(summaryNumberBox.Value), dateBox.Value.ToString("yyyy-MM-dd"), contentsBox.Text, workspaces.contents[workspaces.contents.FindIndex(x => x.name == workspaceComboBox.SelectedItem.ToString())].id, dbRow, filesToAdopt, filesToRemove))
+                                    {
+                                        MessageBox.Show("Summary saved successfully!", "Summaries", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        this.Close();
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("An error occurred while trying to save the summary.", "Error while saving the summary", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    }
+                                }
+                                else
+                                {
+                                    MessageBox.Show("An error occurred while trying to upload the files.", "Error while uploading files", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+                            }
+                            else
+                            {
+                                // Here it saves the basic info about the current summary and uploads the files to the server
+                                if (UpdateDB(Convert.ToInt32(summaryNumberBox.Value), dateBox.Value.ToString("yyyy-MM-dd"), contentsBox.Text, workspaces.contents[workspaces.contents.FindIndex(x => x.name == workspaceComboBox.SelectedItem.ToString())].id, dbRow, null, filesToRemove))
+                                {
+                                    MessageBox.Show("Summary saved successfully!", "Summaries", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    this.Close();
+                                }
+                                else
+                                {
+                                    MessageBox.Show("An error occurred while trying to save the summary.", "Error while saving the summary", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+                            }
                         }
-                        else
+                        else // There isn't any kind of file operation to be performed
                         {
-                            MessageBox.Show("An error occurred while trying to save the summary.", "Error while saving the summary", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            if (UpdateDB(Convert.ToInt32(summaryNumberBox.Value), dateBox.Value.ToString("yyyy-MM-dd"), contentsBox.Text, workspaces.contents[workspaces.contents.FindIndex(x => x.name == workspaceComboBox.SelectedItem.ToString())].id, dbRow))
+                            {
+                                MessageBox.Show("Changes saved successfully!", "Summaries", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                this.Close();
+                            }
+                            else
+                            {
+                                MessageBox.Show("An error occurred while trying to save the summary.", "Error while saving the summary", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
                         }
                     }
                     else
@@ -368,16 +392,46 @@ namespace Summaries
                 }
                 else
                 {
-                    // Here it saves the basic info about the current summary and uploads the files to the server
-                    if (UpdateDB(Convert.ToInt32(summaryNumberBox.Value), dateBox.Value.ToString("yyyy-MM-dd"), contentsBox.Text, workspaces.contents[workspaces.contents.FindIndex(x => x.name == workspaceComboBox.SelectedItem.ToString())].id, 0, UploadFiles(filesToAdd)))
+
+                    // This is a new summary
+
+                    if(filesToAdd.Count > 0) // Cheks if there are files to add
                     {
-                        MessageBox.Show("Summary saved successfully!", "Summaries", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        this.Close();
+                        List<string> filesToAdopt = new List<string>();
+                        filesToAdopt = UploadFiles(filesToAdd);
+                        if (filesToAdopt != null && filesToAdopt.Count > 0)
+                        {
+                            // Here it saves the basic info about the current summary and uploads the files to the server
+                            if (UpdateDB(Convert.ToInt32(summaryNumberBox.Value), dateBox.Value.ToString("yyyy-MM-dd"), contentsBox.Text, workspaces.contents[workspaces.contents.FindIndex(x => x.name == workspaceComboBox.SelectedItem.ToString())].id, 0, filesToAdopt))
+                            {
+                                MessageBox.Show("Summary saved successfully!", "Summaries", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                this.Close();
+                            }
+                            else
+                            {
+                                MessageBox.Show("An error occurred while trying to save the summary.", "Error while saving the summary", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("An error occurred while trying to upload the files.", "Error while uploading files", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
                     else
                     {
-                        MessageBox.Show("An error occurred while trying to save the summary.", "Error while saving the summary", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        // Here it saves the basic info about the current summary and uploads the files to the server
+                        if (UpdateDB(Convert.ToInt32(summaryNumberBox.Value), dateBox.Value.ToString("yyyy-MM-dd"), contentsBox.Text, workspaces.contents[workspaces.contents.FindIndex(x => x.name == workspaceComboBox.SelectedItem.ToString())].id))
+                        {
+                            MessageBox.Show("Summary saved successfully!", "Summaries", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            this.Close();
+                        }
+                        else
+                        {
+                            MessageBox.Show("An error occurred while trying to save the summary.", "Error while saving the summary", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
+                    
+                    
                 }
             }
         }
@@ -388,19 +442,33 @@ namespace Summaries
         /// <param name="summaryID">The ID of the summary</param>
         /// <param name="date">The date of the summary</param>
         /// <param name="text">The text of the summary</param>
+        /// <param name="workspaceID">The ID of the workspace</param>
         /// <param name="dbRowID">(Optional) The row in the database to be updated</param>
-        /// <param name="files">(Optional) The list of files associated with the current summary</param>
+        /// <param name="filesToAdopt">(Optional) The list of files to be adopted</param>
+        /// <param name="filesToRemove">(Optional) The list of files to be removed</param>
         /// <returns></returns>
-        private bool UpdateDB(int summaryID, string date, string text, int workspaceID, int dbRowID = 0, List<String> files = null)
+        private bool UpdateDB(int summaryID, string date, string text, int workspaceID, int dbRowID = 0, List<string> filesToAdopt = null, List<string> filesToRemove = null)
         {
             var functions = new codeResources.functions();
+            string filesLoad = "";
+
+            if(filesToAdopt != null)
+            {
+                filesLoad = "&filesToAdopt=" + functions.Hash(JsonConvert.SerializeObject(filesToAdopt));
+            }
+
+            if(filesToRemove != null)
+            {
+                filesLoad += "&filesToRemove=" + functions.Hash(JsonConvert.SerializeObject(filesToRemove));
+            }
+
             if(dbRowID > 0)
             {
-                savePOSTdata += "&userID=" + Properties.Settings.Default.userID + "&workspace=" + workspaceID + "&dbrowID=" + dbRowID + "&summaryID=" + summaryID + "&date=" + functions.Hash(date) + "&body=" + functions.Hash(text) + "&files=" + functions.Hash(JsonConvert.SerializeObject(files));
+                savePOSTdata += "&operation=edit" + "&userID=" + Properties.Settings.Default.userID + "&workspace=" + workspaceID + "&dbrowID=" + dbRowID + "&summaryID=" + summaryID + "&date=" + functions.Hash(date) + "&contents=" + functions.Hash(text) + filesLoad ;
             }
             else
             {
-                savePOSTdata += "&userID=" + Properties.Settings.Default.userID + "&workspace=" + workspaceID + "&summaryID=" + summaryID + "&date=" + functions.Hash(date) + "&body=" + functions.Hash(text) + "&files=" + functions.Hash(JsonConvert.SerializeObject(files));
+                savePOSTdata += "&operation=new" + "&userID=" + Properties.Settings.Default.userID + "&workspace=" + workspaceID + "&summaryID=" + summaryID + "&date=" + functions.Hash(date) + "&contents=" + functions.Hash(text) + filesLoad;
             }
 
             using (codeResources.loadingForm loadForm = new codeResources.loadingForm(APISave)) {
@@ -430,11 +498,12 @@ namespace Summaries
         /// </summary>
         /// <see cref="https://stackoverflow.com/questions/10237983/upload-to-php-server-from-c-sharp-client-application"/>
         /// <param name="files">List of files to upload</param>
+        /// <param name="summaryID">Current Summary ID</param>
         /// <returns>List of files to be adopted</returns>
-        private List<String> UploadFiles(List<String> files)
+        private List<string> UploadFiles(List<String> filesToUpload)
         {
-            List<String> filesToBeAdopted = new List<string>();
-            foreach(string currentFile in files)
+            List<string> filesToAdopt = new List<string>();
+            foreach(string currentFile in filesToUpload)
             {
                 System.Net.WebClient Client = new System.Net.WebClient();
                 Client.Headers.Add("User-Agent", "app");
@@ -447,15 +516,15 @@ namespace Summaries
 
                 if (uploadResults.status)
                 {
-                    filesToBeAdopted.Add(uploadResults.fileToAdopt);
+                    filesToAdopt.Add(uploadResults.rowID);
                 }
                 else
                 {
                     MessageBox.Show("Error: " + uploadResults.errors, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    break;
+                    return null;
                 }
             }
-            return filesToBeAdopted;
+            return filesToAdopt;
         }
 
         private void workspaceComboBox_DropDownClosed(object sender, EventArgs e)
@@ -485,7 +554,6 @@ namespace Summaries
             addToFileTable((string[])e.Data.GetData(DataFormats.FileDrop));
         }
 
-        List<String> filesToAdd = new List<string>();
         /// <summary>
         /// Adds files to the table
         /// </summary>
@@ -520,8 +588,23 @@ namespace Summaries
 
                 if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
                 {
-                    attachmentsGridView.Rows.RemoveAt(e.RowIndex);
-                    
+                    string fileName = attachmentsGridView.Rows[e.RowIndex].Cells[e.ColumnIndex - 1].Value.ToString();
+                    DialogResult response = MessageBox.Show("Are you sure you want to remove " + fileName + "?", "Remove File", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                    if(response == DialogResult.Yes)
+                    {
+                        // Checks if he file is in the filesToAdd list. If the file is in there, it means that it was added just now and it is not on the server
+                        // If the file is not there, it means that the file is already on the server and has to be removed from there
+                        if (filesToAdd.Contains(fileName))
+                        {
+                            filesToAdd.Remove(fileName);
+                        }
+                        else
+                        {
+                            filesToRemove.Add(fileName);
+                        }
+                        attachmentsGridView.Rows.RemoveAt(e.RowIndex);
+                    }
                 }
             }
             catch { }
