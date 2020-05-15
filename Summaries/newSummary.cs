@@ -114,6 +114,7 @@ namespace Summaries
 
         private void newSummary_Load(object sender, EventArgs e)
         {
+            contentsBox.Focus();
             workspaceComboBox.Items.Clear();
             var functions = new codeResources.functions();
             using(codeResources.loadingForm form = new codeResources.loadingForm(APICalls))
@@ -176,16 +177,16 @@ namespace Summaries
                                 {
                                     this.Text = "Edit Summary";
                                     summaryNumberBox.Value = summaryID;
-                                    dateBox.Value = DateTime.ParseExact(response.contents[summaryID - 1].date, "yyyy-MM-dd", new CultureInfo("pt"));
-                                    contentsBox.Text = response.contents[summaryID - 1].contents;
-                                    originalText = functions.Hash(response.contents[summaryID - 1].contents);
-                                    originalDate = response.contents[summaryID - 1].date;
-                                    originalWorkspaceID = response.contents[summaryID - 1].workspace;
+                                    dateBox.Value = DateTime.ParseExact(response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryID)].date, "yyyy-MM-dd", new CultureInfo("pt"));
+                                    contentsBox.Text = response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryID)].contents;
+                                    originalText = functions.Hash(response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryID)].contents);
+                                    originalDate = response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryID)].date;
+                                    originalWorkspaceID = response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryID)].workspace;
                                     originalSummaryID = summaryID;
-                                    dbRow = response.contents[summaryID - 1].id;
-                                    if (response.contents[summaryID - 1].attachments != null)
+                                    dbRow = response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryID)].id;
+                                    if (response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryID)].attachments != null)
                                     {
-                                        foreach (var attach in response.contents[summaryID - 1].attachments)
+                                        foreach (var attach in response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryID)].attachments)
                                         {
                                             attachmentsGridView.Rows.Add(attach.filename, "Remove");
                                         }
