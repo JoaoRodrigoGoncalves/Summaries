@@ -563,9 +563,12 @@ namespace Summaries
         {
             foreach (var file in files)
             {
-                filesToAdd.Add(file);
-                string fileName = file.Split('\\')[file.Split('\\').Length - 1];
-                attachmentsGridView.Rows.Add(fileName, "Remove");
+                if (!string.IsNullOrEmpty(file))
+                {
+                    filesToAdd.Add(file);
+                    string fileName = file.Split('\\')[file.Split('\\').Length - 1];
+                    attachmentsGridView.Rows.Add(fileName, "Remove");
+                }
             }
         }
 
@@ -586,6 +589,7 @@ namespace Summaries
                 // https://stackoverflow.com/questions/3577297/how-to-handle-click-event-in-button-column-in-datagridview
 
                 var senderGrid = (DataGridView)sender;
+                bool done = false;
 
                 if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
                 {
@@ -596,11 +600,16 @@ namespace Summaries
                     {
                         // Checks if he file is in the filesToAdd list. If the file is in there, it means that it was added just now and it is not on the server
                         // If the file is not there, it means that the file is already on the server and has to be removed from there
-                        if (filesToAdd.Contains(fileName))
+                        foreach(var file in filesToAdd)
                         {
-                            filesToAdd.Remove(fileName);
+                            if (file.Split('\\')[file.Split('\\').Length - 1] == fileName)
+                            {
+                                filesToAdd.Remove(file);
+                                done = true;
+                                break;
+                            }
                         }
-                        else
+                        if (!done)
                         {
                             filesToRemove.Add(fileName);
                         }
