@@ -5,7 +5,6 @@ D:\Documents\GitHub\Summaries\Summaries\bin\Release\Summaries.exe
 D:\Documents\GitHub\Summaries\Summaries\bin\Release\Summaries.pdb
 D:\Documents\GitHub\Summaries\Summaries\bin\Release\Newtonsoft.Json.dll
 D:\Documents\GitHub\Summaries\Summaries\bin\Release\Newtonsoft.Json.xml
-D:\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.csprojAssemblyReference.cache
 D:\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.aboutSummaries.resources
 D:\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.changePassword.resources
 D:\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.loading.resources
@@ -50,3 +49,4 @@ D:\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.codeResources.conf
 C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.codeResources.loadingForm.resources
 D:\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.codeResources.loadingForm.resources
 C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.csprojAssemblyReference.cache
+D:\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.csproj.CoreCompileInputs.cache

@@ -127,5 +127,15 @@ namespace Summaries
             }
             
         }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            menuOptionsExit_Click(sender, e);
+        }
+
+        private void summaryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            menuAboutSummaries_Click(sender, e);
+        }
     }
 }

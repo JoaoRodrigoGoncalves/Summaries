@@ -3,9 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static Summaries.codeResources.functions;
@@ -22,10 +20,15 @@ namespace Summaries
         private int dbRow = 0;
         private int summaryID = 0;
         private int newWorkspaceID = 0;
+        string jsonWorkspace = "";
+        string jsonResponse = "";
+        string jsonSaveResponse = "";
+        string savePOSTdata = "API=" + Properties.Settings.Default.APIkey;
+        bool shouldAbortLoad = false;
+        List<String> filesToAdd = new List<string>();
+        List<String> filesToRemove = new List<string>();
 
         //*********************//
-
-        private List<string> filesToUpload = new List<string>();
 
         public class Attachments
         {
@@ -66,13 +69,16 @@ namespace Summaries
             public List<workspacesContent> contents { get; set; }
         }
 
+        public class uploadInfo
+        {
+            public bool status { get; set; }
+            public string errors { get; set; }
+            public string rowID { get; set; }
+        }
+        
         serverResponse response;
         workspacesServerResponse workspaces;
-        string jsonWorkspace = "";
-        string jsonResponse = "";
-        string jsonSaveResponse = "";
-        string savePOSTdata = "API=" + Properties.Settings.Default.APIkey;
-        bool shouldAbortLoad = false;
+        uploadInfo uploadResults;
 
         public newSummary(int summaryid = 0)
         {
@@ -103,10 +109,12 @@ namespace Summaries
         {
             var functions = new codeResources.functions();
             jsonSaveResponse = functions.APIRequest(savePOSTdata, "summaryUpdateRequest.php");
+
         }
 
         private void newSummary_Load(object sender, EventArgs e)
         {
+            contentsBox.Focus();
             workspaceComboBox.Items.Clear();
             var functions = new codeResources.functions();
             using(codeResources.loadingForm form = new codeResources.loadingForm(APICalls))
@@ -154,64 +162,64 @@ namespace Summaries
                                     isEdit = true;
                                 }
 
+                                if (Properties.Settings.Default.currentWorkspaceID == 0)
+                                {
+                                    // Workspace not defined yet
+                                    workspaceComboBox.SelectedIndex = 0;
+                                    Properties.Settings.Default.currentWorkspaceID = workspaces.contents[workspaces.contents.FindIndex(z => z.name == workspaceComboBox.Text)].id;
+                                }
+                                else
+                                {
+                                    workspaceComboBox.SelectedItem = workspaces.contents[workspaces.contents.FindIndex(c => c.id == Properties.Settings.Default.currentWorkspaceID)].name;
+                                }
+
                                 if (isEdit)
                                 {
                                     this.Text = "Edit Summary";
                                     summaryNumberBox.Value = summaryID;
-                                    dateBox.Value = DateTime.ParseExact(response.contents[summaryID - 1].date, "yyyy-MM-dd", new CultureInfo("pt"));
-                                    contentsBox.Text = response.contents[summaryID - 1].contents;
-                                    originalText = functions.Hash(response.contents[summaryID - 1].contents);
-                                    originalDate = response.contents[summaryID - 1].date;
-                                    originalWorkspaceID = response.contents[summaryID - 1].workspace;
+                                    dateBox.Value = DateTime.ParseExact(response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryID)].date, "yyyy-MM-dd", new CultureInfo("pt"));
+                                    contentsBox.Text = response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryID)].contents;
+                                    originalText = functions.Hash(response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryID)].contents);
+                                    originalDate = response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryID)].date;
+                                    originalWorkspaceID = response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryID)].workspace;
                                     originalSummaryID = summaryID;
-                                    dbRow = response.contents[summaryID - 1].id;
-                                    if (response.contents[summaryID - 1].attachments != null)
+                                    dbRow = response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryID)].id;
+                                    if (response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryID)].attachments != null)
                                     {
-                                        foreach (var attach in response.contents[summaryID - 1].attachments)
+                                        foreach (var attach in response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryID)].attachments)
                                         {
-                                            filesToUpload.Add(attach.path);
+                                            attachmentsGridView.Rows.Add(attach.filename, "Remove");
                                         }
                                     }
 
                                 }
                                 else
                                 {
-                                    if (Properties.Settings.Default.currentWorkspaceID == 0)
+                                    if (response.contents != null)
                                     {
-                                        // Workspace not defined yet
-                                        workspaceComboBox.SelectedIndex = 0;
-                                        Properties.Settings.Default.currentWorkspaceID = workspaces.contents[workspaces.contents.FindIndex(z => z.name == workspaceComboBox.Text)].id;
-                                    }
-                                    else
-                                    {
-                                        workspaceComboBox.SelectedItem = workspaces.contents[workspaces.contents.FindIndex(c => c.id == Properties.Settings.Default.currentWorkspaceID)].name;
-
-                                        if (response.contents != null)
+                                        List<Content> workspaceRelated = new List<Content>();
+                                        foreach (Content row in response.contents)
                                         {
-                                            List<Content> workspaceRelated = new List<Content>();
-                                            foreach (Content row in response.contents)
+                                            if (row.workspace == Properties.Settings.Default.currentWorkspaceID)
                                             {
-                                                if (row.workspace == Properties.Settings.Default.currentWorkspaceID)
-                                                {
-                                                    workspaceRelated.Add(row);
-                                                }
+                                                workspaceRelated.Add(row);
                                             }
+                                        }
 
-                                            if (workspaceRelated.Count > 0)
-                                            {
-                                                summaryNumberBox.Value = workspaceRelated[workspaceRelated.Count - 1].summaryNumber + 1;
-                                            }
-                                            else
-                                            {
-                                                summaryNumberBox.Value = 1;
-                                            }
+                                        if (workspaceRelated.Count > 0)
+                                        {
+                                            summaryNumberBox.Value = workspaceRelated[workspaceRelated.Count - 1].summaryNumber + 1;
                                         }
                                         else
                                         {
                                             summaryNumberBox.Value = 1;
                                         }
-
                                     }
+                                    else
+                                    {
+                                        summaryNumberBox.Value = 1;
+                                    }
+
                                     dateBox.Value = DateTime.ParseExact(DateTime.Today.ToString("yyyy-MM-dd"), "yyyy-MM-dd", new CultureInfo("pt"));
                                 }
 
@@ -222,8 +230,6 @@ namespace Summaries
                                     dateBox.Enabled = false;
                                     contentsBox.ReadOnly = true;
                                     saveBTN.Enabled = false;
-                                    removeCurrentBTN.Enabled = false;
-                                    selectfileBTN.Enabled = false;
                                 }
 
                             }
@@ -256,7 +262,7 @@ namespace Summaries
 
         private void saveBTN_Click(object sender, EventArgs e)
         {
-            if(contentsBox.Text == "" || contentsBox.TextLength < 1 || contentsBox.Text == string.Empty)
+            if(contentsBox.Text == "" || contentsBox.TextLength < 1 || contentsBox.Text == string.Empty || filesToAdd.Count < 1 || filesToRemove.Count < 1)
             {
                 this.Close();
             }
@@ -327,16 +333,57 @@ namespace Summaries
             {
                 if (isEdit)
                 {
-                    if ((originalText != functions.Hash(contentsBox.Text)) || (originalDate != dateBox.Value.ToString("yyyy-MM-dd")) || (originalSummaryID != summaryNumberBox.Value))
+                    if ((originalText != functions.Hash(contentsBox.Text)) || (originalDate != dateBox.Value.ToString("yyyy-MM-dd")) || (originalSummaryID != summaryNumberBox.Value) || filesToAdd.Count > 0 || filesToRemove.Count > 0)
                     {
-                        if (UpdateDB(Convert.ToInt32(summaryNumberBox.Value), dateBox.Value.ToString("yyyy-MM-dd"), contentsBox.Text, workspaces.contents[workspaces.contents.FindIndex(x => x.name == workspaceComboBox.SelectedItem.ToString())].id, dbRow))
+                        if(filesToAdd.Count > 0 || filesToRemove.Count > 0) // Checks if there are files to add or remove
                         {
-                            MessageBox.Show("Changes saved successfully!", "Summaries", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            this.Close();
+                            if(filesToAdd.Count > 0)
+                            {
+                                List<string> filesToAdopt = new List<string>();
+                                filesToAdopt = UploadFiles(filesToAdd);
+                                if (filesToAdopt != null && filesToAdopt.Count > 0)
+                                {
+                                    // Here it saves the basic info about the current summary and uploads the files to the server
+                                    if (UpdateDB(Convert.ToInt32(summaryNumberBox.Value), dateBox.Value.ToString("yyyy-MM-dd"), contentsBox.Text, workspaces.contents[workspaces.contents.FindIndex(x => x.name == workspaceComboBox.SelectedItem.ToString())].id, dbRow, filesToAdopt, filesToRemove))
+                                    {
+                                        MessageBox.Show("Summary saved successfully!", "Summaries", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        this.Close();
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("An error occurred while trying to save the summary.", "Error while saving the summary", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    }
+                                }
+                                else
+                                {
+                                    MessageBox.Show("An error occurred while trying to upload the files.", "Error while uploading files", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+                            }
+                            else
+                            {
+                                // Here it saves the basic info about the current summary and uploads the files to the server
+                                if (UpdateDB(Convert.ToInt32(summaryNumberBox.Value), dateBox.Value.ToString("yyyy-MM-dd"), contentsBox.Text, workspaces.contents[workspaces.contents.FindIndex(x => x.name == workspaceComboBox.SelectedItem.ToString())].id, dbRow, null, filesToRemove))
+                                {
+                                    MessageBox.Show("Summary saved successfully!", "Summaries", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    this.Close();
+                                }
+                                else
+                                {
+                                    MessageBox.Show("An error occurred while trying to save the summary.", "Error while saving the summary", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+                            }
                         }
-                        else
+                        else // There isn't any kind of file operation to be performed
                         {
-                            MessageBox.Show("An error occurred while trying to save the summary.", "Error while saving the summary", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            if (UpdateDB(Convert.ToInt32(summaryNumberBox.Value), dateBox.Value.ToString("yyyy-MM-dd"), contentsBox.Text, workspaces.contents[workspaces.contents.FindIndex(x => x.name == workspaceComboBox.SelectedItem.ToString())].id, dbRow))
+                            {
+                                MessageBox.Show("Changes saved successfully!", "Summaries", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                this.Close();
+                            }
+                            else
+                            {
+                                MessageBox.Show("An error occurred while trying to save the summary.", "Error while saving the summary", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
                         }
                     }
                     else
@@ -346,15 +393,46 @@ namespace Summaries
                 }
                 else
                 {
-                    if (UpdateDB(Convert.ToInt32(summaryNumberBox.Value), dateBox.Value.ToString("yyyy-MM-dd"), contentsBox.Text, workspaces.contents[workspaces.contents.FindIndex(x => x.name == workspaceComboBox.SelectedItem.ToString())].id))
+
+                    // This is a new summary
+
+                    if(filesToAdd.Count > 0) // Cheks if there are files to add
                     {
-                        MessageBox.Show("Summary saved successfully!", "Summaries", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        this.Close();
+                        List<string> filesToAdopt = new List<string>();
+                        filesToAdopt = UploadFiles(filesToAdd);
+                        if (filesToAdopt != null && filesToAdopt.Count > 0)
+                        {
+                            // Here it saves the basic info about the current summary and uploads the files to the server
+                            if (UpdateDB(Convert.ToInt32(summaryNumberBox.Value), dateBox.Value.ToString("yyyy-MM-dd"), contentsBox.Text, workspaces.contents[workspaces.contents.FindIndex(x => x.name == workspaceComboBox.SelectedItem.ToString())].id, 0, filesToAdopt))
+                            {
+                                MessageBox.Show("Summary saved successfully!", "Summaries", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                this.Close();
+                            }
+                            else
+                            {
+                                MessageBox.Show("An error occurred while trying to save the summary.", "Error while saving the summary", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("An error occurred while trying to upload the files.", "Error while uploading files", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
                     else
                     {
-                        MessageBox.Show("An error occurred while trying to save the summary.", "Error while saving the summary", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        // Here it saves the basic info about the current summary and uploads the files to the server
+                        if (UpdateDB(Convert.ToInt32(summaryNumberBox.Value), dateBox.Value.ToString("yyyy-MM-dd"), contentsBox.Text, workspaces.contents[workspaces.contents.FindIndex(x => x.name == workspaceComboBox.SelectedItem.ToString())].id))
+                        {
+                            MessageBox.Show("Summary saved successfully!", "Summaries", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            this.Close();
+                        }
+                        else
+                        {
+                            MessageBox.Show("An error occurred while trying to save the summary.", "Error while saving the summary", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
+                    
+                    
                 }
             }
         }
@@ -365,18 +443,33 @@ namespace Summaries
         /// <param name="summaryID">The ID of the summary</param>
         /// <param name="date">The date of the summary</param>
         /// <param name="text">The text of the summary</param>
+        /// <param name="workspaceID">The ID of the workspace</param>
         /// <param name="dbRowID">(Optional) The row in the database to be updated</param>
+        /// <param name="filesToAdopt">(Optional) The list of files to be adopted</param>
+        /// <param name="filesToRemove">(Optional) The list of files to be removed</param>
         /// <returns></returns>
-        private bool UpdateDB(int summaryID, string date, string text, int workspaceID, int dbRowID = 0)
+        private bool UpdateDB(int summaryID, string date, string text, int workspaceID, int dbRowID = 0, List<string> filesToAdopt = null, List<string> filesToRemove = null)
         {
             var functions = new codeResources.functions();
+            string filesLoad = "";
+
+            if(filesToAdopt != null)
+            {
+                filesLoad = "&filesToAdopt=" + functions.Hash(JsonConvert.SerializeObject(filesToAdopt));
+            }
+
+            if(filesToRemove != null)
+            {
+                filesLoad += "&filesToRemove=" + functions.Hash(JsonConvert.SerializeObject(filesToRemove));
+            }
+
             if(dbRowID > 0)
             {
-                savePOSTdata += "&userID=" + Properties.Settings.Default.userID + "&workspace=" + workspaceID + "&dbrowID=" + dbRowID + "&summaryID=" + summaryID + "&date=" + functions.Hash(date) + "&contents=" + functions.Hash(text);
+                savePOSTdata += "&operation=edit" + "&userID=" + Properties.Settings.Default.userID + "&workspace=" + workspaceID + "&dbrowID=" + dbRowID + "&summaryID=" + summaryID + "&date=" + functions.Hash(date) + "&contents=" + functions.Hash(text) + filesLoad ;
             }
             else
             {
-                savePOSTdata += "&userID=" + Properties.Settings.Default.userID + "&workspace=" + workspaceID + "&summaryID=" + summaryID + "&date=" + functions.Hash(date) + "&contents=" + functions.Hash(text);
+                savePOSTdata += "&operation=new" + "&userID=" + Properties.Settings.Default.userID + "&workspace=" + workspaceID + "&summaryID=" + summaryID + "&date=" + functions.Hash(date) + "&contents=" + functions.Hash(text) + filesLoad;
             }
 
             using (codeResources.loadingForm loadForm = new codeResources.loadingForm(APISave)) {
@@ -387,7 +480,8 @@ namespace Summaries
             try
             {
                 serverResponse = JsonConvert.DeserializeObject<simpleServerResponse>(jsonSaveResponse);
-            }catch(Exception ex)
+            }
+            catch(Exception ex)
             {
                 MessageBox.Show("Error: " + ex.Message + "\n " + jsonSaveResponse, "Critital Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
@@ -400,93 +494,38 @@ namespace Summaries
             return serverResponse.status;
         }
 
-        // Perform the equivalent of posting a form with a filename and two files, in HTML:
-        // <form action="{url}" method="post" enctype="multipart/form-data">
-        //     <input type="text" name="filename" />
-        //     <input type="file" name="file1" />
-        //     <input type="file" name="file2" />
-        // </form>
-        private async Task<Stream> UploadAsync(string url, string filename, Stream fileStream, byte[] fileBytes)
-        {
-            // Convert each of the three inputs into HttpContent objects
-
-            HttpContent stringContent = new StringContent(filename);
-            // examples of converting both Stream and byte [] to HttpContent objects
-            // representing input type file
-            HttpContent fileStreamContent = new StreamContent(fileStream);
-            HttpContent bytesContent = new ByteArrayContent(fileBytes);
-
-            // Submit the form using HttpClient and 
-            // create form data as Multipart (enctype="multipart/form-data")
-
-            using (var client = new HttpClient())
-            using (var formData = new MultipartFormDataContent())
-            {
-                // Add the HttpContent objects to the form data
-
-                // <input type="text" name="filename" />
-                formData.Add(stringContent, "filename", "filename");
-                // <input type="file" name="file1" />
-                formData.Add(fileStreamContent, "file1", "file1");
-                // <input type="file" name="file2" />
-                formData.Add(bytesContent, "file2", "file2");
-
-                // Invoke the request to the server
-
-                // equivalent to pressing the submit button on
-                // a form with attributes (action="{url}" method="post")
-                var response = await client.PostAsync(url, formData);
-
-                // ensure the request was a success
-                if (!response.IsSuccessStatusCode)
-                {
-                    return null;
-                }
-                return await response.Content.ReadAsStreamAsync();
-            }
-        }
-
         /// <summary>
-        /// Opens a OpenFileDialog screen and sets the file to be uploaded into the array
+        /// Upload the specified files and adopts them
         /// </summary>
-        /// <param name="index">The index where the file will be stored on the one-demensional array</param>
-        /// <returns>The name of the file selected by the user</returns>
-        private string loadFileFromComputer(int index)
+        /// <see cref="https://stackoverflow.com/questions/10237983/upload-to-php-server-from-c-sharp-client-application"/>
+        /// <param name="files">List of files to upload</param>
+        /// <param name="summaryID">Current Summary ID</param>
+        /// <returns>List of files to be adopted</returns>
+        private List<string> UploadFiles(List<String> filesToUpload)
         {
-            try
+            List<string> filesToAdopt = new List<string>();
+            foreach(string currentFile in filesToUpload)
             {
-                fileUpload.Multiselect = false;
-                fileUpload.Title = "Select files to upload...";
-                fileUpload.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                fileUpload.Filter = "Images (*.BMP;*.JPG;*.JPEG;*.GIF,*.PNG,*.TIFF)|*.BMP;*.JPG;*.GIF;*.PNG;*.TIFF|" + "All files (*.*)|*.*";
-                fileUpload.CheckFileExists = true;
-                fileUpload.CheckPathExists = true;
-                fileUpload.FilterIndex = 2;
-                fileUpload.RestoreDirectory = true;
-                fileUpload.ReadOnlyChecked = true;
-                fileUpload.ShowReadOnly = true;
+                System.Net.WebClient Client = new System.Net.WebClient();
+                Client.Headers.Add("User-Agent", "app");
+                Client.Headers.Add("Content-Type", "binary/octet-stream");
+                Client.Headers.Add("API", Properties.Settings.Default.APIkey);
+                byte[] result = Client.UploadFile(Properties.Settings.Default.inUseDomain + "/summaries/api/summaryUploadFile.php", "POST", currentFile);
 
-                if (fileUpload.ShowDialog() == DialogResult.OK)
+                string response = System.Text.Encoding.UTF8.GetString(result, 0, result.Length);
+                uploadResults = JsonConvert.DeserializeObject<uploadInfo>(response);
+
+                if (uploadResults.status)
                 {
-                    //filesToUpload.SetValue(fileUpload.FileName, index);
-                    return fileUpload.FileName;
+                    filesToAdopt.Add(uploadResults.rowID);
                 }
                 else
                 {
-                    return string.Empty;
+                    MessageBox.Show("Error: " + uploadResults.errors, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return null;
                 }
             }
-            catch (Exception ex)
-            { 
-                MessageBox.Show("Critial error: " + ex.Message, "Critical Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return string.Empty;
-            }
-
-        }
-
-        private void selectfileBTN_Click(object sender, EventArgs e)
-        {
-
+            return filesToAdopt;
         }
 
         private void workspaceComboBox_DropDownClosed(object sender, EventArgs e)
@@ -497,6 +536,97 @@ namespace Summaries
                 Properties.Settings.Default.currentWorkspaceID = newWorkspaceID;
                 newSummary_Load(sender, e);
             }
+        }
+
+        private void newSummary_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }
+        }
+
+        private void newSummary_DragDrop(object sender, DragEventArgs e)
+        {
+            addToFileTable((string[])e.Data.GetData(DataFormats.FileDrop));
+        }
+
+        /// <summary>
+        /// Adds files to the table
+        /// </summary>
+        /// <param name="files">Files to be added</param>
+        private void addToFileTable(string[] files)
+        {
+            foreach (var file in files)
+            {
+                if (!string.IsNullOrEmpty(file))
+                {
+                    filesToAdd.Add(file);
+                    string fileName = file.Split('\\')[file.Split('\\').Length - 1];
+                    attachmentsGridView.Rows.Add(fileName, "Remove");
+                }
+            }
+        }
+
+        private void attachmentsGridView_DragEnter(object sender, DragEventArgs e)
+        {
+            newSummary_DragEnter(sender, e);
+        }
+
+        private void attachmentsGridView_DragDrop(object sender, DragEventArgs e)
+        {
+            newSummary_DragDrop(sender, e);
+        }
+
+        private void attachmentsGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                // https://stackoverflow.com/questions/3577297/how-to-handle-click-event-in-button-column-in-datagridview
+
+                var senderGrid = (DataGridView)sender;
+                bool done = false;
+
+                if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
+                {
+                    string fileName = attachmentsGridView.Rows[e.RowIndex].Cells[e.ColumnIndex - 1].Value.ToString();
+                    DialogResult response = MessageBox.Show("Are you sure you want to remove " + fileName + "?", "Remove File", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                    if(response == DialogResult.Yes)
+                    {
+                        // Checks if he file is in the filesToAdd list. If the file is in there, it means that it was added just now and it is not on the server
+                        // If the file is not there, it means that the file is already on the server and has to be removed from there
+                        foreach(var file in filesToAdd)
+                        {
+                            if (file.Split('\\')[file.Split('\\').Length - 1] == fileName)
+                            {
+                                filesToAdd.Remove(file);
+                                done = true;
+                                break;
+                            }
+                        }
+                        if (!done)
+                        {
+                            filesToRemove.Add(fileName);
+                        }
+                        attachmentsGridView.Rows.RemoveAt(e.RowIndex);
+                    }
+                }
+            }
+            catch { }
+            
+        }
+
+        private void addAttachmentBTN_Click(object sender, EventArgs e)
+        {
+            DialogResult result;
+            fileUpload.FileName = "";
+            result = fileUpload.ShowDialog();
+            addToFileTable(fileUpload.FileNames);
         }
     }
 }

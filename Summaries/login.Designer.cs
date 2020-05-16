@@ -37,6 +37,7 @@
             this.loginBTN = new System.Windows.Forms.Button();
             this.resetBTN = new System.Windows.Forms.Button();
             this.credentialsWarningLB = new System.Windows.Forms.Label();
+            this.versionLBL = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -116,12 +117,22 @@
             this.credentialsWarningLB.Text = "The Username or Password are incorrect";
             this.credentialsWarningLB.Visible = false;
             // 
+            // versionLBL
+            // 
+            this.versionLBL.Location = new System.Drawing.Point(382, 112);
+            this.versionLBL.Name = "versionLBL";
+            this.versionLBL.Size = new System.Drawing.Size(96, 19);
+            this.versionLBL.TabIndex = 6;
+            this.versionLBL.Text = "0.0.0";
+            this.versionLBL.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.resetBTN;
             this.ClientSize = new System.Drawing.Size(490, 131);
+            this.Controls.Add(this.versionLBL);
             this.Controls.Add(this.credentialsWarningLB);
             this.Controls.Add(this.resetBTN);
             this.Controls.Add(this.loginBTN);
@@ -136,6 +147,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Log in to your account";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.login_FormClosed);
+            this.Load += new System.EventHandler(this.login_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -152,5 +164,6 @@
         private System.Windows.Forms.Button loginBTN;
         private System.Windows.Forms.Button resetBTN;
         private System.Windows.Forms.Label credentialsWarningLB;
+        private System.Windows.Forms.Label versionLBL;
     }
 }

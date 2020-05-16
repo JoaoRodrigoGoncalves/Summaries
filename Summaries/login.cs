@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Diagnostics;
+using System.Reflection;
 using System.Windows.Forms;
 using static Summaries.codeResources.functions;
 
@@ -25,6 +27,7 @@ namespace Summaries
 
         private class userInfo
         {
+            public string APIKEY { get; set; }
             public int userID { get; set; }
             public string username { get; set; }
             public string displayName { get; set; }
@@ -61,7 +64,7 @@ namespace Summaries
             {
                 string username = usernameBox.Text;
                 string password = passwordBox.Text;
-                POSTdata = "API=" + Properties.Settings.Default.APIkey + "&usrnm=" + username + "&psswd=" + password;
+                POSTdata = "usrnm=" + username + "&psswd=" + password;
                 var functions = new codeResources.functions();
 
                 using (codeResources.loadingForm loading = new codeResources.loadingForm(getInformation))
@@ -81,6 +84,7 @@ namespace Summaries
                     if (response.status)
                     {
                         userInfo = JsonConvert.DeserializeObject<userInfo>(jsonResponse);
+                        Properties.Settings.Default.APIkey = userInfo.APIKEY;
                         Properties.Settings.Default.userID = userInfo.userID;
                         Properties.Settings.Default.username = userInfo.username;
                         Properties.Settings.Default.displayName = userInfo.displayName;
@@ -125,6 +129,13 @@ namespace Summaries
                 e.Handled = true;
                 loginBTN_Click(sender, e);
             }
+        }
+
+        private void login_Load(object sender, EventArgs e)
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            FileVersionInfo fileVersion = FileVersionInfo.GetVersionInfo(assembly.Location);
+            versionLBL.Text = fileVersion.ProductVersion;
         }
     }
 }

@@ -925,7 +925,7 @@ namespace Summaries
                     }
                     else
                     {
-                        MessageBox.Show("A critical error occurred. " + serverResponse.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("A critical error occurred. " + serverResponse.errors + "\n" + GlobalAPIResponse, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         this.Close();
                     }
                 }
