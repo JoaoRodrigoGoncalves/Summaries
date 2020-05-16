@@ -55,14 +55,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Summaries.exe" size="1453040">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Summaries.exe" size="1355760">
       <assemblyIdentity name="Summaries" version="4.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>GQlwgvsjHTgyHr7bmZJpyc6HN5xmc40nSF4mRw8Xcf0=</dsig:DigestValue>
+        <dsig:DigestValue>zFNFA5rowLz+XvTrxv2fTTqwgHHW3eYyecdxkzXGM0Q=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -75,13 +75,13 @@
       <dsig:DigestValue>enKP4F+SYRDhsTfNgbRQlpHQOijw2QckL6hOpFyk7+c=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Summaries.exe.config" size="2410">
+  <file name="Summaries.exe.config" size="1748">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>z9hZ7emx4kUHxy/+MgitKFi+pRv6Hg6IvUS8iO9JM3A=</dsig:DigestValue>
+      <dsig:DigestValue>vjW83Z1kjfz1tExTsNImQiOdWlWvKsdiyo/Ggu+SW/A=</dsig:DigestValue>
     </hash>
   </file>
   <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">
