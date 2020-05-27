@@ -1,10 +1,12 @@
 ﻿using Newtonsoft.Json;
+using Summaries.codeResources;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using static Summaries.codeResources.functions;
 
@@ -25,6 +27,7 @@ namespace Summaries
         string jsonSaveResponse = "";
         string savePOSTdata = "API=" + Properties.Settings.Default.APIkey;
         bool shouldAbortLoad = false;
+        bool readOnlyMode = false;
         List<String> filesToAdd = new List<string>();
         List<String> filesToRemove = new List<string>();
 
@@ -225,10 +228,12 @@ namespace Summaries
 
                                 if (!workspaces.contents[workspaces.contents.FindIndex(x => x.id == Properties.Settings.Default.currentWorkspaceID)].write)
                                 {
+                                    readOnlyMode = true;
                                     workspaceComboBox.Enabled = false;
                                     summaryNumberBox.Enabled = false;
                                     dateBox.Enabled = false;
                                     contentsBox.ReadOnly = true;
+                                    addAttachmentBTN.Enabled = false;
                                     saveBTN.Enabled = false;
                                 }
 
@@ -506,7 +511,7 @@ namespace Summaries
             List<string> filesToAdopt = new List<string>();
             foreach(string currentFile in filesToUpload)
             {
-                System.Net.WebClient Client = new System.Net.WebClient();
+                WebClient Client = new WebClient();
                 Client.Headers.Add("User-Agent", "app");
                 Client.Headers.Add("Content-Type", "binary/octet-stream");
                 Client.Headers.Add("API", Properties.Settings.Default.APIkey);
@@ -561,13 +566,38 @@ namespace Summaries
         /// <param name="files">Files to be added</param>
         private void addToFileTable(string[] files)
         {
-            foreach (var file in files)
+            if (!readOnlyMode)
             {
-                if (!string.IsNullOrEmpty(file))
+                foreach (var file in files)
                 {
-                    filesToAdd.Add(file);
-                    string fileName = file.Split('\\')[file.Split('\\').Length - 1];
-                    attachmentsGridView.Rows.Add(fileName, "Remove");
+                    if (!string.IsNullOrEmpty(file))
+                    {
+                        string fileName = file.Split('\\')[file.Split('\\').Length - 1];
+                        if (filesToAdd.Exists(x => x.Split('\\')[x.Split('\\').Length -1] == fileName))
+                        {
+                            MessageBox.Show("This file name already exists. Please rename the file and try again.", "File Already Loaded", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        else
+                        {
+                            try
+                            {
+                                if(response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryID)].attachments.Exists(x => x.filename == fileName))
+                                {
+                                    MessageBox.Show("This file name already exists. Please rename the file and try again.", "File Already Loaded", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+                                else
+                                {
+                                    filesToAdd.Add(file);
+                                    attachmentsGridView.Rows.Add(fileName, "Remove");
+                                }
+                            }
+                            catch
+                            {
+                                filesToAdd.Add(file);
+                                attachmentsGridView.Rows.Add(fileName, "Remove");
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -616,9 +646,55 @@ namespace Summaries
                         attachmentsGridView.Rows.RemoveAt(e.RowIndex);
                     }
                 }
+                else
+                {
+                    if(e.ColumnIndex == 0 && e.RowIndex >= 0)
+                    {
+                        // https://stackoverflow.com/questions/525364/how-to-download-a-file-from-a-website-in-c-sharp
+
+                        try
+                        {
+                            string cell = senderGrid.Rows[e.RowIndex].Cells[0].Value.ToString();
+                            bool inServer = true;
+                            
+                            foreach(var file in filesToAdd)
+                            {
+                                if(file.Split('\\')[file.Split('\\').Length -1] == cell)
+                                {
+                                    inServer = false;
+                                    break;
+                                }
+                            }
+
+                            if (inServer)
+                            {
+                                string fileExtension = cell.Substring(cell.Length - cell.Split('.')[cell.Split('.').Length - 1].Length);
+                                string finalPath = Path.GetTempPath() + "~summariestemp" + Path.GetRandomFileName().Replace('.', 'a') + "." + fileExtension;
+
+                                string inServerPath = response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryID)].attachments.Find(x => x.filename == cell).path;
+                                string inServerName = inServerPath.Split('\\')[inServerPath.Split('\\').Length - 1];
+
+                                WebClient client = new WebClient();
+                                client.Headers.Add("API", Properties.Settings.Default.APIkey);
+                                client.Headers.Add("FILE", inServerName);
+                                client.DownloadFile(Properties.Settings.Default.inUseDomain + "/summaries/api/getFile.php", @"" + finalPath);
+
+                                Process.Start(@"" + finalPath);
+                            }
+                            else
+                            {
+                                int index = filesToAdd.FindIndex(x => x.Contains(cell)); // finds the full path of the specifeid file. Returns an index to be used below
+                                Process.Start(@"" + filesToAdd[index]);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Could not open file: " + ex.Message + "\n" + ex.InnerException, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
             }
             catch { }
-            
         }
 
         private void addAttachmentBTN_Click(object sender, EventArgs e)
