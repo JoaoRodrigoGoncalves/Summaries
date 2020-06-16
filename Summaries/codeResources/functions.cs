@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
+using System.Reflection;
 using System.Text;
 
 namespace Summaries.codeResources
@@ -56,7 +58,9 @@ namespace Summaries.codeResources
             try
             {
                 var data = Encoding.UTF8.GetBytes(POSTdata);
-                var request = WebRequest.CreateHttp(Properties.Settings.Default.inUseDomain + "/summaries/api/" + APIFile);
+                Assembly assembly = Assembly.GetExecutingAssembly();
+                FileVersionInfo fileVersion = FileVersionInfo.GetVersionInfo(assembly.Location);
+                var request = WebRequest.CreateHttp(Properties.Settings.Default.inUseDomain + "/summaries/api/" + fileVersion.ProductVersion + "/" + APIFile);
                 request.Method = "POST";
                 request.ContentType = "application/x-www-form-urlencoded";
                 request.ContentLength = data.Length;

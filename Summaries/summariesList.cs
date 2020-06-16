@@ -179,7 +179,7 @@ namespace Summaries
                                         {
                                             dataGrid.Rows.Add(rowArray);
                                         }
-                                        dataGrid.Sort(dataGrid.Columns[1], System.ComponentModel.ListSortDirection.Ascending);
+                                        dataGrid.Sort(dataGrid.Columns[0], System.ComponentModel.ListSortDirection.Ascending);
                                     }
                                 }
                                 else
