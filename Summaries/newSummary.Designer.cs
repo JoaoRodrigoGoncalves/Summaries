@@ -142,7 +142,7 @@
             this.groupBox1.Size = new System.Drawing.Size(443, 156);
             this.groupBox1.TabIndex = 7;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Attachements";
+            this.groupBox1.Text = "Attachments";
             // 
             // addAttachmentBTN
             // 
