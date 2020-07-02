@@ -17,7 +17,7 @@
     <Setting Name="isAdmin" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="APIkey" Type="System.String" Scope="User">
+    <Setting Name="AccessToken" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="currentWorkspaceID" Type="System.Int32" Scope="User">

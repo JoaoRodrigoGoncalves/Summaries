@@ -87,9 +87,9 @@ namespace Summaries
             var functions = new codeResources.functions();
             if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
             {
-                jsonResponse = functions.APIRequest("API=" + Properties.Settings.Default.APIkey, "userListRequest.php");
-                classJsonResponse = functions.APIRequest("API=" + Properties.Settings.Default.APIkey, "classListRequest.php");
-                workspaceJsonResponse = functions.APIRequest("API=" + Properties.Settings.Default.APIkey, "workspaceListRequest.php");
+                jsonResponse = functions.APIRequest("API=" + Properties.Settings.Default.AccessToken, "user/list");
+                classJsonResponse = functions.APIRequest("API=" + Properties.Settings.Default.AccessToken, "class/list");
+                workspaceJsonResponse = functions.APIRequest("API=" + Properties.Settings.Default.AccessToken, "workspace/list");
             }
             else
             {
@@ -101,48 +101,48 @@ namespace Summaries
         private void SaveUser()
         {
             var functions = new codeResources.functions();
-            GlobalAPIResponse = functions.APIRequest(GlobalPOSTdata, "changeUser.php");
+            GlobalAPIResponse = functions.APIRequest(GlobalPOSTdata, "user/edit");
         }
 
         private void DeleteUser()
         {
             var functions = new codeResources.functions();
-            GlobalAPIResponse = functions.APIRequest(GlobalPOSTdata, "requestUserDelete.php");
+            GlobalAPIResponse = functions.APIRequest(GlobalPOSTdata, "usser/delete");
         }
 
         private void ResetUser()
         {
             var functions = new codeResources.functions();
-            GlobalAPIResponse = functions.APIRequest(GlobalPOSTdata, "changePassword.php");
+            GlobalAPIResponse = functions.APIRequest(GlobalPOSTdata, "user/changePassword");
         }
 
         private void SaveClass()
         {
             var functions = new codeResources.functions();
-            GlobalAPIResponse = functions.APIRequest(GlobalPOSTdata, "changeClass.php");
+            GlobalAPIResponse = functions.APIRequest(GlobalPOSTdata, "class/edit");
         }
 
         private void DeleteClass()
         {
             var functions = new codeResources.functions();
-            GlobalAPIResponse = functions.APIRequest(GlobalPOSTdata, "deleteClassRequest.php");
+            GlobalAPIResponse = functions.APIRequest(GlobalPOSTdata, "class/delete");
         }
 
         private void SaveWorkspace() {
             var functions = new codeResources.functions();
-            GlobalAPIResponse = functions.APIRequest(GlobalPOSTdata, "changeWorkspace.php");
+            GlobalAPIResponse = functions.APIRequest(GlobalPOSTdata, "workspace/edit");
         }
 
         private void DeleteWorkspace()
         {
             var functions = new codeResources.functions();
-            GlobalAPIResponse = functions.APIRequest(GlobalPOSTdata, "requestWorkspaceDelete.php");
+            GlobalAPIResponse = functions.APIRequest(GlobalPOSTdata, "workspace/delete");
         }
 
         private void FlushWorkspace()
         {
             var functions = new codeResources.functions();
-            GlobalAPIResponse = functions.APIRequest(GlobalPOSTdata, "requestWorkspaceFlush.php");
+            GlobalAPIResponse = functions.APIRequest(GlobalPOSTdata, "workspace/flush");
         }
 
         private void AdministrationPanel_Load(object sender, EventArgs e)
@@ -485,7 +485,7 @@ namespace Summaries
                         else
                         {
                             var functions = new codeResources.functions();
-                            GlobalPOSTdata = "API=" + Properties.Settings.Default.APIkey + "&userID=" + userToReset + "&reset=true";
+                            GlobalPOSTdata = "API=" + Properties.Settings.Default.AccessToken + "&userID=" + userToReset + "&reset=true";
 
                             simpleServerResponse serverResponse;
 
@@ -536,7 +536,7 @@ namespace Summaries
                     string isDeletionProtected = accidentalDeletionBox.Checked.ToString();
                     if (addingUser)
                     {
-                        GlobalPOSTdata = "API=" + Properties.Settings.Default.APIkey;
+                        GlobalPOSTdata = "API=" + Properties.Settings.Default.AccessToken;
                         GlobalPOSTdata += "&username=" + username + "&displayName=" + displayName + "&classID=" + classNum + "&admin=" + isAdmin + "&deletionProtection=" + isDeletionProtected;
 
                         simpleServerResponse serverResponse;
@@ -563,7 +563,7 @@ namespace Summaries
                         int selectedrowindex = userDataGrid.SelectedCells[0].RowIndex;
                         DataGridViewRow selectedRow = userDataGrid.Rows[selectedrowindex];
                         int userToUpdate = Convert.ToInt32(selectedRow.Cells["userID"].Value.ToString());
-                        GlobalPOSTdata = "API=" + Properties.Settings.Default.APIkey + "&userID=" + userToUpdate + "&username=" + username + "&displayName=" + displayName + "&classID=" + classNum + "&admin=" + isAdmin + "&deletionProtection=" + isDeletionProtected;
+                        GlobalPOSTdata = "API=" + Properties.Settings.Default.AccessToken + "&userID=" + userToUpdate + "&username=" + username + "&displayName=" + displayName + "&classID=" + classNum + "&admin=" + isAdmin + "&deletionProtection=" + isDeletionProtected;
 
                         simpleServerResponse serverResponse;
 
@@ -619,7 +619,7 @@ namespace Summaries
                         {
                             var functions = new codeResources.functions();
                             int userToDelete = Convert.ToInt32(selectedRow.Cells["userID"].Value.ToString());
-                            GlobalPOSTdata = "API=" + Properties.Settings.Default.APIkey + "&userID=" + userToDelete;
+                            GlobalPOSTdata = "API=" + Properties.Settings.Default.AccessToken + "&userID=" + userToDelete;
 
                             simpleServerResponse serverResponse;
 
@@ -670,7 +670,7 @@ namespace Summaries
                     string writeMode = writeCheckBox.Checked.ToString();
                     if (addingWorkspace)
                     {
-                        GlobalPOSTdata = "API=" + Properties.Settings.Default.APIkey + "&name=" + workspaceName + "&readMode=" + readMode + "&writeMode=" + writeMode;
+                        GlobalPOSTdata = "API=" + Properties.Settings.Default.AccessToken + "&name=" + workspaceName + "&readMode=" + readMode + "&writeMode=" + writeMode;
 
                         simpleServerResponse serverResponse;
 
@@ -696,7 +696,7 @@ namespace Summaries
                         int selectedWorkwspaceIndex = workspacesDataGrid.SelectedCells[0].RowIndex;
                         DataGridViewRow selectedWorkspaceRow = workspacesDataGrid.Rows[selectedWorkwspaceIndex];
                         int workspaceToUpdate = Convert.ToInt32(selectedWorkspaceRow.Cells["id"].Value.ToString());
-                        GlobalPOSTdata = "API=" + Properties.Settings.Default.APIkey + "&workspaceID=" + workspaceToUpdate + "&name=" + functions.Hash(workspaceBOX.Text) + "&readMode=" + readMode + "&writeMode=" + writeMode;
+                        GlobalPOSTdata = "API=" + Properties.Settings.Default.AccessToken + "&workspaceID=" + workspaceToUpdate + "&name=" + functions.Hash(workspaceBOX.Text) + "&readMode=" + readMode + "&writeMode=" + writeMode;
 
                         simpleServerResponse serverResponse;
 
@@ -859,7 +859,7 @@ namespace Summaries
                 try
                 {
                     var functions = new codeResources.functions();
-                    GlobalPOSTdata = "API=" + Properties.Settings.Default.APIkey + "&workspaceID=" + Convert.ToInt32(selectedWorkspaceRow.Cells["id"].Value.ToString());
+                    GlobalPOSTdata = "API=" + Properties.Settings.Default.AccessToken + "&workspaceID=" + Convert.ToInt32(selectedWorkspaceRow.Cells["id"].Value.ToString());
 
                     simpleServerResponse serverResponse;
 
@@ -908,7 +908,7 @@ namespace Summaries
                 try
                 {
                     var functions = new codeResources.functions();
-                    GlobalPOSTdata = "API=" + Properties.Settings.Default.APIkey + "&workspaceID=" + Convert.ToInt32(selectedWorkspaceRow.Cells["id"].Value.ToString());
+                    GlobalPOSTdata = "API=" + Properties.Settings.Default.AccessToken + "&workspaceID=" + Convert.ToInt32(selectedWorkspaceRow.Cells["id"].Value.ToString());
 
                     simpleServerResponse serverResponse;
 
@@ -955,7 +955,7 @@ namespace Summaries
                     var functions = new codeResources.functions();
                     if (addingClass)
                     {
-                        GlobalPOSTdata = "API=" + Properties.Settings.Default.APIkey + "&name=" + functions.Hash(classNameBOX.Text);
+                        GlobalPOSTdata = "API=" + Properties.Settings.Default.AccessToken + "&name=" + functions.Hash(classNameBOX.Text);
                         simpleServerResponse serverResponse;
 
                         using (codeResources.loadingForm form = new codeResources.loadingForm(SaveClass)) {
@@ -980,7 +980,7 @@ namespace Summaries
                         int selectedClassIndex = classesDataGrid.SelectedCells[0].RowIndex;
                         DataGridViewRow selectedClassRow = classesDataGrid.Rows[selectedClassIndex];
                         int classToUpdate = Convert.ToInt32(selectedClassRow.Cells["classID"].Value.ToString());
-                        string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&classID=" + classToUpdate + "&name=" + functions.Hash(classNameBOX.Text);
+                        string POSTdata = "API=" + Properties.Settings.Default.AccessToken + "&classID=" + classToUpdate + "&name=" + functions.Hash(classNameBOX.Text);
 
                         simpleServerResponse serverResponse;
 
@@ -1032,7 +1032,7 @@ namespace Summaries
                     try
                     {
                         var functions = new codeResources.functions();
-                        GlobalPOSTdata = "API=" + Properties.Settings.Default.APIkey + "&classID=" + Convert.ToInt32(selectedClassRow.Cells["classID"].Value.ToString());
+                        GlobalPOSTdata = "API=" + Properties.Settings.Default.AccessToken + "&classID=" + Convert.ToInt32(selectedClassRow.Cells["classID"].Value.ToString());
 
                         simpleServerResponse serverResponse;
 

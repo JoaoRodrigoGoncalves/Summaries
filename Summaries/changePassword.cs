@@ -23,8 +23,8 @@ namespace Summaries
             var functions = new codeResources.functions();
             if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
             { 
-                POSTdata = "API=" + Properties.Settings.Default.APIkey + "&userID=" + Properties.Settings.Default.userID + "&oldpsswd=" + functions.Hash(currentPasswordBox.Text) + "&newpsswd=" + functions.Hash(newPasswordBox.Text);
-                jsonResponse = functions.APIRequest(POSTdata, "changePassword.php");
+                POSTdata = "API=" + Properties.Settings.Default.AccessToken + "&userID=" + Properties.Settings.Default.userID + "&oldpsswd=" + functions.Hash(currentPasswordBox.Text) + "&newpsswd=" + functions.Hash(newPasswordBox.Text);
+                jsonResponse = functions.APIRequest(POSTdata, "user/changePassword");
             }
             else
             {

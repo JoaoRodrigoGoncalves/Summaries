@@ -66,7 +66,7 @@ namespace Summaries
             var functions = new codeResources.functions();
             if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
             {
-                jsonResponse = functions.APIRequest("API=" + Properties.Settings.Default.APIkey, "workspaceListRequest.php");
+                jsonResponse = functions.APIRequest("IAMALIVE=1", "workspace/list");
             }
             else
             {
@@ -80,8 +80,8 @@ namespace Summaries
             var functions = new codeResources.functions();
             if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
             {
-                string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&userid=" + Properties.Settings.Default.userID + "&workspace=" + workspaceSelectedID;
-                jsonResponse = functions.APIRequest(POSTdata, "summaryListRequest.php");
+                string POSTdata = "userid=" + Properties.Settings.Default.userID + "&workspace=" + workspaceSelectedID;
+                jsonResponse = functions.APIRequest(POSTdata, "summary/list");
             }
             else
             {
@@ -237,9 +237,9 @@ namespace Summaries
                             DataGridViewRow selectedRow = dataGrid.Rows[selectedrowindex];
                             int selectedSummary = Convert.ToInt32(selectedRow.Cells["summaryNumber"].Value);
 
-                            string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&userid=" + Properties.Settings.Default.userID + "&workspace=" + Properties.Settings.Default.currentWorkspaceID + "&summaryID=" + selectedSummary;
+                            string POSTdata = "API=" + Properties.Settings.Default.AccessToken + "&userid=" + Properties.Settings.Default.userID + "&workspace=" + Properties.Settings.Default.currentWorkspaceID + "&summaryID=" + selectedSummary;
 
-                            string jsonResponse = functions.APIRequest(POSTdata, "summaryDeleteRequest.php");
+                            string jsonResponse = functions.APIRequest(POSTdata, "summary/delete");
 
                             simpleServerResponse serverResponse;
 

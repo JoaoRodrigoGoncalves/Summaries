@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Summaries.codeResources;
 using System;
 using System.Diagnostics;
 using System.Reflection;
@@ -27,14 +28,12 @@ namespace Summaries
 
         private class userInfo
         {
-            public string APIKEY { get; set; }
+            public string AccessToken { get; set; }
             public int userID { get; set; }
             public string username { get; set; }
             public string displayName { get; set; }
             public bool adminControl { get; set; }
         }
-
-        //https://www.youtube.com/watch?v=yZYAaScEsc0
 
         string jsonResponse = "";
         string POSTdata = "";
@@ -45,7 +44,7 @@ namespace Summaries
             var functions = new codeResources.functions();
             if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
             {
-                jsonResponse = functions.APIRequest(POSTdata, "loginvalidator.php");
+                jsonResponse = functions.APIRequest(POSTdata, "login/login");
             }
             else
             {
@@ -65,9 +64,9 @@ namespace Summaries
                 string username = usernameBox.Text;
                 string password = passwordBox.Text;
                 POSTdata = "usrnm=" + username + "&psswd=" + password;
-                var functions = new codeResources.functions();
+                var functions = new functions();
 
-                using (codeResources.loadingForm loading = new codeResources.loadingForm(getInformation))
+                using (loadingForm loading = new loadingForm(getInformation))
                 {
                     loading.ShowDialog();
                 }
@@ -84,7 +83,7 @@ namespace Summaries
                     if (response.status)
                     {
                         userInfo = JsonConvert.DeserializeObject<userInfo>(jsonResponse);
-                        Properties.Settings.Default.APIkey = userInfo.APIKEY;
+                        Properties.Settings.Default.AccessToken = userInfo.AccessToken;
                         Properties.Settings.Default.userID = userInfo.userID;
                         Properties.Settings.Default.username = userInfo.username;
                         Properties.Settings.Default.displayName = userInfo.displayName;
@@ -133,9 +132,8 @@ namespace Summaries
 
         private void login_Load(object sender, EventArgs e)
         {
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            FileVersionInfo fileVersion = FileVersionInfo.GetVersionInfo(assembly.Location);
-            versionLBL.Text = fileVersion.ProductVersion;
+            var functions = new functions();
+            versionLBL.Text = functions.GetSoftwareVersion();
         }
     }
 }

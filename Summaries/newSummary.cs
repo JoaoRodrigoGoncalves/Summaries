@@ -7,6 +7,7 @@ using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Windows.Forms;
 using static Summaries.codeResources.functions;
 
@@ -25,7 +26,7 @@ namespace Summaries
         string jsonWorkspace = "";
         string jsonResponse = "";
         string jsonSaveResponse = "";
-        string savePOSTdata = "API=" + Properties.Settings.Default.APIkey;
+        string savePOSTdata = "API=" + Properties.Settings.Default.AccessToken;
         bool shouldAbortLoad = false;
         bool readOnlyMode = false;
         List<String> filesToAdd = new List<string>();
@@ -96,10 +97,10 @@ namespace Summaries
             var functions = new codeResources.functions();
             if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
             {
-                jsonWorkspace = functions.APIRequest("API=" + Properties.Settings.Default.APIkey, "workspaceListRequest.php");
+                jsonWorkspace = functions.APIRequest("API=" + Properties.Settings.Default.AccessToken, "workspace/list");
                 workspaces = JsonConvert.DeserializeObject<workspacesServerResponse>(jsonWorkspace);
-                string POSTdata = "API=" + Properties.Settings.Default.APIkey + "&userid=" + Properties.Settings.Default.userID + "&workspace=0";
-                jsonResponse = functions.APIRequest(POSTdata, "summaryListRequest.php");
+                string POSTdata = "API=" + Properties.Settings.Default.AccessToken + "&userid=" + Properties.Settings.Default.userID + "&workspace=0";
+                jsonResponse = functions.APIRequest(POSTdata, "summary/list");
             }
             else
             {
@@ -111,7 +112,7 @@ namespace Summaries
         private void APISave()
         {
             var functions = new codeResources.functions();
-            jsonSaveResponse = functions.APIRequest(savePOSTdata, "summaryUpdateRequest.php");
+            jsonSaveResponse = functions.APIRequest(savePOSTdata, "summary/update");
 
         }
 
@@ -351,7 +352,6 @@ namespace Summaries
                                     // Here it saves the basic info about the current summary and uploads the files to the server
                                     if (UpdateDB(Convert.ToInt32(summaryNumberBox.Value), dateBox.Value.ToString("yyyy-MM-dd"), contentsBox.Text, workspaces.contents[workspaces.contents.FindIndex(x => x.name == workspaceComboBox.SelectedItem.ToString())].id, dbRow, filesToAdopt, filesToRemove))
                                     {
-                                        MessageBox.Show("Summary saved successfully!", "Summaries", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                         this.Close();
                                     }
                                     else
@@ -369,7 +369,6 @@ namespace Summaries
                                 // Here it saves the basic info about the current summary and uploads the files to the server
                                 if (UpdateDB(Convert.ToInt32(summaryNumberBox.Value), dateBox.Value.ToString("yyyy-MM-dd"), contentsBox.Text, workspaces.contents[workspaces.contents.FindIndex(x => x.name == workspaceComboBox.SelectedItem.ToString())].id, dbRow, null, filesToRemove))
                                 {
-                                    MessageBox.Show("Summary saved successfully!", "Summaries", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                     this.Close();
                                 }
                                 else
@@ -382,7 +381,6 @@ namespace Summaries
                         {
                             if (UpdateDB(Convert.ToInt32(summaryNumberBox.Value), dateBox.Value.ToString("yyyy-MM-dd"), contentsBox.Text, workspaces.contents[workspaces.contents.FindIndex(x => x.name == workspaceComboBox.SelectedItem.ToString())].id, dbRow))
                             {
-                                MessageBox.Show("Changes saved successfully!", "Summaries", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 this.Close();
                             }
                             else
@@ -508,16 +506,17 @@ namespace Summaries
         /// <returns>List of files to be adopted</returns>
         private List<string> UploadFiles(List<String> filesToUpload)
         {
+            var functions = new codeResources.functions();
             List<string> filesToAdopt = new List<string>();
             foreach(string currentFile in filesToUpload)
             {
                 WebClient Client = new WebClient();
                 Client.Headers.Add("User-Agent", "app");
                 Client.Headers.Add("Content-Type", "binary/octet-stream");
-                Client.Headers.Add("API", Properties.Settings.Default.APIkey);
-                byte[] result = Client.UploadFile(Properties.Settings.Default.inUseDomain + "/summaries/api/summaryUploadFile.php", "POST", currentFile);
+                Client.Headers.Add("API", Properties.Settings.Default.AccessToken);
+                byte[] result = Client.UploadFile(Properties.Settings.Default.inUseDomain + "/summaries/api/" + functions.GetSoftwareVersion() + "/summary/uploadFile.php", "POST", currentFile);
 
-                string response = System.Text.Encoding.UTF8.GetString(result, 0, result.Length);
+                string response = Encoding.UTF8.GetString(result, 0, result.Length);
                 uploadResults = JsonConvert.DeserializeObject<uploadInfo>(response);
 
                 if (uploadResults.status)
@@ -614,6 +613,7 @@ namespace Summaries
 
         private void attachmentsGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            var functions = new codeResources.functions();
             try
             {
                 // https://stackoverflow.com/questions/3577297/how-to-handle-click-event-in-button-column-in-datagridview
@@ -674,12 +674,32 @@ namespace Summaries
                                 string inServerPath = response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryID)].attachments.Find(x => x.filename == cell).path;
                                 string inServerName = inServerPath.Split('\\')[inServerPath.Split('\\').Length - 1];
 
-                                WebClient client = new WebClient();
-                                client.Headers.Add("API", Properties.Settings.Default.APIkey);
-                                client.Headers.Add("FILE", inServerName);
-                                client.DownloadFile(Properties.Settings.Default.inUseDomain + "/summaries/api/getFile.php", @"" + finalPath);
+                                using (WebClient client = new WebClient())
+                                {
+                                    // https://stackoverflow.com/questions/6397235/write-bytes-to-file
+                                    // https://stackoverflow.com/questions/5401501/how-to-post-data-to-specific-url-using-webclient-in-c-sharp
 
-                                Process.Start(@"" + finalPath);
+                                    client.Headers.Add("API", Properties.Settings.Default.AccessToken);
+                                    var param = new System.Collections.Specialized.NameValueCollection();
+                                    param.Add("file", inServerName);
+                                    byte[] responsebytes = client.UploadValues(Properties.Settings.Default.inUseDomain + "/summaries/api/" + functions.GetSoftwareVersion() + "/getFile.php", "POST", param);
+                                    string response = Encoding.UTF8.GetString(responsebytes);
+                                    try
+                                    {
+                                        var parse = JsonConvert.DeserializeObject<simpleServerResponse>(response);
+                                        if (parse.status == false)
+                                        {
+                                            MessageBox.Show("Error downloading file! \n" + parse.errors, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        }
+                                    }
+                                    catch 
+                                    { 
+                                        // If we got here, it is probably because it is actually a file, so we'll just save it
+                                        var fs = new FileStream(@"" + finalPath, FileMode.Create, FileAccess.Write);
+                                        fs.Write(responsebytes, 0, responsebytes.Length);
+                                        Process.Start(@"" + finalPath);
+                                    }
+                                }
                             }
                             else
                             {
