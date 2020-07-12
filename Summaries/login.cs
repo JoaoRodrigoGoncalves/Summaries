@@ -38,11 +38,12 @@ namespace Summaries
         string jsonResponse = "";
         string POSTdata = "";
         bool shouldAbort = false;
+        Local_Storage storage = Local_Storage.Retrieve;
 
         private void getInformation()
         {
-            var functions = new codeResources.functions();
-            if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+            var functions = new functions();
+            if (functions.CheckForInternetConnection(storage.inUseDomain))
             {
                 jsonResponse = functions.APIRequest(POSTdata, "login/login");
             }
@@ -83,11 +84,11 @@ namespace Summaries
                     if (response.status)
                     {
                         userInfo = JsonConvert.DeserializeObject<userInfo>(jsonResponse);
-                        Properties.Settings.Default.AccessToken = userInfo.AccessToken;
-                        Properties.Settings.Default.userID = userInfo.userID;
-                        Properties.Settings.Default.username = userInfo.username;
-                        Properties.Settings.Default.displayName = userInfo.displayName;
-                        Properties.Settings.Default.isAdmin = userInfo.adminControl;
+                        storage.AccessToken = userInfo.AccessToken;
+                        storage.userID = userInfo.userID;
+                        storage.username = userInfo.username;
+                        storage.displayName = userInfo.displayName;
+                        storage.isAdmin = userInfo.adminControl;
 
                         main form = new main();
                         this.Hide();
@@ -109,8 +110,8 @@ namespace Summaries
                 
             }catch(Exception ex)
             {
-                var functions = new codeResources.functions();
-                if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+                var functions = new functions();
+                if (functions.CheckForInternetConnection(storage.inUseDomain))
                 {
                     MessageBox.Show("Critial Error: " + ex.Message + "\n" + ex.StackTrace, "Critical Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }

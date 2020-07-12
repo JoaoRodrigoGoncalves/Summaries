@@ -6,7 +6,6 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Net;
-using System.Net.Http;
 using System.Text;
 using System.Windows.Forms;
 using static Summaries.codeResources.functions;
@@ -15,6 +14,7 @@ namespace Summaries
 {
     public partial class newSummary : Form
     {
+        Local_Storage storage = Local_Storage.Retrieve;
         private bool isEdit = false;
         private string originalText = null;
         private string originalDate = null;
@@ -26,7 +26,7 @@ namespace Summaries
         string jsonWorkspace = "";
         string jsonResponse = "";
         string jsonSaveResponse = "";
-        string savePOSTdata = "API=" + Properties.Settings.Default.AccessToken;
+        string savePOSTdata = "";
         bool shouldAbortLoad = false;
         bool readOnlyMode = false;
         List<String> filesToAdd = new List<string>();
@@ -86,7 +86,7 @@ namespace Summaries
 
         public newSummary(int summaryid = 0)
         {
-            // this does not require any workspace parameter because the Properties.Settings.Default.currentWorkspaceID were either loaded on the summaries
+            // this does not require any workspace parameter because the storage.currentWorkspaceID were either loaded on the summaries
             // list window, or will be addressed later on this code
             InitializeComponent();
             summaryID = summaryid;
@@ -94,12 +94,12 @@ namespace Summaries
 
         private void APICalls()
         {
-            var functions = new codeResources.functions();
-            if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+            var functions = new functions();
+            if (functions.CheckForInternetConnection(storage.inUseDomain))
             {
-                jsonWorkspace = functions.APIRequest("API=" + Properties.Settings.Default.AccessToken, "workspace/list");
+                jsonWorkspace = functions.APIRequest("", "workspace/list");
                 workspaces = JsonConvert.DeserializeObject<workspacesServerResponse>(jsonWorkspace);
-                string POSTdata = "API=" + Properties.Settings.Default.AccessToken + "&userid=" + Properties.Settings.Default.userID + "&workspace=0";
+                string POSTdata = "userid=" + storage.userID + "&workspace=0";
                 jsonResponse = functions.APIRequest(POSTdata, "summary/list");
             }
             else
@@ -138,7 +138,7 @@ namespace Summaries
 
                     if (workspaces.contents == null)
                     {
-                        Properties.Settings.Default.currentWorkspaceID = 0;
+                        storage.currentWorkspaceID = 0;
                         MessageBox.Show("Cannot create summaries because there are no available workspaces!", "No available workspaces", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         this.Close();
                     }
@@ -166,15 +166,15 @@ namespace Summaries
                                     isEdit = true;
                                 }
 
-                                if (Properties.Settings.Default.currentWorkspaceID == 0)
+                                if (storage.currentWorkspaceID == 0)
                                 {
                                     // Workspace not defined yet
                                     workspaceComboBox.SelectedIndex = 0;
-                                    Properties.Settings.Default.currentWorkspaceID = workspaces.contents[workspaces.contents.FindIndex(z => z.name == workspaceComboBox.Text)].id;
+                                    storage.currentWorkspaceID = workspaces.contents[workspaces.contents.FindIndex(z => z.name == workspaceComboBox.Text)].id;
                                 }
                                 else
                                 {
-                                    workspaceComboBox.SelectedItem = workspaces.contents[workspaces.contents.FindIndex(c => c.id == Properties.Settings.Default.currentWorkspaceID)].name;
+                                    workspaceComboBox.SelectedItem = workspaces.contents[workspaces.contents.FindIndex(c => c.id == storage.currentWorkspaceID)].name;
                                 }
 
                                 if (isEdit)
@@ -204,7 +204,7 @@ namespace Summaries
                                         List<Content> workspaceRelated = new List<Content>();
                                         foreach (Content row in response.contents)
                                         {
-                                            if (row.workspace == Properties.Settings.Default.currentWorkspaceID)
+                                            if (row.workspace == storage.currentWorkspaceID)
                                             {
                                                 workspaceRelated.Add(row);
                                             }
@@ -227,7 +227,7 @@ namespace Summaries
                                     dateBox.Value = DateTime.ParseExact(DateTime.Today.ToString("yyyy-MM-dd"), "yyyy-MM-dd", new CultureInfo("pt"));
                                 }
 
-                                if (!workspaces.contents[workspaces.contents.FindIndex(x => x.id == Properties.Settings.Default.currentWorkspaceID)].write)
+                                if (!workspaces.contents[workspaces.contents.FindIndex(x => x.id == storage.currentWorkspaceID)].write)
                                 {
                                     readOnlyMode = true;
                                     workspaceComboBox.Enabled = false;
@@ -254,7 +254,7 @@ namespace Summaries
                 }
                 catch (Exception ex)
                 {
-                    if (!functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+                    if (!functions.CheckForInternetConnection(storage.inUseDomain))
                     {
                         MessageBox.Show("Connection to the server lost. Please try again later.", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
@@ -303,6 +303,7 @@ namespace Summaries
                 }
                 
 
+                // Checks if the summary number is already in use
                 if (isInList)
                 {
                     var result = MessageBox.Show("The Summary Number given is already registered. Do you wish to overwrite it?", "Summary Number already registered", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -317,6 +318,7 @@ namespace Summaries
                     }
                 }
 
+                // Checks if the selected date is already in use by another summary
                 if (isDateUsed && !shouldAbort)
                 {
                     var res = MessageBox.Show("The Selected date has already a summary registered. Do you wish to overwrite it?", "Selected date already registered", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -333,7 +335,7 @@ namespace Summaries
 
             }
 
-            var functions = new codeResources.functions();
+            var functions = new functions();
 
             if (!shouldAbort)
             {
@@ -408,7 +410,6 @@ namespace Summaries
                             // Here it saves the basic info about the current summary and uploads the files to the server
                             if (UpdateDB(Convert.ToInt32(summaryNumberBox.Value), dateBox.Value.ToString("yyyy-MM-dd"), contentsBox.Text, workspaces.contents[workspaces.contents.FindIndex(x => x.name == workspaceComboBox.SelectedItem.ToString())].id, 0, filesToAdopt))
                             {
-                                MessageBox.Show("Summary saved successfully!", "Summaries", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 this.Close();
                             }
                             else
@@ -426,7 +427,6 @@ namespace Summaries
                         // Here it saves the basic info about the current summary and uploads the files to the server
                         if (UpdateDB(Convert.ToInt32(summaryNumberBox.Value), dateBox.Value.ToString("yyyy-MM-dd"), contentsBox.Text, workspaces.contents[workspaces.contents.FindIndex(x => x.name == workspaceComboBox.SelectedItem.ToString())].id))
                         {
-                            MessageBox.Show("Summary saved successfully!", "Summaries", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             this.Close();
                         }
                         else
@@ -450,10 +450,10 @@ namespace Summaries
         /// <param name="dbRowID">(Optional) The row in the database to be updated</param>
         /// <param name="filesToAdopt">(Optional) The list of files to be adopted</param>
         /// <param name="filesToRemove">(Optional) The list of files to be removed</param>
-        /// <returns></returns>
+        /// <returns>The final status of the update.</returns>
         private bool UpdateDB(int summaryID, string date, string text, int workspaceID, int dbRowID = 0, List<string> filesToAdopt = null, List<string> filesToRemove = null)
         {
-            var functions = new codeResources.functions();
+            var functions = new functions();
             string filesLoad = "";
 
             if(filesToAdopt != null)
@@ -468,14 +468,14 @@ namespace Summaries
 
             if(dbRowID > 0)
             {
-                savePOSTdata += "&operation=edit" + "&userID=" + Properties.Settings.Default.userID + "&workspace=" + workspaceID + "&dbrowID=" + dbRowID + "&summaryID=" + summaryID + "&date=" + functions.Hash(date) + "&contents=" + functions.Hash(text) + filesLoad ;
+                savePOSTdata += "&operation=edit" + "&userID=" + storage.userID + "&workspaceID=" + workspaceID + "&dbrowID=" + dbRowID + "&summaryID=" + summaryID + "&date=" + functions.Hash(date) + "&contents=" + functions.Hash(text) + filesLoad ;
             }
             else
             {
-                savePOSTdata += "&operation=new" + "&userID=" + Properties.Settings.Default.userID + "&workspace=" + workspaceID + "&summaryID=" + summaryID + "&date=" + functions.Hash(date) + "&contents=" + functions.Hash(text) + filesLoad;
+                savePOSTdata += "&operation=new" + "&userID=" + storage.userID + "&workspaceID=" + workspaceID + "&summaryID=" + summaryID + "&date=" + functions.Hash(date) + "&contents=" + functions.Hash(text) + filesLoad;
             }
 
-            using (codeResources.loadingForm loadForm = new codeResources.loadingForm(APISave)) {
+            using (loadingForm loadForm = new loadingForm(APISave)) {
                 loadForm.ShowDialog();
             }
 
@@ -506,15 +506,14 @@ namespace Summaries
         /// <returns>List of files to be adopted</returns>
         private List<string> UploadFiles(List<String> filesToUpload)
         {
-            var functions = new codeResources.functions();
+            var functions = new functions();
             List<string> filesToAdopt = new List<string>();
             foreach(string currentFile in filesToUpload)
             {
                 WebClient Client = new WebClient();
-                Client.Headers.Add("User-Agent", "app");
                 Client.Headers.Add("Content-Type", "binary/octet-stream");
-                Client.Headers.Add("API", Properties.Settings.Default.AccessToken);
-                byte[] result = Client.UploadFile(Properties.Settings.Default.inUseDomain + "/summaries/api/" + functions.GetSoftwareVersion() + "/summary/uploadFile.php", "POST", currentFile);
+                Client.Headers.Add("x-api-key", storage.AccessToken);
+                byte[] result = Client.UploadFile(storage.inUseDomain + "/summaries/api/" + functions.GetSoftwareVersion() + "/summary/uploadFile.php", "POST", currentFile);
 
                 string response = Encoding.UTF8.GetString(result, 0, result.Length);
                 uploadResults = JsonConvert.DeserializeObject<uploadInfo>(response);
@@ -535,9 +534,9 @@ namespace Summaries
         private void workspaceComboBox_DropDownClosed(object sender, EventArgs e)
         {
             newWorkspaceID = workspaces.contents[workspaces.contents.FindIndex(x => x.name == workspaceComboBox.SelectedItem.ToString())].id;
-            if (newWorkspaceID != Properties.Settings.Default.currentWorkspaceID)
+            if (newWorkspaceID != storage.currentWorkspaceID)
             {
-                Properties.Settings.Default.currentWorkspaceID = newWorkspaceID;
+                storage.currentWorkspaceID = newWorkspaceID;
                 newSummary_Load(sender, e);
             }
         }
@@ -679,10 +678,10 @@ namespace Summaries
                                     // https://stackoverflow.com/questions/6397235/write-bytes-to-file
                                     // https://stackoverflow.com/questions/5401501/how-to-post-data-to-specific-url-using-webclient-in-c-sharp
 
-                                    client.Headers.Add("API", Properties.Settings.Default.AccessToken);
+                                    client.Headers.Add("x-api-key", storage.AccessToken);
                                     var param = new System.Collections.Specialized.NameValueCollection();
-                                    param.Add("file", inServerName);
-                                    byte[] responsebytes = client.UploadValues(Properties.Settings.Default.inUseDomain + "/summaries/api/" + functions.GetSoftwareVersion() + "/getFile.php", "POST", param);
+                                    param.Add("FILE", inServerName);
+                                    byte[] responsebytes = client.UploadValues(storage.inUseDomain + "/summaries/api/" + functions.GetSoftwareVersion() + "/summary/getFile.php", "POST", param);
                                     string response = Encoding.UTF8.GetString(responsebytes);
                                     try
                                     {

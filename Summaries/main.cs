@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Summaries.codeResources;
+using System;
 using System.IO;
 using System.Net;
 using System.Threading;
@@ -12,6 +13,7 @@ namespace Summaries
         {
             InitializeComponent();
         }
+        Local_Storage storage = Local_Storage.Retrieve;
 
         private void menuOptionsExit_Click(object sender, EventArgs e)
         {
@@ -24,7 +26,7 @@ namespace Summaries
 
         private void main_Shown(object sender, EventArgs e)
         {
-            sessionLabel.Text += " " + Properties.Settings.Default.displayName;
+            sessionLabel.Text += " " + storage.displayName;
         }
 
         private void main_FormClosed(object sender, FormClosedEventArgs e)
@@ -50,13 +52,13 @@ namespace Summaries
                 {
                     using (var client = new WebClient())
                     {
-                        client.DownloadFile(Properties.Settings.Default.inUseDomain + "/summaries/resources/licenses.txt", Path.GetTempPath() + "\\licenses.txt");
+                        client.DownloadFile(storage.inUseDomain + "/summaries/resources/licenses.txt", Path.GetTempPath() + "\\licenses.txt");
                     }
                     menuAboutLicenses_Click(sender, e);
                 }catch(Exception ex)
                 {
                     var functions = new codeResources.functions();
-                    if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+                    if (functions.CheckForInternetConnection(storage.inUseDomain))
                     {
                         MessageBox.Show("Critical Error: " + ex.Message + "\n" + ex.StackTrace, "Critical Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
@@ -78,7 +80,7 @@ namespace Summaries
         private void menuSummaryNew_Click(object sender, EventArgs e)
         {
             var functions = new codeResources.functions();
-            if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+            if (functions.CheckForInternetConnection(storage.inUseDomain))
             {
                 newSummary newSummary = new newSummary();
                 newSummary.ShowDialog();
@@ -93,7 +95,7 @@ namespace Summaries
         private void menuSummaryList_Click(object sender, EventArgs e)
         {
             var functions = new codeResources.functions();
-            if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+            if (functions.CheckForInternetConnection(storage.inUseDomain))
             {
                 summariesList summaries = new summariesList();
                 summaries.ShowDialog();
@@ -107,7 +109,7 @@ namespace Summaries
 
         private void main_Load(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.isAdmin)
+            if (storage.isAdmin)
             {
                 menuOptionsAdministration_Panel.Visible = true;
                 menuOptionsAdministration_PanelStrip.Visible = true;
@@ -117,7 +119,7 @@ namespace Summaries
         private void menuOptionsAdministration_Panel_Click(object sender, EventArgs e)
         {
             var functions = new codeResources.functions();
-            if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+            if (functions.CheckForInternetConnection(storage.inUseDomain))
             {
                 AdministrationPanel panel = new AdministrationPanel();
                 panel.ShowDialog();

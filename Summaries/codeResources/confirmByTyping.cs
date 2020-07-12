@@ -4,6 +4,7 @@ namespace Summaries.codeResources
 {
     public partial class confirmByTyping : Form
     {
+        Local_Storage storage = Local_Storage.Retrieve;
         public confirmByTyping(string textToWrite)
         {
             InitializeComponent();
@@ -18,7 +19,7 @@ namespace Summaries.codeResources
             }
             else
             {
-                Properties.Settings.Default.typeTestSuccessfull = true;
+                storage.typeTestSuccessfull = true;
                 this.Close();
             }
         }

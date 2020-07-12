@@ -31,13 +31,14 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(summariesList));
             this.dataGrid = new System.Windows.Forms.DataGridView();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
+            this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
+            this.workspaceComboBox = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.addSummary = new System.Windows.Forms.ToolStripButton();
             this.editSummary = new System.Windows.Forms.ToolStripButton();
             this.deleteSummary = new System.Windows.Forms.ToolStripButton();
             this.refreshList = new System.Windows.Forms.ToolStripButton();
-            this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
-            this.workspaceComboBox = new System.Windows.Forms.ToolStripComboBox();
-            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.exportWorkspace = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             this.toolStrip.SuspendLayout();
             this.SuspendLayout();
@@ -66,12 +67,37 @@
             this.refreshList,
             this.toolStripLabel2,
             this.workspaceComboBox,
-            this.toolStripLabel1});
+            this.toolStripLabel1,
+            this.exportWorkspace});
             this.toolStrip.Location = new System.Drawing.Point(0, 425);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Size = new System.Drawing.Size(800, 25);
             this.toolStrip.TabIndex = 1;
             this.toolStrip.Text = "toolStrip1";
+            // 
+            // toolStripLabel2
+            // 
+            this.toolStripLabel2.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripLabel2.Name = "toolStripLabel2";
+            this.toolStripLabel2.Size = new System.Drawing.Size(13, 22);
+            this.toolStripLabel2.Text = "  ";
+            // 
+            // workspaceComboBox
+            // 
+            this.workspaceComboBox.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.workspaceComboBox.AutoSize = false;
+            this.workspaceComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.workspaceComboBox.Name = "workspaceComboBox";
+            this.workspaceComboBox.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
+            this.workspaceComboBox.Size = new System.Drawing.Size(200, 23);
+            this.workspaceComboBox.DropDownClosed += new System.EventHandler(this.workspaceComboBox_DropDownClosed);
+            // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(68, 22);
+            this.toolStripLabel1.Text = "Workspace:";
             // 
             // addSummary
             // 
@@ -109,29 +135,14 @@
             this.refreshList.Text = "Refresh";
             this.refreshList.Click += new System.EventHandler(this.refreshList_Click);
             // 
-            // toolStripLabel2
+            // exportWorkspace
             // 
-            this.toolStripLabel2.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(13, 22);
-            this.toolStripLabel2.Text = "  ";
-            // 
-            // workspaceComboBox
-            // 
-            this.workspaceComboBox.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.workspaceComboBox.AutoSize = false;
-            this.workspaceComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.workspaceComboBox.Name = "workspaceComboBox";
-            this.workspaceComboBox.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
-            this.workspaceComboBox.Size = new System.Drawing.Size(200, 23);
-            this.workspaceComboBox.DropDownClosed += new System.EventHandler(this.workspaceComboBox_DropDownClosed);
-            // 
-            // toolStripLabel1
-            // 
-            this.toolStripLabel1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(68, 22);
-            this.toolStripLabel1.Text = "Workspace:";
+            this.exportWorkspace.Image = global::Summaries.Properties.Resources.export;
+            this.exportWorkspace.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.exportWorkspace.Name = "exportWorkspace";
+            this.exportWorkspace.Size = new System.Drawing.Size(61, 22);
+            this.exportWorkspace.Text = "Export";
+            this.exportWorkspace.Click += new System.EventHandler(this.exportWorkspace_Click);
             // 
             // summariesList
             // 
@@ -167,5 +178,6 @@
         private System.Windows.Forms.ToolStripComboBox workspaceComboBox;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
+        private System.Windows.Forms.ToolStripButton exportWorkspace;
     }
 }

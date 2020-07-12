@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Summaries.codeResources;
+using System;
 using System.IO;
 using System.Net;
 using System.Windows.Forms;
@@ -15,6 +16,7 @@ namespace Summaries
 
         private void loading_Shown(object sender, EventArgs e)
         {
+            Local_Storage storage = Local_Storage.Retrieve;
             var functions = new codeResources.functions();
 
             if (!functions.CheckForInternetConnection("http://google.com/generate_204"))
@@ -33,25 +35,25 @@ namespace Summaries
                     }
                     else
                     {
-                        Properties.Settings.Default.inUseDomain = "https://joaogoncalves.myftp.org";
+                        storage.inUseDomain = "https://joaogoncalves.myftp.org";
                     }
 
                 }
                 else
                 {
-                    Properties.Settings.Default.inUseDomain = "https://joaogoncalves.eu";
+                    storage.inUseDomain = "https://joaogoncalves.eu";
                 }
 
                 try
                 {
                     using (var client = new WebClient())
                     {
-                        client.DownloadFile(Properties.Settings.Default.inUseDomain + "/summaries/resources/licenses.txt", Path.GetTempPath() + "\\licenses.txt");
+                        client.DownloadFile(storage.inUseDomain + "/summaries/resources/licenses.txt", Path.GetTempPath() + "\\licenses.txt");
                     }
 
                     string downloadURL = "";
                     Version newVersion = null;
-                    string xmlURL = Properties.Settings.Default.inUseDomain + "/summaries/updater.xml";
+                    string xmlURL = storage.inUseDomain + "/summaries/updater.xml";
                     XmlTextReader reader = null;
 
                     reader = new XmlTextReader(xmlURL);

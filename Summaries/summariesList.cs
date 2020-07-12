@@ -1,9 +1,7 @@
 ﻿using Newtonsoft.Json;
+using Summaries.codeResources;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Net;
-using System.Text;
 using System.Windows.Forms;
 using static Summaries.codeResources.functions;
 
@@ -12,6 +10,7 @@ namespace Summaries
     public partial class summariesList : Form
     {
         string workspaceName = null;
+        Local_Storage storage = Local_Storage.Retrieve;
 
         public summariesList()
         {
@@ -52,21 +51,19 @@ namespace Summaries
         }
 
 
-        codeResources.functions functions = new codeResources.functions();
+        functions functions = new functions();
         workspacesServerResponse workspaceResponse;
         bool shouldAbort = false;
         int workspaceSelectedID = 0;
-
-        //https://www.youtube.com/watch?v=yZYAaScEsc0
 
         string jsonResponse = "";
 
         private void requestWorkpaceList()
         {
-            var functions = new codeResources.functions();
-            if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+            var functions = new functions();
+            if (functions.CheckForInternetConnection(storage.inUseDomain))
             {
-                jsonResponse = functions.APIRequest("IAMALIVE=1", "workspace/list");
+                jsonResponse = functions.APIRequest("", "workspace/list");
             }
             else
             {
@@ -77,10 +74,10 @@ namespace Summaries
 
         private void requestSummaryList()
         {
-            var functions = new codeResources.functions();
-            if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+            var functions = new functions();
+            if (functions.CheckForInternetConnection(storage.inUseDomain))
             {
-                string POSTdata = "userid=" + Properties.Settings.Default.userID + "&workspace=" + workspaceSelectedID;
+                string POSTdata = "userid=" + storage.userID + "&workspace=" + workspaceSelectedID;
                 jsonResponse = functions.APIRequest(POSTdata, "summary/list");
             }
             else
@@ -93,7 +90,7 @@ namespace Summaries
         private void summariesList_Load(object sender, EventArgs e)
         {
             // Requests the Workspace list, showing the loading screen to the user
-            using (codeResources.loadingForm form = new codeResources.loadingForm(requestWorkpaceList)) {
+            using (loadingForm form = new loadingForm(requestWorkpaceList)) {
                 form.ShowDialog();
             }
 
@@ -110,7 +107,7 @@ namespace Summaries
                     {
                         if (workspaceResponse.contents == null)
                         {
-                            Properties.Settings.Default.currentWorkspaceID = 0;
+                            storage.currentWorkspaceID = 0;
                             MessageBox.Show("Cannot list any summaries because there are no available workspaces!", "No available workspaces", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                             this.Close();
                         }
@@ -137,11 +134,11 @@ namespace Summaries
                                 workspaceComboBox.SelectedItem = workspaceName;
                             }
 
-                            Properties.Settings.Default.currentWorkspaceID = workspaceSelectedID;
+                            storage.currentWorkspaceID = workspaceSelectedID;
 
                             try
                             {
-                                using (codeResources.loadingForm form = new codeResources.loadingForm(requestSummaryList)) {
+                                using (loadingForm form = new loadingForm(requestSummaryList)) {
                                     form.ShowDialog();
                                 }
 
@@ -189,8 +186,8 @@ namespace Summaries
                             }
                             catch (Exception ex)
                             {
-                                codeResources.functions functions = new codeResources.functions();
-                                if (!functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+                                functions functions = new functions();
+                                if (!functions.CheckForInternetConnection(storage.inUseDomain))
                                 {
                                     MessageBox.Show("Connection to the server lost. Please try again later.", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 }
@@ -209,8 +206,8 @@ namespace Summaries
                 }
                 catch (Exception ex)
                 {
-                    codeResources.functions functions = new codeResources.functions();
-                    if (!functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+                    functions functions = new functions();
+                    if (!functions.CheckForInternetConnection(storage.inUseDomain))
                     {
                         MessageBox.Show("Connection to the server lost. Please try again later.", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
@@ -237,7 +234,7 @@ namespace Summaries
                             DataGridViewRow selectedRow = dataGrid.Rows[selectedrowindex];
                             int selectedSummary = Convert.ToInt32(selectedRow.Cells["summaryNumber"].Value);
 
-                            string POSTdata = "API=" + Properties.Settings.Default.AccessToken + "&userid=" + Properties.Settings.Default.userID + "&workspace=" + Properties.Settings.Default.currentWorkspaceID + "&summaryID=" + selectedSummary;
+                            string POSTdata = "userID=" + storage.userID + "&workspaceID=" + storage.currentWorkspaceID + "&summaryID=" + selectedSummary;
 
                             string jsonResponse = functions.APIRequest(POSTdata, "summary/delete");
 
@@ -258,7 +255,7 @@ namespace Summaries
                                 }
                                 else
                                 {
-                                    MessageBox.Show("Error: " + serverResponse.errors, "Critital Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    MessageBox.Show("Error: " + serverResponse.errors + "\n" + jsonResponse, "Critital Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 }
                             }
                         }
@@ -266,14 +263,14 @@ namespace Summaries
                 }
                 catch (Exception ex)
                 {
-                    codeResources.functions functions = new codeResources.functions();
-                    if (!functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+                    functions functions = new functions();
+                    if (!functions.CheckForInternetConnection(storage.inUseDomain))
                     {
                         MessageBox.Show("Connection to the server lost. Please try again later.", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     else
                     {
-                        MessageBox.Show("Critical error: " + ex.Message, "Critical error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Critical error: " + ex.Message + "\n" + ex.StackTrace + "\n" + ex.Source, "Critical error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -300,8 +297,8 @@ namespace Summaries
             }
             catch(Exception ex)
             {
-                codeResources.functions functions = new codeResources.functions();
-                if (!functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+                functions functions = new functions();
+                if (!functions.CheckForInternetConnection(storage.inUseDomain))
                 {
                     MessageBox.Show("Connection to the server lost. Please try again later.", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -316,14 +313,13 @@ namespace Summaries
         {
             if(workspaceResponse.contents[workspaceResponse.contents.FindIndex(x => x.name == workspaceName)].write)
             {
-                codeResources.functions functions = new codeResources.functions();
-                if (!functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+                functions functions = new functions();
+                if (!functions.CheckForInternetConnection(storage.inUseDomain))
                 {
                     MessageBox.Show("Connection to the server lost. Please try again later.", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
-
                     newSummary newSummary = new newSummary();
                     newSummary.ShowDialog();
                     summariesList_Load(sender, e);
@@ -349,6 +345,23 @@ namespace Summaries
         {
             workspaceName = workspaceComboBox.SelectedItem.ToString();
             summariesList_Load(sender, e);
+        }
+
+        private void exportWorkspace_Click(object sender, EventArgs e)
+        {
+            // https://www.codeproject.com/Tips/689968/How-to-Check-Whether-Word-is-Installed-in-the-Syst
+            Type officeType = Type.GetTypeFromProgID("Word.Application");
+            if(officeType == null)
+            {
+                MessageBox.Show("Microsoft Word was not found on the system and is required to for this function to work.", "Microsoft Word Not Found", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            else
+            {
+                using (loadingForm loading = new loadingForm(functions.ExportToWordFile))
+                {
+                    loading.ShowDialog();
+                }
+            }
         }
     }
 }

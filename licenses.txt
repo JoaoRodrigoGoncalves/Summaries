@@ -84,3 +84,11 @@ Administration Panel ICON
 	Original Name: Gears Configuration Tool free icon
 	License: Flaticon Basic License. (https://file000.flaticon.com/downloads/license/license.pdf)
 	Original Download link: https://www.flaticon.com/free-icon/gears-configuration-tool_59108
+
+Export ICON
+
+	Icon made by Freepik (https://www.flaticon.com/authors/freepik) from www.flaticon.com
+
+	Original Name: Share free icon
+	License: Flaticon Basic License. (https://file000.flaticon.com/downloads/license/license.pdf)
+	Original Download link: https://www.flaticon.com/free-icon/share_1059157

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Summaries.codeResources;
 using System;
 using System.Windows.Forms;
 using static Summaries.codeResources.functions;
@@ -16,14 +17,14 @@ namespace Summaries
         string jsonResponse = "";
         string POSTdata = string.Empty;
         bool shouldAbort = false;
+        Local_Storage storage = Local_Storage.Retrieve;
 
-        //https://www.youtube.com/watch?v=yZYAaScEsc0
         private void checkConnection()
         {
             var functions = new codeResources.functions();
-            if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+            if (functions.CheckForInternetConnection(storage.inUseDomain))
             { 
-                POSTdata = "API=" + Properties.Settings.Default.AccessToken + "&userID=" + Properties.Settings.Default.userID + "&oldpsswd=" + functions.Hash(currentPasswordBox.Text) + "&newpsswd=" + functions.Hash(newPasswordBox.Text);
+                POSTdata = "userID=" + storage.userID + "&oldpsswd=" + functions.Hash(currentPasswordBox.Text) + "&newpsswd=" + functions.Hash(newPasswordBox.Text);
                 jsonResponse = functions.APIRequest(POSTdata, "user/changePassword");
             }
             else
@@ -39,8 +40,8 @@ namespace Summaries
             {
                 form.ShowDialog();
             }
-            this.Text += Properties.Settings.Default.displayName;
-            usernameBox.Text = Properties.Settings.Default.username;
+            this.Text += storage.displayName;
+            usernameBox.Text = storage.username;
         }
 
         private void resetFields()

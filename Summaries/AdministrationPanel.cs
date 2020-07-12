@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
 using Newtonsoft.Json;
+using Summaries.codeResources;
 using static Summaries.codeResources.functions;
 
 namespace Summaries
@@ -19,6 +19,7 @@ namespace Summaries
         private bool addingUser = false;
         private bool addingClass = false;
         private bool addingWorkspace = false;
+        Local_Storage storage = Local_Storage.Retrieve;
 
         public AdministrationPanel()
         {
@@ -85,11 +86,11 @@ namespace Summaries
         private void APICalls()
         {
             var functions = new codeResources.functions();
-            if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+            if (functions.CheckForInternetConnection(storage.inUseDomain))
             {
-                jsonResponse = functions.APIRequest("API=" + Properties.Settings.Default.AccessToken, "user/list");
-                classJsonResponse = functions.APIRequest("API=" + Properties.Settings.Default.AccessToken, "class/list");
-                workspaceJsonResponse = functions.APIRequest("API=" + Properties.Settings.Default.AccessToken, "workspace/list");
+                jsonResponse = functions.APIRequest("", "user/list");
+                classJsonResponse = functions.APIRequest("", "class/list");
+                workspaceJsonResponse = functions.APIRequest("", "workspace/list");
             }
             else
             {
@@ -107,7 +108,7 @@ namespace Summaries
         private void DeleteUser()
         {
             var functions = new codeResources.functions();
-            GlobalAPIResponse = functions.APIRequest(GlobalPOSTdata, "usser/delete");
+            GlobalAPIResponse = functions.APIRequest(GlobalPOSTdata, "user/delete");
         }
 
         private void ResetUser()
@@ -149,8 +150,8 @@ namespace Summaries
         {
             try
             {
-                var functions = new codeResources.functions();
-                using(codeResources.loadingForm form = new codeResources.loadingForm(APICalls))
+                var functions = new functions();
+                using (loadingForm form = new loadingForm(APICalls))
                 {
                     form.ShowDialog();
                 }
@@ -391,6 +392,7 @@ namespace Summaries
                 int selectedrowindex = userDataGrid.SelectedCells[0].RowIndex;
                 DataGridViewRow selectedRow = userDataGrid.Rows[selectedrowindex];
                 currentSelectedrow = selectedrowindex;
+                infoGBox.Text = "Editing User " + userDataGrid.Rows[currentSelectedrow].Cells["displayName"].Value.ToString();
                 usernameBox.Text = selectedRow.Cells["username"].Value.ToString();
                 displayNameBox.Text = selectedRow.Cells["displayName"].Value.ToString();
                 classBox.SelectedItem = selectedRow.Cells["class"].Value.ToString();
@@ -484,12 +486,12 @@ namespace Summaries
                         }
                         else
                         {
-                            var functions = new codeResources.functions();
-                            GlobalPOSTdata = "API=" + Properties.Settings.Default.AccessToken + "&userID=" + userToReset + "&reset=true";
+                            var functions = new functions();
+                            GlobalPOSTdata = "userID=" + userToReset + "&reset=true";
 
                             simpleServerResponse serverResponse;
 
-                            using (codeResources.loadingForm form = new codeResources.loadingForm(ResetUser)) {
+                            using (loadingForm form = new loadingForm(ResetUser)) {
                                 form.ShowDialog();
                             }
 
@@ -536,12 +538,11 @@ namespace Summaries
                     string isDeletionProtected = accidentalDeletionBox.Checked.ToString();
                     if (addingUser)
                     {
-                        GlobalPOSTdata = "API=" + Properties.Settings.Default.AccessToken;
-                        GlobalPOSTdata += "&username=" + username + "&displayName=" + displayName + "&classID=" + classNum + "&admin=" + isAdmin + "&deletionProtection=" + isDeletionProtected;
+                        GlobalPOSTdata = "username=" + username + "&displayName=" + displayName + "&classID=" + classNum + "&admin=" + isAdmin + "&deletionProtection=" + isDeletionProtected;
 
                         simpleServerResponse serverResponse;
 
-                        using (codeResources.loadingForm form = new codeResources.loadingForm(SaveUser)) {
+                        using (loadingForm form = new loadingForm(SaveUser)) {
                             form.ShowDialog();
                         }
 
@@ -563,11 +564,11 @@ namespace Summaries
                         int selectedrowindex = userDataGrid.SelectedCells[0].RowIndex;
                         DataGridViewRow selectedRow = userDataGrid.Rows[selectedrowindex];
                         int userToUpdate = Convert.ToInt32(selectedRow.Cells["userID"].Value.ToString());
-                        GlobalPOSTdata = "API=" + Properties.Settings.Default.AccessToken + "&userID=" + userToUpdate + "&username=" + username + "&displayName=" + displayName + "&classID=" + classNum + "&admin=" + isAdmin + "&deletionProtection=" + isDeletionProtected;
+                        GlobalPOSTdata = "userID=" + userToUpdate + "&username=" + username + "&displayName=" + displayName + "&classID=" + classNum + "&admin=" + isAdmin + "&deletionProtection=" + isDeletionProtected;
 
                         simpleServerResponse serverResponse;
 
-                        using (codeResources.loadingForm form = new codeResources.loadingForm(SaveUser)) {
+                        using (loadingForm form = new loadingForm(SaveUser)) {
                             form.ShowDialog();
                         }
 
@@ -604,7 +605,7 @@ namespace Summaries
             int selectedrowindex = userDataGrid.SelectedCells[0].RowIndex;
             DataGridViewRow selectedRow = userDataGrid.Rows[selectedrowindex];
 
-            if (Properties.Settings.Default.userID == Convert.ToInt32(selectedRow.Cells["userID"].Value))
+            if (storage.userID == Convert.ToInt32(selectedRow.Cells["userID"].Value))
             {
                 MessageBox.Show("Cannot delete the current user being used", "Unable to delete the user", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -617,9 +618,9 @@ namespace Summaries
                     {
                         try
                         {
-                            var functions = new codeResources.functions();
+                            var functions = new functions();
                             int userToDelete = Convert.ToInt32(selectedRow.Cells["userID"].Value.ToString());
-                            GlobalPOSTdata = "API=" + Properties.Settings.Default.AccessToken + "&userID=" + userToDelete;
+                            GlobalPOSTdata = "userID=" + userToDelete;
 
                             simpleServerResponse serverResponse;
 
@@ -664,17 +665,17 @@ namespace Summaries
                 }
                 else
                 {
-                    var functions = new codeResources.functions();
+                    var functions = new functions();
                     string workspaceName = functions.Hash(workspaceBOX.Text);
                     string readMode = readCheckBox.Checked.ToString();
                     string writeMode = writeCheckBox.Checked.ToString();
                     if (addingWorkspace)
                     {
-                        GlobalPOSTdata = "API=" + Properties.Settings.Default.AccessToken + "&name=" + workspaceName + "&readMode=" + readMode + "&writeMode=" + writeMode;
+                        GlobalPOSTdata = "name=" + workspaceName + "&readMode=" + readMode + "&writeMode=" + writeMode;
 
                         simpleServerResponse serverResponse;
 
-                        using (codeResources.loadingForm form = new codeResources.loadingForm(SaveWorkspace)) {
+                        using (loadingForm form = new loadingForm(SaveWorkspace)) {
                             form.ShowDialog();
                         }
 
@@ -696,11 +697,11 @@ namespace Summaries
                         int selectedWorkwspaceIndex = workspacesDataGrid.SelectedCells[0].RowIndex;
                         DataGridViewRow selectedWorkspaceRow = workspacesDataGrid.Rows[selectedWorkwspaceIndex];
                         int workspaceToUpdate = Convert.ToInt32(selectedWorkspaceRow.Cells["id"].Value.ToString());
-                        GlobalPOSTdata = "API=" + Properties.Settings.Default.AccessToken + "&workspaceID=" + workspaceToUpdate + "&name=" + functions.Hash(workspaceBOX.Text) + "&readMode=" + readMode + "&writeMode=" + writeMode;
+                        GlobalPOSTdata = "workspaceID=" + workspaceToUpdate + "&name=" + functions.Hash(workspaceBOX.Text) + "&readMode=" + readMode + "&writeMode=" + writeMode;
 
                         simpleServerResponse serverResponse;
 
-                        using (codeResources.loadingForm form = new codeResources.loadingForm(SaveWorkspace)) {
+                        using (loadingForm form = new codeResources.loadingForm(SaveWorkspace)) {
                             form.ShowDialog();
                         }
 
@@ -850,20 +851,20 @@ namespace Summaries
             DataGridViewRow selectedWorkspaceRow = workspacesDataGrid.Rows[selectedWorkspaceIndex];
 
             codeResources.confirmByTyping writtenConfirmation = new codeResources.confirmByTyping(selectedWorkspaceRow.Cells["name"].Value.ToString());
-            Properties.Settings.Default.typeTestSuccessfull = false; // just to be sure
+            storage.typeTestSuccessfull = false; // just to be sure
             writtenConfirmation.ShowDialog();
 
-            if (Properties.Settings.Default.typeTestSuccessfull)
+            if (storage.typeTestSuccessfull)
             {
-                Properties.Settings.Default.typeTestSuccessfull = false;
+                storage.typeTestSuccessfull = false;
                 try
                 {
-                    var functions = new codeResources.functions();
-                    GlobalPOSTdata = "API=" + Properties.Settings.Default.AccessToken + "&workspaceID=" + Convert.ToInt32(selectedWorkspaceRow.Cells["id"].Value.ToString());
+                    var functions = new functions();
+                    GlobalPOSTdata = "workspaceID=" + Convert.ToInt32(selectedWorkspaceRow.Cells["id"].Value.ToString());
 
                     simpleServerResponse serverResponse;
 
-                    using (codeResources.loadingForm form = new codeResources.loadingForm(DeleteWorkspace)) {
+                    using (loadingForm form = new loadingForm(DeleteWorkspace)) {
                         form.ShowDialog();
                     }
 
@@ -899,20 +900,20 @@ namespace Summaries
             DataGridViewRow selectedWorkspaceRow = workspacesDataGrid.Rows[selectedWorkspaceIndex];
 
             codeResources.confirmByTyping writtenConfirmation = new codeResources.confirmByTyping(selectedWorkspaceRow.Cells["name"].Value.ToString());
-            Properties.Settings.Default.typeTestSuccessfull = false; // just to be sure
+            storage.typeTestSuccessfull = false; // just to be sure
             writtenConfirmation.ShowDialog();
 
-            if (Properties.Settings.Default.typeTestSuccessfull)
+            if (storage.typeTestSuccessfull)
             {
-                Properties.Settings.Default.typeTestSuccessfull = false;
+                storage.typeTestSuccessfull = false;
                 try
                 {
-                    var functions = new codeResources.functions();
-                    GlobalPOSTdata = "API=" + Properties.Settings.Default.AccessToken + "&workspaceID=" + Convert.ToInt32(selectedWorkspaceRow.Cells["id"].Value.ToString());
+                    var functions = new functions();
+                    GlobalPOSTdata = "workspaceID=" + Convert.ToInt32(selectedWorkspaceRow.Cells["id"].Value.ToString());
 
                     simpleServerResponse serverResponse;
 
-                    using (codeResources.loadingForm form = new codeResources.loadingForm(FlushWorkspace)) {
+                    using (loadingForm form = new loadingForm(FlushWorkspace)) {
                         form.ShowDialog();
                     }
 
@@ -955,7 +956,7 @@ namespace Summaries
                     var functions = new codeResources.functions();
                     if (addingClass)
                     {
-                        GlobalPOSTdata = "API=" + Properties.Settings.Default.AccessToken + "&name=" + functions.Hash(classNameBOX.Text);
+                        GlobalPOSTdata = "name=" + functions.Hash(classNameBOX.Text);
                         simpleServerResponse serverResponse;
 
                         using (codeResources.loadingForm form = new codeResources.loadingForm(SaveClass)) {
@@ -980,7 +981,7 @@ namespace Summaries
                         int selectedClassIndex = classesDataGrid.SelectedCells[0].RowIndex;
                         DataGridViewRow selectedClassRow = classesDataGrid.Rows[selectedClassIndex];
                         int classToUpdate = Convert.ToInt32(selectedClassRow.Cells["classID"].Value.ToString());
-                        string POSTdata = "API=" + Properties.Settings.Default.AccessToken + "&classID=" + classToUpdate + "&name=" + functions.Hash(classNameBOX.Text);
+                        string POSTdata = "classID=" + classToUpdate + "&name=" + functions.Hash(classNameBOX.Text);
 
                         simpleServerResponse serverResponse;
 
@@ -1023,16 +1024,16 @@ namespace Summaries
             else
             {
                 codeResources.confirmByTyping writtenConfirmation = new codeResources.confirmByTyping(selectedClassRow.Cells["className"].Value.ToString());
-                Properties.Settings.Default.typeTestSuccessfull = false; // just to be sure
+                storage.typeTestSuccessfull = false; // just to be sure
                 writtenConfirmation.ShowDialog();
 
-                if (Properties.Settings.Default.typeTestSuccessfull)
+                if (storage.typeTestSuccessfull)
                 {
-                    Properties.Settings.Default.typeTestSuccessfull = false;
+                    storage.typeTestSuccessfull = false;
                     try
                     {
                         var functions = new codeResources.functions();
-                        GlobalPOSTdata = "API=" + Properties.Settings.Default.AccessToken + "&classID=" + Convert.ToInt32(selectedClassRow.Cells["classID"].Value.ToString());
+                        GlobalPOSTdata = "classID=" + Convert.ToInt32(selectedClassRow.Cells["classID"].Value.ToString());
 
                         simpleServerResponse serverResponse;
 
