@@ -539,7 +539,7 @@ namespace Summaries
                     if (addingUser)
                     {
                         GlobalPOSTdata = "username=" + username + "&displayName=" + displayName + "&classID=" + classNum + "&admin=" + isAdmin + "&deletionProtection=" + isDeletionProtected;
-
+                                               
                         simpleServerResponse serverResponse;
 
                         using (loadingForm form = new loadingForm(SaveUser)) {

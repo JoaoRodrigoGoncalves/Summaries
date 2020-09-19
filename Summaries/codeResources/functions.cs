@@ -170,20 +170,12 @@ namespace Summaries.codeResources
 
                 // Documment configuration
 
-                oWord.ActiveDocument.PageSetup.TopMargin = oWord.CentimetersToPoints(3);
-                oWord.ActiveDocument.PageSetup.BottomMargin = oWord.CentimetersToPoints((float)2.5);
-                oWord.ActiveDocument.PageSetup.RightMargin = oWord.CentimetersToPoints((float)2.5);
-                oWord.ActiveDocument.PageSetup.LeftMargin = oWord.CentimetersToPoints(3);
-                oWord.ActiveDocument.PageSetup.Gutter = oWord.CentimetersToPoints(1);
                 oWord.ActiveDocument.Styles.Add("default");
                 Style Default = oWord.ActiveDocument.Styles["default"];
                 Default.Font.Name = "Arial";
                 Default.Font.Size = 11;
-                //Default.Font.Spacing = oWord.LinesToPoints((float)1.25);
                 Default.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphJustify;
                 Default.ParagraphFormat.FirstLineIndent = 1;
-
-
 
                 // actual word document content
 
