@@ -230,6 +230,7 @@ namespace Summaries.codeResources
                         {
                             oPara2.Range.Text = "There are no summaries to be shown.";
                         }
+                        oWord.Activate();
                     }
                     else
                     {
