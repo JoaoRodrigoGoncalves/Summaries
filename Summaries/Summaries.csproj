@@ -163,6 +163,12 @@
     <Compile Include="summariesList.Designer.cs">
       <DependentUpon>summariesList.cs</DependentUpon>
     </Compile>
+    <Compile Include="userSettings\userSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="userSettings\userSettings.Designer.cs">
+      <DependentUpon>userSettings.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="aboutSummaries.resx">
       <DependentUpon>aboutSummaries.cs</DependentUpon>
     </EmbeddedResource>
@@ -203,6 +209,9 @@
     <EmbeddedResource Include="summariesList.resx">
       <DependentUpon>summariesList.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="userSettings\userSettings.resx">
+      <DependentUpon>userSettings.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
@@ -227,13 +236,6 @@
     <None Include="assets\addSummary.png" />
     <None Include="assets\refresh.png" />
     <None Include="assets\administrationPanel.png" />
-    <None Include="assets\excelFile.png" />
-    <None Include="assets\noFileSelected.png" />
-    <None Include="assets\pdfFile.png" />
-    <None Include="assets\powerpointFile.png" />
-    <None Include="assets\txtFile.png" />
-    <None Include="assets\wordFile.png" />
-    <None Include="assets\zipFile.png" />
     <None Include="assets\export.png" />
     <Content Include="icon.ico" />
   </ItemGroup>

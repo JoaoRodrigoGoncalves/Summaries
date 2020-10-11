@@ -1,8 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Summaries.codeResources;
 using System;
-using System.Diagnostics;
-using System.Reflection;
 using System.Windows.Forms;
 using static Summaries.codeResources.functions;
 

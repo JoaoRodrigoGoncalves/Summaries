@@ -52,3 +52,4 @@ D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.csproj.CoreCompileIn
 C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.csproj.ResolveComReference.cache
 C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.csproj.CoreCompileInputs.cache
 C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.csprojAssemblyReference.cache
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.userSettings.userSettings.resources
