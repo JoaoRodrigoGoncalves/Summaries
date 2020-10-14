@@ -43,7 +43,7 @@ namespace Summaries
             var functions = new functions();
             if (functions.CheckForInternetConnection(storage.inUseDomain))
             {
-                jsonResponse = functions.APIRequest(POSTdata, "login/login");
+                jsonResponse = functions.APIRequest("POST", POSTdata, "login/");
             }
             else
             {

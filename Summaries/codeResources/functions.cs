@@ -1,10 +1,8 @@
-﻿using Microsoft.Office.Core;
-using Microsoft.Office.Interop.Word;
+﻿using Microsoft.Office.Interop.Word;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -40,6 +38,7 @@ namespace Summaries.codeResources
             public List<Content> contents { get; set; }
         }
 
+        
         /// <summary>
         /// Uses BASE64 to hash the given string
         /// </summary>
@@ -87,61 +86,45 @@ namespace Summaries.codeResources
         /// <summary>
         /// Calls the given function on the API with the provided POST data
         /// </summary>
+        /// <param name="method">Method to be used</param>
         /// <param name="POSTdata">The Information required to send to the web server</param>
-        /// <param name="operation">The operation (eg. "sumary/update")</param>
+        /// <param name="endpoint">Endpoint link after api/[version]/</param>
         /// <returns>Returns a JSON string with que server response</returns>
-        public string APIRequest(string POSTdata, string operation)
+        public string APIRequest(string method, string POSTdata, string endpoint)
         {
             Local_Storage storage = Local_Storage.Retrieve;
 
-            List<String> GETendpoints = new List<string> {"login/logout", "user/list", "class/list", "workspace/list", "summary/list"};
             string finalData = "";
             try
             {
-                if (GETendpoints.Contains(operation))
+                var data = Encoding.UTF8.GetBytes(POSTdata);
+                var request = WebRequest.CreateHttp(storage.inUseDomain + "/summaries/api/v" + GetSoftwareVersion().Take(1) + "/" + endpoint);
+                request.Method = method.ToUpper();
+                request.ContentType = "application/x-www-form-urlencoded";
+                request.ContentLength = data.Length;
+                request.UserAgent = "app";
+                request.Headers.Add("X-API-KEY", storage.AccessToken);
+                //writes the post data to the stream
+                using (var stream = request.GetRequestStream())
                 {
-                    WebRequest request = WebRequest.CreateHttp(storage.inUseDomain + "/summaries/api/" + GetSoftwareVersion() + "/" + operation + ".php?" + POSTdata);
-
-                    request.Headers.Add("X-API-KEY", storage.AccessToken);
-
-                    using(WebResponse response = (WebResponse)request.GetResponse())
-                    using(Stream stream = response.GetResponseStream())
-                    using(StreamReader reader = new StreamReader(stream))
-                    {
-                        return reader.ReadToEnd();
-                    }
+                    stream.Write(data, 0, data.Length);
+                    stream.Close();
                 }
-                else
+                //ler a resposta
+                using (var response = request.GetResponse())
                 {
-                    var data = Encoding.UTF8.GetBytes(POSTdata);
-                    var request = WebRequest.CreateHttp(storage.inUseDomain + "/summaries/api/" + GetSoftwareVersion() + "/" + operation + ".php");
-                    request.Method = "POST";
-                    request.ContentType = "application/x-www-form-urlencoded";
-                    request.ContentLength = data.Length;
-                    request.UserAgent = "app";
-                    request.Headers.Add("X-API-KEY", storage.AccessToken);
-                    //writes the post data to the stream
-                    using (var stream = request.GetRequestStream())
-                    {
-                        stream.Write(data, 0, data.Length);
-                        stream.Close();
-                    }
-                    //ler a resposta
-                    using (var response = request.GetResponse())
-                    {
-                        var dataStream = response.GetResponseStream();
-                        StreamReader reader = new StreamReader(dataStream);
-                        finalData = reader.ReadToEnd();
-                        dataStream.Close();
-                        response.Close();
-                    }
+                    var dataStream = response.GetResponseStream();
+                    StreamReader reader = new StreamReader(dataStream);
+                    finalData = reader.ReadToEnd();
+                    dataStream.Close();
+                    response.Close();
                 }
             }
             catch(Exception ex)
             {
                 if (CheckForInternetConnection(storage.inUseDomain))
                 {
-                    finalData = "{\"status\":\"false\", \"errors\":\"" + ex.Message + "\n" + operation + "\"}";  
+                    finalData = "{\"status\":\"false\", \"errors\":\"" + ex.Message + "\nEndpoint: " + endpoint + "\nMethod: " + method + "\"}";  
                 }else{
                     finalData = "{\"status\":\"false\", \"errors\":\"Lost Connection to the Server\"}";
                 }
@@ -194,7 +177,7 @@ namespace Summaries.codeResources
 
                 if (CheckForInternetConnection(storage.inUseDomain))
                 {
-                    string jsonResponse = APIRequest("userid=" + storage.userID + "&workspace=" + storage.currentWorkspaceID, "summary/list");
+                    string jsonResponse = APIRequest("GET", "userid=" + storage.userID + "&workspace=" + storage.currentWorkspaceID, "summary/");
                     serverResponse response;
                     response = JsonConvert.DeserializeObject<serverResponse>(jsonResponse);
                     if (response.status)
