@@ -37,7 +37,7 @@ namespace Summaries
         public class workspacesContent
         {
             public int id { get; set; }
-            public string name { get; set; }
+            public string workspaceName { get; set; }
             public bool read { get; set; }
             public bool write { get; set; }
             public int totalSummaries { get; set; }
@@ -63,7 +63,7 @@ namespace Summaries
             var functions = new functions();
             if (functions.CheckForInternetConnection(storage.inUseDomain))
             {
-                jsonResponse = functions.APIRequest("", "workspace/list");
+                jsonResponse = functions.APIRequest("GET", null, "workspace");
             }
             else
             {
@@ -77,8 +77,7 @@ namespace Summaries
             var functions = new functions();
             if (functions.CheckForInternetConnection(storage.inUseDomain))
             {
-                string POSTdata = "userid=" + storage.userID + "&workspace=" + workspaceSelectedID;
-                jsonResponse = functions.APIRequest(POSTdata, "summary/list");
+                jsonResponse = functions.APIRequest("GET", null, "user/" + storage.userID + "/workspace/" + storage.currentWorkspaceID + "/summary");
             }
             else
             {
@@ -118,19 +117,19 @@ namespace Summaries
                             {
                                 if (row.read)
                                 {
-                                    workspaceComboBox.Items.Add(row.name);
+                                    workspaceComboBox.Items.Add(row.workspaceName);
                                 }
                             }
 
                             if (workspaceName == null || workspaceName == string.Empty || workspaceName == "")
                             {
                                 workspaceSelectedID = workspaceResponse.contents[0].id;
-                                workspaceName = workspaceResponse.contents[0].name;
+                                workspaceName = workspaceResponse.contents[0].workspaceName;
                                 workspaceComboBox.SelectedItem = workspaceName;
                             }
                             else
                             {
-                                workspaceSelectedID = workspaceResponse.contents[workspaceResponse.contents.FindIndex(x => x.name == workspaceName)].id;
+                                workspaceSelectedID = workspaceResponse.contents[workspaceResponse.contents.FindIndex(x => x.workspaceName == workspaceName)].id;
                                 workspaceComboBox.SelectedItem = workspaceName;
                             }
 
@@ -221,7 +220,7 @@ namespace Summaries
 
         private void deleteSummary_Click(object sender, EventArgs e)
         {
-            if (workspaceResponse.contents[workspaceResponse.contents.FindIndex(x => x.name == workspaceName)].write)
+            if (workspaceResponse.contents[workspaceResponse.contents.FindIndex(x => x.workspaceName == workspaceName)].write)
             {
                 try
                 {
@@ -236,7 +235,7 @@ namespace Summaries
 
                             string POSTdata = "userID=" + storage.userID + "&workspaceID=" + storage.currentWorkspaceID + "&summaryID=" + selectedSummary;
 
-                            string jsonResponse = functions.APIRequest(POSTdata, "summary/delete");
+                            string jsonResponse = functions.APIRequest("DELETE", POSTdata, "user/" + storage.userID + "/workspace/" + storage.currentWorkspaceID + "/summary/" + selectedSummary);
 
                             simpleServerResponse serverResponse;
 
@@ -311,7 +310,7 @@ namespace Summaries
 
         private void addSummary_Click(object sender, EventArgs e)
         {
-            if(workspaceResponse.contents[workspaceResponse.contents.FindIndex(x => x.name == workspaceName)].write)
+            if(workspaceResponse.contents[workspaceResponse.contents.FindIndex(x => x.workspaceName == workspaceName)].write)
             {
                 functions functions = new functions();
                 if (!functions.CheckForInternetConnection(storage.inUseDomain))

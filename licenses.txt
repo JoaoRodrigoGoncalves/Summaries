@@ -77,7 +77,7 @@ Refresh ICON
 	License: Flaticon Basic License. (https://file000.flaticon.com/downloads/license/license.pdf)
 	Original Download link: https://www.flaticon.com/free-icon/refresh-button_61444?term=refresh&page=1&position=11
 
-Administration Panel ICON
+Administration Menu ICON
 
 	Icon made by Freepik (https://www.flaticon.com/authors/freepik) from www.flaticon.com
 
@@ -92,3 +92,25 @@ Export ICON
 	Original Name: Share free icon
 	License: Flaticon Basic License. (https://file000.flaticon.com/downloads/license/license.pdf)
 	Original Download link: https://www.flaticon.com/free-icon/share_1059157
+
+User ICON
+
+	Original Name: Personal icon, user, user icon, user outline icon, users icon icon
+	License: Creative Commons (Attribution 3.0 Unported)
+	Original download link: https://www.iconfinder.com/icons/4473009/personal_icon_user_user_icon_user_outline_icon_users_icon_icon
+
+Loupe ICON
+
+	Icon made by Pixel Perfect (https://www.flaticon.com/authors/pixel-perfect) from www.flaticon.com
+
+	Original Name: Loupe free icon
+	License: Flaticon license
+	Original download link: https://www.flaticon.com/free-icon/loupe_622669
+
+Flush Workspace ICON
+
+	Icon made by Freepik (https://www.flaticon.com/authors/freepik) from www.flaticon.com
+
+	Original Name: Clean Code free icon
+	License: Flaticon License.
+	Original Download link: https://www.flaticon.com/free-icon/clean-code_937510

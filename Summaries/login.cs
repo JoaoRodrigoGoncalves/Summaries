@@ -43,7 +43,7 @@ namespace Summaries
             var functions = new functions();
             if (functions.CheckForInternetConnection(storage.inUseDomain))
             {
-                jsonResponse = functions.APIRequest("POST", POSTdata, "login/");
+                jsonResponse = functions.APIRequest("POST", POSTdata, "login");
             }
             else
             {
@@ -57,58 +57,63 @@ namespace Summaries
         {
             simpleServerResponse response;
             userInfo userInfo;
+            var functions = new functions();
 
             try
             {
-                string username = usernameBox.Text;
-                string password = passwordBox.Text;
-                POSTdata = "usrnm=" + username + "&psswd=" + password;
-                var functions = new functions();
-
-                using (loadingForm loading = new loadingForm(getInformation))
+                if(string.IsNullOrEmpty(usernameBox.Text) || string.IsNullOrEmpty(passwordBox.Text))
                 {
-                    loading.ShowDialog();
-                }
-
-                if (shouldAbort)
-                {
-                    passwordBox.Clear();
-                    password = "";
+                    credentialsWarningLB.Visible = true;
                 }
                 else
                 {
-                    response = JsonConvert.DeserializeObject<simpleServerResponse>(jsonResponse);
+                    string username = functions.Hash(usernameBox.Text);
+                    string password = functions.Hash(passwordBox.Text);
+                    POSTdata = "usrnm=" +  username + "&psswd=" + password;
 
-                    if (response.status)
+                    using (loadingForm loading = new loadingForm(getInformation))
                     {
-                        userInfo = JsonConvert.DeserializeObject<userInfo>(jsonResponse);
-                        storage.AccessToken = userInfo.AccessToken;
-                        storage.userID = userInfo.userID;
-                        storage.username = userInfo.username;
-                        storage.displayName = userInfo.displayName;
-                        storage.isAdmin = userInfo.adminControl;
+                        loading.ShowDialog();
+                    }
 
-                        main form = new main();
-                        this.Hide();
-                        form.Show();
+                    if (shouldAbort)
+                    {
+                        passwordBox.Clear();
+                        password = "";
                     }
                     else
                     {
-                        if ((response.errors == null) || (response.errors.Length < 1))
+                        response = JsonConvert.DeserializeObject<simpleServerResponse>(jsonResponse);
+
+                        if (response.status)
                         {
-                            credentialsWarningLB.Visible = true;
+                            userInfo = JsonConvert.DeserializeObject<userInfo>(jsonResponse);
+                            storage.AccessToken = userInfo.AccessToken;
+                            storage.userID = userInfo.userID;
+                            storage.username = userInfo.username;
+                            storage.displayName = userInfo.displayName;
+                            storage.isAdmin = userInfo.adminControl;
+
+                            main form = new main();
+                            this.Hide();
+                            form.Show();
                         }
                         else
                         {
-                            MessageBox.Show("Error: " + response.errors, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            if (response.ErrorCode == 401)
+                            {
+                                credentialsWarningLB.Visible = true;
+                            }
+                            else
+                            {
+                                MessageBox.Show("Error: " + response.errors, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
                         }
                     }
                 }
-
-                
-            }catch(Exception ex)
+            }
+            catch(Exception ex)
             {
-                var functions = new functions();
                 if (functions.CheckForInternetConnection(storage.inUseDomain))
                 {
                     MessageBox.Show("Critial Error: " + ex.Message + "\n" + ex.StackTrace, "Critical Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

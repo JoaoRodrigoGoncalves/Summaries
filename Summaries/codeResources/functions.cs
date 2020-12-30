@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
@@ -18,6 +19,7 @@ namespace Summaries.codeResources
         public class simpleServerResponse
         {
             public bool status { get; set; }
+            public int ErrorCode { get; set; }
             public string errors { get; set; }
         }
 
@@ -93,22 +95,25 @@ namespace Summaries.codeResources
         public string APIRequest(string method, string POSTdata, string endpoint)
         {
             Local_Storage storage = Local_Storage.Retrieve;
-
+            POSTdata = POSTdata == null ? "" : POSTdata;
             string finalData = "";
             try
             {
                 var data = Encoding.UTF8.GetBytes(POSTdata);
-                var request = WebRequest.CreateHttp(storage.inUseDomain + "/summaries/api/v" + GetSoftwareVersion().Take(1) + "/" + endpoint);
+                HttpWebRequest request = WebRequest.CreateHttp(storage.inUseDomain + "/summaries/api/v" + GetSoftwareVersion()[0] + "/" + endpoint);
                 request.Method = method.ToUpper();
                 request.ContentType = "application/x-www-form-urlencoded";
                 request.ContentLength = data.Length;
-                request.UserAgent = "app";
-                request.Headers.Add("X-API-KEY", storage.AccessToken);
+                request.UserAgent = "App-V" + GetSoftwareVersion();
+                request.Headers.Add("HTTP-X-API-KEY", storage.AccessToken);
                 //writes the post data to the stream
-                using (var stream = request.GetRequestStream())
+                if (method.ToUpper() == "POST" || method.ToUpper() == "PUT")
                 {
-                    stream.Write(data, 0, data.Length);
-                    stream.Close();
+                    using (var stream = request.GetRequestStream())
+                    {
+                        stream.Write(data, 0, data.Length);
+                        stream.Close();
+                    }
                 }
                 //ler a resposta
                 using (var response = request.GetResponse())
@@ -120,11 +125,33 @@ namespace Summaries.codeResources
                     response.Close();
                 }
             }
-            catch(Exception ex)
+            catch(WebException ex)
             {
                 if (CheckForInternetConnection(storage.inUseDomain))
                 {
-                    finalData = "{\"status\":\"false\", \"errors\":\"" + ex.Message + "\nEndpoint: " + endpoint + "\nMethod: " + method + "\"}";  
+                    string statusCode = ((HttpWebResponse)ex.Response).StatusCode.ToString();
+                    switch (statusCode)
+                    {
+                        case "Unauthorized":
+                            finalData = "{\"status\":\"false\", \"ErrorCode\":401, \"errors\":\"Authentication Failed\"}";
+                            break;
+
+                        case "Forbidden":
+                            finalData = "{\"status\":\"false\", \"ErrorCode\":403, \"errors\":\"Permission Denied\"}";
+                            break;
+
+                        case "Not Found":
+                            finalData = "{\"status\":\"false\", \"ErrorCode\":404, \"errors\":\"Not Found\"}";
+                            break;
+
+                        case "Not Acceptable":
+                            finalData = "{\"status\":\"false\", \"ErrorCode\":406, \"errors\":\"Not Acceptable\"}";
+                            break;
+
+                        default:
+                            finalData = "{\"status\":\"false\", \"errors\":\"" + ex.Message + "\nEndpoint: " + endpoint + "\nMethod: " + method + "\nOrignalResponse: " + finalData + "\", \"httpCode\":" + statusCode + "\"}";
+                            break;
+                    }  
                 }else{
                     finalData = "{\"status\":\"false\", \"errors\":\"Lost Connection to the Server\"}";
                 }
@@ -177,7 +204,7 @@ namespace Summaries.codeResources
 
                 if (CheckForInternetConnection(storage.inUseDomain))
                 {
-                    string jsonResponse = APIRequest("GET", "userid=" + storage.userID + "&workspace=" + storage.currentWorkspaceID, "summary/");
+                    string jsonResponse = APIRequest("GET", null, "user/" + storage.userID + "/workspace/" + storage.currentWorkspaceID + "/summary");
                     serverResponse response;
                     response = JsonConvert.DeserializeObject<serverResponse>(jsonResponse);
                     if (response.status)

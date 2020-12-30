@@ -97,10 +97,10 @@ namespace Summaries
             var functions = new functions();
             if (functions.CheckForInternetConnection(storage.inUseDomain))
             {
-                jsonWorkspace = functions.APIRequest("", "workspace/list");
+                jsonWorkspace = functions.APIRequest("GET", null, "workspace");
                 workspaces = JsonConvert.DeserializeObject<workspacesServerResponse>(jsonWorkspace);
-                string POSTdata = "userid=" + storage.userID + "&workspace=0";
-                jsonResponse = functions.APIRequest(POSTdata, "summary/list");
+                // this sould get all the user's summaries, independently of the workspace
+                jsonResponse = functions.APIRequest("GET", null, "user/" + storage.userID + "/workspace/0/summary");
             }
             else
             {
@@ -112,8 +112,14 @@ namespace Summaries
         private void APISave()
         {
             var functions = new codeResources.functions();
-            jsonSaveResponse = functions.APIRequest(savePOSTdata, "summary/update");
+            jsonSaveResponse = functions.APIRequest("PUT", savePOSTdata, "user/" + storage.userID + "/workspace/" + storage.currentWorkspaceID + "/summary/" + this.summaryID);
 
+        }
+
+        private void APICreateSummary()
+        {
+            var functions = new codeResources.functions();
+            jsonSaveResponse = functions.APIRequest("POST", savePOSTdata, "user/" + storage.userID + "/workspace/" + storage.currentWorkspaceID + "/summary");
         }
 
         private void newSummary_Load(object sender, EventArgs e)
@@ -455,6 +461,7 @@ namespace Summaries
         {
             var functions = new functions();
             string filesLoad = "";
+            this.summaryID = summaryID;
 
             if(filesToAdopt != null)
             {
@@ -468,16 +475,24 @@ namespace Summaries
 
             if(dbRowID > 0)
             {
-                savePOSTdata += "&operation=edit" + "&userID=" + storage.userID + "&workspaceID=" + workspaceID + "&dbrowID=" + dbRowID + "&summaryID=" + summaryID + "&date=" + functions.Hash(date) + "&contents=" + functions.Hash(text) + filesLoad ;
+                //editing a summary
+                savePOSTdata += "&dbrowID=" + dbRowID + "&summaryID=" + summaryID + "&date=" + functions.Hash(date) + "&contents=" + functions.Hash(text) + filesLoad;
+                using (loadingForm loadForm = new loadingForm(APISave))
+                {
+                    loadForm.ShowDialog();
+                }
             }
             else
             {
-                savePOSTdata += "&operation=new" + "&userID=" + storage.userID + "&workspaceID=" + workspaceID + "&summaryID=" + summaryID + "&date=" + functions.Hash(date) + "&contents=" + functions.Hash(text) + filesLoad;
+                // new summary
+                savePOSTdata += "&summaryID=" + summaryID + "&date=" + functions.Hash(date) + "&contents=" + functions.Hash(text) + filesLoad;
+                using (loadingForm loadForm = new loadingForm(APICreateSummary))
+                {
+                    loadForm.ShowDialog();
+                }
             }
 
-            using (loadingForm loadForm = new loadingForm(APISave)) {
-                loadForm.ShowDialog();
-            }
+            
 
             simpleServerResponse serverResponse;
             try

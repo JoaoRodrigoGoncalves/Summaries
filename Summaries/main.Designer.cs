@@ -32,7 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(main));
             this.menu = new System.Windows.Forms.MenuStrip();
             this.menuOptions = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuOptionsChange_Password = new System.Windows.Forms.ToolStripMenuItem();
+            this.userSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuOptionsAdministration_Panel = new System.Windows.Forms.ToolStripMenuItem();
             this.menuOptionsAdministration_PanelStrip = new System.Windows.Forms.ToolStripSeparator();
@@ -71,7 +71,7 @@
             // menuOptions
             // 
             this.menuOptions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuOptionsChange_Password,
+            this.userSettingsToolStripMenuItem,
             this.toolStripSeparator1,
             this.menuOptionsAdministration_Panel,
             this.menuOptionsAdministration_PanelStrip,
@@ -80,39 +80,39 @@
             this.menuOptions.Size = new System.Drawing.Size(61, 20);
             this.menuOptions.Text = "&Options";
             // 
-            // menuOptionsChange_Password
+            // userSettingsToolStripMenuItem
             // 
-            this.menuOptionsChange_Password.Image = global::Summaries.Properties.Resources.changePassword;
-            this.menuOptionsChange_Password.Name = "menuOptionsChange_Password";
-            this.menuOptionsChange_Password.Size = new System.Drawing.Size(185, 22);
-            this.menuOptionsChange_Password.Text = "Change &Password";
-            this.menuOptionsChange_Password.Click += new System.EventHandler(this.menuOptionsChange_Password_Click);
+            this.userSettingsToolStripMenuItem.Image = global::Summaries.Properties.Resources.administrationPanel;
+            this.userSettingsToolStripMenuItem.Name = "userSettingsToolStripMenuItem";
+            this.userSettingsToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.userSettingsToolStripMenuItem.Text = "User &Settings";
+            this.userSettingsToolStripMenuItem.Click += new System.EventHandler(this.userSettingsToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(182, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(184, 6);
             // 
             // menuOptionsAdministration_Panel
             // 
             this.menuOptionsAdministration_Panel.Image = global::Summaries.Properties.Resources.administrationPanel;
             this.menuOptionsAdministration_Panel.Name = "menuOptionsAdministration_Panel";
-            this.menuOptionsAdministration_Panel.Size = new System.Drawing.Size(185, 22);
-            this.menuOptionsAdministration_Panel.Text = "&Administration Panel";
+            this.menuOptionsAdministration_Panel.Size = new System.Drawing.Size(187, 22);
+            this.menuOptionsAdministration_Panel.Text = "&Administration Menu";
             this.menuOptionsAdministration_Panel.Visible = false;
             this.menuOptionsAdministration_Panel.Click += new System.EventHandler(this.menuOptionsAdministration_Panel_Click);
             // 
             // menuOptionsAdministration_PanelStrip
             // 
             this.menuOptionsAdministration_PanelStrip.Name = "menuOptionsAdministration_PanelStrip";
-            this.menuOptionsAdministration_PanelStrip.Size = new System.Drawing.Size(182, 6);
+            this.menuOptionsAdministration_PanelStrip.Size = new System.Drawing.Size(184, 6);
             this.menuOptionsAdministration_PanelStrip.Visible = false;
             // 
             // menuOptionsExit
             // 
             this.menuOptionsExit.Image = global::Summaries.Properties.Resources.exit;
             this.menuOptionsExit.Name = "menuOptionsExit";
-            this.menuOptionsExit.Size = new System.Drawing.Size(185, 22);
+            this.menuOptionsExit.Size = new System.Drawing.Size(187, 22);
             this.menuOptionsExit.Text = "&Exit";
             this.menuOptionsExit.Click += new System.EventHandler(this.menuOptionsExit_Click);
             // 
@@ -129,7 +129,7 @@
             // 
             this.menuSummaryNew.Image = global::Summaries.Properties.Resources.newSummary;
             this.menuSummaryNew.Name = "menuSummaryNew";
-            this.menuSummaryNew.Size = new System.Drawing.Size(154, 22);
+            this.menuSummaryNew.Size = new System.Drawing.Size(180, 22);
             this.menuSummaryNew.Text = "&New Summary";
             this.menuSummaryNew.Click += new System.EventHandler(this.menuSummaryNew_Click);
             // 
@@ -137,7 +137,7 @@
             // 
             this.menuSummaryList.Image = global::Summaries.Properties.Resources.summariesList;
             this.menuSummaryList.Name = "menuSummaryList";
-            this.menuSummaryList.Size = new System.Drawing.Size(154, 22);
+            this.menuSummaryList.Size = new System.Drawing.Size(180, 22);
             this.menuSummaryList.Text = "Summaries &List";
             this.menuSummaryList.Click += new System.EventHandler(this.menuSummaryList_Click);
             // 
@@ -271,7 +271,6 @@
         private System.Windows.Forms.ToolStripMenuItem menuAbout;
         private System.Windows.Forms.ToolStripMenuItem menuAboutLicenses;
         private System.Windows.Forms.ToolStripMenuItem menuAboutSummaries;
-        private System.Windows.Forms.ToolStripMenuItem menuOptionsChange_Password;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label sessionLabel;
         private System.Windows.Forms.ToolStripMenuItem menuSummaryNew;
@@ -283,5 +282,6 @@
         private System.Windows.Forms.ToolStripMenuItem summaryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ToolStripMenuItem userSettingsToolStripMenuItem;
     }
 }

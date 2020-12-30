@@ -60,9 +60,9 @@
             this.errorLB.ForeColor = System.Drawing.Color.Red;
             this.errorLB.Location = new System.Drawing.Point(12, 124);
             this.errorLB.Name = "errorLB";
-            this.errorLB.Size = new System.Drawing.Size(148, 13);
+            this.errorLB.Size = new System.Drawing.Size(154, 13);
             this.errorLB.TabIndex = 2;
-            this.errorLB.Text = "The given texts do not match!";
+            this.errorLB.Text = "The typed text does not match!";
             this.errorLB.Visible = false;
             // 
             // label2

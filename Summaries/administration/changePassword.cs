@@ -24,8 +24,8 @@ namespace Summaries
             var functions = new codeResources.functions();
             if (functions.CheckForInternetConnection(storage.inUseDomain))
             { 
-                POSTdata = "userID=" + storage.userID + "&oldpsswd=" + functions.Hash(currentPasswordBox.Text) + "&newpsswd=" + functions.Hash(newPasswordBox.Text);
-                jsonResponse = functions.APIRequest(POSTdata, "user/changePassword");
+                POSTdata = "oldpasswd=" + functions.Hash(currentPasswordBox.Text) + "&newpasswd=" + functions.Hash(newPasswordBox.Text);
+                jsonResponse = functions.APIRequest("PUT", POSTdata, "user/" + storage.userID + "/changepassword");
             }
             else
             {

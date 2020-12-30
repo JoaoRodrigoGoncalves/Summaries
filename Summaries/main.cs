@@ -2,7 +2,6 @@
 using System;
 using System.IO;
 using System.Net;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace Summaries
@@ -31,13 +30,13 @@ namespace Summaries
 
         private void main_FormClosed(object sender, FormClosedEventArgs e)
         {
+            var functions = new functions();
+            try
+            {
+                functions.APIRequest("GET", null, "logout");
+            }
+            catch { }
             Application.Exit();
-        }
-
-        private void menuOptionsChange_Password_Click(object sender, EventArgs e)
-        {
-            changePassword password = new changePassword();
-            password.ShowDialog();
         }
 
         private void menuAboutLicenses_Click(object sender, EventArgs e)
@@ -121,7 +120,7 @@ namespace Summaries
             var functions = new codeResources.functions();
             if (functions.CheckForInternetConnection(storage.inUseDomain))
             {
-                AdministrationPanel panel = new AdministrationPanel();
+                administration.AdministrationMenu panel = new administration.AdministrationMenu();
                 panel.ShowDialog();
             }
             else
@@ -139,6 +138,12 @@ namespace Summaries
         private void summaryToolStripMenuItem_Click(object sender, EventArgs e)
         {
             menuAboutSummaries_Click(sender, e);
+        }
+
+        private void userSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            userSettings.userSettings settingsWindow = new userSettings.userSettings();
+            settingsWindow.ShowDialog();
         }
     }
 }
