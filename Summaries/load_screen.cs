@@ -88,23 +88,23 @@ namespace Summaries
                             }
                         }
                     }
-                    catch(Exception exec)
+                    catch (Exception exec)
                     {
                         throw new Exception("Failed to check for updates: " + exec.Message);
                     }
                     finally
                     {
-                        if(reader != null)
+                        if (reader != null)
                         {
                             reader.Close();
                         }
                     }
 
                     Version appVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
-                    if(appVersion.CompareTo(newVersion) < 0)
+                    if (appVersion.CompareTo(newVersion) < 0)
                     {
                         var res = MessageBox.Show("A new version is available. Would you like to download and update now?", "New version available!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                        if(res == DialogResult.Yes)
+                        if (res == DialogResult.Yes)
                         {
                             System.Diagnostics.Process.Start(downloadURL);
                             Application.Exit();
@@ -116,7 +116,8 @@ namespace Summaries
                         }
                     }
 
-                }catch(Exception ex)
+                }
+                catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Cannot load all needed resources", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Application.Exit();

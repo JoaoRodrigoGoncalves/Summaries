@@ -161,10 +161,10 @@
     <Compile Include="main.Designer.cs">
       <DependentUpon>main.cs</DependentUpon>
     </Compile>
-    <Compile Include="newSummary.cs">
+    <Compile Include="userForms\newSummary.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="newSummary.Designer.cs">
+    <Compile Include="userForms\newSummary.designer.cs">
       <DependentUpon>newSummary.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -175,10 +175,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
-    <Compile Include="summariesList.cs">
+    <Compile Include="userForms\summariesList.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="summariesList.Designer.cs">
+    <Compile Include="userForms\summariesList.Designer.cs">
       <DependentUpon>summariesList.cs</DependentUpon>
     </Compile>
     <Compile Include="administration\userSettings.cs">
@@ -220,7 +220,7 @@
     <EmbeddedResource Include="main.resx">
       <DependentUpon>main.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="newSummary.resx">
+    <EmbeddedResource Include="userForms\newSummary.resx">
       <DependentUpon>newSummary.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -233,7 +233,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="summariesList.resx">
+    <EmbeddedResource Include="userForms\summariesList.resx">
       <DependentUpon>summariesList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="administration\userSettings.resx">
@@ -310,5 +310,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

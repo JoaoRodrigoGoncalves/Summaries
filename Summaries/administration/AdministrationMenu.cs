@@ -10,7 +10,7 @@ namespace Summaries.administration
     public partial class AdministrationMenu : Form
     {
         codeResources.functions functions = new codeResources.functions();
-        
+
         public AdministrationMenu()
         {
             InitializeComponent();
@@ -113,7 +113,7 @@ namespace Summaries.administration
 
         private void GetUsers(bool refresh = false, int classID = -1)
         {
-            if(usersArray.Count == 0 || refresh)
+            if (usersArray.Count == 0 || refresh)
             {
                 usersArray.Clear();
                 var usersConvert = JsonConvert.DeserializeObject<usersServerResponse>(functions.APIRequest("GET", null, "user"));
@@ -126,7 +126,7 @@ namespace Summaries.administration
                         string[] row1 = new string[] { content.userid.ToString(), content.user.ToString(), content.displayName.ToString(), classesArray[classesArray.FindIndex(x => x[0] == content.classID.ToString())][1].ToString(), content.isAdmin.ToString(), content.isDeletionProtected.ToString() };
                         usersArray.Add(row1);
                     }
-                    foreach(var Class in classesArray)
+                    foreach (var Class in classesArray)
                     {
                         treeView1.Nodes[0].Nodes[0].Nodes.Add("class-" + Class[1], "(" + Class[2] + ") " + Class[1], "group.png", "group.png").Tag = Class[0];
                     }
@@ -179,10 +179,10 @@ namespace Summaries.administration
 
             foreach (string[] rowArray in usersArray)
             {
-                if(classID > -1)
+                if (classID > -1)
                 {
                     // Check if class name on rowArray is the same as the class pointed by classID
-                    if(rowArray[3] == classesArray[classesArray.FindIndex(x => x[0] == classID.ToString())][1])
+                    if (rowArray[3] == classesArray[classesArray.FindIndex(x => x[0] == classID.ToString())][1])
                     {
                         dataGridView.Rows.Add(rowArray);
                     }
@@ -196,7 +196,7 @@ namespace Summaries.administration
 
         private void GetClasses(bool refresh = false)
         {
-            if(classesArray.Count == 0 || refresh)
+            if (classesArray.Count == 0 || refresh)
             {
                 classesArray.Clear();
                 var classesConvert = JsonConvert.DeserializeObject<classesServerResponse>(functions.APIRequest("GET", null, "class"));
@@ -240,7 +240,7 @@ namespace Summaries.administration
 
         private void GetWorkspaces(bool refresh = false)
         {
-            if(workspacesArray.Count == 0 || refresh)
+            if (workspacesArray.Count == 0 || refresh)
             {
                 workspacesArray.Clear();
                 var workspacesConvert = JsonConvert.DeserializeObject<workspacesServerResponse>(functions.APIRequest("GET", null, "workspace"));
@@ -280,7 +280,7 @@ namespace Summaries.administration
             // ** Write Column **
             DataGridViewCheckBoxColumn column3 = new DataGridViewCheckBoxColumn();
             column3.Name = "readMode";
-            column3.HeaderText = "Read?";
+            column3.HeaderText = "Write?";
             column3.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             column3.FlatStyle = FlatStyle.Standard;
             column3.ThreeState = false;
@@ -338,13 +338,13 @@ namespace Summaries.administration
                 #region usersNode
                 case "usersNode":
                     int userID = int.Parse(selectedRow.Cells["userID"].Value.ToString());
-                    if(usersArray[usersArray.FindIndex(x => x[0] == userID.ToString())][5] == "True")
+                    if (usersArray[usersArray.FindIndex(x => x[0] == userID.ToString())][5] == "True")
                     {
                         MessageBox.Show("Can't delete user \"" + selectedRow.Cells["displayName"].Value.ToString() + "\" because it is protected against accidental deletion");
                     }
                     else
                     {
-                        if(MessageBox.Show("Are you sure you want to delete \"" + selectedRow.Cells["displayName"].Value.ToString() + "\"?", "Delete User", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        if (MessageBox.Show("Are you sure you want to delete \"" + selectedRow.Cells["displayName"].Value.ToString() + "\"?", "Delete User", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                         {
                             simpleServerResponse userDeleteRequest = null;
                             string response = null;
@@ -364,10 +364,10 @@ namespace Summaries.administration
                                     MessageBox.Show("Error: " + userDeleteRequest.errors + "\n" + userDeleteRequest.ErrorCode, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 }
                             }
-                            catch(Exception ex)
+                            catch (Exception ex)
                             {
                                 MessageBox.Show("Request: " + userDeleteRequest + "\n" +
-                                    "Response: " + response + "\n" + 
+                                    "Response: " + response + "\n" +
                                     "Exception: " + ex.Message + "\n" +
                                     "Stack: " + ex.StackTrace, "Fatal Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
@@ -435,7 +435,7 @@ namespace Summaries.administration
                             }
 
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
                             MessageBox.Show("Response: " + response + "\n" +
                                 "Error: " + ex.Message + "\n" +
@@ -537,7 +537,7 @@ namespace Summaries.administration
                         MessageBox.Show("Error: " + flushResponse.errors, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     MessageBox.Show("Request: " + flushRequest + "\n" +
                         "Response: " + flushResponse + "\n" +
@@ -560,7 +560,7 @@ namespace Summaries.administration
 
             simpleServerResponse moveUserRequest = null;
             string response = null;
-            string craftData = "username=" + usersArray[arrayIndex][1] + 
+            string craftData = "username=" + usersArray[arrayIndex][1] +
                 "&displayName=" + usersArray[arrayIndex][2] +
                 "&classID=" + clickedClassID +
                 "&isAdmin=" + usersArray[arrayIndex][4] +
@@ -580,7 +580,7 @@ namespace Summaries.administration
                 }
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("Request: " + moveUserRequest + "\n" +
                                 "Response: " + response + "\n" +
@@ -613,16 +613,16 @@ namespace Summaries.administration
                     else
                     {
                         strip.Items.Add("-");
-                        if(objectType == "User")
+                        if (objectType == "User")
                         {
-                        
+
                             int thisUserClassID = int.Parse(classesArray[classesArray.FindIndex(x => x[1] == selectedRow.Cells["class"].Value.ToString())][0]);
 
                             strip.Items.Add("Move User to...");
                             ContextMenuStrip moveToClass = new ContextMenuStrip();
-                            foreach(var x in classesArray)
+                            foreach (var x in classesArray)
                             {
-                                if(int.Parse(x[0]) != thisUserClassID)
+                                if (int.Parse(x[0]) != thisUserClassID)
                                 {
                                     ToolStripItem current = (strip.Items[2] as ToolStripMenuItem).DropDownItems.Add(x[1], Properties.Resources.group, MoveUserToClass_ContextEvent);
                                     current.Tag = x[0]; // sets the tag as the classID
@@ -635,7 +635,7 @@ namespace Summaries.administration
                             }
                         }
                         strip.Items.Add("Edit " + objectType, Properties.Resources.newSummary, EditEntry_ContextEvent);
-                        if(objectType == "Workspace")
+                        if (objectType == "Workspace")
                         {
                             strip.Items.Add("Flush Workspace", Properties.Resources.flushWorkspace, FlushWorkspace_ContextEvent);
                         }

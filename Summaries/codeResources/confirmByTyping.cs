@@ -13,7 +13,7 @@ namespace Summaries.codeResources
 
         private void button1_Click(object sender, System.EventArgs e)
         {
-            if(textBox.Text != textToBeWritten.Text)
+            if (textBox.Text != textToBeWritten.Text)
             {
                 errorLB.Visible = true;
             }

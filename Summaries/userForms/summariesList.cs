@@ -19,12 +19,12 @@ namespace Summaries
 
         public class Content
         {
-            public int id { get; set; }
-            public int userid { get; set; }
+            public int ID { get; set; }
+            public int userID { get; set; }
             public string date { get; set; }
             public int summaryNumber { get; set; }
-            public int workspace { get; set; }
-            public string contents { get; set; }
+            public int workspaceID { get; set; }
+            public string bodyText { get; set; }
         }
 
         public class serverResponse
@@ -33,6 +33,8 @@ namespace Summaries
             public string errors { get; set; }
             public List<Content> contents { get; set; }
         }
+
+        serverResponse response = null;
 
         public class workspacesContent
         {
@@ -89,7 +91,8 @@ namespace Summaries
         private void summariesList_Load(object sender, EventArgs e)
         {
             // Requests the Workspace list, showing the loading screen to the user
-            using (loadingForm form = new loadingForm(requestWorkpaceList)) {
+            using (loadingForm form = new loadingForm(requestWorkpaceList))
+            {
                 form.ShowDialog();
             }
 
@@ -137,11 +140,11 @@ namespace Summaries
 
                             try
                             {
-                                using (loadingForm form = new loadingForm(requestSummaryList)) {
+                                using (loadingForm form = new loadingForm(requestSummaryList))
+                                {
                                     form.ShowDialog();
                                 }
 
-                                serverResponse response;
                                 response = JsonConvert.DeserializeObject<serverResponse>(jsonResponse);
 
                                 if (response.status)
@@ -167,7 +170,7 @@ namespace Summaries
                                         var rows = new List<string[]>();
                                         foreach (Content content in response.contents)
                                         {
-                                            string[] row1 = new string[] { content.date.ToString(), content.summaryNumber.ToString(), content.contents.ToString() };
+                                            string[] row1 = new string[] { content.date.ToString(), content.summaryNumber.ToString(), content.bodyText.ToString() };
                                             rows.Add(row1);
                                         }
 
@@ -233,9 +236,7 @@ namespace Summaries
                             DataGridViewRow selectedRow = dataGrid.Rows[selectedrowindex];
                             int selectedSummary = Convert.ToInt32(selectedRow.Cells["summaryNumber"].Value);
 
-                            string POSTdata = "userID=" + storage.userID + "&workspaceID=" + storage.currentWorkspaceID + "&summaryID=" + selectedSummary;
-
-                            string jsonResponse = functions.APIRequest("DELETE", POSTdata, "user/" + storage.userID + "/workspace/" + storage.currentWorkspaceID + "/summary/" + selectedSummary);
+                            string jsonResponse = functions.APIRequest("DELETE", null, "user/" + storage.userID + "/summary/" + response.contents[response.contents.FindIndex(x => x.summaryNumber == selectedSummary && x.workspaceID == storage.currentWorkspaceID)].ID);
 
                             simpleServerResponse serverResponse;
 
@@ -294,7 +295,7 @@ namespace Summaries
                     summariesList_Load(sender, e);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 functions functions = new functions();
                 if (!functions.CheckForInternetConnection(storage.inUseDomain))
@@ -310,7 +311,7 @@ namespace Summaries
 
         private void addSummary_Click(object sender, EventArgs e)
         {
-            if(workspaceResponse.contents[workspaceResponse.contents.FindIndex(x => x.workspaceName == workspaceName)].write)
+            if (workspaceResponse.contents[workspaceResponse.contents.FindIndex(x => x.workspaceName == workspaceName)].write)
             {
                 functions functions = new functions();
                 if (!functions.CheckForInternetConnection(storage.inUseDomain))
@@ -350,7 +351,7 @@ namespace Summaries
         {
             // https://www.codeproject.com/Tips/689968/How-to-Check-Whether-Word-is-Installed-in-the-Syst
             Type officeType = Type.GetTypeFromProgID("Word.Application");
-            if(officeType == null)
+            if (officeType == null)
             {
                 MessageBox.Show("Microsoft Word was not found on the system and is required to for this function to work.", "Microsoft Word Not Found", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }

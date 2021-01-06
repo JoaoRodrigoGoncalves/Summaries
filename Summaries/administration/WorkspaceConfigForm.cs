@@ -58,7 +58,7 @@ namespace Summaries.administration
 
         private void WorkspaceConfigForm_Load(object sender, EventArgs e)
         {
-            if(sentWorkspaceID != 0)
+            if (sentWorkspaceID != 0)
             {
 
                 using (loadingForm loading = new loadingForm(RequestWorkspaceData))
@@ -72,7 +72,7 @@ namespace Summaries.administration
 
                     if (workspaceResponse.status)
                     {
-                        if(workspaceResponse.contents.Count != 1)
+                        if (workspaceResponse.contents.Count != 1)
                         {
                             MessageBox.Show("More than one entry received", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             Close();
@@ -93,7 +93,7 @@ namespace Summaries.administration
                         Close();
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     MessageBox.Show("Response: " + workspaceResponse + "\n" +
                         "Request:" + workspaceRequest + "\n" +
@@ -118,7 +118,7 @@ namespace Summaries.administration
 
         private void WorkspaceConfigForm_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.Escape)
+            if (e.KeyCode == Keys.Escape)
             {
                 cancelBTN_Click(sender, e);
             }
@@ -159,7 +159,7 @@ namespace Summaries.administration
                 craftData = "workspaceName=" + workspaceNameTB.Text +
                             "&readMode=" + readCheck.Checked.ToString() +
                             "&writeMode=" + writeCheck.Checked.ToString();
-                if(sentWorkspaceID != 0) // 0 -> new class. != 0 -> class being edited
+                if (sentWorkspaceID != 0) // 0 -> new class. != 0 -> class being edited
                 {
                     if (wasAnyFieldModified())
                     {
@@ -181,7 +181,7 @@ namespace Summaries.administration
                                 MessageBox.Show("Error: " + saveResponse.errors, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
                             MessageBox.Show("Response: " + saveResponse + "\n" +
                                 "Request:" + saveRequest + "\n" +
@@ -231,7 +231,7 @@ namespace Summaries.administration
         {
             if (!changesHandled)
             {
-                if(sentWorkspaceID != 0)
+                if (sentWorkspaceID != 0)
                 {
                     if (wasAnyFieldModified())
                     {

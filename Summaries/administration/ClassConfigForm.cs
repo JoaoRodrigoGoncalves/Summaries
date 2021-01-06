@@ -80,7 +80,7 @@ namespace Summaries.administration
 
         private void ClassConfigForm_Load(object sender, EventArgs e)
         {
-            if(sentClassID != 0)
+            if (sentClassID != 0)
             {
 
                 using (loadingForm loading = new loadingForm(RequestClassData))
@@ -94,7 +94,7 @@ namespace Summaries.administration
 
                     if (classResponse.status)
                     {
-                        if(classResponse.contents.Count != 1)
+                        if (classResponse.contents.Count != 1)
                         {
                             MessageBox.Show("More than one entry received", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             Close();
@@ -106,7 +106,7 @@ namespace Summaries.administration
                             if (userResponse.status)
                             {
                                 classesContent classes = classResponse.contents[0];
-                                
+
                                 this.Text = "\"" + classes.className + "\" Properties";
                                 ClassNameTOPBox.Text = classes.className;
                                 classNameTB.Text = classes.className;
@@ -137,7 +137,7 @@ namespace Summaries.administration
                         Close();
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     MessageBox.Show("Response: " + classResponse + "\n" +
                         "Request:" + classRequest + "\n" +
@@ -164,7 +164,7 @@ namespace Summaries.administration
 
         private void ClassConfigForm_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.Escape)
+            if (e.KeyCode == Keys.Escape)
             {
                 cancelBTN_Click(sender, e);
             }
@@ -177,7 +177,7 @@ namespace Summaries.administration
             if (!string.IsNullOrEmpty(classNameTB.Text) || !string.IsNullOrWhiteSpace(classNameTB.Text))
             {
                 craftData = "className=" + classNameTB.Text;
-                if(sentClassID != 0) // 0 -> new class. != 0 -> class being edited
+                if (sentClassID != 0) // 0 -> new class. != 0 -> class being edited
                 {
                     if (classNameTB.Text != classResponse.contents[0].className)
                     {
@@ -199,7 +199,7 @@ namespace Summaries.administration
                                 MessageBox.Show("Error: " + saveResponse.errors, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
                             MessageBox.Show("Response: " + saveResponse + "\n" +
                                 "Request:" + saveRequest + "\n" +
@@ -254,7 +254,7 @@ namespace Summaries.administration
         {
             if (!changesHandled)
             {
-                if(sentClassID != 0)
+                if (sentClassID != 0)
                 {
                     if (classNameTB.Text != classResponse.contents[0].className)
                     {

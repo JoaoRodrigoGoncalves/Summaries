@@ -17,7 +17,7 @@ namespace Summaries
         private void menuOptionsExit_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show("Are you sure you want to exit?", "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if(result == DialogResult.Yes)
+            if (result == DialogResult.Yes)
             {
                 Application.Exit();
             }
@@ -54,7 +54,8 @@ namespace Summaries
                         client.DownloadFile(storage.inUseDomain + "/summaries/resources/licenses.txt", Path.GetTempPath() + "\\licenses.txt");
                     }
                     menuAboutLicenses_Click(sender, e);
-                }catch(Exception ex)
+                }
+                catch (Exception ex)
                 {
                     var functions = new codeResources.functions();
                     if (functions.CheckForInternetConnection(storage.inUseDomain))
@@ -66,7 +67,7 @@ namespace Summaries
                         MessageBox.Show("Lost Connection to the server. Please try again later!", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
-                
+
             }
         }
 
@@ -88,7 +89,7 @@ namespace Summaries
             {
                 MessageBox.Show("Lost Connection to the server. Please try again later!", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            
+
         }
 
         private void menuSummaryList_Click(object sender, EventArgs e)
@@ -103,7 +104,7 @@ namespace Summaries
             {
                 MessageBox.Show("Lost Connection to the server. Please try again later!", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            
+
         }
 
         private void main_Load(object sender, EventArgs e)
@@ -127,7 +128,7 @@ namespace Summaries
             {
                 MessageBox.Show("Lost Connection to the server. Please try again later!", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            
+
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)

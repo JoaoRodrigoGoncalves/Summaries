@@ -6,7 +6,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
@@ -40,7 +39,7 @@ namespace Summaries.codeResources
             public List<Content> contents { get; set; }
         }
 
-        
+
         /// <summary>
         /// Uses BASE64 to hash the given string
         /// </summary>
@@ -125,34 +124,18 @@ namespace Summaries.codeResources
                     response.Close();
                 }
             }
-            catch(WebException ex)
+            catch (WebException ex)
             {
                 if (CheckForInternetConnection(storage.inUseDomain))
                 {
-                    string statusCode = ((HttpWebResponse)ex.Response).StatusCode.ToString();
-                    switch (statusCode)
+                    using (var stream = ex.Response.GetResponseStream())
+                    using (var reader = new StreamReader(stream))
                     {
-                        case "Unauthorized":
-                            finalData = "{\"status\":\"false\", \"ErrorCode\":401, \"errors\":\"Authentication Failed\"}";
-                            break;
-
-                        case "Forbidden":
-                            finalData = "{\"status\":\"false\", \"ErrorCode\":403, \"errors\":\"Permission Denied\"}";
-                            break;
-
-                        case "Not Found":
-                            finalData = "{\"status\":\"false\", \"ErrorCode\":404, \"errors\":\"Not Found\"}";
-                            break;
-
-                        case "Not Acceptable":
-                            finalData = "{\"status\":\"false\", \"ErrorCode\":406, \"errors\":\"Not Acceptable\"}";
-                            break;
-
-                        default:
-                            finalData = "{\"status\":\"false\", \"errors\":\"" + ex.Message + "\nEndpoint: " + endpoint + "\nMethod: " + method + "\nOrignalResponse: " + finalData + "\", \"httpCode\":" + statusCode + "\"}";
-                            break;
-                    }  
-                }else{
+                        finalData = reader.ReadToEnd();
+                    }
+                }
+                else
+                {
                     finalData = "{\"status\":\"false\", \"errors\":\"Lost Connection to the Server\"}";
                 }
             }
@@ -252,7 +235,7 @@ namespace Summaries.codeResources
                     MessageBox.Show("Lost connection to the server. Please try again later.", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message + "\nExport Halted", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

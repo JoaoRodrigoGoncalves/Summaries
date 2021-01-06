@@ -12,7 +12,7 @@
             {
                 lock (padlock)
                 {
-                    if(singleton == null)
+                    if (singleton == null)
                     {
                         singleton = new Local_Storage();
                     }

@@ -23,7 +23,7 @@ namespace Summaries
         {
             var functions = new codeResources.functions();
             if (functions.CheckForInternetConnection(storage.inUseDomain))
-            { 
+            {
                 POSTdata = "oldpasswd=" + functions.Hash(currentPasswordBox.Text) + "&newpasswd=" + functions.Hash(newPasswordBox.Text);
                 jsonResponse = functions.APIRequest("PUT", POSTdata, "user/" + storage.userID + "/changepassword");
             }
@@ -52,7 +52,7 @@ namespace Summaries
 
         private void changeBTN_Click(object sender, EventArgs e)
         {
-            if(currentPasswordBox.Text.Length <1 || newPasswordBox.Text.Length <1 || confirmPasswordBox.Text.Length < 1)
+            if (currentPasswordBox.Text.Length < 1 || newPasswordBox.Text.Length < 1 || confirmPasswordBox.Text.Length < 1)
             {
                 MessageBox.Show("One or more fields are empty. Please fill them before continue.", "Empty fields", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }

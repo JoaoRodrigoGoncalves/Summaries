@@ -13,7 +13,7 @@ namespace Summaries.codeResources
         public loadingForm(Action worker)
         {
             InitializeComponent();
-            if(worker == null)
+            if (worker == null)
             {
                 throw new ArgumentNullException();
             }
@@ -23,7 +23,8 @@ namespace Summaries.codeResources
             }
         }
 
-        protected override void OnLoad(EventArgs e) {
+        protected override void OnLoad(EventArgs e)
+        {
             base.OnLoad(e);
             Task.Factory.StartNew(Worker).ContinueWith(t => { this.Close(); }, TaskScheduler.FromCurrentSynchronizationContext());
         }

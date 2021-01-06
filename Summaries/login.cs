@@ -61,7 +61,7 @@ namespace Summaries
 
             try
             {
-                if(string.IsNullOrEmpty(usernameBox.Text) || string.IsNullOrEmpty(passwordBox.Text))
+                if (string.IsNullOrEmpty(usernameBox.Text) || string.IsNullOrEmpty(passwordBox.Text))
                 {
                     credentialsWarningLB.Visible = true;
                 }
@@ -69,7 +69,7 @@ namespace Summaries
                 {
                     string username = functions.Hash(usernameBox.Text);
                     string password = functions.Hash(passwordBox.Text);
-                    POSTdata = "usrnm=" +  username + "&psswd=" + password;
+                    POSTdata = "usrnm=" + username + "&psswd=" + password;
 
                     using (loadingForm loading = new loadingForm(getInformation))
                     {
@@ -100,7 +100,7 @@ namespace Summaries
                         }
                         else
                         {
-                            if (response.ErrorCode == 401)
+                            if (response.errors == "Authentication Failed")
                             {
                                 credentialsWarningLB.Visible = true;
                             }
@@ -112,7 +112,7 @@ namespace Summaries
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 if (functions.CheckForInternetConnection(storage.inUseDomain))
                 {

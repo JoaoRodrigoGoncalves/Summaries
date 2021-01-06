@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static Summaries.codeResources.functions;
 
 namespace Summaries.userSettings
 {
@@ -23,7 +16,7 @@ namespace Summaries.userSettings
             codeResources.Local_Storage storage = codeResources.Local_Storage.Retrieve;
             Text = storage.displayName + " Settings";
             nameBoxlb.Text = storage.displayName;
-            if(storage.userImageLocation != null)
+            if (storage.userImageLocation != null)
             {
                 userImagePB.Image = Image.FromFile(@storage.userImageLocation);
             }

@@ -85,7 +85,7 @@ namespace Summaries.administration
 
         private void UserConfigForm_Load(object sender, EventArgs e)
         {
-            if(sentUserID != 0)
+            if (sentUserID != 0)
             {
 
                 using (loadingForm loading = new loadingForm(RequestUserData))
@@ -99,7 +99,7 @@ namespace Summaries.administration
 
                     if (response.status)
                     {
-                        if(response.contents.Count != 1)
+                        if (response.contents.Count != 1)
                         {
                             MessageBox.Show("More than one entry received", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             Close();
@@ -112,7 +112,7 @@ namespace Summaries.administration
                             {
                                 usersContent user = response.contents[0];
 
-                                foreach(var x in classResponse.contents)
+                                foreach (var x in classResponse.contents)
                                 {
                                     classCB.Items.Add(x.className);
                                 }
@@ -147,7 +147,7 @@ namespace Summaries.administration
                         Close();
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     MessageBox.Show("Response: " + response + "\n" +
                         "Request:" + request + "\n" +
@@ -193,7 +193,7 @@ namespace Summaries.administration
 
         private void UserConfigForm_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.Escape)
+            if (e.KeyCode == Keys.Escape)
             {
                 cancelBTN_Click(sender, e);
             }
@@ -237,7 +237,7 @@ namespace Summaries.administration
                 errorProvider.SetError(displayNameTB, "This field is mandatory");
                 return true;
             }
-            
+
             return false;
         }
 
@@ -250,7 +250,7 @@ namespace Summaries.administration
                 "&classID=" + classResponse.contents[classResponse.contents.FindIndex(x => x.className == classCB.SelectedItem.ToString())].classID +
                 "&isAdmin=" + isAdminCheck.Checked.ToString() +
                 "&isDeletionProtected=" + isDeletionProtectedCheck.Checked.ToString();
-                if(sentUserID != 0) // 0 -> new user. != 0 -> user being edited
+                if (sentUserID != 0) // 0 -> new user. != 0 -> user being edited
                 {
                     if (wasAnyFieldModified())
                     {
@@ -272,7 +272,7 @@ namespace Summaries.administration
                                 MessageBox.Show("Error: " + saveResponse.errors, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
                             MessageBox.Show("Response: " + saveResponse + "\n" +
                                 "Request:" + saveRequest + "\n" +
@@ -322,7 +322,7 @@ namespace Summaries.administration
         {
             if (!changesHandled)
             {
-                if(sentUserID != 0)
+                if (sentUserID != 0)
                 {
                     if (wasAnyFieldModified())
                     {
