@@ -706,18 +706,17 @@ namespace Summaries
                                 string finalPath = Path.GetTempPath() + "~summariestemp" + Path.GetRandomFileName().Replace('.', 'a') + "." + fileExtension;
 
                                 string inServerPath = response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryNumber)].attachments.Find(x => x.filename == cell).path;
-                                string inServerName = inServerPath.Split('\\')[inServerPath.Split('\\').Length - 1];
+                                string inServerName = inServerPath.Split('/')[inServerPath.Split('/').Length -1];
 
                                 using (WebClient client = new WebClient())
                                 {
                                     // https://stackoverflow.com/questions/6397235/write-bytes-to-file
 
                                     client.Headers.Add("HTTP-X-API-KEY", storage.AccessToken);
-                                    string response = functions.APIRequest("GET", null, "user/" + storage.userID + "/summary/" + this.response.contents[this.response.contents.FindIndex(x => x.workspaceID == storage.currentWorkspaceID && x.summaryNumber == summaryNumber)].ID + "/files/" + inServerName);
-                                    byte[] responsebytes = Encoding.UTF8.GetBytes(response);
+                                    byte[] response = client.DownloadData(storage.inUseDomain + "/summaries/api/v" + functions.GetSoftwareVersion()[0] + "/user/" + storage.userID + "/summary/" + this.response.contents[this.response.contents.FindIndex(x => x.workspaceID == storage.currentWorkspaceID && x.summaryNumber == summaryNumber)].ID + "/files/" + inServerName);
                                     try
                                     {
-                                        var parse = JsonConvert.DeserializeObject<simpleServerResponse>(response);
+                                        var parse = JsonConvert.DeserializeObject<simpleServerResponse>(Encoding.UTF8.GetString(response));
                                         if (parse.status == false)
                                         {
                                             MessageBox.Show("Error downloading file! \n" + parse.errors, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -727,7 +726,7 @@ namespace Summaries
                                     {
                                         // If we got here, it is probably because it is actually a file, so we'll just save it
                                         var fs = new FileStream(@"" + finalPath, FileMode.Create, FileAccess.Write);
-                                        fs.Write(responsebytes, 0, responsebytes.Length);
+                                        fs.Write(response, 0, response.Length);
                                         Process.Start(@"" + finalPath);
                                     }
                                 }
