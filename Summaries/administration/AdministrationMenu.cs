@@ -589,6 +589,38 @@ namespace Summaries.administration
             }
         }
 
+        private void ResetPassword_ContextEvent(object sender, EventArgs e)
+        {
+            int selectedRowIndex = dataGridView.SelectedCells[0].RowIndex;
+            DataGridViewRow selectedRow = dataGridView.Rows[selectedRowIndex];
+            int userID = int.Parse(selectedRow.Cells["userID"].Value.ToString());
+
+            string response = null;
+            simpleServerResponse resetPasswordRequest = null;
+
+            try
+            {
+                response = functions.APIRequest("PUT", null, "user/" + userID + "/changepassword/reset");
+                resetPasswordRequest = JsonConvert.DeserializeObject<simpleServerResponse>(response);
+
+                if (resetPasswordRequest.status)
+                {
+                    MessageBox.Show("Password Reseted Successfully", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Error: " + resetPasswordRequest.errors + "\nError Code: " + resetPasswordRequest.ErrorCode, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Request: " + resetPasswordRequest + "\n" +
+                                "Response: " + response + "\n" +
+                                "Exception: " + ex.Message + "\n" +
+                                "Stack: " + ex.StackTrace, "Fatal Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         /* Adapted from: https://stackoverflow.com/questions/3035144/right-click-to-select-a-row-in-a-datagridview-and-show-a-menu-to-delete-it
          * It works way better if we use the MouseClick instead of the MouseDown event
          */
@@ -633,6 +665,9 @@ namespace Summaries.administration
                                     current.Enabled = false;
                                 }
                             }
+
+                            strip.Items.Add("Reset Password", Properties.Resources.changePassword, ResetPassword_ContextEvent);
+
                         }
                         strip.Items.Add("Edit " + objectType, Properties.Resources.newSummary, EditEntry_ContextEvent);
                         if (objectType == "Workspace")

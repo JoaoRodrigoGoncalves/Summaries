@@ -29,7 +29,7 @@ namespace Summaries.codeResources
             public string date { get; set; }
             public int summaryNumber { get; set; }
             public int workspace { get; set; }
-            public string contents { get; set; }
+            public string bodytext { get; set; }
         }
 
         private class serverResponse
@@ -216,7 +216,7 @@ namespace Summaries.codeResources
                             for (r = 2; r <= rowsAmount; r++)
                             {
                                 oTable.Cell(r, 1).Range.Text = response.contents[r - 2].date;
-                                oTable.Cell(r, 2).Range.Text = response.contents[r - 2].contents;
+                                oTable.Cell(r, 2).Range.Text = response.contents[r - 2].bodytext;
                             }
                         }
                         else
