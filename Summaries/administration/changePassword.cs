@@ -48,6 +48,8 @@ namespace Summaries
         {
             currentPasswordBox.Clear();
             newPasswordBox.Clear();
+            confirmPasswordBox.Clear();
+            currentPasswordBox.Focus();
         }
 
         private void changeBTN_Click(object sender, EventArgs e)

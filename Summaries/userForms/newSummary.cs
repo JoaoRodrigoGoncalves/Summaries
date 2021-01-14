@@ -112,7 +112,15 @@ namespace Summaries
         private void APISave()
         {
             var functions = new codeResources.functions();
-            jsonSaveResponse = functions.APIRequest("PUT", savePOSTdata, "user/" + storage.userID + "/summary/" + response.contents[response.contents.FindIndex(x => x.workspaceID == storage.currentWorkspaceID && x.summaryNumber == summaryNumber)].ID);
+            try
+            {
+                jsonSaveResponse = functions.APIRequest("PUT", savePOSTdata, "user/" + storage.userID + "/summary/" + response.contents[response.contents.FindIndex(x => x.workspaceID == storage.currentWorkspaceID && x.summaryNumber == summaryNumber)].ID);
+            }
+            catch
+            {
+                // Work arround if the user is trying to save a summary with a different number on a date that is already in-use
+                jsonSaveResponse = functions.APIRequest("PUT", savePOSTdata, "user/" + storage.userID + "/summary/" + response.contents[response.contents.FindIndex(x => x.workspaceID == storage.currentWorkspaceID && x.date == dateBox.Value.ToString("yyyy-MM-dd"))].ID);
+            }
 
         }
 
@@ -240,10 +248,10 @@ namespace Summaries
                                     summaryNumberBox.Enabled = false;
                                     dateBox.Enabled = false;
                                     contentsBox.ReadOnly = true;
+                                    attachmentsGridView.ReadOnly = true;
                                     addAttachmentBTN.Enabled = false;
                                     saveBTN.Enabled = false;
                                 }
-
                             }
                             else
                             {
@@ -254,9 +262,7 @@ namespace Summaries
                         {
                             MessageBox.Show("Critical error. " + ex.Message + "\n" + ex.StackTrace + "\n" + jsonResponse, "Critical Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
-
                     }
-
                 }
                 catch (Exception ex)
                 {
@@ -492,8 +498,6 @@ namespace Summaries
                 }
             }
 
-
-
             simpleServerResponse serverResponse;
             try
             {
@@ -706,7 +710,7 @@ namespace Summaries
                                 string finalPath = Path.GetTempPath() + "~summariestemp" + Path.GetRandomFileName().Replace('.', 'a') + "." + fileExtension;
 
                                 string inServerPath = response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryNumber)].attachments.Find(x => x.filename == cell).path;
-                                string inServerName = inServerPath.Split('/')[inServerPath.Split('/').Length -1];
+                                string inServerName = inServerPath.Split('/')[inServerPath.Split('/').Length - 1];
 
                                 using (WebClient client = new WebClient())
                                 {
