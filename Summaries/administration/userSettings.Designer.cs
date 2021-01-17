@@ -37,10 +37,10 @@
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.nameBox = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.classNameBox = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.userTypeBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.classNameBox = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -162,24 +162,6 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             // 
-            // classNameBox
-            // 
-            this.classNameBox.Enabled = false;
-            this.classNameBox.Location = new System.Drawing.Point(72, 33);
-            this.classNameBox.Name = "classNameBox";
-            this.classNameBox.ReadOnly = true;
-            this.classNameBox.Size = new System.Drawing.Size(309, 20);
-            this.classNameBox.TabIndex = 1;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(31, 36);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Class:";
-            // 
             // userTypeBox
             // 
             this.userTypeBox.Enabled = false;
@@ -197,6 +179,24 @@
             this.label2.Size = new System.Drawing.Size(59, 13);
             this.label2.TabIndex = 2;
             this.label2.Text = "User Type:";
+            // 
+            // classNameBox
+            // 
+            this.classNameBox.Enabled = false;
+            this.classNameBox.Location = new System.Drawing.Point(72, 33);
+            this.classNameBox.Name = "classNameBox";
+            this.classNameBox.ReadOnly = true;
+            this.classNameBox.Size = new System.Drawing.Size(309, 20);
+            this.classNameBox.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(31, 36);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Class:";
             // 
             // userSettings
             // 

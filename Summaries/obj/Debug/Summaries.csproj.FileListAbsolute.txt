@@ -55,3 +55,4 @@ C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summari
 C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.administration.UserConfigForm.resources
 C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.administration.ClassConfigForm.resources
 C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.administration.WorkspaceConfigForm.resources
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.csprojAssemblyReference.cache
