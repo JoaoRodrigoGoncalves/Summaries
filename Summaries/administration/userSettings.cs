@@ -1,30 +1,84 @@
-﻿using System;
-using System.Drawing;
+﻿using Newtonsoft.Json;
+using Summaries.codeResources;
+using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace Summaries.userSettings
 {
     public partial class userSettings : Form
     {
+        Local_Storage storage = Local_Storage.Retrieve;
+        functions functions = new functions();
+        string classRequest = null;
+        ClassInfo classResponse = null;
+
         public userSettings()
         {
             InitializeComponent();
         }
 
-        private void userSettings_Load(object sender, EventArgs e)
+        public class ClassInfo
         {
-            codeResources.Local_Storage storage = codeResources.Local_Storage.Retrieve;
-            Text = storage.displayName + " Settings";
-            nameBoxlb.Text = storage.displayName;
-            if (storage.userImageLocation != null)
-            {
-                userImagePB.Image = Image.FromFile(@storage.userImageLocation);
-            }
+            public bool status { get; set; }
+            public string error { get; set; }
+            public List<ClassList> contents { get; set; }
         }
 
-        private void removePhotoBTN_Click(object sender, EventArgs e)
+        public class ClassList
         {
-            userImagePB.Image = Summaries.Properties.Resources.userIcon;
+            public int classID { get; set; }
+            public string className { get; set; }
+            public int totalUsers { get; set; }
+        }
+
+        public void getClass()
+        {
+            classRequest = functions.APIRequest("GET", null, "class");
+        }
+
+        private void userSettings_Load(object sender, EventArgs e)
+        {
+            Text = storage.displayName + " Settings";
+            nameBox.Text = storage.displayName;
+
+            using (loadingForm form = new loadingForm(getClass))
+            {
+                form.ShowDialog();
+            }
+
+            try
+            {
+                classResponse = JsonConvert.DeserializeObject<ClassInfo>(classRequest);
+                if (classResponse.status)
+                {
+                    foreach (ClassList list in classResponse.contents)
+                    {
+                        if (list.classID == storage.classID)
+                        {
+                            classNameBox.Text = list.className;
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Could Not Get Class Information", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch
+            {
+
+            }
+
+            if (storage.isAdmin)
+            {
+                userTypeBox.Text = "Administrator";
+            }
+            else
+            {
+                userTypeBox.Text = "Student";
+            }
         }
 
         private void changePasswordBTN_Click(object sender, EventArgs e)

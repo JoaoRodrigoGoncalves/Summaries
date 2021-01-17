@@ -38,15 +38,14 @@ namespace Summaries.administration
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.GeneralTabPage = new System.Windows.Forms.TabPage();
             this.usersOnThisClassGV = new System.Windows.Forms.DataGridView();
-            this.userImage = new System.Windows.Forms.DataGridViewImageColumn();
-            this.userLoginName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.userDisplayName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.classNameTB = new System.Windows.Forms.TextBox();
             this.classNameLB = new System.Windows.Forms.Label();
             this.ClassNameTOPBox = new System.Windows.Forms.TextBox();
             this.classPic = new System.Windows.Forms.PictureBox();
             this.splitterLine = new System.Windows.Forms.Label();
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.userLoginName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.userDisplayName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mainLayoutPanel.SuspendLayout();
             this.footerLayoutPanel.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -142,7 +141,6 @@ namespace Summaries.administration
             this.usersOnThisClassGV.CausesValidation = false;
             this.usersOnThisClassGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.usersOnThisClassGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.userImage,
             this.userLoginName,
             this.userDisplayName});
             this.usersOnThisClassGV.Enabled = false;
@@ -152,33 +150,6 @@ namespace Summaries.administration
             this.usersOnThisClassGV.ReadOnly = true;
             this.usersOnThisClassGV.Size = new System.Drawing.Size(374, 300);
             this.usersOnThisClassGV.TabIndex = 5;
-            // 
-            // userImage
-            // 
-            this.userImage.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.userImage.Frozen = true;
-            this.userImage.HeaderText = "Picture";
-            this.userImage.Name = "userImage";
-            this.userImage.ReadOnly = true;
-            this.userImage.Width = 46;
-            // 
-            // userLoginName
-            // 
-            this.userLoginName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.userLoginName.Frozen = true;
-            this.userLoginName.HeaderText = "Login Name";
-            this.userLoginName.Name = "userLoginName";
-            this.userLoginName.ReadOnly = true;
-            this.userLoginName.Width = 89;
-            // 
-            // userDisplayName
-            // 
-            this.userDisplayName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.userDisplayName.Frozen = true;
-            this.userDisplayName.HeaderText = "Display Name";
-            this.userDisplayName.Name = "userDisplayName";
-            this.userDisplayName.ReadOnly = true;
-            this.userDisplayName.Width = 97;
             // 
             // classNameTB
             // 
@@ -230,6 +201,24 @@ namespace Summaries.administration
             // 
             this.errorProvider.ContainerControl = this;
             // 
+            // userLoginName
+            // 
+            this.userLoginName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.userLoginName.Frozen = true;
+            this.userLoginName.HeaderText = "Login Name";
+            this.userLoginName.Name = "userLoginName";
+            this.userLoginName.ReadOnly = true;
+            this.userLoginName.Width = 89;
+            // 
+            // userDisplayName
+            // 
+            this.userDisplayName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.userDisplayName.Frozen = true;
+            this.userDisplayName.HeaderText = "Display Name";
+            this.userDisplayName.Name = "userDisplayName";
+            this.userDisplayName.ReadOnly = true;
+            this.userDisplayName.Width = 97;
+            // 
             // ClassConfigForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -273,9 +262,8 @@ namespace Summaries.administration
         private System.Windows.Forms.TextBox classNameTB;
         private System.Windows.Forms.Label classNameLB;
         private System.Windows.Forms.DataGridView usersOnThisClassGV;
-        private System.Windows.Forms.DataGridViewImageColumn userImage;
+        private System.Windows.Forms.ErrorProvider errorProvider;
         private System.Windows.Forms.DataGridViewTextBoxColumn userLoginName;
         private System.Windows.Forms.DataGridViewTextBoxColumn userDisplayName;
-        private System.Windows.Forms.ErrorProvider errorProvider;
     }
 }

@@ -707,7 +707,7 @@ namespace Summaries
                             if (inServer)
                             {
                                 string fileExtension = cell.Substring(cell.Length - cell.Split('.')[cell.Split('.').Length - 1].Length);
-                                string finalPath = Path.GetTempPath() + "~summariestemp" + Path.GetRandomFileName().Replace('.', 'a') + "." + fileExtension;
+                                string finalPath = Path.GetTempPath() + "summariesTemp\\~summariestemp" + Path.GetRandomFileName().Replace('.', 'a') + "." + fileExtension;
 
                                 string inServerPath = response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryNumber)].attachments.Find(x => x.filename == cell).path;
                                 string inServerName = inServerPath.Split('/')[inServerPath.Split('/').Length - 1];

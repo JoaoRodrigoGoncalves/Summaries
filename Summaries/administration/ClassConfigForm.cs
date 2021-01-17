@@ -35,7 +35,6 @@ namespace Summaries.administration
             public int userid { get; set; }
             public string user { get; set; }
             public string displayName { get; set; }
-            public string avatarURL { get; set; }
             public int classID { get; set; }
             public bool isAdmin { get; set; } = false;
             public bool isDeletionProtected { get; set; } = false;
@@ -118,7 +117,6 @@ namespace Summaries.administration
                                     foreach (var x in userResponse.contents)
                                     {
                                         int thisRowIndex = usersOnThisClassGV.Rows.Add();
-                                        usersOnThisClassGV.Rows[thisRowIndex].Cells["userImage"].Value = null;
                                         usersOnThisClassGV.Rows[thisRowIndex].Cells["userLoginName"].Value = x.user;
                                         usersOnThisClassGV.Rows[thisRowIndex].Cells["userDisplayName"].Value = x.displayName;
                                     }

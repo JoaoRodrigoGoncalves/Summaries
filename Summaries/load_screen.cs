@@ -17,7 +17,7 @@ namespace Summaries
         private void loading_Shown(object sender, EventArgs e)
         {
             Local_Storage storage = Local_Storage.Retrieve;
-            var functions = new codeResources.functions();
+            var functions = new functions();
 
             if (!functions.CheckForInternetConnection("http://google.com/generate_204"))
             {
@@ -44,11 +44,13 @@ namespace Summaries
                     storage.inUseDomain = "https://joaogoncalves.eu";
                 }
 
+                Directory.CreateDirectory(@"" + Path.GetTempPath() + "summariesTemp");
+
                 try
                 {
                     using (var client = new WebClient())
                     {
-                        client.DownloadFile(storage.inUseDomain + "/summaries/resources/licenses.txt", Path.GetTempPath() + "\\licenses.txt");
+                        client.DownloadFile(storage.inUseDomain + "/summaries/resources/licenses.txt", Path.GetTempPath() + "summariesTemp\\licenses.txt");
                     }
 
                     string downloadURL = "";

@@ -35,18 +35,18 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.userImagePB = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.nameBoxlb = new System.Windows.Forms.TextBox();
-            this.picGroupBox = new System.Windows.Forms.GroupBox();
-            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
-            this.removePhotoBTN = new System.Windows.Forms.Button();
-            this.uploadPhotoBTN = new System.Windows.Forms.Button();
+            this.nameBox = new System.Windows.Forms.TextBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.classNameBox = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.userTypeBox = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.userImagePB)).BeginInit();
             this.tableLayoutPanel4.SuspendLayout();
-            this.picGroupBox.SuspendLayout();
-            this.tableLayoutPanel5.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -113,11 +113,12 @@
             // 
             // userImagePB
             // 
+            this.userImagePB.Dock = System.Windows.Forms.DockStyle.Fill;
             this.userImagePB.Image = ((System.Drawing.Image)(resources.GetObject("userImagePB.Image")));
             this.userImagePB.InitialImage = null;
             this.userImagePB.Location = new System.Drawing.Point(3, 3);
             this.userImagePB.Name = "userImagePB";
-            this.userImagePB.Size = new System.Drawing.Size(148, 167);
+            this.userImagePB.Size = new System.Drawing.Size(148, 168);
             this.userImagePB.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.userImagePB.TabIndex = 0;
             this.userImagePB.TabStop = false;
@@ -127,8 +128,8 @@
             this.tableLayoutPanel4.ColumnCount = 1;
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel4.Controls.Add(this.nameBoxlb, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.picGroupBox, 0, 1);
+            this.tableLayoutPanel4.Controls.Add(this.nameBox, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.groupBox1, 0, 1);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(157, 3);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
@@ -138,67 +139,64 @@
             this.tableLayoutPanel4.Size = new System.Drawing.Size(387, 168);
             this.tableLayoutPanel4.TabIndex = 1;
             // 
-            // nameBoxlb
+            // nameBox
             // 
-            this.nameBoxlb.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.nameBoxlb.Enabled = false;
-            this.nameBoxlb.Location = new System.Drawing.Point(3, 3);
-            this.nameBoxlb.Name = "nameBoxlb";
-            this.nameBoxlb.ReadOnly = true;
-            this.nameBoxlb.Size = new System.Drawing.Size(381, 20);
-            this.nameBoxlb.TabIndex = 0;
+            this.nameBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.nameBox.Enabled = false;
+            this.nameBox.Location = new System.Drawing.Point(3, 3);
+            this.nameBox.Name = "nameBox";
+            this.nameBox.ReadOnly = true;
+            this.nameBox.Size = new System.Drawing.Size(381, 20);
+            this.nameBox.TabIndex = 0;
             // 
-            // picGroupBox
+            // groupBox1
             // 
-            this.picGroupBox.Controls.Add(this.tableLayoutPanel5);
-            this.picGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.picGroupBox.Location = new System.Drawing.Point(3, 28);
-            this.picGroupBox.Name = "picGroupBox";
-            this.picGroupBox.Size = new System.Drawing.Size(381, 137);
-            this.picGroupBox.TabIndex = 1;
-            this.picGroupBox.TabStop = false;
-            this.picGroupBox.Text = "Photo Settings";
+            this.groupBox1.Controls.Add(this.userTypeBox);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.classNameBox);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox1.Location = new System.Drawing.Point(3, 28);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(381, 137);
+            this.groupBox1.TabIndex = 1;
+            this.groupBox1.TabStop = false;
             // 
-            // tableLayoutPanel5
+            // classNameBox
             // 
-            this.tableLayoutPanel5.ColumnCount = 5;
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel5.Controls.Add(this.removePhotoBTN, 3, 1);
-            this.tableLayoutPanel5.Controls.Add(this.uploadPhotoBTN, 1, 1);
-            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 16);
-            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
-            this.tableLayoutPanel5.RowCount = 3;
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(375, 118);
-            this.tableLayoutPanel5.TabIndex = 0;
+            this.classNameBox.Enabled = false;
+            this.classNameBox.Location = new System.Drawing.Point(72, 33);
+            this.classNameBox.Name = "classNameBox";
+            this.classNameBox.ReadOnly = true;
+            this.classNameBox.Size = new System.Drawing.Size(309, 20);
+            this.classNameBox.TabIndex = 1;
             // 
-            // removePhotoBTN
+            // label1
             // 
-            this.removePhotoBTN.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.removePhotoBTN.Location = new System.Drawing.Point(208, 32);
-            this.removePhotoBTN.Name = "removePhotoBTN";
-            this.removePhotoBTN.Size = new System.Drawing.Size(125, 53);
-            this.removePhotoBTN.TabIndex = 0;
-            this.removePhotoBTN.Text = "Remove Photo";
-            this.removePhotoBTN.UseVisualStyleBackColor = true;
-            this.removePhotoBTN.Click += new System.EventHandler(this.removePhotoBTN_Click);
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(31, 36);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Class:";
             // 
-            // uploadPhotoBTN
+            // userTypeBox
             // 
-            this.uploadPhotoBTN.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.uploadPhotoBTN.Location = new System.Drawing.Point(40, 32);
-            this.uploadPhotoBTN.Name = "uploadPhotoBTN";
-            this.uploadPhotoBTN.Size = new System.Drawing.Size(125, 53);
-            this.uploadPhotoBTN.TabIndex = 1;
-            this.uploadPhotoBTN.Text = "Change Photo";
-            this.uploadPhotoBTN.UseVisualStyleBackColor = true;
+            this.userTypeBox.Enabled = false;
+            this.userTypeBox.Location = new System.Drawing.Point(72, 76);
+            this.userTypeBox.Name = "userTypeBox";
+            this.userTypeBox.ReadOnly = true;
+            this.userTypeBox.Size = new System.Drawing.Size(309, 20);
+            this.userTypeBox.TabIndex = 3;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(7, 79);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(59, 13);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "User Type:";
             // 
             // userSettings
             // 
@@ -218,8 +216,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.userImagePB)).EndInit();
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel4.PerformLayout();
-            this.picGroupBox.ResumeLayout(false);
-            this.tableLayoutPanel5.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -232,10 +230,11 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.PictureBox userImagePB;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
-        private System.Windows.Forms.TextBox nameBoxlb;
-        private System.Windows.Forms.GroupBox picGroupBox;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
-        private System.Windows.Forms.Button removePhotoBTN;
-        private System.Windows.Forms.Button uploadPhotoBTN;
+        private System.Windows.Forms.TextBox nameBox;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.TextBox classNameBox;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox userTypeBox;
+        private System.Windows.Forms.Label label2;
     }
 }

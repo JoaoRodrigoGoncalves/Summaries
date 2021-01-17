@@ -29,6 +29,7 @@ namespace Summaries
             public string AccessToken { get; set; }
             public int userID { get; set; }
             public string username { get; set; }
+            public int classID { get; set; }
             public string displayName { get; set; }
             public bool adminControl { get; set; }
         }
@@ -91,6 +92,7 @@ namespace Summaries
                             storage.AccessToken = userInfo.AccessToken;
                             storage.userID = userInfo.userID;
                             storage.username = userInfo.username;
+                            storage.classID = userInfo.classID;
                             storage.displayName = userInfo.displayName;
                             storage.isAdmin = userInfo.adminControl;
 

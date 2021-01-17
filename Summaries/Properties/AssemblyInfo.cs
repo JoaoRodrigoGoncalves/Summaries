@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("João Rodrigo Gonçalves")]
 [assembly: AssemblyProduct("Summaries - Summary Control Software")]
-[assembly: AssemblyCopyright("Copyright © João Rodrigo Lopes Gonçalves 2020")]
+[assembly: AssemblyCopyright("Copyright © João Rodrigo Lopes Gonçalves 2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

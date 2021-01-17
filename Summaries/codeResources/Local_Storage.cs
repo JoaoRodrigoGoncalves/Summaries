@@ -27,8 +27,8 @@
         public string inUseDomain;
         public string username;
         public string displayName;
-        public string userImageLocation;
         public int userID = 0;
+        public int classID = 0;
         public bool isAdmin = false;
         public string AccessToken;
         public int currentWorkspaceID = 0;

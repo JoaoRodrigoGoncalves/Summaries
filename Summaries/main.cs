@@ -30,6 +30,11 @@ namespace Summaries
 
         private void main_FormClosed(object sender, FormClosedEventArgs e)
         {
+            try
+            {
+                Directory.Delete(@"" + Path.GetTempPath() + "summariesTemp", true); // Deletes temp files
+            }
+            catch { }
             var functions = new functions();
             try
             {
@@ -43,7 +48,7 @@ namespace Summaries
         {
             try
             {
-                System.Diagnostics.Process.Start(Path.GetTempPath() + "\\licenses.txt");
+                System.Diagnostics.Process.Start(Path.GetTempPath() + "summariesTemp\\licenses.txt");
             }
             catch (System.ComponentModel.Win32Exception)
             {
@@ -51,7 +56,7 @@ namespace Summaries
                 {
                     using (var client = new WebClient())
                     {
-                        client.DownloadFile(storage.inUseDomain + "/summaries/resources/licenses.txt", Path.GetTempPath() + "\\licenses.txt");
+                        client.DownloadFile(storage.inUseDomain + "/summaries/resources/licenses.txt", Path.GetTempPath() + "summariesTemp\\licenses.txt");
                     }
                     menuAboutLicenses_Click(sender, e);
                 }

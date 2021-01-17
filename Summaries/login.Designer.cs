@@ -152,7 +152,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Image = global::Summaries.Properties.Resources.icon1;
+            this.pictureBox1.Image = global::Summaries.Properties.Resources.userIcon;
             this.pictureBox1.Location = new System.Drawing.Point(122, 3);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(113, 113);

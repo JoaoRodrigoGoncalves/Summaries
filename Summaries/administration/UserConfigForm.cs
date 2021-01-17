@@ -35,7 +35,6 @@ namespace Summaries.administration
             public int userid { get; set; }
             public string user { get; set; }
             public string displayName { get; set; }
-            public string avatarURL { get; set; }
             public int classID { get; set; }
             public bool isAdmin { get; set; } = false;
             public bool isDeletionProtected { get; set; } = false;
@@ -118,11 +117,6 @@ namespace Summaries.administration
                                 }
 
                                 this.Text = "\"" + user.displayName + "\" Properties";
-
-                                if (!string.IsNullOrEmpty(user.avatarURL))
-                                {
-                                    userProfilePic.Load(user.avatarURL);
-                                }
 
                                 UsernameTOPBox.Text = user.displayName;
                                 displayNameTB.Text = user.displayName;
