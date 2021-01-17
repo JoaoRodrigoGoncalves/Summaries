@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Summaries.codeResources;
 using System;
 using System.Windows.Forms;
 using static Summaries.codeResources.functions;
@@ -16,15 +17,15 @@ namespace Summaries
         string jsonResponse = "";
         string POSTdata = string.Empty;
         bool shouldAbort = false;
+        Local_Storage storage = Local_Storage.Retrieve;
 
-        //https://www.youtube.com/watch?v=yZYAaScEsc0
         private void checkConnection()
         {
             var functions = new codeResources.functions();
-            if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
-            { 
-                POSTdata = "API=" + Properties.Settings.Default.APIkey + "&userID=" + Properties.Settings.Default.userID + "&oldpsswd=" + functions.Hash(currentPasswordBox.Text) + "&newpsswd=" + functions.Hash(newPasswordBox.Text);
-                jsonResponse = functions.APIRequest(POSTdata, "changePassword.php");
+            if (functions.CheckForInternetConnection(storage.inUseDomain))
+            {
+                POSTdata = "oldpasswd=" + functions.Hash(currentPasswordBox.Text) + "&newpasswd=" + functions.Hash(newPasswordBox.Text);
+                jsonResponse = functions.APIRequest("PUT", POSTdata, "user/" + storage.userID + "/changepassword");
             }
             else
             {
@@ -39,19 +40,21 @@ namespace Summaries
             {
                 form.ShowDialog();
             }
-            this.Text += Properties.Settings.Default.displayName;
-            usernameBox.Text = Properties.Settings.Default.username;
+            this.Text += storage.displayName;
+            usernameBox.Text = storage.username;
         }
 
         private void resetFields()
         {
             currentPasswordBox.Clear();
             newPasswordBox.Clear();
+            confirmPasswordBox.Clear();
+            currentPasswordBox.Focus();
         }
 
         private void changeBTN_Click(object sender, EventArgs e)
         {
-            if(currentPasswordBox.Text.Length <1 || newPasswordBox.Text.Length <1 || confirmPasswordBox.Text.Length < 1)
+            if (currentPasswordBox.Text.Length < 1 || newPasswordBox.Text.Length < 1 || confirmPasswordBox.Text.Length < 1)
             {
                 MessageBox.Show("One or more fields are empty. Please fill them before continue.", "Empty fields", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }

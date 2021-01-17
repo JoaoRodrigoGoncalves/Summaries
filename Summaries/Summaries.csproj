@@ -27,7 +27,7 @@
     <ProductName>Summaries</ProductName>
     <PublisherName>João Rodrigo Lopes Gonçalves</PublisherName>
     <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>4.1.1.0</ApplicationVersion>
+    <ApplicationVersion>5.0.0.0</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -71,7 +71,7 @@
     <StartupObject>Summaries.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>B134ED5848E648F587C9B5824255CED12A1C8497</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>DBFFBE3637336CFB0D9B96B6476D1826B566DEC7</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>Summaries_TemporaryKey.pfx</ManifestKeyFile>
@@ -99,17 +99,35 @@
     <Compile Include="aboutSummaries.Designer.cs">
       <DependentUpon>aboutSummaries.cs</DependentUpon>
     </Compile>
-    <Compile Include="AdministrationPanel.cs">
+    <Compile Include="administration\AdministrationMenu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AdministrationPanel.Designer.cs">
-      <DependentUpon>AdministrationPanel.cs</DependentUpon>
+    <Compile Include="administration\AdministrationMenu.Designer.cs">
+      <DependentUpon>AdministrationMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="changePassword.cs">
+    <Compile Include="administration\changePassword.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="changePassword.Designer.cs">
+    <Compile Include="administration\changePassword.Designer.cs">
       <DependentUpon>changePassword.cs</DependentUpon>
+    </Compile>
+    <Compile Include="administration\WorkspaceConfigForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="administration\WorkspaceConfigForm.Designer.cs">
+      <DependentUpon>WorkspaceConfigForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="administration\ClassConfigForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="administration\ClassConfigForm.Designer.cs">
+      <DependentUpon>ClassConfigForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="administration\UserConfigForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="administration\UserConfigForm.Designer.cs">
+      <DependentUpon>UserConfigForm.cs</DependentUpon>
     </Compile>
     <Compile Include="codeResources\confirmByTyping.cs">
       <SubType>Form</SubType>
@@ -124,6 +142,7 @@
     <Compile Include="codeResources\loadingForm.Designer.cs">
       <DependentUpon>loadingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="codeResources\Local_Storage.cs" />
     <Compile Include="load_screen.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -142,10 +161,10 @@
     <Compile Include="main.Designer.cs">
       <DependentUpon>main.cs</DependentUpon>
     </Compile>
-    <Compile Include="newSummary.cs">
+    <Compile Include="userForms\newSummary.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="newSummary.Designer.cs">
+    <Compile Include="userForms\newSummary.designer.cs">
       <DependentUpon>newSummary.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -156,20 +175,35 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
-    <Compile Include="summariesList.cs">
+    <Compile Include="userForms\summariesList.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="summariesList.Designer.cs">
+    <Compile Include="userForms\summariesList.Designer.cs">
       <DependentUpon>summariesList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="administration\userSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="administration\userSettings.Designer.cs">
+      <DependentUpon>userSettings.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="aboutSummaries.resx">
       <DependentUpon>aboutSummaries.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AdministrationPanel.resx">
-      <DependentUpon>AdministrationPanel.cs</DependentUpon>
+    <EmbeddedResource Include="administration\AdministrationMenu.resx">
+      <DependentUpon>AdministrationMenu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="changePassword.resx">
+    <EmbeddedResource Include="administration\changePassword.resx">
       <DependentUpon>changePassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="administration\WorkspaceConfigForm.resx">
+      <DependentUpon>WorkspaceConfigForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="administration\ClassConfigForm.resx">
+      <DependentUpon>ClassConfigForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="administration\UserConfigForm.resx">
+      <DependentUpon>UserConfigForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="codeResources\confirmByTyping.resx">
       <DependentUpon>confirmByTyping.cs</DependentUpon>
@@ -186,7 +220,7 @@
     <EmbeddedResource Include="main.resx">
       <DependentUpon>main.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="newSummary.resx">
+    <EmbeddedResource Include="userForms\newSummary.resx">
       <DependentUpon>newSummary.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -199,8 +233,11 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="summariesList.resx">
+    <EmbeddedResource Include="userForms\summariesList.resx">
       <DependentUpon>summariesList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="administration\userSettings.resx">
+      <DependentUpon>userSettings.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
@@ -214,6 +251,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\clean-code.png" />
+    <None Include="Resources\userIcon.png" />
+    <None Include="Resources\group.png" />
     <None Include="Resources\icon.png" />
     <None Include="assets\icon.ico" />
     <None Include="assets\exit.png" />
@@ -226,16 +266,38 @@
     <None Include="assets\addSummary.png" />
     <None Include="assets\refresh.png" />
     <None Include="assets\administrationPanel.png" />
-    <None Include="assets\excelFile.png" />
-    <None Include="assets\noFileSelected.png" />
-    <None Include="assets\pdfFile.png" />
-    <None Include="assets\powerpointFile.png" />
-    <None Include="assets\txtFile.png" />
-    <None Include="assets\wordFile.png" />
-    <None Include="assets\zipFile.png" />
+    <None Include="assets\export.png" />
     <Content Include="icon.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>8</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Word">
+      <Guid>{00020905-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>8</VersionMajor>
+      <VersionMinor>7</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
       <Visible>False</Visible>
@@ -248,5 +310,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

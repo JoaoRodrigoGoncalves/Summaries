@@ -28,9 +28,7 @@ C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\bin\Debug\Summari
 C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\bin\Debug\Summaries.pdb
 C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\bin\Debug\Newtonsoft.Json.dll
 C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\bin\Debug\Newtonsoft.Json.xml
-C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.csprojAssemblyReference.cache
 C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.aboutSummaries.resources
-C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.AdministrationPanel.resources
 C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.changePassword.resources
 C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.loading.resources
 C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.login.resources
@@ -50,3 +48,10 @@ C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summari
 D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.codeResources.loadingForm.resources
 C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.codeResources.loadingForm.resources
 D:\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.csproj.CoreCompileInputs.cache
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.csproj.ResolveComReference.cache
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.csproj.CoreCompileInputs.cache
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.userSettings.userSettings.resources
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.administration.AdministrationMenu.resources
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.administration.UserConfigForm.resources
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.administration.ClassConfigForm.resources
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.administration.WorkspaceConfigForm.resources

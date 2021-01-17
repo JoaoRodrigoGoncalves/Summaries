@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
+using Summaries.codeResources;
 using System;
-using System.Diagnostics;
-using System.Reflection;
 using System.Windows.Forms;
 using static Summaries.codeResources.functions;
 
@@ -27,25 +26,25 @@ namespace Summaries
 
         private class userInfo
         {
-            public string APIKEY { get; set; }
+            public string AccessToken { get; set; }
             public int userID { get; set; }
             public string username { get; set; }
+            public int classID { get; set; }
             public string displayName { get; set; }
             public bool adminControl { get; set; }
         }
 
-        //https://www.youtube.com/watch?v=yZYAaScEsc0
-
         string jsonResponse = "";
         string POSTdata = "";
         bool shouldAbort = false;
+        Local_Storage storage = Local_Storage.Retrieve;
 
         private void getInformation()
         {
-            var functions = new codeResources.functions();
-            if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+            var functions = new functions();
+            if (functions.CheckForInternetConnection(storage.inUseDomain))
             {
-                jsonResponse = functions.APIRequest(POSTdata, "loginvalidator.php");
+                jsonResponse = functions.APIRequest("POST", POSTdata, "login");
             }
             else
             {
@@ -59,59 +58,65 @@ namespace Summaries
         {
             simpleServerResponse response;
             userInfo userInfo;
+            var functions = new functions();
 
             try
             {
-                string username = usernameBox.Text;
-                string password = passwordBox.Text;
-                POSTdata = "usrnm=" + username + "&psswd=" + password;
-                var functions = new codeResources.functions();
-
-                using (codeResources.loadingForm loading = new codeResources.loadingForm(getInformation))
+                if (string.IsNullOrEmpty(usernameBox.Text) || string.IsNullOrEmpty(passwordBox.Text))
                 {
-                    loading.ShowDialog();
-                }
-
-                if (shouldAbort)
-                {
-                    passwordBox.Clear();
-                    password = "";
+                    credentialsWarningLB.Visible = true;
                 }
                 else
                 {
-                    response = JsonConvert.DeserializeObject<simpleServerResponse>(jsonResponse);
+                    string username = functions.Hash(usernameBox.Text);
+                    string password = functions.Hash(passwordBox.Text);
+                    POSTdata = "usrnm=" + username + "&psswd=" + password;
 
-                    if (response.status)
+                    using (loadingForm loading = new loadingForm(getInformation))
                     {
-                        userInfo = JsonConvert.DeserializeObject<userInfo>(jsonResponse);
-                        Properties.Settings.Default.APIkey = userInfo.APIKEY;
-                        Properties.Settings.Default.userID = userInfo.userID;
-                        Properties.Settings.Default.username = userInfo.username;
-                        Properties.Settings.Default.displayName = userInfo.displayName;
-                        Properties.Settings.Default.isAdmin = userInfo.adminControl;
+                        loading.ShowDialog();
+                    }
 
-                        main form = new main();
-                        this.Hide();
-                        form.Show();
+                    if (shouldAbort)
+                    {
+                        passwordBox.Clear();
+                        password = "";
                     }
                     else
                     {
-                        if ((response.errors == null) || (response.errors.Length < 1))
+                        response = JsonConvert.DeserializeObject<simpleServerResponse>(jsonResponse);
+
+                        if (response.status)
                         {
-                            credentialsWarningLB.Visible = true;
+                            userInfo = JsonConvert.DeserializeObject<userInfo>(jsonResponse);
+                            storage.AccessToken = userInfo.AccessToken;
+                            storage.userID = userInfo.userID;
+                            storage.username = userInfo.username;
+                            storage.classID = userInfo.classID;
+                            storage.displayName = userInfo.displayName;
+                            storage.isAdmin = userInfo.adminControl;
+
+                            main form = new main();
+                            this.Hide();
+                            form.Show();
                         }
                         else
                         {
-                            MessageBox.Show("Error: " + response.errors, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            if (response.errors == "Authentication Failed")
+                            {
+                                credentialsWarningLB.Visible = true;
+                            }
+                            else
+                            {
+                                MessageBox.Show("Error: " + response.errors, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
                         }
                     }
                 }
-
-                
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
-                var functions = new codeResources.functions();
-                if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+                if (functions.CheckForInternetConnection(storage.inUseDomain))
                 {
                     MessageBox.Show("Critial Error: " + ex.Message + "\n" + ex.StackTrace, "Critical Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -133,9 +138,8 @@ namespace Summaries
 
         private void login_Load(object sender, EventArgs e)
         {
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            FileVersionInfo fileVersion = FileVersionInfo.GetVersionInfo(assembly.Location);
-            versionLBL.Text = fileVersion.ProductVersion;
+            var functions = new functions();
+            versionLBL.Text = functions.GetSoftwareVersion();
         }
     }
 }

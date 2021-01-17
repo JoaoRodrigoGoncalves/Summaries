@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Summaries.codeResources;
+using System;
 using System.IO;
 using System.Net;
 using System.Windows.Forms;
@@ -15,7 +16,8 @@ namespace Summaries
 
         private void loading_Shown(object sender, EventArgs e)
         {
-            var functions = new codeResources.functions();
+            Local_Storage storage = Local_Storage.Retrieve;
+            var functions = new functions();
 
             if (!functions.CheckForInternetConnection("http://google.com/generate_204"))
             {
@@ -33,25 +35,27 @@ namespace Summaries
                     }
                     else
                     {
-                        Properties.Settings.Default.inUseDomain = "https://joaogoncalves.myftp.org";
+                        storage.inUseDomain = "https://joaogoncalves.myftp.org";
                     }
 
                 }
                 else
                 {
-                    Properties.Settings.Default.inUseDomain = "https://joaogoncalves.eu";
+                    storage.inUseDomain = "https://joaogoncalves.eu";
                 }
+
+                Directory.CreateDirectory(@"" + Path.GetTempPath() + "summariesTemp");
 
                 try
                 {
                     using (var client = new WebClient())
                     {
-                        client.DownloadFile(Properties.Settings.Default.inUseDomain + "/summaries/resources/licenses.txt", Path.GetTempPath() + "\\licenses.txt");
+                        client.DownloadFile(storage.inUseDomain + "/summaries/resources/licenses.txt", Path.GetTempPath() + "summariesTemp\\licenses.txt");
                     }
 
                     string downloadURL = "";
                     Version newVersion = null;
-                    string xmlURL = Properties.Settings.Default.inUseDomain + "/summaries/updater.xml";
+                    string xmlURL = storage.inUseDomain + "/summaries/updater.xml";
                     XmlTextReader reader = null;
 
                     reader = new XmlTextReader(xmlURL);
@@ -86,23 +90,23 @@ namespace Summaries
                             }
                         }
                     }
-                    catch(Exception exec)
+                    catch (Exception exec)
                     {
                         throw new Exception("Failed to check for updates: " + exec.Message);
                     }
                     finally
                     {
-                        if(reader != null)
+                        if (reader != null)
                         {
                             reader.Close();
                         }
                     }
 
                     Version appVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
-                    if(appVersion.CompareTo(newVersion) < 0)
+                    if (appVersion.CompareTo(newVersion) < 0)
                     {
                         var res = MessageBox.Show("A new version is available. Would you like to download and update now?", "New version available!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                        if(res == DialogResult.Yes)
+                        if (res == DialogResult.Yes)
                         {
                             System.Diagnostics.Process.Start(downloadURL);
                             Application.Exit();
@@ -114,7 +118,8 @@ namespace Summaries
                         }
                     }
 
-                }catch(Exception ex)
+                }
+                catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Cannot load all needed resources", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Application.Exit();

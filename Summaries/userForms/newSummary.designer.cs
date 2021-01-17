@@ -111,6 +111,7 @@
             // 
             // contentsBox
             // 
+            this.contentsBox.DetectUrls = false;
             this.contentsBox.Location = new System.Drawing.Point(15, 92);
             this.contentsBox.Name = "contentsBox";
             this.contentsBox.Size = new System.Drawing.Size(440, 190);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Summaries.codeResources;
+using System;
 using System.IO;
 using System.Net;
 using System.Windows.Forms;
@@ -11,11 +12,12 @@ namespace Summaries
         {
             InitializeComponent();
         }
+        Local_Storage storage = Local_Storage.Retrieve;
 
         private void menuOptionsExit_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show("Are you sure you want to exit?", "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if(result == DialogResult.Yes)
+            if (result == DialogResult.Yes)
             {
                 Application.Exit();
             }
@@ -23,25 +25,30 @@ namespace Summaries
 
         private void main_Shown(object sender, EventArgs e)
         {
-            sessionLabel.Text += " " + Properties.Settings.Default.displayName;
+            sessionLabel.Text += " " + storage.displayName;
         }
 
         private void main_FormClosed(object sender, FormClosedEventArgs e)
         {
+            try
+            {
+                Directory.Delete(@"" + Path.GetTempPath() + "summariesTemp", true); // Deletes temp files
+            }
+            catch { }
+            var functions = new functions();
+            try
+            {
+                functions.APIRequest("GET", null, "logout");
+            }
+            catch { }
             Application.Exit();
-        }
-
-        private void menuOptionsChange_Password_Click(object sender, EventArgs e)
-        {
-            changePassword password = new changePassword();
-            password.ShowDialog();
         }
 
         private void menuAboutLicenses_Click(object sender, EventArgs e)
         {
             try
             {
-                System.Diagnostics.Process.Start(Path.GetTempPath() + "\\licenses.txt");
+                System.Diagnostics.Process.Start(Path.GetTempPath() + "summariesTemp\\licenses.txt");
             }
             catch (System.ComponentModel.Win32Exception)
             {
@@ -49,13 +56,14 @@ namespace Summaries
                 {
                     using (var client = new WebClient())
                     {
-                        client.DownloadFile(Properties.Settings.Default.inUseDomain + "/summaries/resources/licenses.txt", Path.GetTempPath() + "\\licenses.txt");
+                        client.DownloadFile(storage.inUseDomain + "/summaries/resources/licenses.txt", Path.GetTempPath() + "summariesTemp\\licenses.txt");
                     }
                     menuAboutLicenses_Click(sender, e);
-                }catch(Exception ex)
+                }
+                catch (Exception ex)
                 {
                     var functions = new codeResources.functions();
-                    if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+                    if (functions.CheckForInternetConnection(storage.inUseDomain))
                     {
                         MessageBox.Show("Critical Error: " + ex.Message + "\n" + ex.StackTrace, "Critical Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
@@ -64,7 +72,7 @@ namespace Summaries
                         MessageBox.Show("Lost Connection to the server. Please try again later!", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
-                
+
             }
         }
 
@@ -77,7 +85,7 @@ namespace Summaries
         private void menuSummaryNew_Click(object sender, EventArgs e)
         {
             var functions = new codeResources.functions();
-            if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+            if (functions.CheckForInternetConnection(storage.inUseDomain))
             {
                 newSummary newSummary = new newSummary();
                 newSummary.ShowDialog();
@@ -86,13 +94,13 @@ namespace Summaries
             {
                 MessageBox.Show("Lost Connection to the server. Please try again later!", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            
+
         }
 
         private void menuSummaryList_Click(object sender, EventArgs e)
         {
             var functions = new codeResources.functions();
-            if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+            if (functions.CheckForInternetConnection(storage.inUseDomain))
             {
                 summariesList summaries = new summariesList();
                 summaries.ShowDialog();
@@ -101,12 +109,12 @@ namespace Summaries
             {
                 MessageBox.Show("Lost Connection to the server. Please try again later!", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            
+
         }
 
         private void main_Load(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.isAdmin)
+            if (storage.isAdmin)
             {
                 menuOptionsAdministration_Panel.Visible = true;
                 menuOptionsAdministration_PanelStrip.Visible = true;
@@ -116,16 +124,16 @@ namespace Summaries
         private void menuOptionsAdministration_Panel_Click(object sender, EventArgs e)
         {
             var functions = new codeResources.functions();
-            if (functions.CheckForInternetConnection(Properties.Settings.Default.inUseDomain))
+            if (functions.CheckForInternetConnection(storage.inUseDomain))
             {
-                AdministrationPanel panel = new AdministrationPanel();
+                administration.AdministrationMenu panel = new administration.AdministrationMenu();
                 panel.ShowDialog();
             }
             else
             {
                 MessageBox.Show("Lost Connection to the server. Please try again later!", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            
+
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -136,6 +144,12 @@ namespace Summaries
         private void summaryToolStripMenuItem_Click(object sender, EventArgs e)
         {
             menuAboutSummaries_Click(sender, e);
+        }
+
+        private void userSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            userSettings.userSettings settingsWindow = new userSettings.userSettings();
+            settingsWindow.ShowDialog();
         }
     }
 }
