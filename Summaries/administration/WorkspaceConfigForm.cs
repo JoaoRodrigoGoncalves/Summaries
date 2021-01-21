@@ -58,6 +58,15 @@ namespace Summaries.administration
 
         private void WorkspaceConfigForm_Load(object sender, EventArgs e)
         {
+            DataGridViewTextBoxColumn className = new DataGridViewTextBoxColumn();
+            NumericUpDownColumn totalHours = new NumericUpDownColumn();
+            totalHours.Name = "totalHours";
+            totalHours.HeaderText = "Hours";
+            hoursDataGridView.Columns.Add(totalHours);
+            className.Name = "className";
+            className.HeaderText = "Class Name";
+            hoursDataGridView.Columns.Add(className);
+
             if (sentWorkspaceID != 0)
             {
 

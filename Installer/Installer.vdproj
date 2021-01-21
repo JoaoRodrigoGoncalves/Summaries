@@ -265,15 +265,24 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Summaries"
+<<<<<<< Updated upstream
         "ProductCode" = "8:{53FF0F6A-8BE5-4502-8C08-B7CC07CE6AFF}"
         "PackageCode" = "8:{151E204A-6C23-45AA-8F11-80BE48352FC6}"
+=======
+        "ProductCode" = "8:{93EE7A2A-292F-41D0-A120-1F608D9A330D}"
+        "PackageCode" = "8:{47CAA792-3FB9-49B0-A4EB-62678928AF86}"
+>>>>>>> Stashed changes
         "UpgradeCode" = "8:{43134371-67D1-4D4D-8E36-02F775648D5B}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
+<<<<<<< Updated upstream
         "ProductVersion" = "8:5.0.1"
+=======
+        "ProductVersion" = "8:6.0.0"
+>>>>>>> Stashed changes
         "Manufacturer" = "8:João Rodrigo Gonçalves"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:https://joaogoncalves.eu"
