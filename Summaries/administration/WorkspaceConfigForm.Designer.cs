@@ -37,7 +37,6 @@ namespace Summaries.administration
             this.cancelBTN = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.GeneralTabPage = new System.Windows.Forms.TabPage();
-            this.hoursDataGridView = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.writeCheck = new System.Windows.Forms.CheckBox();
             this.readCheck = new System.Windows.Forms.CheckBox();
@@ -51,7 +50,6 @@ namespace Summaries.administration
             this.footerLayoutPanel.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.GeneralTabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.hoursDataGridView)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.workspacePic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
@@ -120,7 +118,6 @@ namespace Summaries.administration
             // 
             // GeneralTabPage
             // 
-            this.GeneralTabPage.Controls.Add(this.hoursDataGridView);
             this.GeneralTabPage.Controls.Add(this.groupBox1);
             this.GeneralTabPage.Controls.Add(this.workspaceNameTB);
             this.GeneralTabPage.Controls.Add(this.workspaceNameLB);
@@ -134,17 +131,6 @@ namespace Summaries.administration
             this.GeneralTabPage.TabIndex = 0;
             this.GeneralTabPage.Text = "General";
             this.GeneralTabPage.UseVisualStyleBackColor = true;
-            // 
-            // hoursDataGridView
-            // 
-            this.hoursDataGridView.AllowUserToAddRows = false;
-            this.hoursDataGridView.AllowUserToDeleteRows = false;
-            this.hoursDataGridView.AllowUserToResizeRows = false;
-            this.hoursDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.hoursDataGridView.Location = new System.Drawing.Point(10, 206);
-            this.hoursDataGridView.Name = "hoursDataGridView";
-            this.hoursDataGridView.Size = new System.Drawing.Size(370, 226);
-            this.hoursDataGridView.TabIndex = 8;
             // 
             // groupBox1
             // 
@@ -249,7 +235,6 @@ namespace Summaries.administration
             this.tabControl1.ResumeLayout(false);
             this.GeneralTabPage.ResumeLayout(false);
             this.GeneralTabPage.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.hoursDataGridView)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.workspacePic)).EndInit();
@@ -275,6 +260,5 @@ namespace Summaries.administration
         private System.Windows.Forms.CheckBox writeCheck;
         private System.Windows.Forms.CheckBox readCheck;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.DataGridView hoursDataGridView;
     }
 }
