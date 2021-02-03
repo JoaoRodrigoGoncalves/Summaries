@@ -56,3 +56,15 @@ C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summari
 C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.administration.ClassConfigForm.resources
 C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.administration.WorkspaceConfigForm.resources
 C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.csprojAssemblyReference.cache
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\bin\Debug\pt-PT\Summaries.resources.dll
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.login.pt-PT.resources
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\pt-PT\Summaries.resources.dll
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.codeResources.ClassConfigFormStrings.resources
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.codeResources.GlobalStrings.resources
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.codeResources.UserConfigFormStrings.resources
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.administration.ClassConfigForm.pt-PT.resources
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.administration.UserConfigForm.pt-PT.resources
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.userSettings.userSettings.pt-PT.resources
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.codeResources.confirmByTyping.pt-PT.resources
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.codeResources.loadingForm.pt-PT.resources
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.main.pt-PT.resources

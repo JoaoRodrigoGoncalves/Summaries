@@ -37,6 +37,10 @@ namespace Summaries.administration
             this.cancelBTN = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.GeneralTabPage = new System.Windows.Forms.TabPage();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.addClassBTN = new System.Windows.Forms.Button();
+            this.classesCB = new System.Windows.Forms.ComboBox();
+            this.hoursDataGridView = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.writeCheck = new System.Windows.Forms.CheckBox();
             this.readCheck = new System.Windows.Forms.CheckBox();
@@ -50,6 +54,8 @@ namespace Summaries.administration
             this.footerLayoutPanel.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.GeneralTabPage.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.hoursDataGridView)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.workspacePic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
@@ -91,7 +97,7 @@ namespace Summaries.administration
             this.okBTN.Location = new System.Drawing.Point(319, 3);
             this.okBTN.Name = "okBTN";
             this.okBTN.Size = new System.Drawing.Size(73, 23);
-            this.okBTN.TabIndex = 0;
+            this.okBTN.TabIndex = 8;
             this.okBTN.Text = "OK";
             this.okBTN.UseVisualStyleBackColor = true;
             this.okBTN.Click += new System.EventHandler(this.okBTN_Click);
@@ -101,7 +107,7 @@ namespace Summaries.administration
             this.cancelBTN.Location = new System.Drawing.Point(240, 3);
             this.cancelBTN.Name = "cancelBTN";
             this.cancelBTN.Size = new System.Drawing.Size(73, 23);
-            this.cancelBTN.TabIndex = 1;
+            this.cancelBTN.TabIndex = 7;
             this.cancelBTN.Text = "Cancel";
             this.cancelBTN.UseVisualStyleBackColor = true;
             this.cancelBTN.Click += new System.EventHandler(this.cancelBTN_Click);
@@ -118,6 +124,7 @@ namespace Summaries.administration
             // 
             // GeneralTabPage
             // 
+            this.GeneralTabPage.Controls.Add(this.groupBox2);
             this.GeneralTabPage.Controls.Add(this.groupBox1);
             this.GeneralTabPage.Controls.Add(this.workspaceNameTB);
             this.GeneralTabPage.Controls.Add(this.workspaceNameLB);
@@ -131,6 +138,53 @@ namespace Summaries.administration
             this.GeneralTabPage.TabIndex = 0;
             this.GeneralTabPage.Text = "General";
             this.GeneralTabPage.UseVisualStyleBackColor = true;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.addClassBTN);
+            this.groupBox2.Controls.Add(this.classesCB);
+            this.groupBox2.Controls.Add(this.hoursDataGridView);
+            this.groupBox2.Location = new System.Drawing.Point(10, 206);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(370, 226);
+            this.groupBox2.TabIndex = 9;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Class Hours";
+            // 
+            // addClassBTN
+            // 
+            this.addClassBTN.Location = new System.Drawing.Point(289, 17);
+            this.addClassBTN.Name = "addClassBTN";
+            this.addClassBTN.Size = new System.Drawing.Size(75, 23);
+            this.addClassBTN.TabIndex = 5;
+            this.addClassBTN.Text = "Add";
+            this.addClassBTN.UseVisualStyleBackColor = true;
+            this.addClassBTN.Click += new System.EventHandler(this.addClassBTN_Click);
+            // 
+            // classesCB
+            // 
+            this.classesCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.classesCB.FormattingEnabled = true;
+            this.classesCB.Location = new System.Drawing.Point(6, 19);
+            this.classesCB.Name = "classesCB";
+            this.classesCB.Size = new System.Drawing.Size(277, 21);
+            this.classesCB.Sorted = true;
+            this.classesCB.TabIndex = 4;
+            // 
+            // hoursDataGridView
+            // 
+            this.hoursDataGridView.AllowUserToAddRows = false;
+            this.hoursDataGridView.AllowUserToDeleteRows = false;
+            this.hoursDataGridView.AllowUserToResizeRows = false;
+            this.hoursDataGridView.CausesValidation = false;
+            this.hoursDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.hoursDataGridView.Location = new System.Drawing.Point(6, 49);
+            this.hoursDataGridView.MultiSelect = false;
+            this.hoursDataGridView.Name = "hoursDataGridView";
+            this.hoursDataGridView.Size = new System.Drawing.Size(358, 171);
+            this.hoursDataGridView.TabIndex = 6;
+            this.hoursDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.hoursDataGridView_CellClick);
+            this.hoursDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.hoursDataGridView_CellValueChanged);
             // 
             // groupBox1
             // 
@@ -149,7 +203,7 @@ namespace Summaries.administration
             this.writeCheck.Location = new System.Drawing.Point(6, 42);
             this.writeCheck.Name = "writeCheck";
             this.writeCheck.Size = new System.Drawing.Size(81, 17);
-            this.writeCheck.TabIndex = 6;
+            this.writeCheck.TabIndex = 3;
             this.writeCheck.Text = "Write Mode";
             this.writeCheck.UseVisualStyleBackColor = true;
             // 
@@ -159,7 +213,7 @@ namespace Summaries.administration
             this.readCheck.Location = new System.Drawing.Point(6, 19);
             this.readCheck.Name = "readCheck";
             this.readCheck.Size = new System.Drawing.Size(82, 17);
-            this.readCheck.TabIndex = 5;
+            this.readCheck.TabIndex = 2;
             this.readCheck.Text = "Read Mode";
             this.readCheck.UseVisualStyleBackColor = true;
             // 
@@ -168,7 +222,7 @@ namespace Summaries.administration
             this.workspaceNameTB.Location = new System.Drawing.Point(10, 105);
             this.workspaceNameTB.Name = "workspaceNameTB";
             this.workspaceNameTB.Size = new System.Drawing.Size(370, 20);
-            this.workspaceNameTB.TabIndex = 4;
+            this.workspaceNameTB.TabIndex = 1;
             // 
             // workspaceNameLB
             // 
@@ -235,6 +289,8 @@ namespace Summaries.administration
             this.tabControl1.ResumeLayout(false);
             this.GeneralTabPage.ResumeLayout(false);
             this.GeneralTabPage.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.hoursDataGridView)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.workspacePic)).EndInit();
@@ -260,5 +316,9 @@ namespace Summaries.administration
         private System.Windows.Forms.CheckBox writeCheck;
         private System.Windows.Forms.CheckBox readCheck;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.DataGridView hoursDataGridView;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Button addClassBTN;
+        private System.Windows.Forms.ComboBox classesCB;
     }
 }

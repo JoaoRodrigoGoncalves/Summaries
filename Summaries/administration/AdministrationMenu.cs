@@ -393,6 +393,7 @@ namespace Summaries.administration
                                 dataGridView.Rows.Remove(selectedRow);
                                 MessageBox.Show("Success!", "Operation Completed Successfully!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 GetUsers(true);
+                                GetClasses();
                             }
                             else
                             {

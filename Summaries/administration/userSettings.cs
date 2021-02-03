@@ -39,7 +39,7 @@ namespace Summaries.userSettings
 
         private void userSettings_Load(object sender, EventArgs e)
         {
-            Text = storage.displayName + " Settings";
+            Text = storage.displayName + " " + GlobalStrings.Settings;
             nameBox.Text = storage.displayName;
 
             using (loadingForm form = new loadingForm(getClass))
@@ -63,7 +63,7 @@ namespace Summaries.userSettings
                 }
                 else
                 {
-                    MessageBox.Show("Could Not Get Class Information", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(GlobalStrings.CantGetClassInfo, GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch
@@ -73,11 +73,11 @@ namespace Summaries.userSettings
 
             if (storage.isAdmin)
             {
-                userTypeBox.Text = "Administrator";
+                userTypeBox.Text = GlobalStrings.Administrator;
             }
             else
             {
-                userTypeBox.Text = "Student";
+                userTypeBox.Text = GlobalStrings.Student;
             }
         }
 

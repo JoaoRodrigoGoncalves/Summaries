@@ -35,6 +35,12 @@ namespace Summaries
         }
 
         serverResponse response = null;
+        public class workspacesServerResponse
+        {
+            public bool status { get; set; }
+            public string errors { get; set; }
+            public List<workspacesContent> contents { get; set; }
+        }
 
         public class workspacesContent
         {
@@ -43,15 +49,16 @@ namespace Summaries
             public bool read { get; set; }
             public bool write { get; set; }
             public int totalSummaries { get; set; }
+            public List<hoursContent> hours { get; set; }
         }
 
-        public class workspacesServerResponse
+        public class hoursContent
         {
-            public bool status { get; set; }
-            public string errors { get; set; }
-            public List<workspacesContent> contents { get; set; }
+            public int id { get; set; }
+            public int workspaceID { get; set; }
+            public int classID { get; set; }
+            public int totalHours { get; set; }
         }
-
 
         functions functions = new functions();
         workspacesServerResponse workspaceResponse;
@@ -118,21 +125,28 @@ namespace Summaries
                             workspaceComboBox.Items.Clear();
                             foreach (workspacesContent row in workspaceResponse.contents)
                             {
-                                if (row.read)
+                                if(row.hours != null)
                                 {
-                                    workspaceComboBox.Items.Add(row.workspaceName);
+                                    if (row.read && row.hours.Exists(x => x.classID == storage.classID))
+                                    {
+                                        workspaceComboBox.Items.Add(row.workspaceName);
+                                    }
                                 }
                             }
 
                             if (workspaceName == null || workspaceName == string.Empty || workspaceName == "")
                             {
-                                workspaceSelectedID = workspaceResponse.contents[0].id;
-                                workspaceName = workspaceResponse.contents[0].workspaceName;
+                                int index = workspaceResponse.contents.FindIndex(x => x.read == true && x.hours.Exists(c => c.classID == storage.classID));
+                                workspaceSelectedID = workspaceResponse.contents[index].id;
+                                workspaceName = workspaceResponse.contents[index].workspaceName;
                                 workspaceComboBox.SelectedItem = workspaceName;
+                                totalHoursHolder.Text = workspaceResponse.contents[index].hours[workspaceResponse.contents[index].hours.FindIndex(x => x.classID == storage.classID)].totalHours.ToString();
                             }
                             else
                             {
-                                workspaceSelectedID = workspaceResponse.contents[workspaceResponse.contents.FindIndex(x => x.workspaceName == workspaceName)].id;
+                                int workspaceIndex = workspaceResponse.contents.FindIndex(x => x.workspaceName == workspaceName);
+                                workspaceSelectedID = workspaceResponse.contents[workspaceIndex].id;
+                                totalHoursHolder.Text = workspaceResponse.contents[workspaceIndex].hours[workspaceResponse.contents[workspaceIndex].hours.FindIndex(x => x.classID == storage.classID)].totalHours.ToString();
                                 workspaceComboBox.SelectedItem = workspaceName;
                             }
 

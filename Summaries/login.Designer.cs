@@ -40,6 +40,8 @@
             this.layoutTableBase = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.languageDropDown = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.layoutTableBase.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -47,125 +49,94 @@
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 139);
+            resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(55, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Username";
             // 
             // usernameBox
             // 
-            this.usernameBox.Location = new System.Drawing.Point(73, 136);
+            resources.ApplyResources(this.usernameBox, "usernameBox");
             this.usernameBox.Name = "usernameBox";
-            this.usernameBox.Size = new System.Drawing.Size(278, 20);
-            this.usernameBox.TabIndex = 1;
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(11, 184);
+            resources.ApplyResources(this.label2, "label2");
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(53, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Password";
             // 
             // passwordBox
             // 
-            this.passwordBox.Location = new System.Drawing.Point(73, 181);
+            resources.ApplyResources(this.passwordBox, "passwordBox");
             this.passwordBox.Name = "passwordBox";
-            this.passwordBox.Size = new System.Drawing.Size(278, 20);
-            this.passwordBox.TabIndex = 2;
             this.passwordBox.UseSystemPasswordChar = true;
             this.passwordBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.passwordBox_KeyDown);
             // 
             // loginBTN
             // 
-            this.loginBTN.Location = new System.Drawing.Point(276, 233);
+            resources.ApplyResources(this.loginBTN, "loginBTN");
             this.loginBTN.Name = "loginBTN";
-            this.loginBTN.Size = new System.Drawing.Size(75, 23);
-            this.loginBTN.TabIndex = 3;
-            this.loginBTN.Text = "Log in";
             this.loginBTN.UseVisualStyleBackColor = true;
             this.loginBTN.Click += new System.EventHandler(this.loginBTN_Click);
             // 
             // resetBTN
             // 
+            resources.ApplyResources(this.resetBTN, "resetBTN");
             this.resetBTN.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.resetBTN.Location = new System.Drawing.Point(73, 233);
             this.resetBTN.Name = "resetBTN";
-            this.resetBTN.Size = new System.Drawing.Size(75, 23);
-            this.resetBTN.TabIndex = 4;
-            this.resetBTN.Text = "Clear Fields";
             this.resetBTN.UseVisualStyleBackColor = true;
             this.resetBTN.Click += new System.EventHandler(this.resetBTN_Click);
             // 
             // credentialsWarningLB
             // 
-            this.credentialsWarningLB.AutoSize = true;
+            resources.ApplyResources(this.credentialsWarningLB, "credentialsWarningLB");
             this.credentialsWarningLB.ForeColor = System.Drawing.Color.Red;
-            this.credentialsWarningLB.Location = new System.Drawing.Point(70, 206);
             this.credentialsWarningLB.Name = "credentialsWarningLB";
-            this.credentialsWarningLB.Size = new System.Drawing.Size(200, 13);
-            this.credentialsWarningLB.TabIndex = 5;
-            this.credentialsWarningLB.Text = "The Username or Password are incorrect";
-            this.credentialsWarningLB.Visible = false;
             // 
             // versionLBL
             // 
-            this.versionLBL.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.versionLBL.Location = new System.Drawing.Point(0, 275);
+            resources.ApplyResources(this.versionLBL, "versionLBL");
             this.versionLBL.Name = "versionLBL";
-            this.versionLBL.Size = new System.Drawing.Size(364, 19);
-            this.versionLBL.TabIndex = 6;
-            this.versionLBL.Text = "0.0.0";
-            this.versionLBL.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // layoutTableBase
             // 
-            this.layoutTableBase.ColumnCount = 1;
-            this.layoutTableBase.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            resources.ApplyResources(this.layoutTableBase, "layoutTableBase");
             this.layoutTableBase.Controls.Add(this.tableLayoutPanel1, 0, 0);
-            this.layoutTableBase.Dock = System.Windows.Forms.DockStyle.Top;
-            this.layoutTableBase.Location = new System.Drawing.Point(0, 0);
             this.layoutTableBase.Name = "layoutTableBase";
-            this.layoutTableBase.RowCount = 1;
-            this.layoutTableBase.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 42.51701F));
-            this.layoutTableBase.Size = new System.Drawing.Size(364, 125);
-            this.layoutTableBase.TabIndex = 7;
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.ColumnCount = 3;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+            resources.ApplyResources(this.tableLayoutPanel1, "tableLayoutPanel1");
             this.tableLayoutPanel1.Controls.Add(this.pictureBox1, 1, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 119F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(358, 119);
-            this.tableLayoutPanel1.TabIndex = 3;
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            resources.ApplyResources(this.pictureBox1, "pictureBox1");
             this.pictureBox1.Image = global::Summaries.Properties.Resources.userIcon;
-            this.pictureBox1.Location = new System.Drawing.Point(122, 3);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(113, 113);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
+            // 
+            // languageDropDown
+            // 
+            resources.ApplyResources(this.languageDropDown, "languageDropDown");
+            this.languageDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.languageDropDown.FormattingEnabled = true;
+            this.languageDropDown.Items.AddRange(new object[] {
+            resources.GetString("languageDropDown.Items"),
+            resources.GetString("languageDropDown.Items1")});
+            this.languageDropDown.Name = "languageDropDown";
+            this.languageDropDown.SelectedValueChanged += new System.EventHandler(this.languageDropDown_SelectedValueChanged);
+            // 
+            // label3
+            // 
+            resources.ApplyResources(this.label3, "label3");
+            this.label3.Name = "label3";
             // 
             // login
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.resetBTN;
-            this.ClientSize = new System.Drawing.Size(364, 294);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.languageDropDown);
             this.Controls.Add(this.versionLBL);
             this.Controls.Add(this.credentialsWarningLB);
             this.Controls.Add(this.resetBTN);
@@ -176,10 +147,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.layoutTableBase);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "login";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Log in to your account";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.login_FormClosed);
             this.Load += new System.EventHandler(this.login_Load);
             this.layoutTableBase.ResumeLayout(false);
@@ -203,5 +171,7 @@
         private System.Windows.Forms.TableLayoutPanel layoutTableBase;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.ComboBox languageDropDown;
+        private System.Windows.Forms.Label label3;
     }
 }

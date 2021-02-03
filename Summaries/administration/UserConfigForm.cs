@@ -100,7 +100,7 @@ namespace Summaries.administration
                     {
                         if (response.contents.Count != 1)
                         {
-                            MessageBox.Show("More than one entry received", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(GlobalStrings.GotMoreThanOneEntry, GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                             Close();
                         }
                         else
@@ -116,7 +116,7 @@ namespace Summaries.administration
                                     classCB.Items.Add(x.className);
                                 }
 
-                                this.Text = "\"" + user.displayName + "\" Properties";
+                                this.Text = String.Format(UserConfigFormStrings.FormTitle, user.displayName);
 
                                 UsernameTOPBox.Text = user.displayName;
                                 displayNameTB.Text = user.displayName;
@@ -129,7 +129,7 @@ namespace Summaries.administration
                             }
                             else
                             {
-                                MessageBox.Show("Error: " + classResponse.errors, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show(GlobalStrings.Error + ": " + classResponse.errors, GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 Close();
                             }
                         }
@@ -152,8 +152,8 @@ namespace Summaries.administration
             }
             else
             {
-                this.Text = "New User Properties";
-                UsernameTOPBox.Text = "New User";
+                this.Text = UserConfigFormStrings.NewUserProperties;
+                UsernameTOPBox.Text = UserConfigFormStrings.NewUser;
 
                 using (loadingForm loading = new loadingForm(RequestClassesList))
                 {
@@ -172,7 +172,7 @@ namespace Summaries.administration
                 }
                 else
                 {
-                    MessageBox.Show("Error: " + classResponse.errors, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(GlobalStrings.Error + ": " + classResponse.errors, GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Close();
                 }
             }
@@ -221,14 +221,14 @@ namespace Summaries.administration
             if (string.IsNullOrEmpty(loginNameTB.Text) || string.IsNullOrWhiteSpace(loginNameTB.Text))
             {
                 errorProvider.SetIconPadding(loginNameTB, -20);
-                errorProvider.SetError(loginNameTB, "This field is mandatory");
+                errorProvider.SetError(loginNameTB, GlobalStrings.MandatoryField);
                 return true;
             }
 
             if (string.IsNullOrEmpty(displayNameTB.Text) || string.IsNullOrWhiteSpace(displayNameTB.Text))
             {
                 errorProvider.SetIconPadding(displayNameTB, -20);
-                errorProvider.SetError(displayNameTB, "This field is mandatory");
+                errorProvider.SetError(displayNameTB, GlobalStrings.MandatoryField);
                 return true;
             }
 
@@ -263,7 +263,7 @@ namespace Summaries.administration
                             }
                             else
                             {
-                                MessageBox.Show("Error: " + saveResponse.errors, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show(GlobalStrings.Error + ": " + saveResponse.errors, GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
                         catch (Exception ex)
@@ -298,7 +298,7 @@ namespace Summaries.administration
                         }
                         else
                         {
-                            MessageBox.Show("Error: " + saveResponse.errors, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(GlobalStrings.Error + ": " + saveResponse.errors, GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                     catch (Exception ex)
@@ -320,7 +320,7 @@ namespace Summaries.administration
                 {
                     if (wasAnyFieldModified())
                     {
-                        if (MessageBox.Show("There are unsaved changes made to this user. Would you like to save them first?", "Unsaved Changes", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        if (MessageBox.Show(UserConfigFormStrings.UnsavedChangesQuestion, GlobalStrings.UnsavedChanges, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                         {
                             okBTN_Click(sender, e);
                         }

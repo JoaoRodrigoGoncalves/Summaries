@@ -17,6 +17,8 @@ namespace Summaries
             {
                 try
                 {
+                    Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(Properties.Settings.Default.Language);
+                    Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(Properties.Settings.Default.Language);
                     Application.EnableVisualStyles();
                     Application.SetCompatibleTextRenderingDefault(false);
                     new loading().Show();

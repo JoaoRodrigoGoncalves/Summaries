@@ -57,6 +57,12 @@ namespace Summaries
             public string errors { get; set; }
             public List<Content> contents { get; set; }
         }
+        public class workspacesServerResponse
+        {
+            public bool status { get; set; }
+            public string errors { get; set; }
+            public List<workspacesContent> contents { get; set; }
+        }
 
         public class workspacesContent
         {
@@ -64,13 +70,15 @@ namespace Summaries
             public string workspaceName { get; set; }
             public bool read { get; set; }
             public bool write { get; set; }
+            public List<hoursContent> hours { get; set; }
         }
 
-        public class workspacesServerResponse
+        public class hoursContent
         {
-            public bool status { get; set; }
-            public string errors { get; set; }
-            public List<workspacesContent> contents { get; set; }
+            public int id { get; set; }
+            public int workspaceID { get; set; }
+            public int classID { get; set; }
+            public int totalHours { get; set; }
         }
 
         public class uploadInfo
@@ -160,9 +168,12 @@ namespace Summaries
                     {
                         foreach (workspacesContent content in workspaces.contents)
                         {
-                            if (content.read)
+                            if(content.hours != null)
                             {
-                                workspaceComboBox.Items.Add(content.workspaceName);
+                                if (content.read && content.hours.Exists(x => x.classID == storage.classID))
+                                {
+                                    workspaceComboBox.Items.Add(content.workspaceName);
+                                }
                             }
                         }
 
@@ -757,6 +768,15 @@ namespace Summaries
             fileUpload.FileName = "";
             result = fileUpload.ShowDialog();
             addToFileTable(fileUpload.FileNames);
+        }
+
+        private void missedDayCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            bool status = !missedDayCheckBox.Checked;
+            dayHoursNumberBox.Enabled = status;
+            contentsBox.Enabled = status;
+            addAttachmentBTN.Enabled = status;
+            attachmentsGridView.Enabled = status;
         }
     }
 }

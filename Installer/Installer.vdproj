@@ -265,15 +265,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Summaries"
-        "ProductCode" = "8:{53FF0F6A-8BE5-4502-8C08-B7CC07CE6AFF}"
-        "PackageCode" = "8:{151E204A-6C23-45AA-8F11-80BE48352FC6}"
+        "ProductCode" = "8:{E5F1D36C-F3C1-4DEE-A47B-5E9F02674233}"
+        "PackageCode" = "8:{F83EAEAF-F172-42C3-B0EC-AD24AAB25CE9}"
         "UpgradeCode" = "8:{43134371-67D1-4D4D-8E36-02F775648D5B}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:5.0.1"
+        "ProductVersion" = "8:6.0.0"
         "Manufacturer" = "8:João Rodrigo Gonçalves"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:https://joaogoncalves.eu"
@@ -815,7 +815,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_B30D2F817E304A3EB9B923F12E343944"
             {
-            "SourcePath" = "8:"
+            "SourcePath" = "8:..\\Summaries\\obj\\Release\\Summaries.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_45CC7F54A0574787BCF15319FAAF5A9F"

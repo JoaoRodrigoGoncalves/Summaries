@@ -95,7 +95,7 @@ namespace Summaries.administration
                     {
                         if (classResponse.contents.Count != 1)
                         {
-                            MessageBox.Show("More than one entry received", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(GlobalStrings.GotMoreThanOneEntry, GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                             Close();
                         }
                         else
@@ -106,7 +106,7 @@ namespace Summaries.administration
                             {
                                 classesContent classes = classResponse.contents[0];
 
-                                this.Text = "\"" + classes.className + "\" Properties";
+                                this.Text = String.Format(ClassConfigFormStrings.FormName, classes.className);
                                 ClassNameTOPBox.Text = classes.className;
                                 classNameTB.Text = classes.className;
 
@@ -124,14 +124,14 @@ namespace Summaries.administration
                             }
                             else
                             {
-                                MessageBox.Show("Error: " + userResponse.errors, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show(GlobalStrings.Error + ": " + userResponse.errors, GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 Close();
                             }
                         }
                     }
                     else
                     {
-                        MessageBox.Show("Error: " + classResponse.errors, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(GlobalStrings.Error + ": " + classResponse.errors, GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         Close();
                     }
                 }
@@ -146,8 +146,8 @@ namespace Summaries.administration
             }
             else
             {
-                this.Text = "New Class Properties";
-                ClassNameTOPBox.Text = "New Class";
+                this.Text = ClassConfigFormStrings.NewClassProperties;
+                ClassNameTOPBox.Text = ClassConfigFormStrings.NewClass;
 
                 usersOnThisClassGV.Enabled = false;
             }
@@ -194,7 +194,7 @@ namespace Summaries.administration
                             }
                             else
                             {
-                                MessageBox.Show("Error: " + saveResponse.errors, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show(GlobalStrings.Error + ": " + saveResponse.errors, GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
                         catch (Exception ex)
@@ -229,7 +229,7 @@ namespace Summaries.administration
                         }
                         else
                         {
-                            MessageBox.Show("Error: " + saveResponse.errors, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(GlobalStrings.Error + ": " + saveResponse.errors, GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                     catch (Exception ex)
@@ -244,7 +244,7 @@ namespace Summaries.administration
             else
             {
                 errorProvider.SetIconPadding(classNameTB, -20);
-                errorProvider.SetError(classNameTB, "This field is mandatory");
+                errorProvider.SetError(classNameTB, GlobalStrings.MandatoryField);
             }
         }
 
@@ -256,7 +256,7 @@ namespace Summaries.administration
                 {
                     if (classNameTB.Text != classResponse.contents[0].className)
                     {
-                        if (MessageBox.Show("There are unsaved changes made to this class. Would you like to save them first?", "Unsaved Changes", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        if (MessageBox.Show(ClassConfigFormStrings.UnsavedChangesQuestion, GlobalStrings.UnsavedChanges, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                         {
                             okBTN_Click(sender, e);
                         }

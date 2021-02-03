@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Summaries.codeResources;
 using System;
+using System.Threading;
 using System.Windows.Forms;
 using static Summaries.codeResources.functions;
 
@@ -49,7 +50,7 @@ namespace Summaries
             else
             {
                 shouldAbort = true;
-                MessageBox.Show("Lost Connection to the server. Please try again later!", "Connection Lost!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(GlobalStrings.ConnectionToServerLost, GlobalStrings.ConnectionLost, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -108,7 +109,7 @@ namespace Summaries
                             }
                             else
                             {
-                                MessageBox.Show("Error: " + response.errors, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show(GlobalStrings.Error + ": " + response.errors, GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
                     }
@@ -118,11 +119,11 @@ namespace Summaries
             {
                 if (functions.CheckForInternetConnection(storage.inUseDomain))
                 {
-                    MessageBox.Show("Critial Error: " + ex.Message + "\n" + ex.StackTrace, "Critical Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(GlobalStrings.CriticalError + ": " + ex.Message + "\n" + ex.StackTrace, GlobalStrings.CriticalError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
-                    MessageBox.Show("Lost Connection to the server. Please try again!", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(GlobalStrings.ConnectionToServerLost, GlobalStrings.ConnectionLost, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -140,6 +141,45 @@ namespace Summaries
         {
             var functions = new functions();
             versionLBL.Text = functions.GetSoftwareVersion();
+            switch (Properties.Settings.Default.Language)
+            {
+                case "en-US":
+                    languageDropDown.SelectedIndex = languageDropDown.FindStringExact("English");
+                    break;
+
+                case "pt-PT":
+                    languageDropDown.SelectedIndex = languageDropDown.FindStringExact("Português");
+                    break;
+            }
+        }
+
+        private void languageDropDown_SelectedValueChanged(object sender, EventArgs e)
+        {
+            switch (languageDropDown.SelectedItem)
+            {
+                case "English":
+                    if(Thread.CurrentThread.CurrentUICulture != System.Globalization.CultureInfo.GetCultureInfo("en-US"))
+                    {
+                        Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
+                        Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-US");
+                        this.Controls.Clear();
+                        InitializeComponent();
+                    }
+                    break;
+
+                case "Português":
+                    if (Thread.CurrentThread.CurrentUICulture != System.Globalization.CultureInfo.GetCultureInfo("pt-PT"))
+                    {
+                        Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("pt-PT");
+                        Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("pt-PT");
+                        this.Controls.Clear();
+                        InitializeComponent();
+                    }
+                    break;
+
+                default:
+                    break;
+            }
         }
     }
 }

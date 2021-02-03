@@ -27,7 +27,7 @@
     <ProductName>Summaries</ProductName>
     <PublisherName>João Rodrigo Lopes Gonçalves</PublisherName>
     <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>5.0.1.0</ApplicationVersion>
+    <ApplicationVersion>6.0.0.0</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -129,6 +129,11 @@
     <Compile Include="administration\UserConfigForm.Designer.cs">
       <DependentUpon>UserConfigForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="codeResources\ClassConfigFormStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ClassConfigFormStrings.resx</DependentUpon>
+    </Compile>
     <Compile Include="codeResources\confirmByTyping.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -143,6 +148,16 @@
       <DependentUpon>loadingForm.cs</DependentUpon>
     </Compile>
     <Compile Include="codeResources\Local_Storage.cs" />
+    <Compile Include="codeResources\GlobalStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GlobalStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="codeResources\UserConfigFormStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserConfigFormStrings.resx</DependentUpon>
+    </Compile>
     <Compile Include="load_screen.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -196,6 +211,15 @@
     <EmbeddedResource Include="administration\changePassword.resx">
       <DependentUpon>changePassword.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="administration\ClassConfigForm.pt-PT.resx">
+      <DependentUpon>ClassConfigForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="administration\UserConfigForm.pt-PT.resx">
+      <DependentUpon>UserConfigForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="administration\userSettings.pt-PT.resx">
+      <DependentUpon>userSettings.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="administration\WorkspaceConfigForm.resx">
       <DependentUpon>WorkspaceConfigForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -205,17 +229,41 @@
     <EmbeddedResource Include="administration\UserConfigForm.resx">
       <DependentUpon>UserConfigForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="codeResources\ClassConfigFormStrings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ClassConfigFormStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="codeResources\confirmByTyping.pt-PT.resx">
+      <DependentUpon>confirmByTyping.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="codeResources\confirmByTyping.resx">
       <DependentUpon>confirmByTyping.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="codeResources\loadingForm.pt-PT.resx">
+      <DependentUpon>loadingForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="codeResources\loadingForm.resx">
       <DependentUpon>loadingForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="codeResources\GlobalStrings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>GlobalStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="codeResources\UserConfigFormStrings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>UserConfigFormStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="load_screen.resx">
       <DependentUpon>load_screen.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="login.pt-PT.resx">
+      <DependentUpon>login.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="login.resx">
       <DependentUpon>login.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="main.pt-PT.resx">
+      <DependentUpon>main.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="main.resx">
       <DependentUpon>main.cs</DependentUpon>

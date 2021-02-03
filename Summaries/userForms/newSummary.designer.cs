@@ -44,9 +44,13 @@
             this.deleteFileBTN = new System.Windows.Forms.DataGridViewButtonColumn();
             this.workspaceComboBox = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.missedDayCheckBox = new System.Windows.Forms.CheckBox();
+            this.dayHoursNumberBox = new System.Windows.Forms.NumericUpDown();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.summaryNumberBox)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.attachmentsGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dayHoursNumberBox)).BeginInit();
             this.SuspendLayout();
             // 
             // saveBTN
@@ -217,6 +221,48 @@
             this.label3.TabIndex = 9;
             this.label3.Text = "Workspace";
             // 
+            // missedDayCheckBox
+            // 
+            this.missedDayCheckBox.AutoSize = true;
+            this.missedDayCheckBox.Location = new System.Drawing.Point(374, 67);
+            this.missedDayCheckBox.Name = "missedDayCheckBox";
+            this.missedDayCheckBox.Size = new System.Drawing.Size(82, 17);
+            this.missedDayCheckBox.TabIndex = 10;
+            this.missedDayCheckBox.Text = "Not Present";
+            this.missedDayCheckBox.UseVisualStyleBackColor = true;
+            this.missedDayCheckBox.CheckedChanged += new System.EventHandler(this.missedDayCheckBox_CheckedChanged);
+            // 
+            // dayHoursNumberBox
+            // 
+            this.dayHoursNumberBox.Location = new System.Drawing.Point(330, 66);
+            this.dayHoursNumberBox.Maximum = new decimal(new int[] {
+            24,
+            0,
+            0,
+            0});
+            this.dayHoursNumberBox.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.dayHoursNumberBox.Name = "dayHoursNumberBox";
+            this.dayHoursNumberBox.Size = new System.Drawing.Size(39, 20);
+            this.dayHoursNumberBox.TabIndex = 11;
+            this.dayHoursNumberBox.Value = new decimal(new int[] {
+            7,
+            0,
+            0,
+            0});
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(289, 68);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(35, 13);
+            this.label4.TabIndex = 12;
+            this.label4.Text = "Hours";
+            // 
             // newSummary
             // 
             this.AllowDrop = true;
@@ -224,6 +270,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelBTN;
             this.ClientSize = new System.Drawing.Size(473, 483);
+            this.Controls.Add(this.dayHoursNumberBox);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.missedDayCheckBox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.workspaceComboBox);
             this.Controls.Add(this.groupBox1);
@@ -249,6 +298,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.summaryNumberBox)).EndInit();
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.attachmentsGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dayHoursNumberBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -271,5 +321,8 @@
         private System.Windows.Forms.Button addAttachmentBTN;
         private System.Windows.Forms.DataGridViewTextBoxColumn fileName;
         private System.Windows.Forms.DataGridViewButtonColumn deleteFileBTN;
+        private System.Windows.Forms.CheckBox missedDayCheckBox;
+        private System.Windows.Forms.NumericUpDown dayHoursNumberBox;
+        private System.Windows.Forms.Label label4;
     }
 }
