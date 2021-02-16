@@ -61,6 +61,24 @@ namespace Summaries.codeResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The class name provided is already in use.
+        /// </summary>
+        internal static string ClassNameInUse {
+            get {
+                return ResourceManager.GetString("ClassNameInUse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Class name in use.
+        /// </summary>
+        internal static string ClassNameInUseShort {
+            get {
+                return ResourceManager.GetString("ClassNameInUseShort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &quot;{0}&quot; Properties.
         /// </summary>
         internal static string FormName {

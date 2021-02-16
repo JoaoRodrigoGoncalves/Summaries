@@ -78,8 +78,8 @@
             // 
             // resetBTN
             // 
-            resources.ApplyResources(this.resetBTN, "resetBTN");
             this.resetBTN.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            resources.ApplyResources(this.resetBTN, "resetBTN");
             this.resetBTN.Name = "resetBTN";
             this.resetBTN.UseVisualStyleBackColor = true;
             this.resetBTN.Click += new System.EventHandler(this.resetBTN_Click);
@@ -116,14 +116,14 @@
             // 
             // languageDropDown
             // 
-            resources.ApplyResources(this.languageDropDown, "languageDropDown");
             this.languageDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.languageDropDown.FormattingEnabled = true;
             this.languageDropDown.Items.AddRange(new object[] {
             resources.GetString("languageDropDown.Items"),
             resources.GetString("languageDropDown.Items1")});
+            resources.ApplyResources(this.languageDropDown, "languageDropDown");
             this.languageDropDown.Name = "languageDropDown";
-            this.languageDropDown.SelectedValueChanged += new System.EventHandler(this.languageDropDown_SelectedValueChanged);
+            this.languageDropDown.DropDownClosed += new System.EventHandler(this.languageDropDown_DropDownClosed);
             // 
             // label3
             // 

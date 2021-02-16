@@ -77,8 +77,23 @@
     <ManifestKeyFile>Summaries_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MigraDoc.DocumentObjectModel-gdi, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>packages\PDFsharp-MigraDoc-gdi.1.50.5147\lib\net20\MigraDoc.DocumentObjectModel-gdi.dll</HintPath>
+    </Reference>
+    <Reference Include="MigraDoc.Rendering-gdi, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>packages\PDFsharp-MigraDoc-gdi.1.50.5147\lib\net20\MigraDoc.Rendering-gdi.dll</HintPath>
+    </Reference>
+    <Reference Include="MigraDoc.RtfRendering-gdi, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>packages\PDFsharp-MigraDoc-gdi.1.50.5147\lib\net20\MigraDoc.RtfRendering-gdi.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp-gdi, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>packages\PDFsharp-MigraDoc-gdi.1.50.5147\lib\net20\PdfSharp-gdi.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp.Charting-gdi, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>packages\PDFsharp-MigraDoc-gdi.1.50.5147\lib\net20\PdfSharp.Charting-gdi.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -129,6 +144,21 @@
     <Compile Include="administration\UserConfigForm.Designer.cs">
       <DependentUpon>UserConfigForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="codeResources\AdministrationMenuStrings.pt-pt.Designer.cs">
+      <DependentUpon>AdministrationMenuStrings.pt-pt.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="codeResources\AdministrationMenuStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AdministrationMenuStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="codeResources\ClassConfigFormStrings.pt-pt.Designer.cs">
+      <DependentUpon>ClassConfigFormStrings.pt-pt.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="codeResources\ClassConfigFormStrings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -141,6 +171,22 @@
       <DependentUpon>confirmByTyping.cs</DependentUpon>
     </Compile>
     <Compile Include="codeResources\functions.cs" />
+    <Compile Include="codeResources\GenerateReport.cs" />
+    <Compile Include="codeResources\GenerateReportStrings.pt-pt.Designer.cs">
+      <DependentUpon>GenerateReportStrings.pt-pt.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="codeResources\GenerateReportStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GenerateReportStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="codeResources\GlobalStrings.pt-pt.Designer.cs">
+      <DependentUpon>GlobalStrings.pt-pt.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="codeResources\loadingForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -153,10 +199,51 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GlobalStrings.resx</DependentUpon>
     </Compile>
+    <Compile Include="codeResources\newSummaryStrings.pt-pt.Designer.cs">
+      <DependentUpon>newSummaryStrings.pt-pt.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="codeResources\newSummaryStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>newSummaryStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="codeResources\ReportInfoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="codeResources\ReportInfoForm.Designer.cs">
+      <DependentUpon>ReportInfoForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="codeResources\summariesListStrings.pt-pt.Designer.cs">
+      <DependentUpon>summariesListStrings.pt-pt.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="codeResources\summariesListStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>summariesListStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="codeResources\UserConfigFormStrings.pt-pt.Designer.cs">
+      <DependentUpon>UserConfigFormStrings.pt-pt.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="codeResources\UserConfigFormStrings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>UserConfigFormStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="codeResources\WorkspaceConfigFormStrings.pt-pt.Designer.cs">
+      <DependentUpon>WorkspaceConfigFormStrings.pt-pt.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="codeResources\WorkspaceConfigFormStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WorkspaceConfigFormStrings.resx</DependentUpon>
     </Compile>
     <Compile Include="load_screen.cs">
       <SubType>Form</SubType>
@@ -205,8 +292,14 @@
     <EmbeddedResource Include="aboutSummaries.resx">
       <DependentUpon>aboutSummaries.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="administration\AdministrationMenu.pt-PT.resx">
+      <DependentUpon>AdministrationMenu.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="administration\AdministrationMenu.resx">
       <DependentUpon>AdministrationMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="administration\changePassword.pt-PT.resx">
+      <DependentUpon>changePassword.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="administration\changePassword.resx">
       <DependentUpon>changePassword.cs</DependentUpon>
@@ -220,6 +313,9 @@
     <EmbeddedResource Include="administration\userSettings.pt-PT.resx">
       <DependentUpon>userSettings.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="administration\WorkspaceConfigForm.pt-PT.resx">
+      <DependentUpon>WorkspaceConfigForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="administration\WorkspaceConfigForm.resx">
       <DependentUpon>WorkspaceConfigForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -228,6 +324,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="administration\UserConfigForm.resx">
       <DependentUpon>UserConfigForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="codeResources\AdministrationMenuStrings.pt-pt.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AdministrationMenuStrings.pt-pt.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="codeResources\AdministrationMenuStrings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AdministrationMenuStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="codeResources\ClassConfigFormStrings.pt-pt.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ClassConfigFormStrings.pt-pt.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="codeResources\ClassConfigFormStrings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -239,6 +347,18 @@
     <EmbeddedResource Include="codeResources\confirmByTyping.resx">
       <DependentUpon>confirmByTyping.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="codeResources\GenerateReportStrings.pt-pt.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>GenerateReportStrings.pt-pt.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="codeResources\GenerateReportStrings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>GenerateReportStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="codeResources\GlobalStrings.pt-pt.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>GlobalStrings.pt-pt.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="codeResources\loadingForm.pt-PT.resx">
       <DependentUpon>loadingForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -249,9 +369,40 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>GlobalStrings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="codeResources\newSummaryStrings.pt-pt.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>newSummaryStrings.pt-pt.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="codeResources\newSummaryStrings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>newSummaryStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="codeResources\ReportInfoForm.resx">
+      <DependentUpon>ReportInfoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="codeResources\summariesListStrings.pt-pt.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>summariesListStrings.pt-pt.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="codeResources\summariesListStrings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>summariesListStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="codeResources\UserConfigFormStrings.pt-pt.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>UserConfigFormStrings.pt-pt.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="codeResources\UserConfigFormStrings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>UserConfigFormStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="codeResources\WorkspaceConfigFormStrings.pt-pt.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>WorkspaceConfigFormStrings.pt-pt.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="codeResources\WorkspaceConfigFormStrings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>WorkspaceConfigFormStrings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="load_screen.resx">
       <DependentUpon>load_screen.cs</DependentUpon>
@@ -268,6 +419,9 @@
     <EmbeddedResource Include="main.resx">
       <DependentUpon>main.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="userForms\newSummary.pt-PT.resx">
+      <DependentUpon>newSummary.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="userForms\newSummary.resx">
       <DependentUpon>newSummary.cs</DependentUpon>
     </EmbeddedResource>
@@ -281,6 +435,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="userForms\summariesList.pt-PT.resx">
+      <DependentUpon>summariesList.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="userForms\summariesList.resx">
       <DependentUpon>summariesList.cs</DependentUpon>
     </EmbeddedResource>

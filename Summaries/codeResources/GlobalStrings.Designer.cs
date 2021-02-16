@@ -70,11 +70,47 @@ namespace Summaries.codeResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot change to the same password.
+        /// </summary>
+        internal static string CannotChangeSamePassword {
+            get {
+                return ResourceManager.GetString("CannotChangeSamePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to connect to the server.
+        /// </summary>
+        internal static string CannotConnectServer {
+            get {
+                return ResourceManager.GetString("CannotConnectServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Couldn&apos;t establish a connection to the Summaries server. Please try again later..
+        /// </summary>
+        internal static string CannotConnectServerLong {
+            get {
+                return ResourceManager.GetString("CannotConnectServerLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Could Not Get Class Information.
         /// </summary>
         internal static string CantGetClassInfo {
             get {
                 return ResourceManager.GetString("CantGetClassInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Closing....
+        /// </summary>
+        internal static string Closing {
+            get {
+                return ResourceManager.GetString("Closing", resourceCulture);
             }
         }
         
@@ -97,11 +133,38 @@ namespace Summaries.codeResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Could not load all needed resources.
+        /// </summary>
+        internal static string CouldNotLoadResources {
+            get {
+                return ResourceManager.GetString("CouldNotLoadResources", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Critical Error.
         /// </summary>
         internal static string CriticalError {
             get {
                 return ResourceManager.GetString("CriticalError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Empty Fields.
+        /// </summary>
+        internal static string EmptyFields {
+            get {
+                return ResourceManager.GetString("EmptyFields", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One or more fields are empty. Please fill them before continue..
+        /// </summary>
+        internal static string EmptyFieldsText {
+            get {
+                return ResourceManager.GetString("EmptyFieldsText", resourceCulture);
             }
         }
         
@@ -133,11 +196,38 @@ namespace Summaries.codeResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to check for updates.
+        /// </summary>
+        internal static string FailedCheckUpdates {
+            get {
+                return ResourceManager.GetString("FailedCheckUpdates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to More than one entry received.
         /// </summary>
         internal static string GotMoreThanOneEntry {
             get {
                 return ResourceManager.GetString("GotMoreThanOneEntry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The current password provided is incorrect. Please try again..
+        /// </summary>
+        internal static string IncorrectCurrentPassword {
+            get {
+                return ResourceManager.GetString("IncorrectCurrentPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The application can only be lauched on the lastest version. Closing....
+        /// </summary>
+        internal static string LaunchOnLatestVersion {
+            get {
+                return ResourceManager.GetString("LaunchOnLatestVersion", resourceCulture);
             }
         }
         
@@ -151,11 +241,119 @@ namespace Summaries.codeResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The new passwords don&apos;t match. Please try again..
+        /// </summary>
+        internal static string NewPasswordMismatch {
+            get {
+                return ResourceManager.GetString("NewPasswordMismatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New version available!.
+        /// </summary>
+        internal static string NewVersion {
+            get {
+                return ResourceManager.GetString("NewVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A new version is available. Would you like to download it now?.
+        /// </summary>
+        internal static string NewVersionLong {
+            get {
+                return ResourceManager.GetString("NewVersionLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to connect to the internet.
+        /// </summary>
+        internal static string NoInternet {
+            get {
+                return ResourceManager.GetString("NoInternet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Couldn&apos;t establish a connetion to the internet. Please try again later..
+        /// </summary>
+        internal static string NoInternetLong {
+            get {
+                return ResourceManager.GetString("NoInternetLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The current password and new password provided are the same..
+        /// </summary>
+        internal static string OldPasswordSameAsNew {
+            get {
+                return ResourceManager.GetString("OldPasswordSameAsNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password Changed.
+        /// </summary>
+        internal static string PasswordChanged {
+            get {
+                return ResourceManager.GetString("PasswordChanged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password Changed Successfully!.
+        /// </summary>
+        internal static string PasswordChangedSuccess {
+            get {
+                return ResourceManager.GetString("PasswordChangedSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Incorrect Password.
+        /// </summary>
+        internal static string PasswordIncorrect {
+            get {
+                return ResourceManager.GetString("PasswordIncorrect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password Reseted Successfully!.
+        /// </summary>
+        internal static string PasswordResetedSuccessfully {
+            get {
+                return ResourceManager.GetString("PasswordResetedSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The passwords don&apos;t match.
+        /// </summary>
+        internal static string PasswordsDontMatch {
+            get {
+                return ResourceManager.GetString("PasswordsDontMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
         internal static string Settings {
             get {
                 return ResourceManager.GetString("Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Something went wrong.
+        /// </summary>
+        internal static string SomethingWentWrong {
+            get {
+                return ResourceManager.GetString("SomethingWentWrong", resourceCulture);
             }
         }
         

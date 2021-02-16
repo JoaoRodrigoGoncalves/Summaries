@@ -70,6 +70,24 @@ namespace Summaries.codeResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The login name provided is already in use!.
+        /// </summary>
+        internal static string LoginNameInUse {
+            get {
+                return ResourceManager.GetString("LoginNameInUse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login name in use.
+        /// </summary>
+        internal static string LoginNameInUseShort {
+            get {
+                return ResourceManager.GetString("LoginNameInUseShort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New User.
         /// </summary>
         internal static string NewUser {

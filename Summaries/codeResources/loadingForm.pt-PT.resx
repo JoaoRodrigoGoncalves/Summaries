@@ -125,10 +125,10 @@
     <value>A Processar...</value>
   </data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>324, 13</value>
+    <value>336, 13</value>
   </data>
   <data name="label2.Text" xml:space="preserve">
-    <value>Isto poderá demorar um pouco, dependeo da sua ligação à internet</value>
+    <value>Isto poderá demorar um pouco, dependendo da sua ligação à internet</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

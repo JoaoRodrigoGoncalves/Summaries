@@ -63,64 +63,38 @@ namespace Summaries.administration
             // 
             // mainLayoutPanel
             // 
-            this.mainLayoutPanel.ColumnCount = 1;
-            this.mainLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            resources.ApplyResources(this.mainLayoutPanel, "mainLayoutPanel");
             this.mainLayoutPanel.Controls.Add(this.footerLayoutPanel, 0, 1);
             this.mainLayoutPanel.Controls.Add(this.tabControl1, 0, 0);
-            this.mainLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mainLayoutPanel.Location = new System.Drawing.Point(0, 0);
             this.mainLayoutPanel.Name = "mainLayoutPanel";
-            this.mainLayoutPanel.RowCount = 2;
-            this.mainLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 93F));
-            this.mainLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7F));
-            this.mainLayoutPanel.Size = new System.Drawing.Size(401, 506);
-            this.mainLayoutPanel.TabIndex = 0;
             // 
             // footerLayoutPanel
             // 
-            this.footerLayoutPanel.ColumnCount = 3;
-            this.footerLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
-            this.footerLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.footerLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            resources.ApplyResources(this.footerLayoutPanel, "footerLayoutPanel");
             this.footerLayoutPanel.Controls.Add(this.okBTN, 2, 0);
             this.footerLayoutPanel.Controls.Add(this.cancelBTN, 1, 0);
-            this.footerLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.footerLayoutPanel.Location = new System.Drawing.Point(3, 473);
             this.footerLayoutPanel.Name = "footerLayoutPanel";
-            this.footerLayoutPanel.RowCount = 1;
-            this.footerLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.footerLayoutPanel.Size = new System.Drawing.Size(395, 30);
-            this.footerLayoutPanel.TabIndex = 0;
             // 
             // okBTN
             // 
-            this.okBTN.Location = new System.Drawing.Point(319, 3);
+            resources.ApplyResources(this.okBTN, "okBTN");
             this.okBTN.Name = "okBTN";
-            this.okBTN.Size = new System.Drawing.Size(73, 23);
-            this.okBTN.TabIndex = 8;
-            this.okBTN.Text = "OK";
             this.okBTN.UseVisualStyleBackColor = true;
             this.okBTN.Click += new System.EventHandler(this.okBTN_Click);
             // 
             // cancelBTN
             // 
-            this.cancelBTN.Location = new System.Drawing.Point(240, 3);
+            resources.ApplyResources(this.cancelBTN, "cancelBTN");
             this.cancelBTN.Name = "cancelBTN";
-            this.cancelBTN.Size = new System.Drawing.Size(73, 23);
-            this.cancelBTN.TabIndex = 7;
-            this.cancelBTN.Text = "Cancel";
             this.cancelBTN.UseVisualStyleBackColor = true;
             this.cancelBTN.Click += new System.EventHandler(this.cancelBTN_Click);
             // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.GeneralTabPage);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(3, 3);
+            resources.ApplyResources(this.tabControl1, "tabControl1");
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(395, 464);
-            this.tabControl1.TabIndex = 1;
             // 
             // GeneralTabPage
             // 
@@ -131,12 +105,8 @@ namespace Summaries.administration
             this.GeneralTabPage.Controls.Add(this.WorkspaceNameTOPBox);
             this.GeneralTabPage.Controls.Add(this.workspacePic);
             this.GeneralTabPage.Controls.Add(this.splitterLine);
-            this.GeneralTabPage.Location = new System.Drawing.Point(4, 22);
+            resources.ApplyResources(this.GeneralTabPage, "GeneralTabPage");
             this.GeneralTabPage.Name = "GeneralTabPage";
-            this.GeneralTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.GeneralTabPage.Size = new System.Drawing.Size(387, 438);
-            this.GeneralTabPage.TabIndex = 0;
-            this.GeneralTabPage.Text = "General";
             this.GeneralTabPage.UseVisualStyleBackColor = true;
             // 
             // groupBox2
@@ -144,20 +114,14 @@ namespace Summaries.administration
             this.groupBox2.Controls.Add(this.addClassBTN);
             this.groupBox2.Controls.Add(this.classesCB);
             this.groupBox2.Controls.Add(this.hoursDataGridView);
-            this.groupBox2.Location = new System.Drawing.Point(10, 206);
+            resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(370, 226);
-            this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Class Hours";
             // 
             // addClassBTN
             // 
-            this.addClassBTN.Location = new System.Drawing.Point(289, 17);
+            resources.ApplyResources(this.addClassBTN, "addClassBTN");
             this.addClassBTN.Name = "addClassBTN";
-            this.addClassBTN.Size = new System.Drawing.Size(75, 23);
-            this.addClassBTN.TabIndex = 5;
-            this.addClassBTN.Text = "Add";
             this.addClassBTN.UseVisualStyleBackColor = true;
             this.addClassBTN.Click += new System.EventHandler(this.addClassBTN_Click);
             // 
@@ -165,11 +129,9 @@ namespace Summaries.administration
             // 
             this.classesCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.classesCB.FormattingEnabled = true;
-            this.classesCB.Location = new System.Drawing.Point(6, 19);
+            resources.ApplyResources(this.classesCB, "classesCB");
             this.classesCB.Name = "classesCB";
-            this.classesCB.Size = new System.Drawing.Size(277, 21);
             this.classesCB.Sorted = true;
-            this.classesCB.TabIndex = 4;
             // 
             // hoursDataGridView
             // 
@@ -178,11 +140,9 @@ namespace Summaries.administration
             this.hoursDataGridView.AllowUserToResizeRows = false;
             this.hoursDataGridView.CausesValidation = false;
             this.hoursDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.hoursDataGridView.Location = new System.Drawing.Point(6, 49);
+            resources.ApplyResources(this.hoursDataGridView, "hoursDataGridView");
             this.hoursDataGridView.MultiSelect = false;
             this.hoursDataGridView.Name = "hoursDataGridView";
-            this.hoursDataGridView.Size = new System.Drawing.Size(358, 171);
-            this.hoursDataGridView.TabIndex = 6;
             this.hoursDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.hoursDataGridView_CellClick);
             this.hoursDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.hoursDataGridView_CellValueChanged);
             // 
@@ -190,78 +150,51 @@ namespace Summaries.administration
             // 
             this.groupBox1.Controls.Add(this.writeCheck);
             this.groupBox1.Controls.Add(this.readCheck);
-            this.groupBox1.Location = new System.Drawing.Point(10, 131);
+            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(370, 68);
-            this.groupBox1.TabIndex = 7;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Workspace Permissions";
             // 
             // writeCheck
             // 
-            this.writeCheck.AutoSize = true;
-            this.writeCheck.Location = new System.Drawing.Point(6, 42);
+            resources.ApplyResources(this.writeCheck, "writeCheck");
             this.writeCheck.Name = "writeCheck";
-            this.writeCheck.Size = new System.Drawing.Size(81, 17);
-            this.writeCheck.TabIndex = 3;
-            this.writeCheck.Text = "Write Mode";
             this.writeCheck.UseVisualStyleBackColor = true;
             // 
             // readCheck
             // 
-            this.readCheck.AutoSize = true;
-            this.readCheck.Location = new System.Drawing.Point(6, 19);
+            resources.ApplyResources(this.readCheck, "readCheck");
             this.readCheck.Name = "readCheck";
-            this.readCheck.Size = new System.Drawing.Size(82, 17);
-            this.readCheck.TabIndex = 2;
-            this.readCheck.Text = "Read Mode";
             this.readCheck.UseVisualStyleBackColor = true;
             // 
             // workspaceNameTB
             // 
-            this.workspaceNameTB.Location = new System.Drawing.Point(10, 105);
+            resources.ApplyResources(this.workspaceNameTB, "workspaceNameTB");
             this.workspaceNameTB.Name = "workspaceNameTB";
-            this.workspaceNameTB.Size = new System.Drawing.Size(370, 20);
-            this.workspaceNameTB.TabIndex = 1;
             // 
             // workspaceNameLB
             // 
-            this.workspaceNameLB.AutoSize = true;
-            this.workspaceNameLB.Location = new System.Drawing.Point(7, 89);
+            resources.ApplyResources(this.workspaceNameLB, "workspaceNameLB");
             this.workspaceNameLB.Name = "workspaceNameLB";
-            this.workspaceNameLB.Size = new System.Drawing.Size(93, 13);
-            this.workspaceNameLB.TabIndex = 3;
-            this.workspaceNameLB.Text = "Workspace Name";
             // 
             // WorkspaceNameTOPBox
             // 
-            this.WorkspaceNameTOPBox.Location = new System.Drawing.Point(76, 28);
+            resources.ApplyResources(this.WorkspaceNameTOPBox, "WorkspaceNameTOPBox");
             this.WorkspaceNameTOPBox.Name = "WorkspaceNameTOPBox";
             this.WorkspaceNameTOPBox.ReadOnly = true;
-            this.WorkspaceNameTOPBox.Size = new System.Drawing.Size(306, 20);
-            this.WorkspaceNameTOPBox.TabIndex = 2;
             // 
             // workspacePic
             // 
             this.workspacePic.BackColor = System.Drawing.Color.Gainsboro;
             this.workspacePic.BackgroundImage = global::Summaries.Properties.Resources.summariesList;
-            this.workspacePic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.workspacePic.Location = new System.Drawing.Point(6, 6);
+            resources.ApplyResources(this.workspacePic, "workspacePic");
             this.workspacePic.Name = "workspacePic";
-            this.workspacePic.Size = new System.Drawing.Size(64, 64);
-            this.workspacePic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.workspacePic.TabIndex = 0;
             this.workspacePic.TabStop = false;
             // 
             // splitterLine
             // 
-            this.splitterLine.AutoSize = true;
+            resources.ApplyResources(this.splitterLine, "splitterLine");
             this.splitterLine.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.splitterLine.Location = new System.Drawing.Point(7, 65);
             this.splitterLine.Name = "splitterLine";
-            this.splitterLine.Size = new System.Drawing.Size(373, 13);
-            this.splitterLine.TabIndex = 1;
-            this.splitterLine.Text = "_____________________________________________________________";
             // 
             // errorProvider
             // 
@@ -269,18 +202,12 @@ namespace Summaries.administration
             // 
             // WorkspaceConfigForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(401, 506);
             this.Controls.Add(this.mainLayoutPanel);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(417, 545);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(417, 545);
             this.Name = "WorkspaceConfigForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Properties";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.WorkspaceConfigForm_FormClosed);
             this.Load += new System.EventHandler(this.WorkspaceConfigForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WorkspaceConfigForm_KeyDown);

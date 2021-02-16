@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Summaries is a software designed to help students to write and keep up with their internship summaries.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("João Rodrigo Gonçalves")]
-[assembly: AssemblyProduct("Summaries - Summary Control Software")]
+[assembly: AssemblyProduct("Summaries - Internship Summary Control Software")]
 [assembly: AssemblyCopyright("Copyright © João Rodrigo Lopes Gonçalves 2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

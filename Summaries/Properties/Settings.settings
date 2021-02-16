@@ -2,8 +2,14 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Summaries.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="Language" Type="System.String" Scope="Application">
+    <Setting Name="Language" Type="System.String" Scope="User">
       <Value Profile="(Default)">en-US</Value>
+    </Setting>
+    <Setting Name="SchoolName" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="City" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

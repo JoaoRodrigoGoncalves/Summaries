@@ -121,8 +121,20 @@
     <value>Administrator</value>
     <comment>As in, what type of user</comment>
   </data>
+  <data name="CannotChangeSamePassword" xml:space="preserve">
+    <value>Cannot change to the same password</value>
+  </data>
+  <data name="CannotConnectServer" xml:space="preserve">
+    <value>Failed to connect to the server</value>
+  </data>
+  <data name="CannotConnectServerLong" xml:space="preserve">
+    <value>Couldn't establish a connection to the Summaries server. Please try again later.</value>
+  </data>
   <data name="CantGetClassInfo" xml:space="preserve">
     <value>Could Not Get Class Information</value>
+  </data>
+  <data name="Closing" xml:space="preserve">
+    <value>Closing...</value>
   </data>
   <data name="ConnectionLost" xml:space="preserve">
     <value>Connection Lost!</value>
@@ -130,8 +142,17 @@
   <data name="ConnectionToServerLost" xml:space="preserve">
     <value>Lost Connection to the server. Please try again later!</value>
   </data>
+  <data name="CouldNotLoadResources" xml:space="preserve">
+    <value>Could not load all needed resources</value>
+  </data>
   <data name="CriticalError" xml:space="preserve">
     <value>Critical Error</value>
+  </data>
+  <data name="EmptyFields" xml:space="preserve">
+    <value>Empty Fields</value>
+  </data>
+  <data name="EmptyFieldsText" xml:space="preserve">
+    <value>One or more fields are empty. Please fill them before continue.</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
@@ -142,14 +163,60 @@
   <data name="ExitQuestion" xml:space="preserve">
     <value>Are you sure you want to exit?</value>
   </data>
+  <data name="FailedCheckUpdates" xml:space="preserve">
+    <value>Failed to check for updates</value>
+  </data>
   <data name="GotMoreThanOneEntry" xml:space="preserve">
     <value>More than one entry received</value>
+  </data>
+  <data name="IncorrectCurrentPassword" xml:space="preserve">
+    <value>The current password provided is incorrect. Please try again.</value>
+  </data>
+  <data name="LaunchOnLatestVersion" xml:space="preserve">
+    <value>The application can only be lauched on the lastest version. Closing...</value>
   </data>
   <data name="MandatoryField" xml:space="preserve">
     <value>This field is mandatory</value>
   </data>
+  <data name="NewPasswordMismatch" xml:space="preserve">
+    <value>The new passwords don't match. Please try again.</value>
+  </data>
+  <data name="NewVersion" xml:space="preserve">
+    <value>New version available!</value>
+  </data>
+  <data name="NewVersionLong" xml:space="preserve">
+    <value>A new version is available. Would you like to download it now?</value>
+  </data>
+  <data name="NoInternet" xml:space="preserve">
+    <value>Failed to connect to the internet</value>
+  </data>
+  <data name="NoInternetLong" xml:space="preserve">
+    <value>Couldn't establish a connetion to the internet. Please try again later.</value>
+  </data>
+  <data name="OldPasswordSameAsNew" xml:space="preserve">
+    <value>The current password and new password provided are the same.</value>
+  </data>
+  <data name="PasswordChanged" xml:space="preserve">
+    <value>Password Changed</value>
+  </data>
+  <data name="PasswordChangedSuccess" xml:space="preserve">
+    <value>Password Changed Successfully!</value>
+  </data>
+  <data name="PasswordIncorrect" xml:space="preserve">
+    <value>Incorrect Password</value>
+  </data>
+  <data name="PasswordResetedSuccessfully" xml:space="preserve">
+    <value>Password Reseted Successfully!</value>
+  </data>
+  <data name="PasswordsDontMatch" xml:space="preserve">
+    <value>The passwords don't match</value>
+  </data>
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>
+  </data>
+  <data name="SomethingWentWrong" xml:space="preserve">
+    <value>Something went wrong</value>
+    <comment>Error</comment>
   </data>
   <data name="Student" xml:space="preserve">
     <value>Student</value>

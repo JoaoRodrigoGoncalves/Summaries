@@ -120,13 +120,13 @@ namespace Summaries.administration
         {
             DataGridViewTextBoxColumn className = new DataGridViewTextBoxColumn();
             className.Name = "className";
-            className.HeaderText = "Class Name";
+            className.HeaderText = AdministrationMenuStrings.ClassName;
             className.ReadOnly = true;
             hoursDataGridView.Columns.Add(className);
 
             NumericUpDownColumn column = new NumericUpDownColumn();
             column.Name = "totalHours";
-            column.HeaderText = "Total Hours";
+            column.HeaderText = WorkspaceConfigFormStrings.TotalHours;
             column.ReadOnly = false;
             hoursDataGridView.Columns.Add(column);
 
@@ -148,7 +148,7 @@ namespace Summaries.administration
                 {
                     if (classResponse.contents.Count < 1)
                     {
-                        MessageBox.Show("Classes not found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(WorkspaceConfigFormStrings.ClassesNotFound, GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         Close();
                     }
                     else
@@ -161,7 +161,7 @@ namespace Summaries.administration
                 }
                 else
                 {
-                    MessageBox.Show("Error: " + classResponse.errors, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(GlobalStrings.Error + ": " + classResponse.errors, GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Close();
                 }
             }
@@ -190,12 +190,12 @@ namespace Summaries.administration
                     {
                         if (workspaceResponse.contents.Count != 1)
                         {
-                            MessageBox.Show("More than one entry received", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(GlobalStrings.GotMoreThanOneEntry, GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                             Close();
                         }
                         else
                         {
-                            this.Text = "\"" + workspaceResponse.contents[0].workspaceName + "\" Properties";
+                            this.Text = String.Format(WorkspaceConfigFormStrings.FormTitle, workspaceResponse.contents[0].workspaceName);
                             WorkspaceNameTOPBox.Text = workspaceResponse.contents[0].workspaceName;
                             workspaceNameTB.Text = workspaceResponse.contents[0].workspaceName;
 
@@ -215,7 +215,7 @@ namespace Summaries.administration
                                     NumUpDownCell.Value = item.totalHours;
                                     DataGridViewButtonCell BTNCell = new DataGridViewButtonCell();
                                     BTNCell.Tag = classResponse.contents.FindIndex(x => x.classID == item.classID);
-                                    BTNCell.Value = "Remove";
+                                    BTNCell.Value = WorkspaceConfigFormStrings.RemoveBTN;
 
                                     row.Cells.Add(TBcell);
                                     row.Cells.Add(NumUpDownCell);
@@ -228,7 +228,7 @@ namespace Summaries.administration
                     }
                     else
                     {
-                        MessageBox.Show("Error: " + workspaceResponse.errors, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(GlobalStrings.Error + ": " + workspaceResponse.errors, GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         Close();
                     }
                 }
@@ -243,8 +243,8 @@ namespace Summaries.administration
             }
             else
             {
-                this.Text = "New Workspace Properties";
-                WorkspaceNameTOPBox.Text = "New Workspace";
+                this.Text = WorkspaceConfigFormStrings.NewWorkspaceTitle;
+                WorkspaceNameTOPBox.Text = WorkspaceConfigFormStrings.NewWorkspace;
             }
         }
 
@@ -293,7 +293,7 @@ namespace Summaries.administration
             if (string.IsNullOrEmpty(workspaceNameTB.Text) || string.IsNullOrWhiteSpace(workspaceNameTB.Text))
             {
                 errorProvider.SetIconPadding(workspaceNameTB, -20);
-                errorProvider.SetError(workspaceNameTB, "This field is mandatory");
+                errorProvider.SetError(workspaceNameTB, GlobalStrings.MandatoryField);
                 return true;
             }
 
@@ -306,7 +306,7 @@ namespace Summaries.administration
             {
                 if(hoursDataGridView.Rows.Count == 0)
                 {
-                    MessageBox.Show("No class hours assigned. This workspace will not be seen by users!", "Not class hours", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(WorkspaceConfigFormStrings.NoClassHoursAssignedWarning, WorkspaceConfigFormStrings.NoClassHours, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     readCheck.Checked = false;
                     writeCheck.Checked = false;
                 }
@@ -333,7 +333,7 @@ namespace Summaries.administration
                             }
                             else
                             {
-                                MessageBox.Show("Error: " + saveResponse.errors, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show(GlobalStrings.Error + ": " + saveResponse.errors, GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
                         catch (Exception ex)
@@ -352,31 +352,38 @@ namespace Summaries.administration
                 }
                 else
                 {
-                    using (loadingForm loading = new loadingForm(CreateNewWorkspace))
+                    if(!workspaceResponse.contents.Exists(x => x.workspaceName == workspaceNameTB.Text))
                     {
-                        loading.ShowDialog();
-                    }
-                    try
-                    {
-
-                        saveResponse = JsonConvert.DeserializeObject<simpleServerResponse>(saveRequest);
-
-                        if (saveResponse.status)
+                        using (loadingForm loading = new loadingForm(CreateNewWorkspace))
                         {
-                            changesHandled = true;
-                            cancelBTN_Click(sender, e);
+                            loading.ShowDialog();
                         }
-                        else
+                        try
                         {
-                            MessageBox.Show("Error: " + saveResponse.errors, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                            saveResponse = JsonConvert.DeserializeObject<simpleServerResponse>(saveRequest);
+
+                            if (saveResponse.status)
+                            {
+                                changesHandled = true;
+                                cancelBTN_Click(sender, e);
+                            }
+                            else
+                            {
+                                MessageBox.Show(GlobalStrings.Error + ": " + saveResponse.errors, GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Response: " + saveResponse + "\n" +
+                                "Request:" + saveRequest + "\n" +
+                                "Error: " + ex.Message + "\n" +
+                                "Stack: " + ex.StackTrace, "Fatal Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        MessageBox.Show("Response: " + saveResponse + "\n" +
-                            "Request:" + saveRequest + "\n" +
-                            "Error: " + ex.Message + "\n" +
-                            "Stack: " + ex.StackTrace, "Fatal Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(WorkspaceConfigFormStrings.WorkspaceNameInUse, WorkspaceConfigFormStrings.WorkspaceNameInUseShort, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -390,7 +397,7 @@ namespace Summaries.administration
                 {
                     if (wasAnyFieldModified())
                     {
-                        if (MessageBox.Show("There are unsaved changes made to this workspace. Would you like to save them first?", "Unsaved Changes", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        if (MessageBox.Show(WorkspaceConfigFormStrings.UnsavedChangesQuestion, WorkspaceConfigFormStrings.UnsavedChanges, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                         {
                             okBTN_Click(sender, e);
                         }
@@ -419,7 +426,7 @@ namespace Summaries.administration
                 NumUpDownCell.Value = 300;
                 DataGridViewButtonCell BTNCell = new DataGridViewButtonCell();
                 BTNCell.Tag = classIndex;
-                BTNCell.Value = "Remove";
+                BTNCell.Value = WorkspaceConfigFormStrings.RemoveBTN;
 
                 row.Cells.Add(TBcell);
                 row.Cells.Add(NumUpDownCell);

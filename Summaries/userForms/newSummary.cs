@@ -49,6 +49,7 @@ namespace Summaries
             public int workspaceID { get; set; }
             public string bodyText { get; set; }
             public List<Attachments> attachments { get; set; }
+            public int dayHours { get; set; }
         }
 
         public class serverResponse
@@ -113,7 +114,7 @@ namespace Summaries
             else
             {
                 shouldAbortLoad = true;
-                MessageBox.Show("Lost connection to ther server. Please try again.", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(GlobalStrings.ConnectionToServerLost, GlobalStrings.ConnectionLost, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -161,7 +162,7 @@ namespace Summaries
                     if (workspaces.contents == null)
                     {
                         storage.currentWorkspaceID = 0;
-                        MessageBox.Show("Cannot create summaries because there are no available workspaces!", "No available workspaces", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        MessageBox.Show(summariesListStrings.NoAvailableWorkspacesLong, summariesListStrings.NoAvailableWorkspaces, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         this.Close();
                     }
                     else
@@ -204,10 +205,18 @@ namespace Summaries
 
                                 if (isEdit)
                                 {
-                                    this.Text = "Edit Summary";
+                                    this.Text = newSummaryStrings.EditSummary;
                                     summaryNumberBox.Value = summaryNumber;
                                     dateBox.Value = DateTime.ParseExact(response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryNumber)].date, "yyyy-MM-dd", new CultureInfo("pt"));
                                     contentsBox.Text = response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryNumber)].bodyText;
+                                    if(response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryNumber)].dayHours == 0)
+                                    {
+                                        missedDayCheckBox.Checked = true;
+                                    }
+                                    else
+                                    {
+                                        dayHoursNumberBox.Value = response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryNumber)].dayHours;
+                                    }
                                     originalText = functions.Hash(response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryNumber)].bodyText);
                                     originalDate = response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryNumber)].date;
                                     originalWorkspaceID = response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryNumber)].workspaceID;
@@ -217,7 +226,7 @@ namespace Summaries
                                     {
                                         foreach (var attach in response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryNumber)].attachments)
                                         {
-                                            attachmentsGridView.Rows.Add(attach.filename, "Remove");
+                                            attachmentsGridView.Rows.Add(attach.filename, newSummaryStrings.RemoveBTN);
                                         }
                                     }
 
@@ -266,12 +275,12 @@ namespace Summaries
                             }
                             else
                             {
-                                MessageBox.Show("Error: " + response.errors, "Critical error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show(GlobalStrings.Error + ": " + response.errors, GlobalStrings.CriticalError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show("Critical error. " + ex.Message + "\n" + ex.StackTrace + "\n" + jsonResponse, "Critical Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(GlobalStrings.Error + ": " + ex.Message + "\n" + ex.StackTrace + "\n" + jsonResponse, GlobalStrings.CriticalError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                 }
@@ -279,11 +288,11 @@ namespace Summaries
                 {
                     if (!functions.CheckForInternetConnection(storage.inUseDomain))
                     {
-                        MessageBox.Show("Connection to the server lost. Please try again later.", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(GlobalStrings.ConnectionToServerLost, GlobalStrings.ConnectionLost, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     else
                     {
-                        MessageBox.Show("Critical error: " + ex.Message + "\n" + jsonWorkspace + "\n" + ex.StackTrace + "\n" + ex.InnerException, "Critical error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(GlobalStrings.Error + ": " + ex.Message + "\n" + jsonWorkspace + "\n" + ex.StackTrace + "\n" + ex.InnerException, GlobalStrings.CriticalError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -329,7 +338,7 @@ namespace Summaries
                 // Checks if the summary number is already in use
                 if (isInList)
                 {
-                    var result = MessageBox.Show("The Summary Number given is already registered. Do you wish to overwrite it?", "Summary Number already registered", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    var result = MessageBox.Show(newSummaryStrings.SummaryNumberInUseQuestion, newSummaryStrings.SummaryNumberInUse, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (result == DialogResult.Yes)
                     {
                         isEdit = true;
@@ -344,7 +353,7 @@ namespace Summaries
                 // Checks if the selected date is already in use by another summary
                 if (isDateUsed && !shouldAbort)
                 {
-                    var res = MessageBox.Show("The Selected date has already a summary registered. Do you wish to overwrite it?", "Selected date already registered", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    var res = MessageBox.Show(newSummaryStrings.DateInUseQuestion, newSummaryStrings.DateInUse, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (res == DialogResult.Yes)
                     {
                         isEdit = true;
@@ -362,6 +371,7 @@ namespace Summaries
 
             if (!shouldAbort)
             {
+                int dayHours = (missedDayCheckBox.Checked ? 0 : Convert.ToInt32(dayHoursNumberBox.Value));
                 if (isEdit)
                 {
                     if ((originalText != functions.Hash(contentsBox.Text)) || (originalDate != dateBox.Value.ToString("yyyy-MM-dd")) || (originalSummaryID != summaryNumberBox.Value) || filesToAdd.Count > 0 || filesToRemove.Count > 0)
@@ -375,42 +385,42 @@ namespace Summaries
                                 if (filesToAdopt != null && filesToAdopt.Count > 0)
                                 {
                                     // Here it saves the basic info about the current summary and uploads the files to the server
-                                    if (UpdateDB(Convert.ToInt32(summaryNumberBox.Value), dateBox.Value.ToString("yyyy-MM-dd"), contentsBox.Text, workspaces.contents[workspaces.contents.FindIndex(x => x.workspaceName == workspaceComboBox.SelectedItem.ToString())].id, dbRow, filesToAdopt, filesToRemove))
+                                    if (UpdateDB(Convert.ToInt32(summaryNumberBox.Value), dateBox.Value.ToString("yyyy-MM-dd"), contentsBox.Text, dayHours, dbRow, filesToAdopt, filesToRemove))
                                     {
                                         this.Close();
                                     }
                                     else
                                     {
-                                        MessageBox.Show("An error occurred while trying to save the summary.", "Error while saving the summary", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        MessageBox.Show(newSummaryStrings.ErrorSaveLong, newSummaryStrings.ErrorSave, MessageBoxButtons.OK, MessageBoxIcon.Error);
                                     }
                                 }
                                 else
                                 {
-                                    MessageBox.Show("An error occurred while trying to upload the files.", "Error while uploading files", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    MessageBox.Show(newSummaryStrings.ErrorUploadLong, newSummaryStrings.ErrorUpload, MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 }
                             }
                             else
                             {
                                 // Here it saves the basic info about the current summary and uploads the files to the server
-                                if (UpdateDB(Convert.ToInt32(summaryNumberBox.Value), dateBox.Value.ToString("yyyy-MM-dd"), contentsBox.Text, workspaces.contents[workspaces.contents.FindIndex(x => x.workspaceName == workspaceComboBox.SelectedItem.ToString())].id, dbRow, null, filesToRemove))
+                                if (UpdateDB(Convert.ToInt32(summaryNumberBox.Value), dateBox.Value.ToString("yyyy-MM-dd"), contentsBox.Text, dayHours, dbRow, null, filesToRemove))
                                 {
                                     this.Close();
                                 }
                                 else
                                 {
-                                    MessageBox.Show("An error occurred while trying to save the summary.", "Error while saving the summary", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    MessageBox.Show(newSummaryStrings.ErrorSaveLong, newSummaryStrings.ErrorSave, MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 }
                             }
                         }
                         else // There isn't any kind of file operation to be performed
                         {
-                            if (UpdateDB(Convert.ToInt32(summaryNumberBox.Value), dateBox.Value.ToString("yyyy-MM-dd"), contentsBox.Text, workspaces.contents[workspaces.contents.FindIndex(x => x.workspaceName == workspaceComboBox.SelectedItem.ToString())].id, dbRow))
+                            if (UpdateDB(Convert.ToInt32(summaryNumberBox.Value), dateBox.Value.ToString("yyyy-MM-dd"), contentsBox.Text, dayHours, dbRow))
                             {
                                 this.Close();
                             }
                             else
                             {
-                                MessageBox.Show("An error occurred while trying to save the summary.", "Error while saving the summary", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show(newSummaryStrings.ErrorSaveLong, newSummaryStrings.ErrorSave, MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
                     }
@@ -431,30 +441,30 @@ namespace Summaries
                         if (filesToAdopt != null && filesToAdopt.Count > 0)
                         {
                             // Here it saves the basic info about the current summary and uploads the files to the server
-                            if (UpdateDB(Convert.ToInt32(summaryNumberBox.Value), dateBox.Value.ToString("yyyy-MM-dd"), contentsBox.Text, workspaces.contents[workspaces.contents.FindIndex(x => x.workspaceName == workspaceComboBox.SelectedItem.ToString())].id, 0, filesToAdopt))
+                            if (UpdateDB(Convert.ToInt32(summaryNumberBox.Value), dateBox.Value.ToString("yyyy-MM-dd"), contentsBox.Text, dayHours, 0, filesToAdopt))
                             {
                                 this.Close();
                             }
                             else
                             {
-                                MessageBox.Show("An error occurred while trying to save the summary.", "Error while saving the summary", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show(newSummaryStrings.ErrorSaveLong, newSummaryStrings.ErrorSave, MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
                         else
                         {
-                            MessageBox.Show("An error occurred while trying to upload the files.", "Error while uploading files", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(newSummaryStrings.ErrorUploadLong, newSummaryStrings.ErrorUpload, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                     else
                     {
                         // Here it saves the basic info about the current summary and uploads the files to the server
-                        if (UpdateDB(Convert.ToInt32(summaryNumberBox.Value), dateBox.Value.ToString("yyyy-MM-dd"), contentsBox.Text, workspaces.contents[workspaces.contents.FindIndex(x => x.workspaceName == workspaceComboBox.SelectedItem.ToString())].id))
+                        if (UpdateDB(Convert.ToInt32(summaryNumberBox.Value), dateBox.Value.ToString("yyyy-MM-dd"), contentsBox.Text, dayHours))
                         {
                             this.Close();
                         }
                         else
                         {
-                            MessageBox.Show("An error occurred while trying to save the summary.", "Error while saving the summary", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(newSummaryStrings.ErrorSaveLong, newSummaryStrings.ErrorSave, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
 
@@ -469,12 +479,11 @@ namespace Summaries
         /// <param name="summaryNumber">The number of the summary</param>
         /// <param name="date">The date of the summary</param>
         /// <param name="text">The text of the summary</param>
-        /// <param name="workspaceID">The ID of the workspace</param>
         /// <param name="dbRowID">(Optional) The sumary ID in the database to be updated</param>
         /// <param name="filesToAdopt">(Optional) The list of files to be adopted</param>
         /// <param name="filesToRemove">(Optional) The list of files to be removed</param>
         /// <returns>The final status of the update.</returns>
-        private bool UpdateDB(int summaryNumber, string date, string text, int workspaceID, int dbRowID = 0, List<string> filesToAdopt = null, List<string> filesToRemove = null)
+        private bool UpdateDB(int summaryNumber, string date, string text, int dayHours, int dbRowID = 0, List<string> filesToAdopt = null, List<string> filesToRemove = null)
         {
             var functions = new functions();
             string filesLoad = "";
@@ -493,7 +502,7 @@ namespace Summaries
             if (dbRowID > 0)
             {
                 //editing a summary
-                savePOSTdata += "&summaryID=" + dbRowID + "&workspaceID=" + storage.currentWorkspaceID + "&summaryNumber=" + summaryNumber + "&date=" + functions.Hash(date) + "&bodyText=" + functions.Hash(text) + filesLoad;
+                savePOSTdata += "&summaryID=" + dbRowID + "&workspaceID=" + storage.currentWorkspaceID + "&summaryNumber=" + summaryNumber + "&date=" + functions.Hash(date) + "&bodyText=" + functions.Hash(text) + "&dayHours=" + dayHours + filesLoad;
                 using (loadingForm loadForm = new loadingForm(APISave))
                 {
                     loadForm.ShowDialog();
@@ -502,7 +511,7 @@ namespace Summaries
             else
             {
                 // new summary
-                savePOSTdata += "&summaryNumber=" + summaryNumber + "&date=" + functions.Hash(date) + "&bodyText=" + functions.Hash(text) + filesLoad;
+                savePOSTdata += "&summaryNumber=" + summaryNumber + "&date=" + functions.Hash(date) + "&bodyText=" + functions.Hash(text) + "&dayHours=" + dayHours + filesLoad;
                 using (loadingForm loadForm = new loadingForm(APICreateSummary))
                 {
                     loadForm.ShowDialog();
@@ -516,13 +525,13 @@ namespace Summaries
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error: " + ex.Message + "\n " + jsonSaveResponse, "Critital Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(GlobalStrings.Error + ": " + ex.Message + "\n " + jsonSaveResponse, GlobalStrings.CriticalError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 
             if (!serverResponse.status && (serverResponse.errors != null || serverResponse.errors.Length > 0))
             {
-                MessageBox.Show("Error: " + serverResponse.errors, "Critital backend error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(GlobalStrings.Error + ": " + serverResponse.errors, GlobalStrings.CriticalError, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             return serverResponse.status;
         }
@@ -556,7 +565,7 @@ namespace Summaries
                     }
                     else
                     {
-                        MessageBox.Show("Error: " + uploadResults.errors, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(GlobalStrings.Error + ": " + uploadResults.errors, GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return null;
                     }
                 }
@@ -575,7 +584,7 @@ namespace Summaries
                 }
                 else
                 {
-                    MessageBox.Show("Lost Connection to the Server!", "Fatal Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(GlobalStrings.ConnectionToServerLost, GlobalStrings.ConnectionLost, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 return null;
             }
@@ -623,7 +632,7 @@ namespace Summaries
                         string fileName = file.Split('\\')[file.Split('\\').Length - 1];
                         if (filesToAdd.Exists(x => x.Split('\\')[x.Split('\\').Length - 1] == fileName))
                         {
-                            MessageBox.Show("This file name already exists. Please rename the file and try again.", "File Already Loaded", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(newSummaryStrings.UsedFileNameRename, newSummaryStrings.FileLoaded, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                         else
                         {
@@ -631,18 +640,18 @@ namespace Summaries
                             {
                                 if (response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryNumber)].attachments.Exists(x => x.filename == fileName))
                                 {
-                                    MessageBox.Show("This file name already exists. Please rename the file and try again.", "File Already Loaded", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    MessageBox.Show(newSummaryStrings.UsedFileNameRename, newSummaryStrings.FileLoaded, MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 }
                                 else
                                 {
                                     filesToAdd.Add(file);
-                                    attachmentsGridView.Rows.Add(fileName, "Remove");
+                                    attachmentsGridView.Rows.Add(fileName, newSummaryStrings.RemoveBTN);
                                 }
                             }
                             catch
                             {
                                 filesToAdd.Add(file);
-                                attachmentsGridView.Rows.Add(fileName, "Remove");
+                                attachmentsGridView.Rows.Add(fileName, newSummaryStrings.RemoveBTN);
                             }
                         }
                     }
@@ -673,7 +682,7 @@ namespace Summaries
                 if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
                 {
                     string fileName = attachmentsGridView.Rows[e.RowIndex].Cells[e.ColumnIndex - 1].Value.ToString();
-                    DialogResult response = MessageBox.Show("Are you sure you want to remove " + fileName + "?", "Remove File", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    DialogResult response = MessageBox.Show(String.Format(newSummaryStrings.RemoveFileQuestion, fileName), newSummaryStrings.RemoveFile, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                     if (response == DialogResult.Yes)
                     {
@@ -734,7 +743,7 @@ namespace Summaries
                                         var parse = JsonConvert.DeserializeObject<simpleServerResponse>(Encoding.UTF8.GetString(response));
                                         if (parse.status == false)
                                         {
-                                            MessageBox.Show("Error downloading file! \n" + parse.errors, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                            MessageBox.Show(newSummaryStrings.ErrorDownloadingFile + "\n" + parse.errors, GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                                         }
                                     }
                                     catch
@@ -754,7 +763,7 @@ namespace Summaries
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show("Could not open file: " + ex.Message + "\n" + ex.InnerException, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(newSummaryStrings.CouldNotOpenFile + ": " + ex.Message + "\n" + ex.InnerException, GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                 }

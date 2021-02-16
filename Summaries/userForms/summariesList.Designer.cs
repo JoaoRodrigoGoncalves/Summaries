@@ -38,14 +38,14 @@
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.totalHoursLB = new System.Windows.Forms.ToolStripLabel();
+            this.totalHoursHolder = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.sumarizedHoursLB = new System.Windows.Forms.ToolStripLabel();
+            this.summarizedHoursLB = new System.Windows.Forms.ToolStripLabel();
             this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
+            this.exportWorkspace = new System.Windows.Forms.ToolStripButton();
             this.workspaceComboBox = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripLabel4 = new System.Windows.Forms.ToolStripLabel();
-            this.exportWorkspace = new System.Windows.Forms.ToolStripButton();
-            this.totalHoursHolder = new System.Windows.Forms.ToolStripLabel();
-            this.sumarizedHoursHolder = new System.Windows.Forms.ToolStripLabel();
+            this.summarizedHoursHolder = new System.Windows.Forms.ToolStripLabel();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             this.toolStrip.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -56,12 +56,10 @@
             this.dataGrid.AllowUserToAddRows = false;
             this.dataGrid.AllowUserToDeleteRows = false;
             this.dataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGrid.Location = new System.Drawing.Point(12, 28);
+            resources.ApplyResources(this.dataGrid, "dataGrid");
             this.dataGrid.MultiSelect = false;
             this.dataGrid.Name = "dataGrid";
             this.dataGrid.ReadOnly = true;
-            this.dataGrid.Size = new System.Drawing.Size(776, 394);
-            this.dataGrid.TabIndex = 0;
             this.dataGrid.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrid_CellDoubleClick);
             // 
             // toolStrip
@@ -73,148 +71,120 @@
             this.deleteSummary,
             this.refreshList,
             this.toolStripLabel2});
-            this.toolStrip.Location = new System.Drawing.Point(0, 0);
+            resources.ApplyResources(this.toolStrip, "toolStrip");
             this.toolStrip.Name = "toolStrip";
-            this.toolStrip.Size = new System.Drawing.Size(800, 25);
-            this.toolStrip.TabIndex = 1;
-            this.toolStrip.Text = "toolStrip1";
             // 
             // addSummary
             // 
             this.addSummary.Image = global::Summaries.Properties.Resources.addSummary;
-            this.addSummary.ImageTransparentColor = System.Drawing.Color.Magenta;
+            resources.ApplyResources(this.addSummary, "addSummary");
             this.addSummary.Name = "addSummary";
-            this.addSummary.Size = new System.Drawing.Size(136, 22);
-            this.addSummary.Text = "Add a new summary";
             this.addSummary.Click += new System.EventHandler(this.addSummary_Click);
             // 
             // editSummary
             // 
             this.editSummary.Image = global::Summaries.Properties.Resources.newSummary;
-            this.editSummary.ImageTransparentColor = System.Drawing.Color.Magenta;
+            resources.ApplyResources(this.editSummary, "editSummary");
             this.editSummary.Name = "editSummary";
-            this.editSummary.Size = new System.Drawing.Size(101, 22);
-            this.editSummary.Text = "Edit Summary";
             this.editSummary.Click += new System.EventHandler(this.editSummary_Click);
             // 
             // deleteSummary
             // 
             this.deleteSummary.Image = global::Summaries.Properties.Resources.deleteSummary;
-            this.deleteSummary.ImageTransparentColor = System.Drawing.Color.Magenta;
+            resources.ApplyResources(this.deleteSummary, "deleteSummary");
             this.deleteSummary.Name = "deleteSummary";
-            this.deleteSummary.Size = new System.Drawing.Size(114, 22);
-            this.deleteSummary.Text = "Delete Summary";
             this.deleteSummary.Click += new System.EventHandler(this.deleteSummary_Click);
             // 
             // refreshList
             // 
             this.refreshList.Image = global::Summaries.Properties.Resources.refresh;
-            this.refreshList.ImageTransparentColor = System.Drawing.Color.Magenta;
+            resources.ApplyResources(this.refreshList, "refreshList");
             this.refreshList.Name = "refreshList";
-            this.refreshList.Size = new System.Drawing.Size(66, 22);
-            this.refreshList.Text = "Refresh";
             this.refreshList.Click += new System.EventHandler(this.refreshList_Click);
             // 
             // toolStripLabel2
             // 
             this.toolStripLabel2.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(13, 22);
-            this.toolStripLabel2.Text = "  ";
+            resources.ApplyResources(this.toolStripLabel2, "toolStripLabel2");
             // 
             // toolStrip1
             // 
-            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            resources.ApplyResources(this.toolStrip1, "toolStrip1");
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.totalHoursLB,
             this.totalHoursHolder,
             this.toolStripSeparator2,
-            this.sumarizedHoursLB,
+            this.summarizedHoursLB,
             this.toolStripLabel3,
             this.exportWorkspace,
             this.workspaceComboBox,
             this.toolStripLabel4,
-            this.sumarizedHoursHolder});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 425);
+            this.summarizedHoursHolder});
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(800, 25);
-            this.toolStrip1.TabIndex = 2;
-            this.toolStrip1.Text = "toolStrip1";
             // 
             // totalHoursLB
             // 
             this.totalHoursLB.Name = "totalHoursLB";
-            this.totalHoursLB.Size = new System.Drawing.Size(70, 22);
-            this.totalHoursLB.Text = "Total Hours:";
+            resources.ApplyResources(this.totalHoursLB, "totalHoursLB");
+            // 
+            // totalHoursHolder
+            // 
+            this.totalHoursHolder.Name = "totalHoursHolder";
+            resources.ApplyResources(this.totalHoursHolder, "totalHoursHolder");
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            resources.ApplyResources(this.toolStripSeparator2, "toolStripSeparator2");
             // 
-            // sumarizedHoursLB
+            // summarizedHoursLB
             // 
-            this.sumarizedHoursLB.Name = "sumarizedHoursLB";
-            this.sumarizedHoursLB.Size = new System.Drawing.Size(100, 22);
-            this.sumarizedHoursLB.Text = "Sumarized Hours:";
+            this.summarizedHoursLB.Name = "summarizedHoursLB";
+            resources.ApplyResources(this.summarizedHoursLB, "summarizedHoursLB");
             // 
             // toolStripLabel3
             // 
             this.toolStripLabel3.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.toolStripLabel3.Name = "toolStripLabel3";
-            this.toolStripLabel3.Size = new System.Drawing.Size(13, 22);
-            this.toolStripLabel3.Text = "  ";
+            resources.ApplyResources(this.toolStripLabel3, "toolStripLabel3");
+            // 
+            // exportWorkspace
+            // 
+            this.exportWorkspace.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.exportWorkspace.Image = global::Summaries.Properties.Resources.export;
+            resources.ApplyResources(this.exportWorkspace, "exportWorkspace");
+            this.exportWorkspace.Name = "exportWorkspace";
+            this.exportWorkspace.Click += new System.EventHandler(this.exportWorkspace_Click);
             // 
             // workspaceComboBox
             // 
             this.workspaceComboBox.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.workspaceComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.workspaceComboBox.Name = "workspaceComboBox";
-            this.workspaceComboBox.Size = new System.Drawing.Size(200, 25);
+            resources.ApplyResources(this.workspaceComboBox, "workspaceComboBox");
             this.workspaceComboBox.DropDownClosed += new System.EventHandler(this.workspaceComboBox_DropDownClosed);
             // 
             // toolStripLabel4
             // 
             this.toolStripLabel4.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.toolStripLabel4.Name = "toolStripLabel4";
-            this.toolStripLabel4.Size = new System.Drawing.Size(68, 22);
-            this.toolStripLabel4.Text = "Workspace:";
+            resources.ApplyResources(this.toolStripLabel4, "toolStripLabel4");
             // 
-            // exportWorkspace
+            // summarizedHoursHolder
             // 
-            this.exportWorkspace.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.exportWorkspace.Image = global::Summaries.Properties.Resources.export;
-            this.exportWorkspace.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.exportWorkspace.Name = "exportWorkspace";
-            this.exportWorkspace.Size = new System.Drawing.Size(61, 22);
-            this.exportWorkspace.Text = "Export";
-            this.exportWorkspace.Click += new System.EventHandler(this.exportWorkspace_Click);
-            // 
-            // totalHoursHolder
-            // 
-            this.totalHoursHolder.Name = "totalHoursHolder";
-            this.totalHoursHolder.Size = new System.Drawing.Size(0, 22);
-            // 
-            // sumarizedHoursHolder
-            // 
-            this.sumarizedHoursHolder.Name = "sumarizedHoursHolder";
-            this.sumarizedHoursHolder.Size = new System.Drawing.Size(0, 22);
+            this.summarizedHoursHolder.Name = "summarizedHoursHolder";
+            resources.ApplyResources(this.summarizedHoursHolder, "summarizedHoursHolder");
             // 
             // summariesList
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.toolStrip);
             this.Controls.Add(this.dataGrid);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximumSize = new System.Drawing.Size(816, 489);
-            this.MinimumSize = new System.Drawing.Size(816, 489);
             this.Name = "summariesList";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Summaries List";
             this.Load += new System.EventHandler(this.summariesList_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).EndInit();
             this.toolStrip.ResumeLayout(false);
@@ -238,12 +208,12 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripLabel totalHoursLB;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripLabel sumarizedHoursLB;
+        private System.Windows.Forms.ToolStripLabel summarizedHoursLB;
         private System.Windows.Forms.ToolStripLabel toolStripLabel3;
         private System.Windows.Forms.ToolStripComboBox workspaceComboBox;
         private System.Windows.Forms.ToolStripLabel toolStripLabel4;
         private System.Windows.Forms.ToolStripButton exportWorkspace;
         private System.Windows.Forms.ToolStripLabel totalHoursHolder;
-        private System.Windows.Forms.ToolStripLabel sumarizedHoursHolder;
+        private System.Windows.Forms.ToolStripLabel summarizedHoursHolder;
     }
 }

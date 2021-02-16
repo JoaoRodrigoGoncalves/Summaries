@@ -143,41 +143,44 @@ namespace Summaries
             versionLBL.Text = functions.GetSoftwareVersion();
             switch (Properties.Settings.Default.Language)
             {
-                case "en-US":
-                    languageDropDown.SelectedIndex = languageDropDown.FindStringExact("English");
-                    break;
-
                 case "pt-PT":
                     languageDropDown.SelectedIndex = languageDropDown.FindStringExact("Português");
+                    break;
+
+                default:
+                    languageDropDown.SelectedIndex = languageDropDown.FindStringExact("English");
                     break;
             }
         }
 
-        private void languageDropDown_SelectedValueChanged(object sender, EventArgs e)
+        private void languageDropDown_DropDownClosed(object sender, EventArgs e)
         {
             switch (languageDropDown.SelectedItem)
             {
-                case "English":
-                    if(Thread.CurrentThread.CurrentUICulture != System.Globalization.CultureInfo.GetCultureInfo("en-US"))
-                    {
-                        Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
-                        Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-US");
-                        this.Controls.Clear();
-                        InitializeComponent();
-                    }
-                    break;
-
                 case "Português":
                     if (Thread.CurrentThread.CurrentUICulture != System.Globalization.CultureInfo.GetCultureInfo("pt-PT"))
                     {
                         Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("pt-PT");
                         Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("pt-PT");
+                        Properties.Settings.Default.Language = "pt-PT";
+                        Properties.Settings.Default.Save();
                         this.Controls.Clear();
                         InitializeComponent();
+                        languageDropDown.SelectedIndex = languageDropDown.FindStringExact("Português");
                     }
                     break;
 
                 default:
+                    if (Thread.CurrentThread.CurrentUICulture != System.Globalization.CultureInfo.GetCultureInfo("en-US"))
+                    {
+                        Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
+                        Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-US");
+                        Properties.Settings.Default.Language = "en-US";
+                        Properties.Settings.Default.Save();
+                        this.Controls.Clear();
+                        InitializeComponent();
+                        languageDropDown.SelectedIndex = languageDropDown.FindStringExact("English");
+                    }
                     break;
             }
         }

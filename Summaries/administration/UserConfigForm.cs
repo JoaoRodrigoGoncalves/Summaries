@@ -282,31 +282,38 @@ namespace Summaries.administration
                 }
                 else
                 {
-                    using (loadingForm loading = new loadingForm(CreateNewUser))
+                    if(!response.contents.Exists(x => x.user == loginNameTB.Text))
                     {
-                        loading.ShowDialog();
-                    }
-                    try
-                    {
-
-                        saveResponse = JsonConvert.DeserializeObject<simpleServerResponse>(saveRequest);
-
-                        if (saveResponse.status)
+                        using (loadingForm loading = new loadingForm(CreateNewUser))
                         {
-                            changesHandled = true;
-                            cancelBTN_Click(sender, e);
+                            loading.ShowDialog();
                         }
-                        else
+                        try
                         {
-                            MessageBox.Show(GlobalStrings.Error + ": " + saveResponse.errors, GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                            saveResponse = JsonConvert.DeserializeObject<simpleServerResponse>(saveRequest);
+
+                            if (saveResponse.status)
+                            {
+                                changesHandled = true;
+                                cancelBTN_Click(sender, e);
+                            }
+                            else
+                            {
+                                MessageBox.Show(GlobalStrings.Error + ": " + saveResponse.errors, GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Response: " + saveResponse + "\n" +
+                                "Request:" + saveRequest + "\n" +
+                                "Error: " + ex.Message + "\n" +
+                                "Stack: " + ex.StackTrace, "Fatal Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        MessageBox.Show("Response: " + saveResponse + "\n" +
-                            "Request:" + saveRequest + "\n" +
-                            "Error: " + ex.Message + "\n" +
-                            "Stack: " + ex.StackTrace, "Fatal Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(UserConfigFormStrings.LoginNameInUse, UserConfigFormStrings.LoginNameInUseShort, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
