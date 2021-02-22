@@ -288,7 +288,7 @@ namespace Summaries.codeResources.ExportSummary
         void FillContent()
         {
             int totalHours = 0;
-            if(summariesResponse.contents != null)
+            if (summariesResponse.contents != null)
             {
                 foreach (summariesContent item in summariesResponse.contents)
                 {

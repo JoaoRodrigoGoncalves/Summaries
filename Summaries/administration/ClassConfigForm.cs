@@ -197,7 +197,7 @@ namespace Summaries.administration
             if (!string.IsNullOrEmpty(classNameTB.Text) || !string.IsNullOrWhiteSpace(classNameTB.Text))
             {
                 craftData = "className=" + classNameTB.Text;
-                if(!allClassesList.contents.Exists(x => x.className == classNameTB.Text && x.classID != sentClassID))
+                if (!allClassesList.contents.Exists(x => x.className == classNameTB.Text && x.classID != sentClassID))
                 {
                     if (sentClassID != 0) // 0 -> new class. != 0 -> class being edited
                     {

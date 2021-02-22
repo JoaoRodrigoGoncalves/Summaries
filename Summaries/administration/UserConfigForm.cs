@@ -267,7 +267,7 @@ namespace Summaries.administration
                 "&classID=" + classResponse.contents[classResponse.contents.FindIndex(x => x.className == classCB.SelectedItem.ToString())].classID +
                 "&isAdmin=" + isAdminCheck.Checked.ToString() +
                 "&isDeletionProtected=" + isDeletionProtectedCheck.Checked.ToString();
-                if(!allUsersList.contents.Exists(x => x.user == loginNameTB.Text && x.userid != sentUserID))
+                if (!allUsersList.contents.Exists(x => x.user == loginNameTB.Text && x.userid != sentUserID))
                 {
                     if (sentUserID != 0) // 0 -> new user. != 0 -> user being edited
                     {

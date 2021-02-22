@@ -315,7 +315,7 @@ namespace Summaries.codeResources
                 {
                     var row = this._table.AddRow();
                     int index = workspaceHoursResponse.contents.FindIndex(x => x.classID == classID && x.userID == student.userid);
-                    if(index != -1)
+                    if (index != -1)
                     {
                         int thisUserHours = workspaceHoursResponse.contents[index].summarizedHours;
                         row.Cells[0].AddParagraph(student.displayName);

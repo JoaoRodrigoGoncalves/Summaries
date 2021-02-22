@@ -731,5 +731,17 @@ namespace Summaries.administration
             }
             catch { }
         }
+
+        private void dataGridView_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                var hit = dataGridView.HitTest(e.X, e.Y);
+                dataGridView.ClearSelection();
+                dataGridView.Rows[hit.RowIndex].Selected = true;
+                EditEntry_ContextEvent(sender, e);
+            }
+            catch { }
+        }
     }
 }

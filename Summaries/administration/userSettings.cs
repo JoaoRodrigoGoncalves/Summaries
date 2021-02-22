@@ -90,7 +90,7 @@ namespace Summaries.userSettings
 
         private void bigBarCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            if(bigBarCheckBox.Checked != Properties.Settings.Default.bigBar)
+            if (bigBarCheckBox.Checked != Properties.Settings.Default.bigBar)
             {
                 Properties.Settings.Default.bigBar = bigBarCheckBox.Checked;
                 Properties.Settings.Default.Save();

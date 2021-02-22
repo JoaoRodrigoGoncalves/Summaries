@@ -177,7 +177,7 @@ namespace Summaries.administration
                     Close();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("Response: " + classResponse + "\n" +
                         "Request:" + classRequest + "\n" +
@@ -215,7 +215,7 @@ namespace Summaries.administration
                             writeCheck.Checked = workspaceResponse.contents[0].write;
 
 
-                            if(workspaceResponse.contents[0].hours != null)
+                            if (workspaceResponse.contents[0].hours != null)
                             {
                                 foreach (hoursContent item in workspaceResponse.contents[0].hours)
                                 {
@@ -316,7 +316,7 @@ namespace Summaries.administration
         {
             if (!isAnyFieldEmpty())
             {
-                if(hoursDataGridView.Rows.Count == 0)
+                if (hoursDataGridView.Rows.Count == 0)
                 {
                     MessageBox.Show(WorkspaceConfigFormStrings.NoClassHoursAssignedWarning, WorkspaceConfigFormStrings.NoClassHours, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     readCheck.Checked = false;
@@ -326,7 +326,7 @@ namespace Summaries.administration
                             "&readMode=" + readCheck.Checked.ToString() +
                             "&writeMode=" + writeCheck.Checked.ToString() +
                             "&JSONString=" + functions.Hash(JsonConvert.SerializeObject(hoursControl));
-                if(!allWorkspacesList.contents.Exists(x => x.workspaceName == workspaceNameTB.Text && x.id != sentWorkspaceID))
+                if (!allWorkspacesList.contents.Exists(x => x.workspaceName == workspaceNameTB.Text && x.id != sentWorkspaceID))
                 {
                     if (sentWorkspaceID != 0) // 0 -> new class. != 0 -> class being edited
                     {
@@ -422,11 +422,11 @@ namespace Summaries.administration
 
         private void addClassBTN_Click(object sender, EventArgs e)
         {
-            if(classesCB.Items.Count > 0 && classesCB.SelectedItem != null)
+            if (classesCB.Items.Count > 0 && classesCB.SelectedItem != null)
             {
                 int classIndex = classResponse.contents.FindIndex(x => x.className == classesCB.SelectedItem.ToString());
                 classesCB.Items.RemoveAt(classesCB.SelectedIndex);
-                if(classesCB.Items.Count > 0)
+                if (classesCB.Items.Count > 0)
                 {
                     classesCB.SelectedIndex = 0;
                 }
@@ -444,29 +444,40 @@ namespace Summaries.administration
                 row.Cells.Add(NumUpDownCell);
                 row.Cells.Add(BTNCell);
 
-                if(sentWorkspaceID != 0) // checks if we're editing a workspace
+                if (sentWorkspaceID != 0) // checks if we're editing a workspace
                 {
-                    if(!hoursControl.classesToAdd.Exists(x => x.classID == classResponse.contents[classIndex].classID)) // checks if this class is not on the "to add" list
+                    if (!hoursControl.classesToAdd.Exists(x => x.classID == classResponse.contents[classIndex].classID)) // checks if this class is not on the "to add" list
                     {
-                        if(hoursControl.classesToRemove.Exists(x => x.classID == classResponse.contents[classIndex].classID)) // checks if this class if on the "to remove" list
+                        if (hoursControl.classesToRemove.Exists(x => x.classID == classResponse.contents[classIndex].classID)) // checks if this class if on the "to remove" list
                         {
                             hoursControl.classesToRemove.Remove(hoursControl.classesToRemove.Find(x => x.classID == classResponse.contents[classIndex].classID)); // removes the class from the "to remove" list
                         }
 
-                        if(hoursControl.classesToEdit.Exists(x => x.classID == classResponse.contents[classIndex].classID)) // checks if this class is on the "to edit" list
+                        if (hoursControl.classesToEdit.Exists(x => x.classID == classResponse.contents[classIndex].classID)) // checks if this class is on the "to edit" list
                         {
                             hoursControl.classesToEdit[hoursControl.classesToEdit.FindIndex(x => x.classID == classResponse.contents[classIndex].classID)].totalHours = 300;
                         }
                         else
                         {
-                            if(workspaceResponse.contents[0].hours.Exists(x => x.classID == classResponse.contents[classIndex].classID)) // checks if this class was already registered on the server
+                            if(workspaceResponse.contents[0].hours != null)
                             {
-                                // if the class was alread redistered on the server, this will add to the "to edit" list instead of the "to add". This way, it will not create multiple instances of the same class on the same workspace
-                                if(workspaceResponse.contents[0].hours[workspaceResponse.contents[0].hours.FindIndex(x => x.classID == classResponse.contents[classIndex].classID)].totalHours != 300) // checks if the hours total on server is different than the default 300
+                                if (workspaceResponse.contents[0].hours.Exists(x => x.classID == classResponse.contents[classIndex].classID)) // checks if this class was already registered on the server
                                 {
-                                    classesToEdit toEdit = new classesToEdit();
-                                    toEdit.classID = classResponse.contents[classIndex].classID;
-                                    toEdit.totalHours = 300;
+                                    // if the class was alread redistered on the server, this will add to the "to edit" list instead of the "to add". This way, it will not create multiple instances of the same class on the same workspace
+                                    if (workspaceResponse.contents[0].hours[workspaceResponse.contents[0].hours.FindIndex(x => x.classID == classResponse.contents[classIndex].classID)].totalHours != 300) // checks if the hours total on server is different than the default 300
+                                    {
+                                        classesToEdit toEdit = new classesToEdit();
+                                        toEdit.classID = classResponse.contents[classIndex].classID;
+                                        toEdit.totalHours = 300;
+                                    }
+                                }
+                                else
+                                {
+                                    // add the class to the "to add" list
+                                    classesToAdd toAdd = new classesToAdd();
+                                    toAdd.classID = classResponse.contents[classIndex].classID;
+                                    toAdd.totalHours = 300;
+                                    hoursControl.classesToAdd.Add(toAdd);
                                 }
                             }
                             else
@@ -538,14 +549,14 @@ namespace Summaries.administration
 
             int editedClassIndex = classResponse.contents.FindIndex(x => x.className == hoursDataGridView.Rows[e.RowIndex].Cells[0].Value.ToString());
 
-            if(hoursControl.classesToEdit.Exists(x => x.classID == classResponse.contents[editedClassIndex].classID)) // check if this class is on the "to edit" list
+            if (hoursControl.classesToEdit.Exists(x => x.classID == classResponse.contents[editedClassIndex].classID)) // check if this class is on the "to edit" list
             {
                 hoursControl.classesToEdit[hoursControl.classesToEdit.FindIndex(x => x.classID == classResponse.contents[editedClassIndex].classID)].totalHours = newHoursTotal;
             }
             else
             {
                 // if it is not on the "to edit" list, then check if it is on the "to add" list
-                if(hoursControl.classesToAdd.Exists(x => x.classID == classResponse.contents[editedClassIndex].classID))
+                if (hoursControl.classesToAdd.Exists(x => x.classID == classResponse.contents[editedClassIndex].classID))
                 {
                     hoursControl.classesToAdd[hoursControl.classesToAdd.FindIndex(x => x.classID == classResponse.contents[editedClassIndex].classID)].totalHours = newHoursTotal;
                 }

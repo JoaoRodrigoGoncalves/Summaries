@@ -118,6 +118,24 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="menuOptions.Size" type="System.Drawing.Size, System.Drawing">
+    <value>59, 20</value>
+  </data>
+  <data name="menuOptions.Text" xml:space="preserve">
+    <value>&amp;Opções</value>
+  </data>
+  <data name="menuSummary.Size" type="System.Drawing.Size, System.Drawing">
+    <value>68, 20</value>
+  </data>
+  <data name="menuSummary.Text" xml:space="preserve">
+    <value>&amp;Sumários</value>
+  </data>
+  <data name="menuAbout.Size" type="System.Drawing.Size, System.Drawing">
+    <value>49, 20</value>
+  </data>
+  <data name="menuAbout.Text" xml:space="preserve">
+    <value>So&amp;bre</value>
+  </data>
   <data name="userSettingsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>202, 22</value>
   </data>
@@ -142,35 +160,29 @@
   <data name="menuOptionsExit.Text" xml:space="preserve">
     <value>S&amp;air</value>
   </data>
-  <data name="menuOptions.Size" type="System.Drawing.Size, System.Drawing">
-    <value>59, 20</value>
-  </data>
-  <data name="menuOptions.Text" xml:space="preserve">
-    <value>&amp;Opções</value>
+  <data name="menuSummaryNew.Size" type="System.Drawing.Size, System.Drawing">
+    <value>166, 22</value>
   </data>
   <data name="menuSummaryNew.Text" xml:space="preserve">
     <value>&amp;Novo Sumário</value>
   </data>
+  <data name="menuSummaryList.Size" type="System.Drawing.Size, System.Drawing">
+    <value>166, 22</value>
+  </data>
   <data name="menuSummaryList.Text" xml:space="preserve">
     <value>&amp;Lista de Sumários</value>
   </data>
-  <data name="menuSummary.Size" type="System.Drawing.Size, System.Drawing">
-    <value>68, 20</value>
-  </data>
-  <data name="menuSummary.Text" xml:space="preserve">
-    <value>&amp;Sumários</value>
+  <data name="menuAboutLicenses.Size" type="System.Drawing.Size, System.Drawing">
+    <value>166, 22</value>
   </data>
   <data name="menuAboutLicenses.Text" xml:space="preserve">
     <value>Li&amp;cenças</value>
   </data>
+  <data name="menuAboutSummaries.Size" type="System.Drawing.Size, System.Drawing">
+    <value>166, 22</value>
+  </data>
   <data name="menuAboutSummaries.Text" xml:space="preserve">
     <value>Sob&amp;re Summaries</value>
-  </data>
-  <data name="menuAbout.Size" type="System.Drawing.Size, System.Drawing">
-    <value>49, 20</value>
-  </data>
-  <data name="menuAbout.Text" xml:space="preserve">
-    <value>So&amp;bre</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="sessionLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
@@ -185,11 +197,8 @@
   <data name="sessionLabel.Text" xml:space="preserve">
     <value>Sessão Iniciada como</value>
   </data>
-  <data name="summaryToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>118, 22</value>
-  </data>
-  <data name="summaryToolStripMenuItem.Text" xml:space="preserve">
-    <value>Sumário</value>
+  <data name="contextMenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>104, 48</value>
   </data>
   <data name="newToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>103, 22</value>
@@ -197,23 +206,32 @@
   <data name="newToolStripMenuItem.Text" xml:space="preserve">
     <value>Novo</value>
   </data>
+  <data name="summaryToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>118, 22</value>
+  </data>
+  <data name="summaryToolStripMenuItem.Text" xml:space="preserve">
+    <value>Sumário</value>
+  </data>
   <data name="exitToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>103, 22</value>
   </data>
   <data name="exitToolStripMenuItem.Text" xml:space="preserve">
     <value>Sair</value>
   </data>
-  <data name="contextMenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>104, 48</value>
-  </data>
-  <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="userSettingsBTN.Text" xml:space="preserve">
     <value>&amp;Definições</value>
   </data>
+  <data name="toolStripButton1.Text" xml:space="preserve">
+    <value>So&amp;bre</value>
+  </data>
+  <data name="licensesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>166, 22</value>
+  </data>
   <data name="licensesToolStripMenuItem.Text" xml:space="preserve">
     <value>Licenças</value>
+  </data>
+  <data name="aboutSummariesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>166, 22</value>
   </data>
   <data name="aboutSummariesToolStripMenuItem.Text" xml:space="preserve">
     <value>Sobre Summaries</value>
