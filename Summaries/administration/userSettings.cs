@@ -39,7 +39,7 @@ namespace Summaries.userSettings
 
         private void userSettings_Load(object sender, EventArgs e)
         {
-            Text = storage.displayName + " Settings";
+            Text = String.Format(GlobalStrings.UserSettings, storage.displayName);
             nameBox.Text = storage.displayName;
 
             using (loadingForm form = new loadingForm(getClass))
@@ -63,7 +63,7 @@ namespace Summaries.userSettings
                 }
                 else
                 {
-                    MessageBox.Show("Could Not Get Class Information", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(GlobalStrings.CantGetClassInfo, GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch
@@ -73,18 +73,28 @@ namespace Summaries.userSettings
 
             if (storage.isAdmin)
             {
-                userTypeBox.Text = "Administrator";
+                userTypeBox.Text = GlobalStrings.Administrator;
             }
             else
             {
-                userTypeBox.Text = "Student";
+                userTypeBox.Text = GlobalStrings.Student;
             }
+            bigBarCheckBox.Checked = Properties.Settings.Default.bigBar;
         }
 
         private void changePasswordBTN_Click(object sender, EventArgs e)
         {
             changePassword changePassword = new changePassword();
             changePassword.ShowDialog();
+        }
+
+        private void bigBarCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (bigBarCheckBox.Checked != Properties.Settings.Default.bigBar)
+            {
+                Properties.Settings.Default.bigBar = bigBarCheckBox.Checked;
+                Properties.Settings.Default.Save();
+            }
         }
     }
 }

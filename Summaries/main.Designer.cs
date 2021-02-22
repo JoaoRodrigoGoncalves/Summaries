@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(main));
             this.menu = new System.Windows.Forms.MenuStrip();
             this.menuOptions = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,13 +44,18 @@
             this.menuAboutSummaries = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.sessionLabel = new System.Windows.Forms.Label();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.summaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bigBar = new System.Windows.Forms.ToolStrip();
+            this.userSettingsBTN = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.licensesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutSummariesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitBTN = new System.Windows.Forms.ToolStripButton();
+            this.administrationMenuBTN = new System.Windows.Forms.ToolStripButton();
+            this.newSummaryBTN = new System.Windows.Forms.ToolStripButton();
+            this.summariesListBTN = new System.Windows.Forms.ToolStripButton();
             this.menu.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.contextMenuStrip1.SuspendLayout();
+            this.bigBar.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -60,12 +64,9 @@
             this.menuOptions,
             this.menuSummary,
             this.menuAbout});
-            this.menu.Location = new System.Drawing.Point(0, 0);
+            resources.ApplyResources(this.menu, "menu");
             this.menu.Name = "menu";
             this.menu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.menu.Size = new System.Drawing.Size(800, 24);
-            this.menu.TabIndex = 0;
-            this.menu.Text = "menuStrip1";
             // 
             // menuOptions
             // 
@@ -76,43 +77,37 @@
             this.menuOptionsAdministration_PanelStrip,
             this.menuOptionsExit});
             this.menuOptions.Name = "menuOptions";
-            this.menuOptions.Size = new System.Drawing.Size(61, 20);
-            this.menuOptions.Text = "&Options";
+            resources.ApplyResources(this.menuOptions, "menuOptions");
             // 
             // userSettingsToolStripMenuItem
             // 
             this.userSettingsToolStripMenuItem.Image = global::Summaries.Properties.Resources.administrationPanel;
             this.userSettingsToolStripMenuItem.Name = "userSettingsToolStripMenuItem";
-            this.userSettingsToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
-            this.userSettingsToolStripMenuItem.Text = "User &Settings";
+            resources.ApplyResources(this.userSettingsToolStripMenuItem, "userSettingsToolStripMenuItem");
             this.userSettingsToolStripMenuItem.Click += new System.EventHandler(this.userSettingsToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(184, 6);
+            resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
             // 
             // menuOptionsAdministration_Panel
             // 
             this.menuOptionsAdministration_Panel.Image = global::Summaries.Properties.Resources.administrationPanel;
             this.menuOptionsAdministration_Panel.Name = "menuOptionsAdministration_Panel";
-            this.menuOptionsAdministration_Panel.Size = new System.Drawing.Size(187, 22);
-            this.menuOptionsAdministration_Panel.Text = "&Administration Menu";
-            this.menuOptionsAdministration_Panel.Visible = false;
+            resources.ApplyResources(this.menuOptionsAdministration_Panel, "menuOptionsAdministration_Panel");
             this.menuOptionsAdministration_Panel.Click += new System.EventHandler(this.menuOptionsAdministration_Panel_Click);
             // 
             // menuOptionsAdministration_PanelStrip
             // 
             this.menuOptionsAdministration_PanelStrip.Name = "menuOptionsAdministration_PanelStrip";
-            this.menuOptionsAdministration_PanelStrip.Size = new System.Drawing.Size(184, 6);
-            this.menuOptionsAdministration_PanelStrip.Visible = false;
+            resources.ApplyResources(this.menuOptionsAdministration_PanelStrip, "menuOptionsAdministration_PanelStrip");
             // 
             // menuOptionsExit
             // 
             this.menuOptionsExit.Image = global::Summaries.Properties.Resources.exit;
             this.menuOptionsExit.Name = "menuOptionsExit";
-            this.menuOptionsExit.Size = new System.Drawing.Size(187, 22);
-            this.menuOptionsExit.Text = "&Exit";
+            resources.ApplyResources(this.menuOptionsExit, "menuOptionsExit");
             this.menuOptionsExit.Click += new System.EventHandler(this.menuOptionsExit_Click);
             // 
             // menuSummary
@@ -121,23 +116,20 @@
             this.menuSummaryNew,
             this.menuSummaryList});
             this.menuSummary.Name = "menuSummary";
-            this.menuSummary.Size = new System.Drawing.Size(70, 20);
-            this.menuSummary.Text = "&Summary";
+            resources.ApplyResources(this.menuSummary, "menuSummary");
             // 
             // menuSummaryNew
             // 
             this.menuSummaryNew.Image = global::Summaries.Properties.Resources.newSummary;
             this.menuSummaryNew.Name = "menuSummaryNew";
-            this.menuSummaryNew.Size = new System.Drawing.Size(154, 22);
-            this.menuSummaryNew.Text = "&New Summary";
+            resources.ApplyResources(this.menuSummaryNew, "menuSummaryNew");
             this.menuSummaryNew.Click += new System.EventHandler(this.menuSummaryNew_Click);
             // 
             // menuSummaryList
             // 
             this.menuSummaryList.Image = global::Summaries.Properties.Resources.summariesList;
             this.menuSummaryList.Name = "menuSummaryList";
-            this.menuSummaryList.Size = new System.Drawing.Size(154, 22);
-            this.menuSummaryList.Text = "Summaries &List";
+            resources.ApplyResources(this.menuSummaryList, "menuSummaryList");
             this.menuSummaryList.Click += new System.EventHandler(this.menuSummaryList_Click);
             // 
             // menuAbout
@@ -146,93 +138,120 @@
             this.menuAboutLicenses,
             this.menuAboutSummaries});
             this.menuAbout.Name = "menuAbout";
-            this.menuAbout.Size = new System.Drawing.Size(52, 20);
-            this.menuAbout.Text = "&About";
+            resources.ApplyResources(this.menuAbout, "menuAbout");
             // 
             // menuAboutLicenses
             // 
             this.menuAboutLicenses.Image = global::Summaries.Properties.Resources.licenses;
             this.menuAboutLicenses.Name = "menuAboutLicenses";
-            this.menuAboutLicenses.Size = new System.Drawing.Size(169, 22);
-            this.menuAboutLicenses.Text = "Li&censes";
+            resources.ApplyResources(this.menuAboutLicenses, "menuAboutLicenses");
             this.menuAboutLicenses.Click += new System.EventHandler(this.menuAboutLicenses_Click);
             // 
             // menuAboutSummaries
             // 
             this.menuAboutSummaries.Image = global::Summaries.Properties.Resources.aboutSummaries;
             this.menuAboutSummaries.Name = "menuAboutSummaries";
-            this.menuAboutSummaries.Size = new System.Drawing.Size(169, 22);
-            this.menuAboutSummaries.Text = "A&bout Summaries";
+            resources.ApplyResources(this.menuAboutSummaries, "menuAboutSummaries");
             this.menuAboutSummaries.Click += new System.EventHandler(this.menuAboutSummaries_Click);
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
             this.panel1.Controls.Add(this.sessionLabel);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 428);
+            resources.ApplyResources(this.panel1, "panel1");
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(800, 22);
-            this.panel1.TabIndex = 1;
             // 
             // sessionLabel
             // 
-            this.sessionLabel.AutoSize = true;
-            this.sessionLabel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.sessionLabel.Location = new System.Drawing.Point(732, 0);
+            resources.ApplyResources(this.sessionLabel, "sessionLabel");
             this.sessionLabel.Name = "sessionLabel";
-            this.sessionLabel.Size = new System.Drawing.Size(68, 13);
-            this.sessionLabel.TabIndex = 0;
-            this.sessionLabel.Text = "Logged in as";
-            this.sessionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // contextMenuStrip1
+            // bigBar
             // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newToolStripMenuItem,
-            this.exitToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(99, 48);
+            resources.ApplyResources(this.bigBar, "bigBar");
+            this.bigBar.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.bigBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.userSettingsBTN,
+            this.toolStripButton1,
+            this.exitBTN,
+            this.administrationMenuBTN,
+            this.newSummaryBTN,
+            this.summariesListBTN});
+            this.bigBar.Name = "bigBar";
             // 
-            // newToolStripMenuItem
+            // userSettingsBTN
             // 
-            this.newToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.summaryToolStripMenuItem});
-            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
-            this.newToolStripMenuItem.Text = "New";
+            resources.ApplyResources(this.userSettingsBTN, "userSettingsBTN");
+            this.userSettingsBTN.Image = global::Summaries.Properties.Resources.administrationPanel;
+            this.userSettingsBTN.Name = "userSettingsBTN";
+            this.userSettingsBTN.Click += new System.EventHandler(this.userSettingsToolStripMenuItem_Click);
             // 
-            // summaryToolStripMenuItem
+            // toolStripButton1
             // 
-            this.summaryToolStripMenuItem.Image = global::Summaries.Properties.Resources.newSummary;
-            this.summaryToolStripMenuItem.Name = "summaryToolStripMenuItem";
-            this.summaryToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
-            this.summaryToolStripMenuItem.Text = "Summary";
-            this.summaryToolStripMenuItem.Click += new System.EventHandler(this.summaryToolStripMenuItem_Click);
+            this.toolStripButton1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.licensesToolStripMenuItem,
+            this.aboutSummariesToolStripMenuItem});
+            this.toolStripButton1.Image = global::Summaries.Properties.Resources.aboutSummaries;
+            resources.ApplyResources(this.toolStripButton1, "toolStripButton1");
+            this.toolStripButton1.Name = "toolStripButton1";
             // 
-            // exitToolStripMenuItem
+            // licensesToolStripMenuItem
             // 
-            this.exitToolStripMenuItem.Image = global::Summaries.Properties.Resources.exit;
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
-            this.exitToolStripMenuItem.Text = "Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            this.licensesToolStripMenuItem.Image = global::Summaries.Properties.Resources.licenses;
+            this.licensesToolStripMenuItem.Name = "licensesToolStripMenuItem";
+            resources.ApplyResources(this.licensesToolStripMenuItem, "licensesToolStripMenuItem");
+            this.licensesToolStripMenuItem.Click += new System.EventHandler(this.menuAboutLicenses_Click);
+            // 
+            // aboutSummariesToolStripMenuItem
+            // 
+            this.aboutSummariesToolStripMenuItem.Image = global::Summaries.Properties.Resources.aboutSummaries;
+            this.aboutSummariesToolStripMenuItem.Name = "aboutSummariesToolStripMenuItem";
+            resources.ApplyResources(this.aboutSummariesToolStripMenuItem, "aboutSummariesToolStripMenuItem");
+            this.aboutSummariesToolStripMenuItem.Click += new System.EventHandler(this.menuAboutSummaries_Click);
+            // 
+            // exitBTN
+            // 
+            this.exitBTN.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            resources.ApplyResources(this.exitBTN, "exitBTN");
+            this.exitBTN.Image = global::Summaries.Properties.Resources.exit;
+            this.exitBTN.Name = "exitBTN";
+            this.exitBTN.Click += new System.EventHandler(this.menuOptionsExit_Click);
+            // 
+            // administrationMenuBTN
+            // 
+            this.administrationMenuBTN.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            resources.ApplyResources(this.administrationMenuBTN, "administrationMenuBTN");
+            this.administrationMenuBTN.Image = global::Summaries.Properties.Resources.administrationPanel;
+            this.administrationMenuBTN.Name = "administrationMenuBTN";
+            this.administrationMenuBTN.Click += new System.EventHandler(this.menuOptionsAdministration_Panel_Click);
+            // 
+            // newSummaryBTN
+            // 
+            resources.ApplyResources(this.newSummaryBTN, "newSummaryBTN");
+            this.newSummaryBTN.Image = global::Summaries.Properties.Resources.newSummary;
+            this.newSummaryBTN.Name = "newSummaryBTN";
+            this.newSummaryBTN.Click += new System.EventHandler(this.menuSummaryNew_Click);
+            // 
+            // summariesListBTN
+            // 
+            resources.ApplyResources(this.summariesListBTN, "summariesListBTN");
+            this.summariesListBTN.Image = global::Summaries.Properties.Resources.summariesList;
+            this.summariesListBTN.Name = "summariesListBTN";
+            this.summariesListBTN.Click += new System.EventHandler(this.menuSummaryList_Click);
             // 
             // main
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.ButtonShadow;
             this.CausesValidation = false;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.bigBar);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.menu);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menu;
             this.Name = "main";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Summaries";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.main_FormClosed);
             this.Load += new System.EventHandler(this.main_Load);
@@ -241,7 +260,8 @@
             this.menu.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.contextMenuStrip1.ResumeLayout(false);
+            this.bigBar.ResumeLayout(false);
+            this.bigBar.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -263,10 +283,15 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem menuOptionsAdministration_Panel;
         private System.Windows.Forms.ToolStripSeparator menuOptionsAdministration_PanelStrip;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem summaryToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem userSettingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStrip bigBar;
+        private System.Windows.Forms.ToolStripButton userSettingsBTN;
+        private System.Windows.Forms.ToolStripButton administrationMenuBTN;
+        private System.Windows.Forms.ToolStripButton newSummaryBTN;
+        private System.Windows.Forms.ToolStripButton summariesListBTN;
+        private System.Windows.Forms.ToolStripButton exitBTN;
+        private System.Windows.Forms.ToolStripDropDownButton toolStripButton1;
+        private System.Windows.Forms.ToolStripMenuItem licensesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutSummariesToolStripMenuItem;
     }
 }

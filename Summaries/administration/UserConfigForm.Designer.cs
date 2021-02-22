@@ -59,67 +59,57 @@ namespace Summaries.administration
             // 
             // mainLayoutPanel
             // 
-            this.mainLayoutPanel.ColumnCount = 1;
-            this.mainLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            resources.ApplyResources(this.mainLayoutPanel, "mainLayoutPanel");
             this.mainLayoutPanel.Controls.Add(this.footerLayoutPanel, 0, 1);
             this.mainLayoutPanel.Controls.Add(this.tabControl1, 0, 0);
-            this.mainLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mainLayoutPanel.Location = new System.Drawing.Point(0, 0);
+            this.errorProvider.SetError(this.mainLayoutPanel, resources.GetString("mainLayoutPanel.Error"));
+            this.errorProvider.SetIconAlignment(this.mainLayoutPanel, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("mainLayoutPanel.IconAlignment"))));
+            this.errorProvider.SetIconPadding(this.mainLayoutPanel, ((int)(resources.GetObject("mainLayoutPanel.IconPadding"))));
             this.mainLayoutPanel.Name = "mainLayoutPanel";
-            this.mainLayoutPanel.RowCount = 2;
-            this.mainLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 93F));
-            this.mainLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7F));
-            this.mainLayoutPanel.Size = new System.Drawing.Size(401, 506);
-            this.mainLayoutPanel.TabIndex = 0;
             // 
             // footerLayoutPanel
             // 
-            this.footerLayoutPanel.ColumnCount = 3;
-            this.footerLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
-            this.footerLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.footerLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            resources.ApplyResources(this.footerLayoutPanel, "footerLayoutPanel");
             this.footerLayoutPanel.Controls.Add(this.okBTN, 2, 0);
             this.footerLayoutPanel.Controls.Add(this.cancelBTN, 1, 0);
-            this.footerLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.footerLayoutPanel.Location = new System.Drawing.Point(3, 473);
+            this.errorProvider.SetError(this.footerLayoutPanel, resources.GetString("footerLayoutPanel.Error"));
+            this.errorProvider.SetIconAlignment(this.footerLayoutPanel, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("footerLayoutPanel.IconAlignment"))));
+            this.errorProvider.SetIconPadding(this.footerLayoutPanel, ((int)(resources.GetObject("footerLayoutPanel.IconPadding"))));
             this.footerLayoutPanel.Name = "footerLayoutPanel";
-            this.footerLayoutPanel.RowCount = 1;
-            this.footerLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.footerLayoutPanel.Size = new System.Drawing.Size(395, 30);
-            this.footerLayoutPanel.TabIndex = 0;
             // 
             // okBTN
             // 
-            this.okBTN.Location = new System.Drawing.Point(319, 3);
+            resources.ApplyResources(this.okBTN, "okBTN");
+            this.errorProvider.SetError(this.okBTN, resources.GetString("okBTN.Error"));
+            this.errorProvider.SetIconAlignment(this.okBTN, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("okBTN.IconAlignment"))));
+            this.errorProvider.SetIconPadding(this.okBTN, ((int)(resources.GetObject("okBTN.IconPadding"))));
             this.okBTN.Name = "okBTN";
-            this.okBTN.Size = new System.Drawing.Size(73, 23);
-            this.okBTN.TabIndex = 0;
-            this.okBTN.Text = "OK";
             this.okBTN.UseVisualStyleBackColor = true;
             this.okBTN.Click += new System.EventHandler(this.okBTN_Click);
             // 
             // cancelBTN
             // 
-            this.cancelBTN.Location = new System.Drawing.Point(240, 3);
+            resources.ApplyResources(this.cancelBTN, "cancelBTN");
+            this.errorProvider.SetError(this.cancelBTN, resources.GetString("cancelBTN.Error"));
+            this.errorProvider.SetIconAlignment(this.cancelBTN, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("cancelBTN.IconAlignment"))));
+            this.errorProvider.SetIconPadding(this.cancelBTN, ((int)(resources.GetObject("cancelBTN.IconPadding"))));
             this.cancelBTN.Name = "cancelBTN";
-            this.cancelBTN.Size = new System.Drawing.Size(73, 23);
-            this.cancelBTN.TabIndex = 1;
-            this.cancelBTN.Text = "Cancel";
             this.cancelBTN.UseVisualStyleBackColor = true;
             this.cancelBTN.Click += new System.EventHandler(this.cancelBTN_Click);
             // 
             // tabControl1
             // 
+            resources.ApplyResources(this.tabControl1, "tabControl1");
             this.tabControl1.Controls.Add(this.GeneralTabPage);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(3, 3);
+            this.errorProvider.SetError(this.tabControl1, resources.GetString("tabControl1.Error"));
+            this.errorProvider.SetIconAlignment(this.tabControl1, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("tabControl1.IconAlignment"))));
+            this.errorProvider.SetIconPadding(this.tabControl1, ((int)(resources.GetObject("tabControl1.IconPadding"))));
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(395, 464);
-            this.tabControl1.TabIndex = 1;
             // 
             // GeneralTabPage
             // 
+            resources.ApplyResources(this.GeneralTabPage, "GeneralTabPage");
             this.GeneralTabPage.Controls.Add(this.isDeletionProtectedCheck);
             this.GeneralTabPage.Controls.Add(this.isAdminCheck);
             this.GeneralTabPage.Controls.Add(this.classCB);
@@ -131,132 +121,122 @@ namespace Summaries.administration
             this.GeneralTabPage.Controls.Add(this.UsernameTOPBox);
             this.GeneralTabPage.Controls.Add(this.userProfilePic);
             this.GeneralTabPage.Controls.Add(this.splitterLine);
-            this.GeneralTabPage.Location = new System.Drawing.Point(4, 22);
+            this.errorProvider.SetError(this.GeneralTabPage, resources.GetString("GeneralTabPage.Error"));
+            this.errorProvider.SetIconAlignment(this.GeneralTabPage, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("GeneralTabPage.IconAlignment"))));
+            this.errorProvider.SetIconPadding(this.GeneralTabPage, ((int)(resources.GetObject("GeneralTabPage.IconPadding"))));
             this.GeneralTabPage.Name = "GeneralTabPage";
-            this.GeneralTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.GeneralTabPage.Size = new System.Drawing.Size(387, 438);
-            this.GeneralTabPage.TabIndex = 0;
-            this.GeneralTabPage.Text = "General";
             this.GeneralTabPage.UseVisualStyleBackColor = true;
             // 
             // isDeletionProtectedCheck
             // 
-            this.isDeletionProtectedCheck.AutoSize = true;
-            this.isDeletionProtectedCheck.Location = new System.Drawing.Point(10, 265);
+            resources.ApplyResources(this.isDeletionProtectedCheck, "isDeletionProtectedCheck");
+            this.errorProvider.SetError(this.isDeletionProtectedCheck, resources.GetString("isDeletionProtectedCheck.Error"));
+            this.errorProvider.SetIconAlignment(this.isDeletionProtectedCheck, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("isDeletionProtectedCheck.IconAlignment"))));
+            this.errorProvider.SetIconPadding(this.isDeletionProtectedCheck, ((int)(resources.GetObject("isDeletionProtectedCheck.IconPadding"))));
             this.isDeletionProtectedCheck.Name = "isDeletionProtectedCheck";
-            this.isDeletionProtectedCheck.Size = new System.Drawing.Size(205, 17);
-            this.isDeletionProtectedCheck.TabIndex = 11;
-            this.isDeletionProtectedCheck.Text = "Protected Against Accidental Deletion";
             this.isDeletionProtectedCheck.UseVisualStyleBackColor = true;
             // 
             // isAdminCheck
             // 
-            this.isAdminCheck.AutoSize = true;
-            this.isAdminCheck.Location = new System.Drawing.Point(10, 241);
+            resources.ApplyResources(this.isAdminCheck, "isAdminCheck");
+            this.errorProvider.SetError(this.isAdminCheck, resources.GetString("isAdminCheck.Error"));
+            this.errorProvider.SetIconAlignment(this.isAdminCheck, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("isAdminCheck.IconAlignment"))));
+            this.errorProvider.SetIconPadding(this.isAdminCheck, ((int)(resources.GetObject("isAdminCheck.IconPadding"))));
             this.isAdminCheck.Name = "isAdminCheck";
-            this.isAdminCheck.Size = new System.Drawing.Size(139, 17);
-            this.isAdminCheck.TabIndex = 10;
-            this.isAdminCheck.Text = "Administrative Privileges";
             this.isAdminCheck.UseVisualStyleBackColor = true;
             // 
             // classCB
             // 
+            resources.ApplyResources(this.classCB, "classCB");
             this.classCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.errorProvider.SetError(this.classCB, resources.GetString("classCB.Error"));
             this.classCB.FormattingEnabled = true;
-            this.classCB.Location = new System.Drawing.Point(10, 194);
+            this.errorProvider.SetIconAlignment(this.classCB, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("classCB.IconAlignment"))));
+            this.errorProvider.SetIconPadding(this.classCB, ((int)(resources.GetObject("classCB.IconPadding"))));
             this.classCB.Name = "classCB";
-            this.classCB.Size = new System.Drawing.Size(370, 21);
-            this.classCB.TabIndex = 9;
             // 
             // classLB
             // 
-            this.classLB.AutoSize = true;
-            this.classLB.Location = new System.Drawing.Point(7, 178);
+            resources.ApplyResources(this.classLB, "classLB");
+            this.errorProvider.SetError(this.classLB, resources.GetString("classLB.Error"));
+            this.errorProvider.SetIconAlignment(this.classLB, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("classLB.IconAlignment"))));
+            this.errorProvider.SetIconPadding(this.classLB, ((int)(resources.GetObject("classLB.IconPadding"))));
             this.classLB.Name = "classLB";
-            this.classLB.Size = new System.Drawing.Size(32, 13);
-            this.classLB.TabIndex = 7;
-            this.classLB.Text = "Class";
             // 
             // displayNameTB
             // 
-            this.displayNameTB.Location = new System.Drawing.Point(10, 149);
+            resources.ApplyResources(this.displayNameTB, "displayNameTB");
+            this.errorProvider.SetError(this.displayNameTB, resources.GetString("displayNameTB.Error"));
+            this.errorProvider.SetIconAlignment(this.displayNameTB, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("displayNameTB.IconAlignment"))));
+            this.errorProvider.SetIconPadding(this.displayNameTB, ((int)(resources.GetObject("displayNameTB.IconPadding"))));
             this.displayNameTB.Name = "displayNameTB";
-            this.displayNameTB.Size = new System.Drawing.Size(370, 20);
-            this.displayNameTB.TabIndex = 6;
             // 
             // displayNameLB
             // 
-            this.displayNameLB.AutoSize = true;
-            this.displayNameLB.Location = new System.Drawing.Point(7, 133);
+            resources.ApplyResources(this.displayNameLB, "displayNameLB");
+            this.errorProvider.SetError(this.displayNameLB, resources.GetString("displayNameLB.Error"));
+            this.errorProvider.SetIconAlignment(this.displayNameLB, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("displayNameLB.IconAlignment"))));
+            this.errorProvider.SetIconPadding(this.displayNameLB, ((int)(resources.GetObject("displayNameLB.IconPadding"))));
             this.displayNameLB.Name = "displayNameLB";
-            this.displayNameLB.Size = new System.Drawing.Size(72, 13);
-            this.displayNameLB.TabIndex = 5;
-            this.displayNameLB.Text = "Display Name";
             // 
             // loginNameTB
             // 
-            this.loginNameTB.Location = new System.Drawing.Point(10, 105);
+            resources.ApplyResources(this.loginNameTB, "loginNameTB");
+            this.errorProvider.SetError(this.loginNameTB, resources.GetString("loginNameTB.Error"));
+            this.errorProvider.SetIconAlignment(this.loginNameTB, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("loginNameTB.IconAlignment"))));
+            this.errorProvider.SetIconPadding(this.loginNameTB, ((int)(resources.GetObject("loginNameTB.IconPadding"))));
             this.loginNameTB.Name = "loginNameTB";
-            this.loginNameTB.Size = new System.Drawing.Size(370, 20);
-            this.loginNameTB.TabIndex = 4;
             // 
             // usernameLB
             // 
-            this.usernameLB.AutoSize = true;
-            this.usernameLB.Location = new System.Drawing.Point(7, 89);
+            resources.ApplyResources(this.usernameLB, "usernameLB");
+            this.errorProvider.SetError(this.usernameLB, resources.GetString("usernameLB.Error"));
+            this.errorProvider.SetIconAlignment(this.usernameLB, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("usernameLB.IconAlignment"))));
+            this.errorProvider.SetIconPadding(this.usernameLB, ((int)(resources.GetObject("usernameLB.IconPadding"))));
             this.usernameLB.Name = "usernameLB";
-            this.usernameLB.Size = new System.Drawing.Size(64, 13);
-            this.usernameLB.TabIndex = 3;
-            this.usernameLB.Text = "Login Name";
             // 
             // UsernameTOPBox
             // 
-            this.UsernameTOPBox.Location = new System.Drawing.Point(76, 28);
+            resources.ApplyResources(this.UsernameTOPBox, "UsernameTOPBox");
+            this.errorProvider.SetError(this.UsernameTOPBox, resources.GetString("UsernameTOPBox.Error"));
+            this.errorProvider.SetIconAlignment(this.UsernameTOPBox, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("UsernameTOPBox.IconAlignment"))));
+            this.errorProvider.SetIconPadding(this.UsernameTOPBox, ((int)(resources.GetObject("UsernameTOPBox.IconPadding"))));
             this.UsernameTOPBox.Name = "UsernameTOPBox";
             this.UsernameTOPBox.ReadOnly = true;
-            this.UsernameTOPBox.Size = new System.Drawing.Size(306, 20);
-            this.UsernameTOPBox.TabIndex = 2;
             // 
             // userProfilePic
             // 
+            resources.ApplyResources(this.userProfilePic, "userProfilePic");
             this.userProfilePic.BackColor = System.Drawing.Color.Gainsboro;
             this.userProfilePic.BackgroundImage = global::Summaries.Properties.Resources.userIcon;
-            this.userProfilePic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.userProfilePic.Location = new System.Drawing.Point(6, 6);
+            this.errorProvider.SetError(this.userProfilePic, resources.GetString("userProfilePic.Error"));
+            this.errorProvider.SetIconAlignment(this.userProfilePic, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("userProfilePic.IconAlignment"))));
+            this.errorProvider.SetIconPadding(this.userProfilePic, ((int)(resources.GetObject("userProfilePic.IconPadding"))));
             this.userProfilePic.Name = "userProfilePic";
-            this.userProfilePic.Size = new System.Drawing.Size(64, 64);
-            this.userProfilePic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.userProfilePic.TabIndex = 0;
             this.userProfilePic.TabStop = false;
             // 
             // splitterLine
             // 
-            this.splitterLine.AutoSize = true;
+            resources.ApplyResources(this.splitterLine, "splitterLine");
+            this.errorProvider.SetError(this.splitterLine, resources.GetString("splitterLine.Error"));
             this.splitterLine.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.splitterLine.Location = new System.Drawing.Point(7, 65);
+            this.errorProvider.SetIconAlignment(this.splitterLine, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("splitterLine.IconAlignment"))));
+            this.errorProvider.SetIconPadding(this.splitterLine, ((int)(resources.GetObject("splitterLine.IconPadding"))));
             this.splitterLine.Name = "splitterLine";
-            this.splitterLine.Size = new System.Drawing.Size(373, 13);
-            this.splitterLine.TabIndex = 1;
-            this.splitterLine.Text = "_____________________________________________________________";
             // 
             // errorProvider
             // 
             this.errorProvider.ContainerControl = this;
+            resources.ApplyResources(this.errorProvider, "errorProvider");
             // 
             // UserConfigForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(401, 506);
             this.Controls.Add(this.mainLayoutPanel);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(417, 545);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(417, 545);
             this.Name = "UserConfigForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Properties";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.UserConfigForm_FormClosed);
             this.Load += new System.EventHandler(this.UserConfigForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UserConfigForm_KeyDown);

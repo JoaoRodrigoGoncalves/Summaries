@@ -3,6 +3,11 @@ JSON Library:
 	License: The MIT License
 	Original download link: https://github.com/JamesNK/Newtonsoft.Json
 
+PDF Library:
+	Original Name: MigraDoc
+	License: The MIT License
+	Original download link: http://www.pdfsharp.net/Downloads.ashx
+
 Software ICON:
 
 	Original Name: Calligraphy, design, drawing, pen, tool, write icon

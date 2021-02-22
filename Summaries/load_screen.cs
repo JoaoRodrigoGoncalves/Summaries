@@ -21,7 +21,7 @@ namespace Summaries
 
             if (!functions.CheckForInternetConnection("http://google.com/generate_204"))
             {
-                MessageBox.Show("Couldn't establish a connection to the internet. Please try again later.", "Failed to connect to the internet", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(GlobalStrings.NoInternetLong, GlobalStrings.NoInternet, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit();
             }
             else
@@ -30,7 +30,7 @@ namespace Summaries
                 {
                     if (!functions.CheckForInternetConnection("https://joaogoncalves.myftp.org"))
                     {
-                        MessageBox.Show("Couldn't establish a connection to the Summaries server. Please try again later.", "Failed to connect to the server", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(GlobalStrings.CannotConnectServerLong, GlobalStrings.CannotConnectServer, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         Application.Exit();
                     }
                     else
@@ -92,7 +92,7 @@ namespace Summaries
                     }
                     catch (Exception exec)
                     {
-                        throw new Exception("Failed to check for updates: " + exec.Message);
+                        throw new Exception(GlobalStrings.FailedCheckUpdates + ": " + exec.Message);
                     }
                     finally
                     {
@@ -105,7 +105,7 @@ namespace Summaries
                     Version appVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
                     if (appVersion.CompareTo(newVersion) < 0)
                     {
-                        var res = MessageBox.Show("A new version is available. Would you like to download and update now?", "New version available!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        var res = MessageBox.Show(GlobalStrings.NewVersionLong, GlobalStrings.NewVersion, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                         if (res == DialogResult.Yes)
                         {
                             System.Diagnostics.Process.Start(downloadURL);
@@ -113,7 +113,7 @@ namespace Summaries
                         }
                         else
                         {
-                            MessageBox.Show("The application can only be lauched on the latest version. Closing...", "Closing...", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show(GlobalStrings.LaunchOnLatestVersion, GlobalStrings.Closing, MessageBoxButtons.OK, MessageBoxIcon.Information);
                             Application.Exit();
                         }
                     }
@@ -121,7 +121,7 @@ namespace Summaries
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Cannot load all needed resources", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(ex.Message, GlobalStrings.CouldNotLoadResources, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Application.Exit();
                 }
                 login loginForm = new login();

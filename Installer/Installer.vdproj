@@ -27,14 +27,134 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_04226B1052FD446BB8213745721EBC0D"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_0F0F529349802350AC8748F2D2EE228B"
+        "OwnerKey" = "8:_E5017CFBE1F7B70CF63668E2B5EB54FD"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_19BF524981BD411D978235D5CDE8FFCB"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_3CF2D1BA398742289627A39E8858123F"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_5AB32018FB094F2DBC6BA4AAB554AFE3"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_74156EB001BA45ED8C27921547B3E77B"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_7F09DE0D575642C5AF95256DA10BB220"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A65DABD06BBF439B85704D4E156269AD"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_DDDD19B6BAF24B289A2A0DAB42080CAA"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
+        "MsmKey" = "8:_E5017CFBE1F7B70CF63668E2B5EB54FD"
+        "OwnerKey" = "8:_74156EB001BA45ED8C27921547B3E77B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_EA33B560EF193BD45D1E2F63612F134B"
+        "OwnerKey" = "8:_74156EB001BA45ED8C27921547B3E77B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_EA33B560EF193BD45D1E2F63612F134B"
+        "OwnerKey" = "8:_E5017CFBE1F7B70CF63668E2B5EB54FD"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F4913A1546CDB6C7314CF3F074C95D43"
+        "OwnerKey" = "8:_74156EB001BA45ED8C27921547B3E77B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F4913A1546CDB6C7314CF3F074C95D43"
+        "OwnerKey" = "8:_0F0F529349802350AC8748F2D2EE228B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F4913A1546CDB6C7314CF3F074C95D43"
+        "OwnerKey" = "8:_E5017CFBE1F7B70CF63668E2B5EB54FD"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_B30D2F817E304A3EB9B923F12E343944"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_74156EB001BA45ED8C27921547B3E77B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_E5017CFBE1F7B70CF63668E2B5EB54FD"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_0F0F529349802350AC8748F2D2EE228B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_EA33B560EF193BD45D1E2F63612F134B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_F4913A1546CDB6C7314CF3F074C95D43"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_3CF2D1BA398742289627A39E8858123F"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -189,6 +309,199 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_04226B1052FD446BB8213745721EBC0D"
+            {
+            "SourcePath" = "8:..\\Summaries\\bin\\Debug\\MigraDoc.DocumentObjectModel-gdi.xml"
+            "TargetName" = "8:MigraDoc.DocumentObjectModel-gdi.xml"
+            "Tag" = "8:"
+            "Folder" = "8:_45CC7F54A0574787BCF15319FAAF5A9F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_0F0F529349802350AC8748F2D2EE228B"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:PdfSharp.Charting-gdi, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_0F0F529349802350AC8748F2D2EE228B"
+                    {
+                    "Name" = "8:PdfSharp.Charting-gdi.DLL"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:PdfSharp.Charting-gdi.DLL"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_45CC7F54A0574787BCF15319FAAF5A9F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_19BF524981BD411D978235D5CDE8FFCB"
+            {
+            "SourcePath" = "8:..\\Summaries\\bin\\Debug\\MigraDoc.Rendering-gdi.xml"
+            "TargetName" = "8:MigraDoc.Rendering-gdi.xml"
+            "Tag" = "8:"
+            "Folder" = "8:_45CC7F54A0574787BCF15319FAAF5A9F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3CF2D1BA398742289627A39E8858123F"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Summaries.resources, Version=6.0.0.0, Culture=pt-PT, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_3CF2D1BA398742289627A39E8858123F"
+                    {
+                    "Name" = "8:Summaries.resources.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\Summaries\\bin\\Release\\pt-PT\\Summaries.resources.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_2B8FCA6D98594AE99AD63C0E8F3351CF"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5AB32018FB094F2DBC6BA4AAB554AFE3"
+            {
+            "SourcePath" = "8:..\\Summaries\\bin\\Debug\\PdfSharp-gdi.xml"
+            "TargetName" = "8:PdfSharp-gdi.xml"
+            "Tag" = "8:"
+            "Folder" = "8:_45CC7F54A0574787BCF15319FAAF5A9F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_74156EB001BA45ED8C27921547B3E77B"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:MigraDoc.RtfRendering-gdi, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_74156EB001BA45ED8C27921547B3E77B"
+                    {
+                    "Name" = "8:MigraDoc.RtfRendering-gdi.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\Summaries\\bin\\Debug\\MigraDoc.RtfRendering-gdi.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_45CC7F54A0574787BCF15319FAAF5A9F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7F09DE0D575642C5AF95256DA10BB220"
+            {
+            "SourcePath" = "8:..\\Summaries\\bin\\Debug\\PdfSharp.Charting-gdi.xml"
+            "TargetName" = "8:PdfSharp.Charting-gdi.xml"
+            "Tag" = "8:"
+            "Folder" = "8:_45CC7F54A0574787BCF15319FAAF5A9F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A65DABD06BBF439B85704D4E156269AD"
+            {
+            "SourcePath" = "8:..\\Summaries\\bin\\Debug\\MigraDoc.RtfRendering-gdi.xml"
+            "TargetName" = "8:MigraDoc.RtfRendering-gdi.xml"
+            "Tag" = "8:"
+            "Folder" = "8:_45CC7F54A0574787BCF15319FAAF5A9F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DDDD19B6BAF24B289A2A0DAB42080CAA"
             {
             "SourcePath" = "8:..\\Summaries\\assets\\icon.ico"
@@ -209,6 +522,99 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E5017CFBE1F7B70CF63668E2B5EB54FD"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:MigraDoc.Rendering-gdi, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_E5017CFBE1F7B70CF63668E2B5EB54FD"
+                    {
+                    "Name" = "8:MigraDoc.Rendering-gdi.DLL"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:MigraDoc.Rendering-gdi.DLL"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_45CC7F54A0574787BCF15319FAAF5A9F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_EA33B560EF193BD45D1E2F63612F134B"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:MigraDoc.DocumentObjectModel-gdi, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_EA33B560EF193BD45D1E2F63612F134B"
+                    {
+                    "Name" = "8:MigraDoc.DocumentObjectModel-gdi.DLL"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:MigraDoc.DocumentObjectModel-gdi.DLL"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_45CC7F54A0574787BCF15319FAAF5A9F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F4913A1546CDB6C7314CF3F074C95D43"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:PdfSharp-gdi, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_F4913A1546CDB6C7314CF3F074C95D43"
+                    {
+                    "Name" = "8:PdfSharp-gdi.DLL"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:PdfSharp-gdi.DLL"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_45CC7F54A0574787BCF15319FAAF5A9F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
         }
         "FileType"
         {
@@ -225,6 +631,17 @@
             "Property" = "8:TARGETDIR"
                 "Folders"
                 {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_2B8FCA6D98594AE99AD63C0E8F3351CF"
+                    {
+                    "Name" = "8:pt-PT"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_CD12F69BD75349CBB9C9119E59F75283"
+                        "Folders"
+                        {
+                        }
+                    }
                 }
             }
             "{1525181F-901A-416C-8A58-119130FE478E}:_9CD12571DB50446CA5EDA6115ACBC6D8"
@@ -265,15 +682,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Summaries"
-        "ProductCode" = "8:{53FF0F6A-8BE5-4502-8C08-B7CC07CE6AFF}"
-        "PackageCode" = "8:{151E204A-6C23-45AA-8F11-80BE48352FC6}"
+        "ProductCode" = "8:{E5F1D36C-F3C1-4DEE-A47B-5E9F02674233}"
+        "PackageCode" = "8:{E9BA3D24-8F7B-4DB4-907E-B4D9D377D5DC}"
         "UpgradeCode" = "8:{43134371-67D1-4D4D-8E36-02F775648D5B}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:5.0.1"
+        "ProductVersion" = "8:6.0.0"
         "Manufacturer" = "8:João Rodrigo Gonçalves"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:https://joaogoncalves.eu"
@@ -815,7 +1232,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_B30D2F817E304A3EB9B923F12E343944"
             {
-            "SourcePath" = "8:"
+            "SourcePath" = "8:..\\Summaries\\obj\\Release\\Summaries.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_45CC7F54A0574787BCF15319FAAF5A9F"

@@ -132,7 +132,7 @@ namespace Summaries.administration
                 }
                 else
                 {
-                    MessageBox.Show("Something went wrong: " + usersConvert.errors, "Error");
+                    MessageBox.Show(codeResources.GlobalStrings.SomethingWentWrong + ": " + usersConvert.errors, codeResources.GlobalStrings.Error);
                     return;
                 }
             }
@@ -145,18 +145,18 @@ namespace Summaries.administration
             dataGridView.Columns[0].HeaderText = "#";
             dataGridView.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dataGridView.Columns[1].Name = "username";
-            dataGridView.Columns[1].HeaderText = "Login Name";
+            dataGridView.Columns[1].HeaderText = codeResources.AdministrationMenuStrings.LoginName;
             dataGridView.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dataGridView.Columns[2].Name = "displayName";
-            dataGridView.Columns[2].HeaderText = "Display Name";
+            dataGridView.Columns[2].HeaderText = codeResources.AdministrationMenuStrings.DisplayName;
             dataGridView.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dataGridView.Columns[3].Name = "class";
-            dataGridView.Columns[3].HeaderText = "Class";
+            dataGridView.Columns[3].HeaderText = codeResources.AdministrationMenuStrings.Class;
             dataGridView.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             // ** Admin column **
             DataGridViewCheckBoxColumn column4 = new DataGridViewCheckBoxColumn();
             column4.Name = "isAdmin";
-            column4.HeaderText = "Admin?";
+            column4.HeaderText = codeResources.AdministrationMenuStrings.AdminColumn;
             column4.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             column4.FlatStyle = FlatStyle.Standard;
             column4.ThreeState = false;
@@ -165,7 +165,7 @@ namespace Summaries.administration
             // ** Protection Column **
             DataGridViewCheckBoxColumn column5 = new DataGridViewCheckBoxColumn();
             column5.Name = "isProtected";
-            column5.HeaderText = "Deletion Protected?";
+            column5.HeaderText = codeResources.AdministrationMenuStrings.UserDeletionProtectedColumn;
             column5.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             column5.FlatStyle = FlatStyle.Standard;
             column5.ThreeState = false;
@@ -210,7 +210,7 @@ namespace Summaries.administration
                 }
                 else
                 {
-                    MessageBox.Show("Something went wrong: " + classesConvert.errors, "Error");
+                    MessageBox.Show(codeResources.GlobalStrings.SomethingWentWrong + ": " + classesConvert.errors, codeResources.GlobalStrings.Error);
                     return;
                 }
             }
@@ -221,10 +221,10 @@ namespace Summaries.administration
             dataGridView.Columns[0].HeaderText = "#";
             dataGridView.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dataGridView.Columns[1].Name = "className";
-            dataGridView.Columns[1].HeaderText = "Class Name";
+            dataGridView.Columns[1].HeaderText = codeResources.AdministrationMenuStrings.ClassName;
             dataGridView.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dataGridView.Columns[2].Name = "registeredUsers";
-            dataGridView.Columns[2].HeaderText = "Total of Registered Users";
+            dataGridView.Columns[2].HeaderText = codeResources.AdministrationMenuStrings.TotalRegisteredUsers;
             dataGridView.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dataGridView.AllowUserToDeleteRows = false;
             dataGridView.AllowUserToAddRows = false;
@@ -254,7 +254,7 @@ namespace Summaries.administration
                 }
                 else
                 {
-                    MessageBox.Show("Something went wrong: " + workspacesConvert.errors, "Error");
+                    MessageBox.Show(codeResources.GlobalStrings.SomethingWentWrong + ": " + workspacesConvert.errors, codeResources.GlobalStrings.Error);
                     return;
                 }
             }
@@ -265,12 +265,12 @@ namespace Summaries.administration
             dataGridView.Columns[0].HeaderText = "#";
             dataGridView.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dataGridView.Columns[1].Name = "workspaceName";
-            dataGridView.Columns[1].HeaderText = "Name";
+            dataGridView.Columns[1].HeaderText = codeResources.AdministrationMenuStrings.WorkspaceName;
             dataGridView.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             // ** Read Column **
             DataGridViewCheckBoxColumn column2 = new DataGridViewCheckBoxColumn();
             column2.Name = "readMode";
-            column2.HeaderText = "Read?";
+            column2.HeaderText = codeResources.AdministrationMenuStrings.WorkspaceReadColumn;
             column2.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             column2.FlatStyle = FlatStyle.Standard;
             column2.ThreeState = false;
@@ -279,14 +279,14 @@ namespace Summaries.administration
             // ** Write Column **
             DataGridViewCheckBoxColumn column3 = new DataGridViewCheckBoxColumn();
             column3.Name = "readMode";
-            column3.HeaderText = "Write?";
+            column3.HeaderText = codeResources.AdministrationMenuStrings.WorkspaceWriteColumn;
             column3.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             column3.FlatStyle = FlatStyle.Standard;
             column3.ThreeState = false;
             column3.CellTemplate = new DataGridViewCheckBoxCell();
             dataGridView.Columns.Insert(3, column3);
             dataGridView.Columns[4].Name = "savedSummaries";
-            dataGridView.Columns[4].HeaderText = "Registered Summaries";
+            dataGridView.Columns[4].HeaderText = codeResources.AdministrationMenuStrings.WorksapceSavedSummaries;
             dataGridView.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dataGridView.AllowUserToDeleteRows = false;
             dataGridView.AllowUserToAddRows = false;
@@ -305,9 +305,9 @@ namespace Summaries.administration
             treeView1.Nodes[0].Nodes[0].ContextMenuStrip = usersMenu;
             treeView1.Nodes[0].Nodes[1].ContextMenuStrip = classesMenu;
             treeView1.Nodes[0].Nodes[2].ContextMenuStrip = workspacesMenu;
-            usersMenu.Items.Add("Refresh", null, refreshUsers_ContextEvent);
-            classesMenu.Items.Add("Refresh", null, refreshClasses_ContextEvent);
-            workspacesMenu.Items.Add("Refresh", null, refreshWorkspaces_ContextEvent);
+            usersMenu.Items.Add(codeResources.AdministrationMenuStrings.RefreshBTN, null, refreshUsers_ContextEvent);
+            classesMenu.Items.Add(codeResources.AdministrationMenuStrings.RefreshBTN, null, refreshClasses_ContextEvent);
+            workspacesMenu.Items.Add(codeResources.AdministrationMenuStrings.RefreshBTN, null, refreshWorkspaces_ContextEvent);
         }
 
         private void refreshUsers_ContextEvent(object sender, EventArgs e)
@@ -339,11 +339,11 @@ namespace Summaries.administration
                     int userID = int.Parse(selectedRow.Cells["userID"].Value.ToString());
                     if (usersArray[usersArray.FindIndex(x => x[0] == userID.ToString())][5] == "True")
                     {
-                        MessageBox.Show("Can't delete user \"" + selectedRow.Cells["displayName"].Value.ToString() + "\" because it is protected against accidental deletion");
+                        MessageBox.Show(String.Format(codeResources.AdministrationMenuStrings.CantDeleteUserDeletionProtected, selectedRow.Cells["displayName"].Value.ToString()));
                     }
                     else
                     {
-                        if (MessageBox.Show("Are you sure you want to delete \"" + selectedRow.Cells["displayName"].Value.ToString() + "\"?", "Delete User", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        if (MessageBox.Show(String.Format(codeResources.AdministrationMenuStrings.ConfirmDeleteUser, selectedRow.Cells["displayName"].Value.ToString()), codeResources.AdministrationMenuStrings.DeleteUserQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                         {
                             simpleServerResponse userDeleteRequest = null;
                             string response = null;
@@ -355,12 +355,12 @@ namespace Summaries.administration
                                 {
                                     dataGridView.ClearSelection();
                                     dataGridView.Rows.Remove(selectedRow);
-                                    MessageBox.Show("Success!", "Operation Completed Successfully!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    MessageBox.Show(codeResources.AdministrationMenuStrings.Success, codeResources.AdministrationMenuStrings.OperationCompleted, MessageBoxButtons.OK, MessageBoxIcon.Information);
                                     GetUsers(true);
                                 }
                                 else
                                 {
-                                    MessageBox.Show("Error: " + userDeleteRequest.errors + "\n" + userDeleteRequest.ErrorCode, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    MessageBox.Show(codeResources.GlobalStrings.Error + ": " + userDeleteRequest.errors + "\n" + userDeleteRequest.ErrorCode, codeResources.GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 }
                             }
                             catch (Exception ex)
@@ -377,7 +377,7 @@ namespace Summaries.administration
 
                 #region classesNode
                 case "classesNode":
-                    if (MessageBox.Show("Are you sure you want to delete \"" + selectedRow.Cells["className"].Value.ToString() + "\" class?", "Delete Class", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    if (MessageBox.Show(String.Format(codeResources.AdministrationMenuStrings.ConfirmDeleteClass, selectedRow.Cells["className"].Value.ToString()), codeResources.AdministrationMenuStrings.DeleteClassQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
                         int classID = int.Parse(selectedRow.Cells["classID"].Value.ToString());
                         simpleServerResponse classDeleteRequest = null;
@@ -391,12 +391,13 @@ namespace Summaries.administration
                             {
                                 dataGridView.ClearSelection();
                                 dataGridView.Rows.Remove(selectedRow);
-                                MessageBox.Show("Success!", "Operation Completed Successfully!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                MessageBox.Show(codeResources.AdministrationMenuStrings.Success, codeResources.AdministrationMenuStrings.OperationCompleted, MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 GetUsers(true);
+                                GetClasses();
                             }
                             else
                             {
-                                MessageBox.Show("Error: " + classDeleteRequest.errors + "\nError Code: " + classDeleteRequest.ErrorCode, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show(codeResources.GlobalStrings.Error + ": " + classDeleteRequest.errors + "\nError Code: " + classDeleteRequest.ErrorCode, codeResources.GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
                         catch (Exception ex)
@@ -411,7 +412,7 @@ namespace Summaries.administration
 
                 #region workspacesNode
                 case "workspacesNode":
-                    if (MessageBox.Show("Are you sure you want to delete the workspace \"" + selectedRow.Cells["workspaceName"].Value.ToString() + "\"?", "Delete Workspace", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    if (MessageBox.Show(String.Format(codeResources.AdministrationMenuStrings.ConfirmDeleteWorkspace, selectedRow.Cells["workspaceName"].Value.ToString()), codeResources.AdministrationMenuStrings.DeleteWorkspaceQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
                         int workspaceID = int.Parse(selectedRow.Cells["workspaceID"].Value.ToString());
                         simpleServerResponse workspaceDeleteRequest = null;
@@ -425,12 +426,12 @@ namespace Summaries.administration
                             {
                                 dataGridView.ClearSelection();
                                 dataGridView.Rows.Remove(selectedRow);
-                                MessageBox.Show("Success!", "Operation Completed Successfully!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                MessageBox.Show(codeResources.AdministrationMenuStrings.Success, codeResources.AdministrationMenuStrings.OperationCompleted, MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 GetWorkspaces(true);
                             }
                             else
                             {
-                                MessageBox.Show("Error: " + workspaceDeleteRequest.errors + "\nError Code: " + workspaceDeleteRequest.ErrorCode, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show(codeResources.GlobalStrings.Error + ": " + workspaceDeleteRequest.errors + "\nError Code: " + workspaceDeleteRequest.ErrorCode, codeResources.GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
 
                         }
@@ -575,7 +576,7 @@ namespace Summaries.administration
                 }
                 else
                 {
-                    MessageBox.Show("Error: " + moveUserRequest.errors + "\nError Code: " + moveUserRequest.ErrorCode, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(codeResources.GlobalStrings.Error + ": " + moveUserRequest.errors + "\nError Code: " + moveUserRequest.ErrorCode, codeResources.GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
             }
@@ -604,11 +605,11 @@ namespace Summaries.administration
 
                 if (resetPasswordRequest.status)
                 {
-                    MessageBox.Show("Password Reseted Successfully", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(codeResources.GlobalStrings.PasswordResetedSuccessfully, codeResources.AdministrationMenuStrings.Success, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    MessageBox.Show("Error: " + resetPasswordRequest.errors + "\nError Code: " + resetPasswordRequest.ErrorCode, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(codeResources.GlobalStrings.Error + ": " + resetPasswordRequest.errors + "\nError Code: " + resetPasswordRequest.ErrorCode, codeResources.GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
@@ -618,6 +619,16 @@ namespace Summaries.administration
                                 "Exception: " + ex.Message + "\n" +
                                 "Stack: " + ex.StackTrace, "Fatal Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void CreateReport_ContextEvent(object sender, EventArgs e)
+        {
+            int selectedRowIndex = dataGridView.SelectedCells[0].RowIndex;
+            DataGridViewRow selectedRow = dataGridView.Rows[selectedRowIndex];
+            int workspaceID = int.Parse(selectedRow.Cells["workspaceID"].Value.ToString());
+
+            codeResources.ReportInfoForm reportForm = new codeResources.ReportInfoForm(workspaceID);
+            reportForm.ShowDialog();
         }
 
         /* Adapted from: https://stackoverflow.com/questions/3035144/right-click-to-select-a-row-in-a-datagridview-and-show-a-menu-to-delete-it
@@ -636,7 +647,20 @@ namespace Summaries.administration
                     DataGridViewRow selectedRow = dataGridView.Rows[selectedRowIndex];
 
                     ContextMenuStrip strip = new ContextMenuStrip();
-                    strip.Items.Add("Add New " + objectType, Properties.Resources.addSummary, AddNew_ContextEvent);
+                    switch (objectType)
+                    {
+                        case "User":
+                            strip.Items.Add(codeResources.AdministrationMenuStrings.AddNewUser, Properties.Resources.addSummary, AddNew_ContextEvent);
+                            break;
+
+                        case "Class":
+                            strip.Items.Add(codeResources.AdministrationMenuStrings.AddNewClass, Properties.Resources.addSummary, AddNew_ContextEvent);
+                            break;
+
+                        case "Workspace":
+                            strip.Items.Add(codeResources.AdministrationMenuStrings.AddNewWorkspace, Properties.Resources.addSummary, AddNew_ContextEvent);
+                            break;
+                    }
                     if (objectType == "Class" && int.Parse(selectedRow.Cells[0].Value.ToString()) == 0)
                     {
                         strip.Show(dataGridView, new Point(e.X, e.Y));
@@ -649,7 +673,7 @@ namespace Summaries.administration
 
                             int thisUserClassID = int.Parse(classesArray[classesArray.FindIndex(x => x[1] == selectedRow.Cells["class"].Value.ToString())][0]);
 
-                            strip.Items.Add("Move User to...");
+                            strip.Items.Add(codeResources.AdministrationMenuStrings.MoveUserTo);
                             ContextMenuStrip moveToClass = new ContextMenuStrip();
                             foreach (var x in classesArray)
                             {
@@ -665,18 +689,57 @@ namespace Summaries.administration
                                 }
                             }
 
-                            strip.Items.Add("Reset Password", Properties.Resources.changePassword, ResetPassword_ContextEvent);
+                            strip.Items.Add(codeResources.AdministrationMenuStrings.ResetPassword, Properties.Resources.changePassword, ResetPassword_ContextEvent);
 
                         }
-                        strip.Items.Add("Edit " + objectType, Properties.Resources.newSummary, EditEntry_ContextEvent);
+                        switch (objectType)
+                        {
+                            case "User":
+                                strip.Items.Add(codeResources.AdministrationMenuStrings.EditUser, Properties.Resources.newSummary, EditEntry_ContextEvent);
+                                break;
+
+                            case "Class":
+                                strip.Items.Add(codeResources.AdministrationMenuStrings.EditClass, Properties.Resources.newSummary, EditEntry_ContextEvent);
+                                break;
+
+                            case "Workspace":
+                                strip.Items.Add(codeResources.AdministrationMenuStrings.EditWorkspace, Properties.Resources.newSummary, EditEntry_ContextEvent);
+                                break;
+                        }
                         if (objectType == "Workspace")
                         {
-                            strip.Items.Add("Flush Workspace", Properties.Resources.flushWorkspace, FlushWorkspace_ContextEvent);
+                            strip.Items.Add(codeResources.AdministrationMenuStrings.FlushWorkspace, Properties.Resources.flushWorkspace, FlushWorkspace_ContextEvent);
+                            strip.Items.Add(codeResources.AdministrationMenuStrings.CreateWorkspaceReport, Properties.Resources.export, CreateReport_ContextEvent);
                         }
-                        strip.Items.Add("Delete " + objectType, Properties.Resources.deleteSummary, DeleteEntry_ContextEvent);
+                        switch (objectType)
+                        {
+                            case "User":
+                                strip.Items.Add(codeResources.AdministrationMenuStrings.DeleteUser, Properties.Resources.deleteSummary, DeleteEntry_ContextEvent);
+                                break;
+
+                            case "Class":
+                                strip.Items.Add(codeResources.AdministrationMenuStrings.DeleteClass, Properties.Resources.deleteSummary, DeleteEntry_ContextEvent);
+                                break;
+
+                            case "Workspace":
+                                strip.Items.Add(codeResources.AdministrationMenuStrings.DeleteWorkspace, Properties.Resources.deleteSummary, DeleteEntry_ContextEvent);
+                                break;
+                        }
                         strip.Show(dataGridView, new Point(e.X, e.Y));
                     }
                 }
+            }
+            catch { }
+        }
+
+        private void dataGridView_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                var hit = dataGridView.HitTest(e.X, e.Y);
+                dataGridView.ClearSelection();
+                dataGridView.Rows[hit.RowIndex].Selected = true;
+                EditEntry_ContextEvent(sender, e);
             }
             catch { }
         }

@@ -30,7 +30,7 @@ namespace Summaries
             else
             {
                 shouldAbort = true;
-                MessageBox.Show("Lost Connection to the server. Please try again later!", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(GlobalStrings.ConnectionToServerLost, GlobalStrings.ConnectionLost, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -56,7 +56,7 @@ namespace Summaries
         {
             if (currentPasswordBox.Text.Length < 1 || newPasswordBox.Text.Length < 1 || confirmPasswordBox.Text.Length < 1)
             {
-                MessageBox.Show("One or more fields are empty. Please fill them before continue.", "Empty fields", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show(GlobalStrings.EmptyFieldsText, GlobalStrings.EmptyFields, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else
             {
@@ -85,35 +85,35 @@ namespace Summaries
                                     if ((response.errors == null) || (response.errors.Length < 1))
                                     {
                                         currentPasswordBox.Clear();
-                                        MessageBox.Show("The given 'Current Password' is incorrect. Please try again.", "Password Incorrect", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        MessageBox.Show(GlobalStrings.IncorrectCurrentPassword, GlobalStrings.PasswordIncorrect, MessageBoxButtons.OK, MessageBoxIcon.Error);
                                     }
                                     else
                                     {
-                                        MessageBox.Show("Error: " + response.errors, "Critital Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        MessageBox.Show(GlobalStrings.Error + ": " + response.errors, GlobalStrings.CriticalError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                                     }
                                 }
                                 else
                                 {
-                                    MessageBox.Show("Password Changed Successfully!", "Password Changed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    MessageBox.Show(GlobalStrings.PasswordChangedSuccess, GlobalStrings.PasswordChanged, MessageBoxButtons.OK, MessageBoxIcon.Information);
                                     this.Close();
                                 }
                             }
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show(ex.Message + "\n" + ex.StackTrace + "\n" + jsonResponse, "Critital Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(ex.Message + "\n" + ex.StackTrace + "\n" + jsonResponse, GlobalStrings.CriticalError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                     else
                     {
                         resetFields();
-                        MessageBox.Show("The current password and the new password given are the same.", "Cannot change to the same password", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        MessageBox.Show(GlobalStrings.OldPasswordSameAsNew, GlobalStrings.CannotChangeSamePassword, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     }
                 }
                 else
                 {
                     resetFields();
-                    MessageBox.Show("The new passwords don't match. Please try again.", "The passwords don't match", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(GlobalStrings.NewPasswordMismatch, GlobalStrings.PasswordsDontMatch, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

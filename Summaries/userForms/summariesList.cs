@@ -25,6 +25,7 @@ namespace Summaries
             public int summaryNumber { get; set; }
             public int workspaceID { get; set; }
             public string bodyText { get; set; }
+            public int dayHours { get; set; }
         }
 
         public class serverResponse
@@ -35,6 +36,12 @@ namespace Summaries
         }
 
         serverResponse response = null;
+        public class workspacesServerResponse
+        {
+            public bool status { get; set; }
+            public string errors { get; set; }
+            public List<workspacesContent> contents { get; set; }
+        }
 
         public class workspacesContent
         {
@@ -43,15 +50,16 @@ namespace Summaries
             public bool read { get; set; }
             public bool write { get; set; }
             public int totalSummaries { get; set; }
+            public List<hoursContent> hours { get; set; }
         }
 
-        public class workspacesServerResponse
+        public class hoursContent
         {
-            public bool status { get; set; }
-            public string errors { get; set; }
-            public List<workspacesContent> contents { get; set; }
+            public int id { get; set; }
+            public int workspaceID { get; set; }
+            public int classID { get; set; }
+            public int totalHours { get; set; }
         }
-
 
         functions functions = new functions();
         workspacesServerResponse workspaceResponse;
@@ -70,7 +78,7 @@ namespace Summaries
             else
             {
                 shouldAbort = true;
-                MessageBox.Show("Lost Connection to the server. Please try again later!", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(GlobalStrings.ConnectionToServerLost, GlobalStrings.ConnectionLost, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -84,12 +92,13 @@ namespace Summaries
             else
             {
                 shouldAbort = true;
-                MessageBox.Show("Lost Connection to the server. Please try again later!", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(GlobalStrings.ConnectionToServerLost, GlobalStrings.ConnectionLost, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void summariesList_Load(object sender, EventArgs e)
         {
+            summarizedHoursHolder.Text = "0"; // must set it to 0 here otherwise, if the workspace is clear, the number of summarized hours will be the last loaded one
             // Requests the Workspace list, showing the loading screen to the user
             using (loadingForm form = new loadingForm(requestWorkpaceList))
             {
@@ -110,7 +119,7 @@ namespace Summaries
                         if (workspaceResponse.contents == null)
                         {
                             storage.currentWorkspaceID = 0;
-                            MessageBox.Show("Cannot list any summaries because there are no available workspaces!", "No available workspaces", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            MessageBox.Show(summariesListStrings.NoAvailableWorkspacesLong, summariesListStrings.NoAvailableWorkspaces, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                             this.Close();
                         }
                         else
@@ -118,21 +127,28 @@ namespace Summaries
                             workspaceComboBox.Items.Clear();
                             foreach (workspacesContent row in workspaceResponse.contents)
                             {
-                                if (row.read)
+                                if (row.hours != null)
                                 {
-                                    workspaceComboBox.Items.Add(row.workspaceName);
+                                    if (row.read && row.hours.Exists(x => x.classID == storage.classID))
+                                    {
+                                        workspaceComboBox.Items.Add(row.workspaceName);
+                                    }
                                 }
                             }
 
                             if (workspaceName == null || workspaceName == string.Empty || workspaceName == "")
                             {
-                                workspaceSelectedID = workspaceResponse.contents[0].id;
-                                workspaceName = workspaceResponse.contents[0].workspaceName;
+                                int index = workspaceResponse.contents.FindIndex(x => x.read == true && x.hours.Exists(c => c.classID == storage.classID));
+                                workspaceSelectedID = workspaceResponse.contents[index].id;
+                                workspaceName = workspaceResponse.contents[index].workspaceName;
                                 workspaceComboBox.SelectedItem = workspaceName;
+                                totalHoursHolder.Text = workspaceResponse.contents[index].hours[workspaceResponse.contents[index].hours.FindIndex(x => x.classID == storage.classID)].totalHours.ToString();
                             }
                             else
                             {
-                                workspaceSelectedID = workspaceResponse.contents[workspaceResponse.contents.FindIndex(x => x.workspaceName == workspaceName)].id;
+                                int workspaceIndex = workspaceResponse.contents.FindIndex(x => x.workspaceName == workspaceName);
+                                workspaceSelectedID = workspaceResponse.contents[workspaceIndex].id;
+                                totalHoursHolder.Text = workspaceResponse.contents[workspaceIndex].hours[workspaceResponse.contents[workspaceIndex].hours.FindIndex(x => x.classID == storage.classID)].totalHours.ToString();
                                 workspaceComboBox.SelectedItem = workspaceName;
                             }
 
@@ -149,19 +165,20 @@ namespace Summaries
 
                                 if (response.status)
                                 {
+                                    int summarizedHours = 0;
                                     dataGrid.Rows.Clear();
                                     dataGrid.Refresh();
                                     if (response.contents != null)
                                     {
                                         dataGrid.ColumnCount = 3;
                                         dataGrid.Columns[0].Name = "date";
-                                        dataGrid.Columns[0].HeaderText = "Date";
+                                        dataGrid.Columns[0].HeaderText = summariesListStrings.Date;
                                         dataGrid.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                                         dataGrid.Columns[1].Name = "summaryNumber";
                                         dataGrid.Columns[1].HeaderText = "#";
                                         dataGrid.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                                         dataGrid.Columns[2].Name = "contents";
-                                        dataGrid.Columns[2].HeaderText = "Summary";
+                                        dataGrid.Columns[2].HeaderText = summariesListStrings.Summary;
                                         dataGrid.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                                         dataGrid.AllowUserToDeleteRows = false;
                                         dataGrid.AllowUserToAddRows = false;
@@ -171,6 +188,7 @@ namespace Summaries
                                         foreach (Content content in response.contents)
                                         {
                                             string[] row1 = new string[] { content.date.ToString(), content.summaryNumber.ToString(), content.bodyText.ToString() };
+                                            summarizedHours += content.dayHours;
                                             rows.Add(row1);
                                         }
 
@@ -179,11 +197,12 @@ namespace Summaries
                                             dataGrid.Rows.Add(rowArray);
                                         }
                                         dataGrid.Sort(dataGrid.Columns[0], System.ComponentModel.ListSortDirection.Ascending);
+                                        summarizedHoursHolder.Text = summarizedHours.ToString();
                                     }
                                 }
                                 else
                                 {
-                                    MessageBox.Show("Error: " + response.errors, "Critical error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    MessageBox.Show(GlobalStrings.Error + ": " + response.errors, GlobalStrings.CriticalError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 }
                             }
                             catch (Exception ex)
@@ -191,18 +210,18 @@ namespace Summaries
                                 functions functions = new functions();
                                 if (!functions.CheckForInternetConnection(storage.inUseDomain))
                                 {
-                                    MessageBox.Show("Connection to the server lost. Please try again later.", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    MessageBox.Show(GlobalStrings.ConnectionToServerLost, GlobalStrings.ConnectionLost, MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 }
                                 else
                                 {
-                                    MessageBox.Show("Critical error: " + ex.Message + "\n" + jsonResponse + "\n" + ex.StackTrace, "Critical error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    MessageBox.Show(GlobalStrings.CriticalError + ": " + ex.Message + "\n" + jsonResponse + "\n" + ex.StackTrace, GlobalStrings.CriticalError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 }
                             }
                         }
                     }
                     else
                     {
-                        MessageBox.Show("A critical error occurred. " + workspaceResponse.errors, "Critial Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(GlobalStrings.Error + ": " + workspaceResponse.errors, GlobalStrings.CriticalError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         this.Close();
                     }
                 }
@@ -211,11 +230,11 @@ namespace Summaries
                     functions functions = new functions();
                     if (!functions.CheckForInternetConnection(storage.inUseDomain))
                     {
-                        MessageBox.Show("Connection to the server lost. Please try again later.", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(GlobalStrings.ConnectionToServerLost, GlobalStrings.ConnectionLost, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     else
                     {
-                        MessageBox.Show("Critical error: " + ex.Message + "\n" + jsonResponse + "\n" + ex.StackTrace, "Critical error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(GlobalStrings.Error + ": " + ex.Message + "\n" + jsonResponse + "\n" + ex.StackTrace, GlobalStrings.CriticalError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -229,7 +248,7 @@ namespace Summaries
                 {
                     if (dataGrid.SelectedRows.Count > 0 || dataGrid.SelectedCells.Count > 0)
                     {
-                        DialogResult boxResponse = MessageBox.Show("Are you sure you want to delete the summary?", "Delete a summary", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        DialogResult boxResponse = MessageBox.Show(summariesListStrings.DeleteSummaryQuestion, summariesListStrings.DeleteSummary, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                         if (boxResponse == DialogResult.Yes)
                         {
                             int selectedrowindex = dataGrid.SelectedCells[0].RowIndex;
@@ -250,12 +269,12 @@ namespace Summaries
                             {
                                 if (serverResponse.errors == null || serverResponse.errors.Length < 1)
                                 {
-                                    MessageBox.Show("The row you are trying to remove does not exist in the database! ", "Row does not exist", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                    MessageBox.Show(summariesListStrings.RowNotExistLong, summariesListStrings.RowDoesNotExist, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                     summariesList_Load(sender, e);
                                 }
                                 else
                                 {
-                                    MessageBox.Show("Error: " + serverResponse.errors + "\n" + jsonResponse, "Critital Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    MessageBox.Show(GlobalStrings.Error + ": " + serverResponse.errors + "\n" + jsonResponse, GlobalStrings.CriticalError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 }
                             }
                         }
@@ -266,17 +285,17 @@ namespace Summaries
                     functions functions = new functions();
                     if (!functions.CheckForInternetConnection(storage.inUseDomain))
                     {
-                        MessageBox.Show("Connection to the server lost. Please try again later.", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(GlobalStrings.ConnectionToServerLost, GlobalStrings.ConnectionLost, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     else
                     {
-                        MessageBox.Show("Critical error: " + ex.Message + "\n" + ex.StackTrace + "\n" + ex.Source, "Critical error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(GlobalStrings.Error + ": " + ex.Message + "\n" + ex.StackTrace + "\n" + ex.Source, GlobalStrings.CriticalError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
             else
             {
-                MessageBox.Show("You cannot delete this summary because the current workspace is in read-only mode!", "Read-Only", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show(summariesListStrings.ReadOnlyWorkspace, summariesListStrings.ReadOnly, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 
@@ -300,11 +319,11 @@ namespace Summaries
                 functions functions = new functions();
                 if (!functions.CheckForInternetConnection(storage.inUseDomain))
                 {
-                    MessageBox.Show("Connection to the server lost. Please try again later.", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(GlobalStrings.ConnectionToServerLost, GlobalStrings.ConnectionLost, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
-                    MessageBox.Show("Critical error: " + ex.Message, "Critical error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(GlobalStrings.Error + ": " + ex.Message, GlobalStrings.CriticalError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -316,7 +335,7 @@ namespace Summaries
                 functions functions = new functions();
                 if (!functions.CheckForInternetConnection(storage.inUseDomain))
                 {
-                    MessageBox.Show("Connection to the server lost. Please try again later.", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(GlobalStrings.ConnectionToServerLost, GlobalStrings.ConnectionLost, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
@@ -327,7 +346,7 @@ namespace Summaries
             }
             else
             {
-                MessageBox.Show("You cannot add anything to this workspace because it is in read-only mode.", "Read-Only", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show(summariesListStrings.ReadOnlyWorkspace, summariesListStrings.ReadOnly, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 
@@ -349,19 +368,8 @@ namespace Summaries
 
         private void exportWorkspace_Click(object sender, EventArgs e)
         {
-            // https://www.codeproject.com/Tips/689968/How-to-Check-Whether-Word-is-Installed-in-the-Syst
-            Type officeType = Type.GetTypeFromProgID("Word.Application");
-            if (officeType == null)
-            {
-                MessageBox.Show("Microsoft Word was not found on the system and is required to for this function to work.", "Microsoft Word Not Found", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
-            else
-            {
-                using (loadingForm loading = new loadingForm(functions.ExportToWordFile))
-                {
-                    loading.ShowDialog();
-                }
-            }
+            codeResources.ExportSummary.ExportSummaryForm export = new codeResources.ExportSummary.ExportSummaryForm();
+            export.ShowDialog();
         }
     }
 }
