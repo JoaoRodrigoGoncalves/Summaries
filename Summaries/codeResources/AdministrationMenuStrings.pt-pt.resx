@@ -117,8 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AddNewObject" xml:space="preserve">
-    <value>Adicionar novo {0}</value>
+  <data name="AddNewClass" xml:space="preserve">
+    <value>Adicionar nova turma</value>
+  </data>
+  <data name="AddNewUser" xml:space="preserve">
+    <value>Adicionar novo utilizador</value>
+  </data>
+  <data name="AddNewWorkspace" xml:space="preserve">
+    <value>Adicionar novo Espaço de Trabalho</value>
   </data>
   <data name="AdminColumn" xml:space="preserve">
     <value>Admin?</value>
@@ -144,14 +150,20 @@
   <data name="CreateWorkspaceReport" xml:space="preserve">
     <value>Criar relatório</value>
   </data>
+  <data name="DeleteClass" xml:space="preserve">
+    <value>Remover turma</value>
+  </data>
   <data name="DeleteClassQuestion" xml:space="preserve">
     <value>Remover turma?</value>
   </data>
-  <data name="DeleteObject" xml:space="preserve">
-    <value>Remover {0}</value>
+  <data name="DeleteUser" xml:space="preserve">
+    <value>Remover utilizador</value>
   </data>
   <data name="DeleteUserQuestion" xml:space="preserve">
     <value>Remover utilizador?</value>
+  </data>
+  <data name="DeleteWorkspace" xml:space="preserve">
+    <value>Remover Espaço de Trabalho</value>
   </data>
   <data name="DeleteWorkspaceQuestion" xml:space="preserve">
     <value>Remover Espaço de Trabalho?</value>
@@ -159,8 +171,14 @@
   <data name="DisplayName" xml:space="preserve">
     <value>Nome</value>
   </data>
-  <data name="EditObject" xml:space="preserve">
-    <value>Editar {0}</value>
+  <data name="EditClass" xml:space="preserve">
+    <value>Editar turma</value>
+  </data>
+  <data name="EditUser" xml:space="preserve">
+    <value>Editar utilizador</value>
+  </data>
+  <data name="EditWorkspace" xml:space="preserve">
+    <value>Editar Espaço de Trabalho</value>
   </data>
   <data name="FlushWorkspace" xml:space="preserve">
     <value>Esvaziar Espaço de Trabalho</value>
@@ -197,7 +215,7 @@
     <comment>Amount</comment>
   </data>
   <data name="Workspace" xml:space="preserve">
-    <value>Estpaço de Trabalho</value>
+    <value>Espaço de Trabalho</value>
   </data>
   <data name="WorkspaceName" xml:space="preserve">
     <value>Nome</value>

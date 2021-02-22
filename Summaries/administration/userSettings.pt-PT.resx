@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="changePasswordBTN.Text" xml:space="preserve">
-    <value>Alterar Password</value>
+    <value>Alterar palavra-passe</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="userImagePB.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -312,11 +312,23 @@
         JEmSJEmSJEmSJEmSJEkz7Xa3+28YX4W7RJNyLwAAAABJRU5ErkJggg==
 </value>
   </data>
+  <data name="bigBarCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>99, 99</value>
+  </data>
+  <data name="bigBarCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>260, 17</value>
+  </data>
+  <data name="bigBarCheckBox.Text" xml:space="preserve">
+    <value>Utilizar a barra larga (Requer reiniciar a aplicação)</value>
+  </data>
   <data name="userTypeBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>105, 76</value>
+    <value>99, 59</value>
   </data>
   <data name="userTypeBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>276, 20</value>
+  </data>
+  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 62</value>
   </data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
     <value>92, 13</value>
@@ -325,13 +337,13 @@
     <value>Tipo de Utilizador:</value>
   </data>
   <data name="classNameBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>105, 33</value>
+    <value>99, 19</value>
   </data>
   <data name="classNameBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>276, 20</value>
   </data>
   <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>59, 36</value>
+    <value>53, 22</value>
   </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>40, 13</value>

@@ -1,7 +1,4 @@
-﻿using Microsoft.Office.Interop.Word;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -9,7 +6,6 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
-using Word = Microsoft.Office.Interop.Word;
 
 namespace Summaries.codeResources
 {
@@ -21,24 +17,6 @@ namespace Summaries.codeResources
             public int ErrorCode { get; set; }
             public string errors { get; set; }
         }
-
-        private class Content
-        {
-            public int id { get; set; }
-            public int userid { get; set; }
-            public string date { get; set; }
-            public int summaryNumber { get; set; }
-            public int workspace { get; set; }
-            public string bodytext { get; set; }
-        }
-
-        private class serverResponse
-        {
-            public bool status { get; set; }
-            public string errors { get; set; }
-            public List<Content> contents { get; set; }
-        }
-
 
         /// <summary>
         /// Uses BASE64 to hash the given string
@@ -136,109 +114,10 @@ namespace Summaries.codeResources
                 }
                 else
                 {
-                    finalData = "{\"status\":\"false\", \"errors\":\"Lost Connection to the Server\"}";
+                    finalData = "{\"status\":\"false\", \"errors\":\"" + GlobalStrings.ConnectionToServerLost + "\"}";
                 }
             }
             return finalData;
-        }
-
-        /// <summary>
-        /// Creates a word file, based on the current selected workspace, with all registered summaries.
-        /// <see cref="https://docs.microsoft.com/en-us/previous-versions/office/troubleshoot/office-developer/automate-word-create-file-using-visual-c"/>
-        /// </summary>
-        public void ExportToWordFile()
-        {
-            try
-            {
-                Local_Storage storage = Local_Storage.Retrieve;
-
-                object oMissing = Missing.Value;
-                object oEndOfDoc = "\\endofdoc";
-
-                Word.Application oWord;
-                Word.Document oDoc;
-                oWord = new Word.Application();
-                oWord.Visible = true;
-                oDoc = oWord.Documents.Add(ref oMissing, ref oMissing, ref oMissing, ref oMissing);
-
-                // Documment configuration
-
-                oWord.ActiveDocument.Styles.Add("default");
-                Style Default = oWord.ActiveDocument.Styles["default"];
-                Default.Font.Name = "Arial";
-                Default.Font.Size = 11;
-                Default.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphJustify;
-                Default.ParagraphFormat.FirstLineIndent = 1;
-
-                // actual word document content
-
-                Word.Paragraph oPara1;
-                oPara1 = oDoc.Content.Paragraphs.Add(ref oMissing);
-                oPara1.set_Style(Default);
-                oPara1.Range.Font.Size = 12;
-                oPara1.Range.Font.Bold = 1;
-                oPara1.Range.Font.AllCaps = 1;
-                oPara1.Range.Text = "Summaries Workspace Export";
-                oPara1.Range.InsertParagraphAfter();
-
-                Word.Paragraph oPara2;
-                oPara2 = oDoc.Paragraphs.Add(ref oMissing);
-                oPara2.set_Style(Default);
-
-                if (CheckForInternetConnection(storage.inUseDomain))
-                {
-                    string jsonResponse = APIRequest("GET", null, "user/" + storage.userID + "/workspace/" + storage.currentWorkspaceID + "/summary");
-                    serverResponse response;
-                    response = JsonConvert.DeserializeObject<serverResponse>(jsonResponse);
-                    if (response.status)
-                    {
-                        if (response.contents != null)
-                        {
-                            int rowsAmount = response.contents.Count + 1;
-                            Word.Table oTable;
-                            Word.Range wrdRng = oDoc.Bookmarks.get_Item(ref oEndOfDoc).Range;
-                            oTable = oDoc.Tables.Add(wrdRng, rowsAmount, 2, ref oMissing, ref oMissing);
-                            oTable.Range.ParagraphFormat.SpaceAfter = 6;
-                            oTable.Borders.InsideLineStyle = WdLineStyle.wdLineStyleSingle;
-                            oTable.Borders.OutsideLineStyle = WdLineStyle.wdLineStyleSingle;
-
-                            int r;
-
-                            oTable.Cell(1, 1).Range.Text = "Date";
-                            oTable.Cell(1, 2).Range.Text = "Summary";
-
-                            oTable.AllowAutoFit = true;
-                            oTable.Columns[1].AutoFit();
-                            Single firstColWidth = oTable.Columns[1].Width;
-                            oTable.AutoFitBehavior(Word.WdAutoFitBehavior.wdAutoFitWindow);
-                            oTable.Columns[1].SetWidth(firstColWidth, Word.WdRulerStyle.wdAdjustFirstColumn);
-
-                            for (r = 2; r <= rowsAmount; r++)
-                            {
-                                oTable.Cell(r, 1).Range.Text = response.contents[r - 2].date;
-                                oTable.Cell(r, 2).Range.Text = response.contents[r - 2].bodytext;
-                            }
-                        }
-                        else
-                        {
-                            oPara2.Range.Text = "There are no summaries to be shown.";
-                        }
-                        oWord.Activate();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Error: " + response.errors, "Critical Backend Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Lost connection to the server. Please try again later.", "Connection Lost", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message + "\nExport Halted", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
     }
 

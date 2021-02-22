@@ -13,6 +13,7 @@ namespace Summaries.administration
         codeResources.functions functions = new codeResources.functions();
         int sentWorkspaceID = 0;
         string workspaceRequest = null;
+        string allWorkspacesRequest = null;
         string classRequest = null;
         string craftData = null;
         string saveRequest = null;
@@ -20,6 +21,7 @@ namespace Summaries.administration
 
         simpleServerResponse saveResponse;
         workspacesServerResponse workspaceResponse;
+        workspacesServerResponse allWorkspacesList;
         classServerResponse classResponse;
         HoursEditObject hoursControl = new HoursEditObject()
         {
@@ -101,8 +103,9 @@ namespace Summaries.administration
             workspaceRequest = functions.APIRequest("GET", null, "workspace/" + sentWorkspaceID);
         }
 
-        private void RequestClassData()
+        private void RequestAllData()
         {
+            allWorkspacesRequest = functions.APIRequest("GET", null, "workspace");
             classRequest = functions.APIRequest("GET", null, "class");
         }
 
@@ -135,7 +138,7 @@ namespace Summaries.administration
             removeBTN.Name = "removeBTN";
             hoursDataGridView.Columns.Add(removeBTN);
 
-            using (loadingForm loading = new loadingForm(RequestClassData))
+            using (loadingForm loading = new loadingForm(RequestAllData))
             {
                 loading.ShowDialog();
             }
@@ -143,6 +146,7 @@ namespace Summaries.administration
             try
             {
                 classResponse = JsonConvert.DeserializeObject<classServerResponse>(classRequest);
+                allWorkspacesList = JsonConvert.DeserializeObject<workspacesServerResponse>(allWorkspacesRequest);
 
                 if (classResponse.status)
                 {
@@ -153,9 +157,17 @@ namespace Summaries.administration
                     }
                     else
                     {
-                        foreach (classContent Class in classResponse.contents)
+                        if (allWorkspacesList.status)
                         {
-                            classesCB.Items.Add(Class.className);
+                            foreach (classContent Class in classResponse.contents)
+                            {
+                                classesCB.Items.Add(Class.className);
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show(GlobalStrings.Error + ": " + allWorkspacesList.errors, GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            Close();
                         }
                     }
                 }
@@ -314,45 +326,45 @@ namespace Summaries.administration
                             "&readMode=" + readCheck.Checked.ToString() +
                             "&writeMode=" + writeCheck.Checked.ToString() +
                             "&JSONString=" + functions.Hash(JsonConvert.SerializeObject(hoursControl));
-                if (sentWorkspaceID != 0) // 0 -> new class. != 0 -> class being edited
+                if(!allWorkspacesList.contents.Exists(x => x.workspaceName == workspaceNameTB.Text && x.id != sentWorkspaceID))
                 {
-                    if (wasAnyFieldModified())
+                    if (sentWorkspaceID != 0) // 0 -> new class. != 0 -> class being edited
                     {
-                        using (loadingForm loading = new loadingForm(UpdateWorkspaceData))
+                        if (wasAnyFieldModified())
                         {
-                            loading.ShowDialog();
-                        }
-                        try
-                        {
-                            saveResponse = JsonConvert.DeserializeObject<simpleServerResponse>(saveRequest);
+                            using (loadingForm loading = new loadingForm(UpdateWorkspaceData))
+                            {
+                                loading.ShowDialog();
+                            }
+                            try
+                            {
+                                saveResponse = JsonConvert.DeserializeObject<simpleServerResponse>(saveRequest);
 
-                            if (saveResponse.status)
-                            {
-                                changesHandled = true;
-                                cancelBTN_Click(sender, e);
+                                if (saveResponse.status)
+                                {
+                                    changesHandled = true;
+                                    cancelBTN_Click(sender, e);
+                                }
+                                else
+                                {
+                                    MessageBox.Show(GlobalStrings.Error + ": " + saveResponse.errors, GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
                             }
-                            else
+                            catch (Exception ex)
                             {
-                                MessageBox.Show(GlobalStrings.Error + ": " + saveResponse.errors, GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show("Response: " + saveResponse + "\n" +
+                                    "Request:" + saveRequest + "\n" +
+                                    "Error: " + ex.Message + "\n" +
+                                    "Stack: " + ex.StackTrace, "Fatal Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
-                        catch (Exception ex)
+                        else
                         {
-                            MessageBox.Show("Response: " + saveResponse + "\n" +
-                                "Request:" + saveRequest + "\n" +
-                                "Error: " + ex.Message + "\n" +
-                                "Stack: " + ex.StackTrace, "Fatal Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            changesHandled = true;
+                            cancelBTN_Click(sender, e);
                         }
                     }
                     else
-                    {
-                        changesHandled = true;
-                        cancelBTN_Click(sender, e);
-                    }
-                }
-                else
-                {
-                    if(!workspaceResponse.contents.Exists(x => x.workspaceName == workspaceNameTB.Text))
                     {
                         using (loadingForm loading = new loadingForm(CreateNewWorkspace))
                         {
@@ -381,10 +393,10 @@ namespace Summaries.administration
                                 "Stack: " + ex.StackTrace, "Fatal Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
-                    else
-                    {
-                        MessageBox.Show(WorkspaceConfigFormStrings.WorkspaceNameInUse, WorkspaceConfigFormStrings.WorkspaceNameInUseShort, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                }
+                else
+                {
+                    MessageBox.Show(WorkspaceConfigFormStrings.WorkspaceNameInUse, WorkspaceConfigFormStrings.WorkspaceNameInUseShort, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

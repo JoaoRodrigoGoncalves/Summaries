@@ -61,11 +61,29 @@ namespace Summaries.codeResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add New {0}.
+        ///   Looks up a localized string similar to Add new class.
         /// </summary>
-        internal static string AddNewObject {
+        internal static string AddNewClass {
             get {
-                return ResourceManager.GetString("AddNewObject", resourceCulture);
+                return ResourceManager.GetString("AddNewClass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add new user.
+        /// </summary>
+        internal static string AddNewUser {
+            get {
+                return ResourceManager.GetString("AddNewUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add new Workspace.
+        /// </summary>
+        internal static string AddNewWorkspace {
+            get {
+                return ResourceManager.GetString("AddNewWorkspace", resourceCulture);
             }
         }
         
@@ -142,6 +160,15 @@ namespace Summaries.codeResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete class.
+        /// </summary>
+        internal static string DeleteClass {
+            get {
+                return ResourceManager.GetString("DeleteClass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete Class?.
         /// </summary>
         internal static string DeleteClassQuestion {
@@ -151,11 +178,11 @@ namespace Summaries.codeResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delete {0}.
+        ///   Looks up a localized string similar to Delete user.
         /// </summary>
-        internal static string DeleteObject {
+        internal static string DeleteUser {
             get {
-                return ResourceManager.GetString("DeleteObject", resourceCulture);
+                return ResourceManager.GetString("DeleteUser", resourceCulture);
             }
         }
         
@@ -165,6 +192,15 @@ namespace Summaries.codeResources {
         internal static string DeleteUserQuestion {
             get {
                 return ResourceManager.GetString("DeleteUserQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Workspace.
+        /// </summary>
+        internal static string DeleteWorkspace {
+            get {
+                return ResourceManager.GetString("DeleteWorkspace", resourceCulture);
             }
         }
         
@@ -187,11 +223,29 @@ namespace Summaries.codeResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit {0}.
+        ///   Looks up a localized string similar to Edit class.
         /// </summary>
-        internal static string EditObject {
+        internal static string EditClass {
             get {
-                return ResourceManager.GetString("EditObject", resourceCulture);
+                return ResourceManager.GetString("EditClass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit user.
+        /// </summary>
+        internal static string EditUser {
+            get {
+                return ResourceManager.GetString("EditUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Workspace.
+        /// </summary>
+        internal static string EditWorkspace {
+            get {
+                return ResourceManager.GetString("EditWorkspace", resourceCulture);
             }
         }
         

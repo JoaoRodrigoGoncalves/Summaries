@@ -88,24 +88,6 @@ namespace Summaries.codeResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Microsoft Word Not Found.
-        /// </summary>
-        internal static string MSWordNotFound {
-            get {
-                return ResourceManager.GetString("MSWordNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Microsoft Word was not found on the system and is required to for this function to work..
-        /// </summary>
-        internal static string MSWordNotFoundLong {
-            get {
-                return ResourceManager.GetString("MSWordNotFoundLong", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to No Available Workspace.
         /// </summary>
         internal static string NoAvailableWorkspaces {

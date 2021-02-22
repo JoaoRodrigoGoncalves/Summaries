@@ -70,7 +70,7 @@ namespace Summaries.administration
         List<String[]> classesArray = new List<string[]>();
         List<String[]> workspacesArray = new List<string[]>();
         TreeNode currentSelectedNode;
-        string objectType = null; // Dynamically changes to "User", "Class" or "Workspace" when the user clicks on a node - Localization applies
+        string objectType = null; // Dynamically changes to "User", "Class" or "Workspace" when the user clicks on a node
         codeResources.Local_Storage storage = codeResources.Local_Storage.Retrieve;
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
@@ -79,21 +79,21 @@ namespace Summaries.administration
             {
                 case "usersNode":
                     currentSelectedNode = treeView1.SelectedNode;
-                    objectType = codeResources.AdministrationMenuStrings.User;
+                    objectType = "User";
                     GetUsers();
                     treeView1.SelectedNode.Expand();
                     break;
 
                 case "classesNode":
                     currentSelectedNode = treeView1.SelectedNode;
-                    objectType = codeResources.AdministrationMenuStrings.Class;
+                    objectType = "Class";
                     GetClasses();
                     treeView1.SelectedNode.Expand();
                     break;
 
                 case "workspacesNode":
                     currentSelectedNode = treeView1.SelectedNode;
-                    objectType = codeResources.AdministrationMenuStrings.Workspace;
+                    objectType = "Workspace";
                     GetWorkspaces();
                     treeView1.SelectedNode.Expand();
                     break;
@@ -103,7 +103,7 @@ namespace Summaries.administration
                     {
                         // The "class-" name is part of the groups presented under the Users node
                         currentSelectedNode = treeView1.SelectedNode.Parent;
-                        objectType = codeResources.AdministrationMenuStrings.User;
+                        objectType = "User";
                         GetUsers(false, int.Parse(treeView1.SelectedNode.Tag.ToString()));
                     }
                     break;
@@ -647,15 +647,28 @@ namespace Summaries.administration
                     DataGridViewRow selectedRow = dataGridView.Rows[selectedRowIndex];
 
                     ContextMenuStrip strip = new ContextMenuStrip();
-                    strip.Items.Add(String.Format(codeResources.AdministrationMenuStrings.AddNewObject, objectType), Properties.Resources.addSummary, AddNew_ContextEvent);
-                    if (objectType == codeResources.AdministrationMenuStrings.Class && int.Parse(selectedRow.Cells[0].Value.ToString()) == 0)
+                    switch (objectType)
+                    {
+                        case "User":
+                            strip.Items.Add(codeResources.AdministrationMenuStrings.AddNewUser, Properties.Resources.addSummary, AddNew_ContextEvent);
+                            break;
+
+                        case "Class":
+                            strip.Items.Add(codeResources.AdministrationMenuStrings.AddNewClass, Properties.Resources.addSummary, AddNew_ContextEvent);
+                            break;
+
+                        case "Workspace":
+                            strip.Items.Add(codeResources.AdministrationMenuStrings.AddNewWorkspace, Properties.Resources.addSummary, AddNew_ContextEvent);
+                            break;
+                    }
+                    if (objectType == "Class" && int.Parse(selectedRow.Cells[0].Value.ToString()) == 0)
                     {
                         strip.Show(dataGridView, new Point(e.X, e.Y));
                     }
                     else
                     {
                         strip.Items.Add("-");
-                        if (objectType == codeResources.AdministrationMenuStrings.User)
+                        if (objectType == "User")
                         {
 
                             int thisUserClassID = int.Parse(classesArray[classesArray.FindIndex(x => x[1] == selectedRow.Cells["class"].Value.ToString())][0]);
@@ -679,13 +692,39 @@ namespace Summaries.administration
                             strip.Items.Add(codeResources.AdministrationMenuStrings.ResetPassword, Properties.Resources.changePassword, ResetPassword_ContextEvent);
 
                         }
-                        strip.Items.Add(String.Format(codeResources.AdministrationMenuStrings.EditObject, objectType), Properties.Resources.newSummary, EditEntry_ContextEvent);
-                        if (objectType == codeResources.AdministrationMenuStrings.Workspace)
+                        switch (objectType)
+                        {
+                            case "User":
+                                strip.Items.Add(codeResources.AdministrationMenuStrings.EditUser, Properties.Resources.newSummary, EditEntry_ContextEvent);
+                                break;
+
+                            case "Class":
+                                strip.Items.Add(codeResources.AdministrationMenuStrings.EditClass, Properties.Resources.newSummary, EditEntry_ContextEvent);
+                                break;
+
+                            case "Workspace":
+                                strip.Items.Add(codeResources.AdministrationMenuStrings.EditWorkspace, Properties.Resources.newSummary, EditEntry_ContextEvent);
+                                break;
+                        }
+                        if (objectType == "Workspace")
                         {
                             strip.Items.Add(codeResources.AdministrationMenuStrings.FlushWorkspace, Properties.Resources.flushWorkspace, FlushWorkspace_ContextEvent);
                             strip.Items.Add(codeResources.AdministrationMenuStrings.CreateWorkspaceReport, Properties.Resources.export, CreateReport_ContextEvent);
                         }
-                        strip.Items.Add(String.Format(codeResources.AdministrationMenuStrings.DeleteObject, objectType), Properties.Resources.deleteSummary, DeleteEntry_ContextEvent);
+                        switch (objectType)
+                        {
+                            case "User":
+                                strip.Items.Add(codeResources.AdministrationMenuStrings.DeleteUser, Properties.Resources.deleteSummary, DeleteEntry_ContextEvent);
+                                break;
+
+                            case "Class":
+                                strip.Items.Add(codeResources.AdministrationMenuStrings.DeleteClass, Properties.Resources.deleteSummary, DeleteEntry_ContextEvent);
+                                break;
+
+                            case "Workspace":
+                                strip.Items.Add(codeResources.AdministrationMenuStrings.DeleteWorkspace, Properties.Resources.deleteSummary, DeleteEntry_ContextEvent);
+                                break;
+                        }
                         strip.Show(dataGridView, new Point(e.X, e.Y));
                     }
                 }

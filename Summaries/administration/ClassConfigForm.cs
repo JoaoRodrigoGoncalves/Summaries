@@ -14,11 +14,13 @@ namespace Summaries.administration
         int sentClassID = 0;
         string userRequest = null;
         string classRequest = null;
+        string allClassesRequest = null;
         string craftData = null;
         string saveRequest = null;
         bool changesHandled = false;
 
         classesServerResponse classResponse;
+        classesServerResponse allClassesList;
         usersServerResponse userResponse;
         simpleServerResponse saveResponse;
 
@@ -77,79 +79,99 @@ namespace Summaries.administration
             saveRequest = functions.APIRequest("PUT", craftData, "class/" + sentClassID);
         }
 
+        private void GetAllClasses()
+        {
+            allClassesRequest = functions.APIRequest("GET", null, "class");
+        }
+
         private void ClassConfigForm_Load(object sender, EventArgs e)
         {
-            if (sentClassID != 0)
+            using (loadingForm loading = new loadingForm(GetAllClasses))
             {
+                loading.ShowDialog();
+            }
 
-                using (loadingForm loading = new loadingForm(RequestClassData))
+            allClassesList = JsonConvert.DeserializeObject<classesServerResponse>(allClassesRequest);
+
+            if (allClassesList.status)
+            {
+                if (sentClassID != 0)
                 {
-                    loading.ShowDialog();
-                }
 
-                try
-                {
-                    classResponse = JsonConvert.DeserializeObject<classesServerResponse>(classRequest);
-
-                    if (classResponse.status)
+                    using (loadingForm loading = new loadingForm(RequestClassData))
                     {
-                        if (classResponse.contents.Count != 1)
-                        {
-                            MessageBox.Show(GlobalStrings.GotMoreThanOneEntry, GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            Close();
-                        }
-                        else
-                        {
-                            userResponse = JsonConvert.DeserializeObject<usersServerResponse>(userRequest);
+                        loading.ShowDialog();
+                    }
 
-                            if (userResponse.status)
+                    try
+                    {
+                        classResponse = JsonConvert.DeserializeObject<classesServerResponse>(classRequest);
+
+                        if (classResponse.status)
+                        {
+                            if (classResponse.contents.Count != 1)
                             {
-                                classesContent classes = classResponse.contents[0];
-
-                                this.Text = String.Format(ClassConfigFormStrings.FormName, classes.className);
-                                ClassNameTOPBox.Text = classes.className;
-                                classNameTB.Text = classes.className;
-
-                                if (userResponse.contents != null)
-                                {
-                                    usersOnThisClassGV.Enabled = true;
-                                    usersOnThisClassGV.ReadOnly = true;
-                                    foreach (var x in userResponse.contents)
-                                    {
-                                        int thisRowIndex = usersOnThisClassGV.Rows.Add();
-                                        usersOnThisClassGV.Rows[thisRowIndex].Cells["userLoginName"].Value = x.user;
-                                        usersOnThisClassGV.Rows[thisRowIndex].Cells["userDisplayName"].Value = x.displayName;
-                                    }
-                                }
+                                MessageBox.Show(GlobalStrings.GotMoreThanOneEntry, GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                Close();
                             }
                             else
                             {
-                                MessageBox.Show(GlobalStrings.Error + ": " + userResponse.errors, GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                Close();
+                                userResponse = JsonConvert.DeserializeObject<usersServerResponse>(userRequest);
+
+                                if (userResponse.status)
+                                {
+                                    classesContent classes = classResponse.contents[0];
+
+                                    this.Text = String.Format(ClassConfigFormStrings.FormName, classes.className);
+                                    ClassNameTOPBox.Text = classes.className;
+                                    classNameTB.Text = classes.className;
+
+                                    if (userResponse.contents != null)
+                                    {
+                                        usersOnThisClassGV.Enabled = true;
+                                        usersOnThisClassGV.ReadOnly = true;
+                                        foreach (var x in userResponse.contents)
+                                        {
+                                            int thisRowIndex = usersOnThisClassGV.Rows.Add();
+                                            usersOnThisClassGV.Rows[thisRowIndex].Cells["userLoginName"].Value = x.user;
+                                            usersOnThisClassGV.Rows[thisRowIndex].Cells["userDisplayName"].Value = x.displayName;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    MessageBox.Show(GlobalStrings.Error + ": " + userResponse.errors, GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    Close();
+                                }
                             }
                         }
+                        else
+                        {
+                            MessageBox.Show(GlobalStrings.Error + ": " + classResponse.errors, GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            Close();
+                        }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        MessageBox.Show(GlobalStrings.Error + ": " + classResponse.errors, GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Response: " + classResponse + "\n" +
+                            "Request:" + classRequest + "\n" +
+                            "Error: " + ex.Message + "\n" +
+                            "Stack: " + ex.StackTrace, "Fatal Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         Close();
                     }
                 }
-                catch (Exception ex)
+                else
                 {
-                    MessageBox.Show("Response: " + classResponse + "\n" +
-                        "Request:" + classRequest + "\n" +
-                        "Error: " + ex.Message + "\n" +
-                        "Stack: " + ex.StackTrace, "Fatal Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Close();
+                    this.Text = ClassConfigFormStrings.NewClassProperties;
+                    ClassNameTOPBox.Text = ClassConfigFormStrings.NewClass;
+
+                    usersOnThisClassGV.Enabled = false;
                 }
             }
             else
             {
-                this.Text = ClassConfigFormStrings.NewClassProperties;
-                ClassNameTOPBox.Text = ClassConfigFormStrings.NewClass;
-
-                usersOnThisClassGV.Enabled = false;
+                MessageBox.Show(GlobalStrings.Error + ": " + allClassesList.errors, GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Close();
             }
         }
 
@@ -175,45 +197,45 @@ namespace Summaries.administration
             if (!string.IsNullOrEmpty(classNameTB.Text) || !string.IsNullOrWhiteSpace(classNameTB.Text))
             {
                 craftData = "className=" + classNameTB.Text;
-                if (sentClassID != 0) // 0 -> new class. != 0 -> class being edited
+                if(!allClassesList.contents.Exists(x => x.className == classNameTB.Text && x.classID != sentClassID))
                 {
-                    if (classNameTB.Text != classResponse.contents[0].className)
+                    if (sentClassID != 0) // 0 -> new class. != 0 -> class being edited
                     {
-                        using (loadingForm loading = new loadingForm(UpdateClassData))
+                        if (classNameTB.Text != classResponse.contents[0].className)
                         {
-                            loading.ShowDialog();
-                        }
-                        try
-                        {
-                            saveResponse = JsonConvert.DeserializeObject<simpleServerResponse>(saveRequest);
+                            using (loadingForm loading = new loadingForm(UpdateClassData))
+                            {
+                                loading.ShowDialog();
+                            }
+                            try
+                            {
+                                saveResponse = JsonConvert.DeserializeObject<simpleServerResponse>(saveRequest);
 
-                            if (saveResponse.status)
-                            {
-                                changesHandled = true;
-                                cancelBTN_Click(sender, e);
+                                if (saveResponse.status)
+                                {
+                                    changesHandled = true;
+                                    cancelBTN_Click(sender, e);
+                                }
+                                else
+                                {
+                                    MessageBox.Show(GlobalStrings.Error + ": " + saveResponse.errors, GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
                             }
-                            else
+                            catch (Exception ex)
                             {
-                                MessageBox.Show(GlobalStrings.Error + ": " + saveResponse.errors, GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show("Response: " + saveResponse + "\n" +
+                                    "Request:" + saveRequest + "\n" +
+                                    "Error: " + ex.Message + "\n" +
+                                    "Stack: " + ex.StackTrace, "Fatal Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
-                        catch (Exception ex)
+                        else
                         {
-                            MessageBox.Show("Response: " + saveResponse + "\n" +
-                                "Request:" + saveRequest + "\n" +
-                                "Error: " + ex.Message + "\n" +
-                                "Stack: " + ex.StackTrace, "Fatal Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            changesHandled = true;
+                            cancelBTN_Click(sender, e);
                         }
                     }
                     else
-                    {
-                        changesHandled = true;
-                        cancelBTN_Click(sender, e);
-                    }
-                }
-                else
-                {
-                    if(!classResponse.contents.Exists(x => x.className == classNameTB.Text))
                     {
                         using (loadingForm loading = new loadingForm(CreateNewClass))
                         {
@@ -242,10 +264,10 @@ namespace Summaries.administration
                                 "Stack: " + ex.StackTrace, "Fatal Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
-                    else
-                    {
-                        MessageBox.Show(ClassConfigFormStrings.ClassNameInUse, ClassConfigFormStrings.ClassNameInUseShort, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                }
+                else
+                {
+                    MessageBox.Show(ClassConfigFormStrings.ClassNameInUse, ClassConfigFormStrings.ClassNameInUseShort, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else

@@ -37,6 +37,7 @@
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.nameBox = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.bigBarCheckBox = new System.Windows.Forms.CheckBox();
             this.userTypeBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.classNameBox = new System.Windows.Forms.TextBox();
@@ -98,12 +99,20 @@
             // groupBox1
             // 
             resources.ApplyResources(this.groupBox1, "groupBox1");
+            this.groupBox1.Controls.Add(this.bigBarCheckBox);
             this.groupBox1.Controls.Add(this.userTypeBox);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.classNameBox);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
+            // 
+            // bigBarCheckBox
+            // 
+            resources.ApplyResources(this.bigBarCheckBox, "bigBarCheckBox");
+            this.bigBarCheckBox.Name = "bigBarCheckBox";
+            this.bigBarCheckBox.UseVisualStyleBackColor = true;
+            this.bigBarCheckBox.CheckedChanged += new System.EventHandler(this.bigBarCheckBox_CheckedChanged);
             // 
             // userTypeBox
             // 
@@ -161,5 +170,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox userTypeBox;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.CheckBox bigBarCheckBox;
     }
 }

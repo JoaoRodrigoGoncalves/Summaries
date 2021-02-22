@@ -58,5 +58,17 @@ namespace Summaries.Properties {
                 this["City"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool bigBar {
+            get {
+                return ((bool)(this["bigBar"]));
+            }
+            set {
+                this["bigBar"] = value;
+            }
+        }
     }
 }

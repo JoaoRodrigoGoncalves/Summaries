@@ -169,7 +169,7 @@ namespace Summaries
                     {
                         foreach (workspacesContent content in workspaces.contents)
                         {
-                            if(content.hours != null)
+                            if (content.hours != null)
                             {
                                 if (content.read && content.hours.Exists(x => x.classID == storage.classID))
                                 {
@@ -209,7 +209,7 @@ namespace Summaries
                                     summaryNumberBox.Value = summaryNumber;
                                     dateBox.Value = DateTime.ParseExact(response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryNumber)].date, "yyyy-MM-dd", new CultureInfo("pt"));
                                     contentsBox.Text = response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryNumber)].bodyText;
-                                    if(response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryNumber)].dayHours == 0)
+                                    if (response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryNumber)].dayHours == 0)
                                     {
                                         missedDayCheckBox.Checked = true;
                                     }

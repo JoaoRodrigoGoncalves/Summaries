@@ -117,18 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AppName" xml:space="preserve">
-    <value>Summaries - Software de Controlo de Sumários de Estágio</value>
-  </data>
   <data name="Class" xml:space="preserve">
     <value>Turma</value>
   </data>
   <data name="DocumentType" xml:space="preserve">
     <value>Horas estagiádas por aluno</value>
-  </data>
-  <data name="GenerationTime" xml:space="preserve">
-    <value>Documento processado por computador em {0} às {1}.</value>
-    <comment>0 -&gt; date. 1 -&gt; time</comment>
   </data>
   <data name="HoursLeft" xml:space="preserve">
     <value>Horas Restantes</value>

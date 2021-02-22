@@ -118,6 +118,18 @@ namespace Summaries
             {
                 menuOptionsAdministration_Panel.Visible = true;
                 menuOptionsAdministration_PanelStrip.Visible = true;
+                administrationMenuBTN.Visible = true;
+            }
+
+            if (Properties.Settings.Default.bigBar)
+            {
+                menu.Visible = false;
+                bigBar.Visible = true;
+            }
+            else
+            {
+                menu.Visible = true;
+                bigBar.Visible = false;
             }
         }
 

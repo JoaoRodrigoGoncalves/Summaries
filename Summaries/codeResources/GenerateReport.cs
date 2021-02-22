@@ -3,12 +3,12 @@
  * http://www.pdfsharp.net/wiki/Invoice-sample.ashx
  */
 
-using System;
 using MigraDoc.DocumentObjectModel;
-using MigraDoc.DocumentObjectModel.Tables;
 using MigraDoc.DocumentObjectModel.Shapes;
-using System.Collections.Generic;
+using MigraDoc.DocumentObjectModel.Tables;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Summaries.codeResources
@@ -103,7 +103,7 @@ namespace Summaries.codeResources
                 workspaceResponse = JsonConvert.DeserializeObject<workspaceServerResponse>(func.APIRequest("GET", null, "workspace/" + workspaceID));
                 if (workspaceResponse.status)
                 {
-                    if(workspaceResponse.contents[0].hours != null)
+                    if (workspaceResponse.contents[0].hours != null)
                     {
                         userResponse = JsonConvert.DeserializeObject<userServerResponse>(func.APIRequest("GET", null, "user"));
                         if (userResponse.status)
@@ -154,9 +154,9 @@ namespace Summaries.codeResources
                     throw new Exception(GlobalStrings.Error + ": " + workspaceResponse.errors);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                throw new Exception(ex.Message, ex.InnerException);
+                throw new Exception(ex.Message + "\n" + ex.StackTrace, ex.InnerException);
             }
         }
 
@@ -225,7 +225,7 @@ namespace Summaries.codeResources
                 image.Top = ShapePosition.Top;
                 image.Left = ShapePosition.Left;
                 image.WrapFormat.Style = WrapStyle.Through;
-                image.Section.AddParagraph(GenerateReportStrings.AppName);
+                image.Section.AddParagraph(GlobalStrings.AppName);
 
 
                 var school = section.Headers.Primary.AddParagraph(Properties.Settings.Default.SchoolName);
@@ -241,6 +241,7 @@ namespace Summaries.codeResources
                 var info = section.AddParagraph(String.Format("{0}: {1}.\n{2}: {3}.", GenerateReportStrings.Workspace, workspaceResponse.contents[0].workspaceName, GenerateReportStrings.Class, ClassName));
                 info.Format.Font.Size = 11;
                 info.Format.SpaceAfter = "0.5cm";
+                info.Format.SpaceBefore = "0.5cm";
 
                 // Create the item table.
                 _table = section.AddTable();
@@ -293,7 +294,7 @@ namespace Summaries.codeResources
                 string date = DateTime.Today.ToString("dd/MM/yyyy");
                 string time = DateTime.Now.ToString("HH:mm:ss");
                 var paragraph = section.Footers.Primary.AddParagraph();
-                paragraph.AddText(String.Format(GenerateReportStrings.GenerationTime, date, time));
+                paragraph.AddText(String.Format(GlobalStrings.GenerationTime, date, time));
                 paragraph.Format.Font.Size = 6;
             }
             catch (Exception ex)
@@ -310,17 +311,21 @@ namespace Summaries.codeResources
         {
             foreach (userContents student in userResponse.contents)
             {
-                if(student.classID == classID)
+                if (student.classID == classID)
                 {
                     var row = this._table.AddRow();
-                    int thisUserHours = workspaceHoursResponse.contents[workspaceHoursResponse.contents.FindIndex(x => x.classID == classID && x.userID == student.userid)].summarizedHours;
-                    row.Cells[0].AddParagraph(student.displayName);
-                    row.Cells[1].AddParagraph(thisUserHours.ToString());
-                    row.Cells[1].Format.Alignment = ParagraphAlignment.Center;
-                    row.Cells[1].VerticalAlignment = VerticalAlignment.Center;
-                    row.Cells[2].AddParagraph((workspaceResponse.contents[0].hours[workspaceResponse.contents[0].hours.FindIndex(x => x.classID == classID)].TotalHours - thisUserHours).ToString());
-                    row.Cells[2].Format.Alignment = ParagraphAlignment.Center;
-                    row.Cells[2].VerticalAlignment = VerticalAlignment.Center;
+                    int index = workspaceHoursResponse.contents.FindIndex(x => x.classID == classID && x.userID == student.userid);
+                    if(index != -1)
+                    {
+                        int thisUserHours = workspaceHoursResponse.contents[index].summarizedHours;
+                        row.Cells[0].AddParagraph(student.displayName);
+                        row.Cells[1].AddParagraph(thisUserHours.ToString());
+                        row.Cells[1].Format.Alignment = ParagraphAlignment.Center;
+                        row.Cells[1].VerticalAlignment = VerticalAlignment.Center;
+                        row.Cells[2].AddParagraph((workspaceResponse.contents[0].hours[workspaceResponse.contents[0].hours.FindIndex(x => x.classID == classID)].TotalHours - thisUserHours).ToString());
+                        row.Cells[2].Format.Alignment = ParagraphAlignment.Center;
+                        row.Cells[2].VerticalAlignment = VerticalAlignment.Center;
+                    }
                 }
             }
             _table.SetEdge(0, _table.Rows.Count - 1, 3, 1, Edge.Box, BorderStyle.Single, 0.75);

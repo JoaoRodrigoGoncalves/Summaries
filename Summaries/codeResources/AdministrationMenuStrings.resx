@@ -117,8 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AddNewObject" xml:space="preserve">
-    <value>Add New {0}</value>
+  <data name="AddNewClass" xml:space="preserve">
+    <value>Add new class</value>
+  </data>
+  <data name="AddNewUser" xml:space="preserve">
+    <value>Add new user</value>
+  </data>
+  <data name="AddNewWorkspace" xml:space="preserve">
+    <value>Add new Workspace</value>
   </data>
   <data name="AdminColumn" xml:space="preserve">
     <value>Admin?</value>
@@ -144,14 +150,20 @@
   <data name="CreateWorkspaceReport" xml:space="preserve">
     <value>Create Report</value>
   </data>
+  <data name="DeleteClass" xml:space="preserve">
+    <value>Delete class</value>
+  </data>
   <data name="DeleteClassQuestion" xml:space="preserve">
     <value>Delete Class?</value>
   </data>
-  <data name="DeleteObject" xml:space="preserve">
-    <value>Delete {0}</value>
+  <data name="DeleteUser" xml:space="preserve">
+    <value>Delete user</value>
   </data>
   <data name="DeleteUserQuestion" xml:space="preserve">
     <value>Delete User?</value>
+  </data>
+  <data name="DeleteWorkspace" xml:space="preserve">
+    <value>Delete Workspace</value>
   </data>
   <data name="DeleteWorkspaceQuestion" xml:space="preserve">
     <value>Delete Workspace?</value>
@@ -159,8 +171,14 @@
   <data name="DisplayName" xml:space="preserve">
     <value>Display Name</value>
   </data>
-  <data name="EditObject" xml:space="preserve">
-    <value>Edit {0}</value>
+  <data name="EditClass" xml:space="preserve">
+    <value>Edit class</value>
+  </data>
+  <data name="EditUser" xml:space="preserve">
+    <value>Edit user</value>
+  </data>
+  <data name="EditWorkspace" xml:space="preserve">
+    <value>Edit Workspace</value>
   </data>
   <data name="FlushWorkspace" xml:space="preserve">
     <value>Flush Workspace</value>

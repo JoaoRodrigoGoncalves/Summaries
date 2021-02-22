@@ -56,7 +56,7 @@ namespace Summaries.codeResources
         {
             if (!EmptyFields())
             {
-                if(Properties.Settings.Default.SchoolName != schoolNameTB.Text)
+                if (Properties.Settings.Default.SchoolName != schoolNameTB.Text)
                 {
                     Properties.Settings.Default.SchoolName = schoolNameTB.Text;
                     Properties.Settings.Default.Save();
@@ -92,7 +92,7 @@ namespace Summaries.codeResources
                     Process.Start(saveFile.FileName);
                     Close();
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     MessageBox.Show(GlobalStrings.Error + ": " + ex.Message, GlobalStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }

@@ -148,14 +148,8 @@
   <data name="menuOptions.Text" xml:space="preserve">
     <value>&amp;Opções</value>
   </data>
-  <data name="menuSummaryNew.Size" type="System.Drawing.Size, System.Drawing">
-    <value>166, 22</value>
-  </data>
   <data name="menuSummaryNew.Text" xml:space="preserve">
     <value>&amp;Novo Sumário</value>
-  </data>
-  <data name="menuSummaryList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>166, 22</value>
   </data>
   <data name="menuSummaryList.Text" xml:space="preserve">
     <value>&amp;Lista de Sumários</value>
@@ -166,14 +160,8 @@
   <data name="menuSummary.Text" xml:space="preserve">
     <value>&amp;Sumários</value>
   </data>
-  <data name="menuAboutLicenses.Size" type="System.Drawing.Size, System.Drawing">
-    <value>166, 22</value>
-  </data>
   <data name="menuAboutLicenses.Text" xml:space="preserve">
     <value>Li&amp;cenças</value>
-  </data>
-  <data name="menuAboutSummaries.Size" type="System.Drawing.Size, System.Drawing">
-    <value>166, 22</value>
   </data>
   <data name="menuAboutSummaries.Text" xml:space="preserve">
     <value>Sob&amp;re Summaries</value>
@@ -220,6 +208,27 @@
   </data>
   <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
+  </data>
+  <data name="userSettingsBTN.Text" xml:space="preserve">
+    <value>&amp;Definições</value>
+  </data>
+  <data name="licensesToolStripMenuItem.Text" xml:space="preserve">
+    <value>Licenças</value>
+  </data>
+  <data name="aboutSummariesToolStripMenuItem.Text" xml:space="preserve">
+    <value>Sobre Summaries</value>
+  </data>
+  <data name="exitBTN.Text" xml:space="preserve">
+    <value>&amp;Sair</value>
+  </data>
+  <data name="administrationMenuBTN.Text" xml:space="preserve">
+    <value>&amp;Painel de Administração</value>
+  </data>
+  <data name="newSummaryBTN.Text" xml:space="preserve">
+    <value>&amp;Novo Sumário</value>
+  </data>
+  <data name="summariesListBTN.Text" xml:space="preserve">
+    <value>&amp;Lista de Sumários</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

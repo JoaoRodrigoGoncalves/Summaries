@@ -126,12 +126,6 @@
   <data name="DeleteSummaryQuestion" xml:space="preserve">
     <value>Tem a certeza que pretende apagar este sumário?</value>
   </data>
-  <data name="MSWordNotFound" xml:space="preserve">
-    <value>Microsoft Word não encontrado</value>
-  </data>
-  <data name="MSWordNotFoundLong" xml:space="preserve">
-    <value>Microsoft Word não foi encontrado neste computador e é necessário para esta função funcionar!</value>
-  </data>
   <data name="NoAvailableWorkspaces" xml:space="preserve">
     <value>Não existem Espaços de Trabalho disponíveis</value>
   </data>

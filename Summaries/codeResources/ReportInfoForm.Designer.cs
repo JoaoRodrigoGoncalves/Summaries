@@ -43,53 +43,35 @@ namespace Summaries.codeResources
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 13);
+            resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(71, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "School Name";
             // 
             // schoolNameTB
             // 
-            this.schoolNameTB.Location = new System.Drawing.Point(90, 10);
+            resources.ApplyResources(this.schoolNameTB, "schoolNameTB");
             this.schoolNameTB.Name = "schoolNameTB";
-            this.schoolNameTB.Size = new System.Drawing.Size(452, 20);
-            this.schoolNameTB.TabIndex = 1;
             // 
             // saveBTN
             // 
-            this.saveBTN.Location = new System.Drawing.Point(467, 62);
+            resources.ApplyResources(this.saveBTN, "saveBTN");
             this.saveBTN.Name = "saveBTN";
-            this.saveBTN.Size = new System.Drawing.Size(75, 23);
-            this.saveBTN.TabIndex = 2;
-            this.saveBTN.Text = "Save";
             this.saveBTN.UseVisualStyleBackColor = true;
             this.saveBTN.Click += new System.EventHandler(this.saveBTN_Click);
             // 
             // cityNameTB
             // 
-            this.cityNameTB.Location = new System.Drawing.Point(90, 36);
+            resources.ApplyResources(this.cityNameTB, "cityNameTB");
             this.cityNameTB.Name = "cityNameTB";
-            this.cityNameTB.Size = new System.Drawing.Size(452, 20);
-            this.cityNameTB.TabIndex = 4;
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(60, 39);
+            resources.ApplyResources(this.label2, "label2");
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(24, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "City";
             // 
             // cancelBTN
             // 
-            this.cancelBTN.Location = new System.Drawing.Point(386, 62);
+            resources.ApplyResources(this.cancelBTN, "cancelBTN");
             this.cancelBTN.Name = "cancelBTN";
-            this.cancelBTN.Size = new System.Drawing.Size(75, 23);
-            this.cancelBTN.TabIndex = 9;
-            this.cancelBTN.Text = "Cancel";
             this.cancelBTN.UseVisualStyleBackColor = true;
             this.cancelBTN.Click += new System.EventHandler(this.cancelBTN_Click);
             // 
@@ -99,22 +81,16 @@ namespace Summaries.codeResources
             // 
             // ReportInfoForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(554, 93);
             this.Controls.Add(this.cancelBTN);
             this.Controls.Add(this.cityNameTB);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.saveBTN);
             this.Controls.Add(this.schoolNameTB);
             this.Controls.Add(this.label1);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(570, 132);
-            this.MinimumSize = new System.Drawing.Size(570, 132);
             this.Name = "ReportInfoForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Create Report";
             this.Load += new System.EventHandler(this.ReportInfoForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.ResumeLayout(false);

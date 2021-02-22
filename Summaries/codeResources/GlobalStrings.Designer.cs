@@ -70,6 +70,15 @@ namespace Summaries.codeResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Summaries - Internship Summary Control Software.
+        /// </summary>
+        internal static string AppName {
+            get {
+                return ResourceManager.GetString("AppName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot change to the same password.
         /// </summary>
         internal static string CannotChangeSamePassword {
@@ -201,6 +210,15 @@ namespace Summaries.codeResources {
         internal static string FailedCheckUpdates {
             get {
                 return ResourceManager.GetString("FailedCheckUpdates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Document processed by a computer on {0} at {1}..
+        /// </summary>
+        internal static string GenerationTime {
+            get {
+                return ResourceManager.GetString("GenerationTime", resourceCulture);
             }
         }
         
@@ -372,6 +390,15 @@ namespace Summaries.codeResources {
         internal static string UnsavedChanges {
             get {
                 return ResourceManager.GetString("UnsavedChanges", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} settings.
+        /// </summary>
+        internal static string UserSettings {
+            get {
+                return ResourceManager.GetString("UserSettings", resourceCulture);
             }
         }
     }

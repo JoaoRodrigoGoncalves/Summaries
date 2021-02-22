@@ -126,12 +126,6 @@
   <data name="DeleteSummaryQuestion" xml:space="preserve">
     <value>Are you sure you want to delete the summary?</value>
   </data>
-  <data name="MSWordNotFound" xml:space="preserve">
-    <value>Microsoft Word Not Found</value>
-  </data>
-  <data name="MSWordNotFoundLong" xml:space="preserve">
-    <value>Microsoft Word was not found on the system and is required to for this function to work.</value>
-  </data>
   <data name="NoAvailableWorkspaces" xml:space="preserve">
     <value>No Available Workspace</value>
   </data>

@@ -127,7 +127,7 @@ namespace Summaries
                             workspaceComboBox.Items.Clear();
                             foreach (workspacesContent row in workspaceResponse.contents)
                             {
-                                if(row.hours != null)
+                                if (row.hours != null)
                                 {
                                     if (row.read && row.hours.Exists(x => x.classID == storage.classID))
                                     {
@@ -368,19 +368,8 @@ namespace Summaries
 
         private void exportWorkspace_Click(object sender, EventArgs e)
         {
-            // https://www.codeproject.com/Tips/689968/How-to-Check-Whether-Word-is-Installed-in-the-Syst
-            Type officeType = Type.GetTypeFromProgID("Word.Application");
-            if (officeType == null)
-            {
-                MessageBox.Show(summariesListStrings.MSWordNotFoundLong, summariesListStrings.MSWordNotFound, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
-            else
-            {
-                using (loadingForm loading = new loadingForm(functions.ExportToWordFile))
-                {
-                    loading.ShowDialog();
-                }
-            }
+            codeResources.ExportSummary.ExportSummaryForm export = new codeResources.ExportSummary.ExportSummaryForm();
+            export.ShowDialog();
         }
     }
 }

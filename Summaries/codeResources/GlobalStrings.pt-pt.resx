@@ -121,6 +121,9 @@
     <value>Administrador</value>
     <comment>As in, what type of user</comment>
   </data>
+  <data name="AppName" xml:space="preserve">
+    <value>Summaries - Software de Controlo de Sumários de Estágio</value>
+  </data>
   <data name="CannotChangeSamePassword" xml:space="preserve">
     <value>Não é possível alterar para a mesma palavra-passe.</value>
   </data>
@@ -165,6 +168,10 @@
   </data>
   <data name="FailedCheckUpdates" xml:space="preserve">
     <value>Não foi possível procurar por atualizações</value>
+  </data>
+  <data name="GenerationTime" xml:space="preserve">
+    <value>Documento processado por computador em {0} às {1}.</value>
+    <comment>0 -&gt; date. 1 -&gt; time</comment>
   </data>
   <data name="GotMoreThanOneEntry" xml:space="preserve">
     <value>Mais que uma entrada recebida</value>
@@ -224,5 +231,8 @@
   </data>
   <data name="UnsavedChanges" xml:space="preserve">
     <value>Alterações por guardar</value>
+  </data>
+  <data name="UserSettings" xml:space="preserve">
+    <value>Definições de {0}</value>
   </data>
 </root>

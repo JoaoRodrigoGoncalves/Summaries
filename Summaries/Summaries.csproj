@@ -170,7 +170,24 @@
     <Compile Include="codeResources\confirmByTyping.Designer.cs">
       <DependentUpon>confirmByTyping.cs</DependentUpon>
     </Compile>
+    <Compile Include="codeResources\ExportSummary\ExportSummaryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="codeResources\ExportSummary\ExportSummaryForm.Designer.cs">
+      <DependentUpon>ExportSummaryForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="codeResources\ExportSummary\GenerateSummaryExportStrings.pt-pt.Designer.cs">
+      <DependentUpon>GenerateSummaryExportStrings.pt-pt.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="codeResources\ExportSummary\GenerateSummaryExportStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GenerateSummaryExportStrings.resx</DependentUpon>
+    </Compile>
     <Compile Include="codeResources\functions.cs" />
+    <Compile Include="codeResources\ExportSummary\GenerateSummaryExport.cs" />
     <Compile Include="codeResources\GenerateReport.cs" />
     <Compile Include="codeResources\GenerateReportStrings.pt-pt.Designer.cs">
       <DependentUpon>GenerateReportStrings.pt-pt.resx</DependentUpon>
@@ -347,6 +364,20 @@
     <EmbeddedResource Include="codeResources\confirmByTyping.resx">
       <DependentUpon>confirmByTyping.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="codeResources\ExportSummary\ExportSummaryForm.pt-PT.resx">
+      <DependentUpon>ExportSummaryForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="codeResources\ExportSummary\ExportSummaryForm.resx">
+      <DependentUpon>ExportSummaryForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="codeResources\ExportSummary\GenerateSummaryExportStrings.pt-pt.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>GenerateSummaryExportStrings.pt-pt.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="codeResources\ExportSummary\GenerateSummaryExportStrings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>GenerateSummaryExportStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="codeResources\GenerateReportStrings.pt-pt.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>GenerateReportStrings.pt-pt.Designer.cs</LastGenOutput>
@@ -376,6 +407,9 @@
     <EmbeddedResource Include="codeResources\newSummaryStrings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>newSummaryStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="codeResources\ReportInfoForm.pt-PT.resx">
+      <DependentUpon>ReportInfoForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="codeResources\ReportInfoForm.resx">
       <DependentUpon>ReportInfoForm.cs</DependentUpon>
@@ -479,15 +513,6 @@
       <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
       <VersionMajor>2</VersionMajor>
       <VersionMinor>8</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>primary</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
-    <COMReference Include="Microsoft.Office.Interop.Word">
-      <Guid>{00020905-0000-0000-C000-000000000046}</Guid>
-      <VersionMajor>8</VersionMajor>
-      <VersionMinor>7</VersionMinor>
       <Lcid>0</Lcid>
       <WrapperTool>primary</WrapperTool>
       <Isolated>False</Isolated>
