@@ -207,24 +207,24 @@ namespace Summaries
                                 {
                                     this.Text = newSummaryStrings.EditSummary;
                                     summaryNumberBox.Value = summaryNumber;
-                                    dateBox.Value = DateTime.ParseExact(response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryNumber)].date, "yyyy-MM-dd", new CultureInfo("pt"));
-                                    contentsBox.Text = response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryNumber)].bodyText;
-                                    if (response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryNumber)].dayHours == 0)
+                                    dateBox.Value = DateTime.ParseExact(response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryNumber && x.workspaceID == storage.currentWorkspaceID)].date, "yyyy-MM-dd", new CultureInfo("pt"));
+                                    contentsBox.Text = response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryNumber && x.workspaceID == storage.currentWorkspaceID)].bodyText;
+                                    if (response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryNumber && x.workspaceID == storage.currentWorkspaceID)].dayHours == 0)
                                     {
                                         missedDayCheckBox.Checked = true;
                                     }
                                     else
                                     {
-                                        dayHoursNumberBox.Value = response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryNumber)].dayHours;
+                                        dayHoursNumberBox.Value = response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryNumber && x.workspaceID == storage.currentWorkspaceID)].dayHours;
                                     }
-                                    originalText = functions.Hash(response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryNumber)].bodyText);
-                                    originalDate = response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryNumber)].date;
-                                    originalWorkspaceID = response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryNumber)].workspaceID;
+                                    originalText = functions.Hash(response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryNumber && x.workspaceID == storage.currentWorkspaceID)].bodyText);
+                                    originalDate = response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryNumber && x.workspaceID == storage.currentWorkspaceID)].date;
+                                    originalWorkspaceID = response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryNumber && x.workspaceID == storage.currentWorkspaceID)].workspaceID;
                                     originalSummaryID = summaryNumber;
-                                    dbRow = response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryNumber)].ID;
-                                    if (response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryNumber)].attachments != null)
+                                    dbRow = response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryNumber && x.workspaceID == storage.currentWorkspaceID)].ID;
+                                    if (response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryNumber && x.workspaceID == storage.currentWorkspaceID)].attachments != null)
                                     {
-                                        foreach (var attach in response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryNumber)].attachments)
+                                        foreach (var attach in response.contents[response.contents.FindIndex(x => x.summaryNumber == summaryNumber && x.workspaceID == storage.currentWorkspaceID)].attachments)
                                         {
                                             attachmentsGridView.Rows.Add(attach.filename, newSummaryStrings.RemoveBTN);
                                         }
@@ -300,7 +300,7 @@ namespace Summaries
 
         private void saveBTN_Click(object sender, EventArgs e)
         {
-            if (contentsBox.Text == "" || contentsBox.TextLength < 1 || contentsBox.Text == string.Empty || filesToAdd.Count < 1 || filesToRemove.Count < 1)
+            if (String.IsNullOrEmpty(contentsBox.Text) || filesToAdd.Count < 1 || filesToRemove.Count < 1)
             {
                 this.Close();
             }
@@ -374,7 +374,7 @@ namespace Summaries
                 int dayHours = (missedDayCheckBox.Checked ? 0 : Convert.ToInt32(dayHoursNumberBox.Value));
                 if (isEdit)
                 {
-                    if ((originalText != functions.Hash(contentsBox.Text)) || (originalDate != dateBox.Value.ToString("yyyy-MM-dd")) || (originalSummaryID != summaryNumberBox.Value) || filesToAdd.Count > 0 || filesToRemove.Count > 0)
+                    if ((originalText != functions.Hash(contentsBox.Text)) || (originalDate != dateBox.Value.ToString("yyyy-MM-dd")) || (originalSummaryID != summaryNumberBox.Value) || dayHours != response.contents[response.contents.FindIndex(x => x.workspaceID == storage.currentWorkspaceID && x.summaryNumber == originalSummaryID)].dayHours || filesToAdd.Count > 0 || filesToRemove.Count > 0)
                     {
                         if (filesToAdd.Count > 0 || filesToRemove.Count > 0) // Checks if there are files to add or remove
                         {
