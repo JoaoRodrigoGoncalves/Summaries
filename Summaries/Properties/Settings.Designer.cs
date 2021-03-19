@@ -70,5 +70,17 @@ namespace Summaries.Properties {
                 this["bigBar"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string serverURL {
+            get {
+                return ((string)(this["serverURL"]));
+            }
+            set {
+                this["serverURL"] = value;
+            }
+        }
     }
 }

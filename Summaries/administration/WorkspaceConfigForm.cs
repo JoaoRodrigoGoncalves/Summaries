@@ -459,7 +459,7 @@ namespace Summaries.administration
                         }
                         else
                         {
-                            if(workspaceResponse.contents[0].hours != null)
+                            if (workspaceResponse.contents[0].hours != null)
                             {
                                 if (workspaceResponse.contents[0].hours.Exists(x => x.classID == classResponse.contents[classIndex].classID)) // checks if this class was already registered on the server
                                 {
