@@ -446,7 +446,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Summaries.resources, Version=6.0.3.0, Culture=pt-PT, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Summaries.resources, Version=6.0.4.0, Culture=pt-PT, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_3CF2D1BA398742289627A39E8858123F"
@@ -682,15 +682,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Summaries"
-        "ProductCode" = "8:{BF92A588-0A7B-4F7C-9C84-95CEB8494814}"
-        "PackageCode" = "8:{0D4F880A-C549-4369-B10A-BAD2ABB932F5}"
+        "ProductCode" = "8:{1C433DDF-8458-4D24-98F7-97050799A2C9}"
+        "PackageCode" = "8:{296DBA38-7C9D-46CA-9A88-22DCF8E42DCB}"
         "UpgradeCode" = "8:{43134371-67D1-4D4D-8E36-02F775648D5B}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:6.0.4"
+        "ProductVersion" = "8:6.1.0"
         "Manufacturer" = "8:João Rodrigo Gonçalves"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:https://joaogoncalves.eu"
@@ -843,7 +843,7 @@
                 {
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_851B4A10B0CA43E092C7ADA3638F5748"
                     {
-                    "Sequence" = "3:300"
+                    "Sequence" = "3:400"
                     "DisplayName" = "8:Confirm Installation"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
@@ -913,7 +913,7 @@
                     }
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_DFA8F0FC00FF4E35BF86BDB45A248204"
                     {
-                    "Sequence" = "3:200"
+                    "Sequence" = "3:210"
                     "DisplayName" = "8:Installation Folder"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"

@@ -27,7 +27,7 @@
     <ProductName>Summaries</ProductName>
     <PublisherName>João Rodrigo Lopes Gonçalves</PublisherName>
     <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>6.0.4.0</ApplicationVersion>
+    <ApplicationVersion>6.1.0.0</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -280,6 +280,12 @@
     <Compile Include="main.Designer.cs">
       <DependentUpon>main.cs</DependentUpon>
     </Compile>
+    <Compile Include="ServerInput.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ServerInput.Designer.cs">
+      <DependentUpon>ServerInput.cs</DependentUpon>
+    </Compile>
     <Compile Include="userForms\newSummary.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -452,6 +458,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="main.resx">
       <DependentUpon>main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ServerInput.resx">
+      <DependentUpon>ServerInput.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="userForms\newSummary.pt-PT.resx">
       <DependentUpon>newSummary.cs</DependentUpon>

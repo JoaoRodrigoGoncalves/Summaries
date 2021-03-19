@@ -26,22 +26,20 @@ namespace Summaries
             }
             else
             {
-                if (!functions.CheckForInternetConnection("https://joaogoncalves.eu"))
+                if (String.IsNullOrEmpty(Properties.Settings.Default.serverURL) || String.IsNullOrWhiteSpace(Properties.Settings.Default.serverURL))
                 {
-                    if (!functions.CheckForInternetConnection("https://joaogoncalves.myftp.org"))
-                    {
-                        MessageBox.Show(GlobalStrings.CannotConnectServerLong, GlobalStrings.CannotConnectServer, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        Application.Exit();
-                    }
-                    else
-                    {
-                        storage.inUseDomain = "https://joaogoncalves.myftp.org";
-                    }
+                    ServerInput config = new ServerInput();
+                    config.ShowDialog();
+                }
 
+                if (!functions.CheckForInternetConnection(Properties.Settings.Default.serverURL))
+                {
+                    MessageBox.Show(GlobalStrings.CannotConnectServerLong, GlobalStrings.CannotConnectServer, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Application.Exit();
                 }
                 else
                 {
-                    storage.inUseDomain = "https://joaogoncalves.eu";
+                    storage.inUseDomain = Properties.Settings.Default.serverURL;
                 }
 
                 Directory.CreateDirectory(@"" + Path.GetTempPath() + "summariesTemp");

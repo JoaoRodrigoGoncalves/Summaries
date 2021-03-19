@@ -107,3 +107,4 @@ C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summari
 C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.codeResources.ExportSummary.ExportSummaryForm.pt-PT.resources
 C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.codeResources.ExportSummary.GenerateSummaryExportStrings.pt-pt.resources
 C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.csprojAssemblyReference.cache
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Debug\Summaries.ServerInput.resources

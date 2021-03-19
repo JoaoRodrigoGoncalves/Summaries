@@ -155,6 +155,7 @@ namespace Summaries
 
         private void languageDropDown_DropDownClosed(object sender, EventArgs e)
         {
+            var functions = new functions();
             switch (languageDropDown.SelectedItem)
             {
                 case "Português":
@@ -167,6 +168,7 @@ namespace Summaries
                         this.Controls.Clear();
                         InitializeComponent();
                         languageDropDown.SelectedIndex = languageDropDown.FindStringExact("Português");
+                        versionLBL.Text = functions.GetSoftwareVersion();
                     }
                     break;
 
@@ -180,6 +182,7 @@ namespace Summaries
                         this.Controls.Clear();
                         InitializeComponent();
                         languageDropDown.SelectedIndex = languageDropDown.FindStringExact("English");
+                        versionLBL.Text = functions.GetSoftwareVersion();
                     }
                     break;
             }

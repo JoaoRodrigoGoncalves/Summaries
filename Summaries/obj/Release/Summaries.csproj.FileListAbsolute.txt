@@ -108,3 +108,4 @@ C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Release\Summa
 C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.csproj.CopyComplete
 C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.exe
 C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.pdb
+C:\Users\João Gonçalves\Documents\GitHub\Summaries\Summaries\obj\Release\Summaries.ServerInput.resources
