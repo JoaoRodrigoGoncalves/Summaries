@@ -326,6 +326,16 @@ namespace Summaries.codeResources
                         row.Cells[2].Format.Alignment = ParagraphAlignment.Center;
                         row.Cells[2].VerticalAlignment = VerticalAlignment.Center;
                     }
+                    else
+                    {
+                        row.Cells[0].AddParagraph(student.displayName);
+                        row.Cells[1].AddParagraph("0");
+                        row.Cells[1].Format.Alignment = ParagraphAlignment.Center;
+                        row.Cells[1].VerticalAlignment = VerticalAlignment.Center;
+                        row.Cells[2].AddParagraph(workspaceResponse.contents[0].hours[workspaceResponse.contents[0].hours.FindIndex(x => x.classID == classID)].TotalHours.ToString());
+                        row.Cells[2].Format.Alignment = ParagraphAlignment.Center;
+                        row.Cells[2].VerticalAlignment = VerticalAlignment.Center;
+                    }
                 }
             }
             _table.SetEdge(0, _table.Rows.Count - 1, 3, 1, Edge.Box, BorderStyle.Single, 0.75);
