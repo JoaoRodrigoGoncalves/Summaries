@@ -94,5 +94,17 @@ namespace Summaries.Properties {
                 this["summaryOrderDate"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool callUpgrade {
+            get {
+                return ((bool)(this["callUpgrade"]));
+            }
+            set {
+                this["callUpgrade"] = value;
+            }
+        }
     }
 }

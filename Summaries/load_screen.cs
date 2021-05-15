@@ -26,6 +26,13 @@ namespace Summaries
             }
             else
             {
+                if (Properties.Settings.Default.callUpgrade)
+                {
+                    Properties.Settings.Default.Upgrade();
+                    Properties.Settings.Default.callUpgrade = false;
+                    Properties.Settings.Default.Save();
+                }
+
                 if (String.IsNullOrEmpty(Properties.Settings.Default.serverURL) || String.IsNullOrWhiteSpace(Properties.Settings.Default.serverURL))
                 {
                     ServerInput config = new ServerInput();

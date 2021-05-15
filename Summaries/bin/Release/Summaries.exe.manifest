@@ -122,7 +122,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>pncGWZ0EY8Zqlhds2V6PrYnGcUkxYM1kRhewhwXY02Y=</dsig:DigestValue>
+        <dsig:DigestValue>05SvTA9uwwA3vCwbQc3kjVlcBgFgY8b+HG6gk+hwFAU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -135,13 +135,13 @@
       <dsig:DigestValue>enKP4F+SYRDhsTfNgbRQlpHQOijw2QckL6hOpFyk7+c=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Summaries.exe.config" size="1509">
+  <file name="Summaries.exe.config" size="1633">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>b5u1vcCiUuvXP1+1GLdc1/8tZLO/j2whzq3IxmDF+N8=</dsig:DigestValue>
+      <dsig:DigestValue>gy/s7ihBYjHgXdWuQJryNpeCRPyEhs9c9uHHrhlbl7U=</dsig:DigestValue>
     </hash>
   </file>
   <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">
