@@ -46,6 +46,9 @@
             this.workspaceComboBox = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripLabel4 = new System.Windows.Forms.ToolStripLabel();
             this.summarizedHoursHolder = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.hoursRemainingLB = new System.Windows.Forms.ToolStripLabel();
+            this.hoursRemainingHolder = new System.Windows.Forms.ToolStripLabel();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             this.toolStrip.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -121,7 +124,10 @@
             this.exportWorkspace,
             this.workspaceComboBox,
             this.toolStripLabel4,
-            this.summarizedHoursHolder});
+            this.summarizedHoursHolder,
+            this.toolStripSeparator1,
+            this.hoursRemainingLB,
+            this.hoursRemainingHolder});
             this.toolStrip1.Name = "toolStrip1";
             // 
             // totalHoursLB
@@ -177,6 +183,21 @@
             this.summarizedHoursHolder.Name = "summarizedHoursHolder";
             resources.ApplyResources(this.summarizedHoursHolder, "summarizedHoursHolder");
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
+            // 
+            // hoursRemainingLB
+            // 
+            this.hoursRemainingLB.Name = "hoursRemainingLB";
+            resources.ApplyResources(this.hoursRemainingLB, "hoursRemainingLB");
+            // 
+            // hoursRemainingHolder
+            // 
+            this.hoursRemainingHolder.Name = "hoursRemainingHolder";
+            resources.ApplyResources(this.hoursRemainingHolder, "hoursRemainingHolder");
+            // 
             // summariesList
             // 
             resources.ApplyResources(this, "$this");
@@ -216,5 +237,8 @@
         private System.Windows.Forms.ToolStripButton exportWorkspace;
         private System.Windows.Forms.ToolStripLabel totalHoursHolder;
         private System.Windows.Forms.ToolStripLabel summarizedHoursHolder;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripLabel hoursRemainingLB;
+        private System.Windows.Forms.ToolStripLabel hoursRemainingHolder;
     }
 }

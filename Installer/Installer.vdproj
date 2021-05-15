@@ -446,7 +446,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Summaries.resources, Version=6.1.1.0, Culture=pt-PT, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Summaries.resources, Version=6.2.1.0, Culture=pt-PT, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_3CF2D1BA398742289627A39E8858123F"
@@ -682,15 +682,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Summaries"
-        "ProductCode" = "8:{8A305239-66BA-4E8C-A779-2B47060CF51F}"
-        "PackageCode" = "8:{B9708626-520B-403F-B391-67999197026C}"
+        "ProductCode" = "8:{58B353FA-84F2-4661-8DED-DD30465257E3}"
+        "PackageCode" = "8:{9EAA042C-74B6-4B54-BC31-3F229F2630DE}"
         "UpgradeCode" = "8:{43134371-67D1-4D4D-8E36-02F775648D5B}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:6.2.0"
+        "ProductVersion" = "8:6.3.0"
         "Manufacturer" = "8:João Rodrigo Gonçalves"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:https://joaogoncalves.eu"
