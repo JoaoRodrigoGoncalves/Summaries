@@ -82,5 +82,29 @@ namespace Summaries.Properties {
                 this["serverURL"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Ascending")]
+        public global::System.ComponentModel.ListSortDirection summaryOrderDate {
+            get {
+                return ((global::System.ComponentModel.ListSortDirection)(this["summaryOrderDate"]));
+            }
+            set {
+                this["summaryOrderDate"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool callUpgrade {
+            get {
+                return ((bool)(this["callUpgrade"]));
+            }
+            set {
+                this["callUpgrade"] = value;
+            }
+        }
     }
 }
