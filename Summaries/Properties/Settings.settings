@@ -23,5 +23,8 @@
     <Setting Name="callUpgrade" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="adminMenuSize" Type="System.Drawing.Size" Scope="User">
+      <Value Profile="(Default)">901, 489</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

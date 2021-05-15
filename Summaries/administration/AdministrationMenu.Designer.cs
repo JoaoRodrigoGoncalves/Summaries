@@ -60,18 +60,18 @@ namespace Summaries.administration
             // 
             // tableLayoutPanel1
             // 
-            resources.ApplyResources(this.tableLayoutPanel1, "tableLayoutPanel1");
             this.tableLayoutPanel1.CausesValidation = false;
+            resources.ApplyResources(this.tableLayoutPanel1, "tableLayoutPanel1");
             this.tableLayoutPanel1.Controls.Add(this.treeView1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.dataGridView, 1, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             // 
             // dataGridView
             // 
-            resources.ApplyResources(this.dataGridView, "dataGridView");
             this.dataGridView.AllowUserToAddRows = false;
             this.dataGridView.BackgroundColor = System.Drawing.SystemColors.Window;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            resources.ApplyResources(this.dataGridView, "dataGridView");
             this.dataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dataGridView.MultiSelect = false;
             this.dataGridView.Name = "dataGridView";
@@ -86,6 +86,7 @@ namespace Summaries.administration
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "AdministrationMenu";
             this.Load += new System.EventHandler(this.AdministrationMenu_Load);
+            this.ResizeEnd += new System.EventHandler(this.AdministrationMenu_ResizeEnd);
             this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.ResumeLayout(false);

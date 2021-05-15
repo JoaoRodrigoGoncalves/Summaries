@@ -121,18 +121,192 @@
   <data name="treeView1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="treeView1.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="treeView1.ImageIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <metadata name="treeViewImageList.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="treeViewImageList.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
+        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
+        ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABg
+        DAAAAk1TRnQBSQFMAgEBBQEAAWgBAAFoAQABEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        AwABQAMAASADAAEBAQABCAYAAQgYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
+        AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
+        AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
+        AWYDAAGZAwABzAIAATMDAAIzAgABMwFmAgABMwGZAgABMwHMAgABMwH/AgABZgMAAWYBMwIAAmYCAAFm
+        AZkCAAFmAcwCAAFmAf8CAAGZAwABmQEzAgABmQFmAgACmQIAAZkBzAIAAZkB/wIAAcwDAAHMATMCAAHM
+        AWYCAAHMAZkCAALMAgABzAH/AgAB/wFmAgAB/wGZAgAB/wHMAQABMwH/AgAB/wEAATMBAAEzAQABZgEA
+        ATMBAAGZAQABMwEAAcwBAAEzAQAB/wEAAf8BMwIAAzMBAAIzAWYBAAIzAZkBAAIzAcwBAAIzAf8BAAEz
+        AWYCAAEzAWYBMwEAATMCZgEAATMBZgGZAQABMwFmAcwBAAEzAWYB/wEAATMBmQIAATMBmQEzAQABMwGZ
+        AWYBAAEzApkBAAEzAZkBzAEAATMBmQH/AQABMwHMAgABMwHMATMBAAEzAcwBZgEAATMBzAGZAQABMwLM
+        AQABMwHMAf8BAAEzAf8BMwEAATMB/wFmAQABMwH/AZkBAAEzAf8BzAEAATMC/wEAAWYDAAFmAQABMwEA
+        AWYBAAFmAQABZgEAAZkBAAFmAQABzAEAAWYBAAH/AQABZgEzAgABZgIzAQABZgEzAWYBAAFmATMBmQEA
+        AWYBMwHMAQABZgEzAf8BAAJmAgACZgEzAQADZgEAAmYBmQEAAmYBzAEAAWYBmQIAAWYBmQEzAQABZgGZ
+        AWYBAAFmApkBAAFmAZkBzAEAAWYBmQH/AQABZgHMAgABZgHMATMBAAFmAcwBmQEAAWYCzAEAAWYBzAH/
+        AQABZgH/AgABZgH/ATMBAAFmAf8BmQEAAWYB/wHMAQABzAEAAf8BAAH/AQABzAEAApkCAAGZATMBmQEA
+        AZkBAAGZAQABmQEAAcwBAAGZAwABmQIzAQABmQEAAWYBAAGZATMBzAEAAZkBAAH/AQABmQFmAgABmQFm
+        ATMBAAGZATMBZgEAAZkBZgGZAQABmQFmAcwBAAGZATMB/wEAApkBMwEAApkBZgEAA5kBAAKZAcwBAAKZ
+        Af8BAAGZAcwCAAGZAcwBMwEAAWYBzAFmAQABmQHMAZkBAAGZAswBAAGZAcwB/wEAAZkB/wIAAZkB/wEz
+        AQABmQHMAWYBAAGZAf8BmQEAAZkB/wHMAQABmQL/AQABzAMAAZkBAAEzAQABzAEAAWYBAAHMAQABmQEA
+        AcwBAAHMAQABmQEzAgABzAIzAQABzAEzAWYBAAHMATMBmQEAAcwBMwHMAQABzAEzAf8BAAHMAWYCAAHM
+        AWYBMwEAAZkCZgEAAcwBZgGZAQABzAFmAcwBAAGZAWYB/wEAAcwBmQIAAcwBmQEzAQABzAGZAWYBAAHM
+        ApkBAAHMAZkBzAEAAcwBmQH/AQACzAIAAswBMwEAAswBZgEAAswBmQEAA8wBAALMAf8BAAHMAf8CAAHM
+        Af8BMwEAAZkB/wFmAQABzAH/AZkBAAHMAf8BzAEAAcwC/wEAAcwBAAEzAQAB/wEAAWYBAAH/AQABmQEA
+        AcwBMwIAAf8CMwEAAf8BMwFmAQAB/wEzAZkBAAH/ATMBzAEAAf8BMwH/AQAB/wFmAgAB/wFmATMBAAHM
+        AmYBAAH/AWYBmQEAAf8BZgHMAQABzAFmAf8BAAH/AZkCAAH/AZkBMwEAAf8BmQFmAQAB/wKZAQAB/wGZ
+        AcwBAAH/AZkB/wEAAf8BzAIAAf8BzAEzAQAB/wHMAWYBAAH/AcwBmQEAAf8CzAEAAf8BzAH/AQAC/wEz
+        AQABzAH/AWYBAAL/AZkBAAL/AcwBAAJmAf8BAAFmAf8BZgEAAWYC/wEAAf8CZgEAAf8BZgH/AQAC/wFm
+        AQABIQEAAaUBAANfAQADdwEAA4YBAAOWAQADywEAA7IBAAPXAQAD3QEAA+MBAAPqAQAD8QEAA/gBAAHw
+        AfsB/wEAAaQCoAEAA4ADAAH/AgAB/wMAAv8BAAH/AwAB/wEAAf8BAAL/AgAD/w8AAQcBQz0AAQcBAAEH
+        PAABBwEAAQc0AAH/AbwBkgHsAfcB8gH/AQABBwEAAQc0AAHwARABDgFtAewBEwEAARIB7wEAAQc0AAG8
+        AQAB9wH/AwAB9AHqAQAB7zQAAfQBDgHvBgAB/wHqARIB/zMAAe0BFAH/BwAB9AEAAfIzAAFDAQcJAAET
+        Afc0AAHwCQAC7DMAAQ8BvAkAAW0BkjMAAesB7AgAAf8BDgG8MwAB8QEAAfMHAAH3ARAB/zQAAewBEAHz
+        BAAB/wHvAQAB8DUAAf8B7AEAAewBvAHwAQcBEwEOAbw4AAHxAesBDwEAAUMBkgH0VgAB/wUAAf8B9wHv
+        Af8FAAH/AfABDwcAAf8BAAH/AfQB/wG8AZIRAAHzDAAC9AEHAe8B8AHyAfACBwL/AQcB7wHwAfIB8QLv
+        AQ8B7wfyAf8B8AEPAQABEAEAAbwRAAHvDAAB7wH/AQAB9wH0AfMB9AH/BAAB/wH0AfMB9AHvAf8BAAHy
+        BwAB9AEOAQcB9AGSAQ8B/wIAAv8J8QHyAwAB8gHxCgAB9AEHAgAD7wGSAfIEAAHzAu8BkgHtAgAB8gEA
+        AQcB8QEAAfAB7wH0AfABEQIAAf8BAAHzAgAB7QEHAfMB/wwAAQcB9AgAAf8B9wH/AQAC8QIAAf8B7wH0
+        AgAB9AEHAwAB8AHyAQAB8gEAAewB7wEAAfcBbQHyAfMBAAH0AQAB8QEAAf8CAAHyAQcB8wHyAfEB8goA
+        Af8BBwHzBgAB9AHvAf8CAAHvBAAB/wEHAgAB7wH/BAAB7wEAAfIIAAHsAQ4BEgEAAe8DAAH/AfEB8AHy
+        AQAB8AH/CwAB8gHvAQcC8gG8AQcB8AH/AwABBwUAAewC8gHtBQAB7wEAAfIIAAH/AfIBBwHzBQAB8QH/
+        AfEBAAH/AfENAAH/AvMB/wYAAQcB/wMAAfMBBwLzAbwB8wMAAf8B7wEAAfIBAAEHAfABAAG8Be8B8QEA
+        AfMBDwMAAfAB/wMAAfABvAH/CgAB/wIHAe8B9wH/BQAB/wGSAfMB/wHxAfcCBwHvAfcBkgHyAf8B8wGS
+        Af8BAAHyAQAB7AEHAQAB7wXrAbwBAAHyBAAB/wHwAfIB/wH0AfEB/wHxCgAB9wH/AgAB/wH3BgAB/wHx
+        AQcB8wH3Af8CAAH/AfcB8gEHAfEB/wIAAfIMAAHyBgAB/wEHAfEMAAH0AbwEAAHwAfQIAAH0AbwEAAHw
+        AfQFAAHyDAAB8gcAAfIB9AwAAfQB8QQAAvIIAAH0AfEEAALyBQAB8gEAAewB7wEAAZIF6gEHAQAB8ggA
+        AfIMAAH/Ae8EAAHvAf8IAAH/Ae8EAAHvAf8FAAHyAQABvAHxAQAB8AUHAfIBAAHyFgAB8gEHAv8BBwHx
+        CgAB8gEHAv8BBwHxBgAB8gwAAfIXAAH0AgcB9AwAAfQCBwH0BgABDwHvDPIB7wEPMAAB8AEPDAABDwHw
+        AUIBTQE+BwABPgMAASgDAAFAAwABIAMAAQEBAAEBBgABARYAA/8BAAH/AfwGAAH/AfgGAAH/AfEGAAHg
+        ASMGAAHAAQcGAAGHAQ8GAAEfAYcGAAEfAccGAAE/AecGAAE/AecGAAE/AecGAAE/AccGAAEfAccGAAGP
+        AQ8GAAGAAR8GAAHgAT8GAAT/AXwBPgEAASAC/wG/AfwEAAL/Ab8B/AGDAcABPwGAAcABAwGfAfkBgwHB
+        ASQBGAHDAf8BzwHxATEBnAEkAQgBwAH/AccB4wF5AZ4BPwHBAcIBfwHwAQcBfAE+AT8BwwHiAX8B/AE/
+        ATgBHAEkAQQB5wEfAfgBHwIAASQBBAHgAR8B+QGfAoEBPwH8AfgB/wHzAc8B8wHPAT8C/AH/AfMBzwHz
+        Ac8BJAEEAf4B/wHzAc8B8wHPASQBBAL/AfgBHwH4AR8BPwH8Av8B/AE/AfwBPwIABv8CAAs=
+</value>
+  </data>
+  <data name="treeView1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="treeView1.Nodes" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
+        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAAB1TeXN0
+        ZW0uV2luZG93cy5Gb3Jtcy5UcmVlTm9kZQ0AAAAEVGV4dAtUb29sVGlwVGV4dAROYW1lCUlzQ2hlY2tl
+        ZApJbWFnZUluZGV4CEltYWdlS2V5ElNlbGVjdGVkSW1hZ2VJbmRleBBTZWxlY3RlZEltYWdlS2V5CkNo
+        aWxkQ291bnQJY2hpbGRyZW4wCWNoaWxkcmVuMQljaGlsZHJlbjIIVXNlckRhdGEBAQEAAAEAAQAEBAQB
+        AQgICB1TeXN0ZW0uV2luZG93cy5Gb3Jtcy5UcmVlTm9kZQIAAAAdU3lzdGVtLldpbmRvd3MuRm9ybXMu
+        VHJlZU5vZGUCAAAAHVN5c3RlbS5XaW5kb3dzLkZvcm1zLlRyZWVOb2RlAgAAAAIAAAAGAwAAAAlTdW1t
+        YXJpZXMGBAAAAAAGBQAAAARyb290AP////8JBAAAAP////8JBAAAAAMAAAAJBwAAAAkIAAAACQkAAAAG
+        CgAAAAhyb290Tm9kZQUHAAAAHVN5c3RlbS5XaW5kb3dzLkZvcm1zLlRyZWVOb2RlCgAAAARUZXh0C1Rv
+        b2xUaXBUZXh0BE5hbWUJSXNDaGVja2VkCkltYWdlSW5kZXgISW1hZ2VLZXkSU2VsZWN0ZWRJbWFnZUlu
+        ZGV4EFNlbGVjdGVkSW1hZ2VLZXkKQ2hpbGRDb3VudAhVc2VyRGF0YQEBAQAAAQABAAEBCAgIAgAAAAYL
+        AAAABVVzZXJzCQQAAAAGDQAAAAV1c2VycwD/////Bg4AAAAMdXNlckljb24ucG5n/////wYPAAAADHVz
+        ZXJJY29uLnBuZwAAAAAGEAAAAAl1c2Vyc05vZGUFCAAAAB1TeXN0ZW0uV2luZG93cy5Gb3Jtcy5UcmVl
+        Tm9kZQoAAAAEVGV4dAtUb29sVGlwVGV4dAROYW1lCUlzQ2hlY2tlZApJbWFnZUluZGV4CEltYWdlS2V5
+        ElNlbGVjdGVkSW1hZ2VJbmRleBBTZWxlY3RlZEltYWdlS2V5CkNoaWxkQ291bnQIVXNlckRhdGEBAQEA
+        AAEAAQABAQgICAIAAAAGEQAAAAdDbGFzc2VzCQQAAAAGEwAAAAdjbGFzc2VzAP////8GFAAAAAlncm91
+        cC5wbmf/////BhUAAAAJZ3JvdXAucG5nAAAAAAYWAAAAC2NsYXNzZXNOb2RlBQkAAAAdU3lzdGVtLldp
+        bmRvd3MuRm9ybXMuVHJlZU5vZGUKAAAABFRleHQLVG9vbFRpcFRleHQETmFtZQlJc0NoZWNrZWQKSW1h
+        Z2VJbmRleAhJbWFnZUtleRJTZWxlY3RlZEltYWdlSW5kZXgQU2VsZWN0ZWRJbWFnZUtleQpDaGlsZENv
+        dW50CFVzZXJEYXRhAQEBAAABAAEAAQEICAgCAAAABhcAAAAKV29ya3NwYWNlcwkEAAAABhkAAAAKd29y
+        a3NwYWNlcwD/////BhoAAAAKc2VhcmNoLnBuZ/////8GGwAAAApzZWFyY2gucG5nAAAAAAYcAAAADndv
+        cmtzcGFjZXNOb2RlCw==
+</value>
+  </data>
+  <data name="treeView1.SelectedImageIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="treeView1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>259, 444</value>
+  </data>
+  <data name="treeView1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;treeView1.Name" xml:space="preserve">
+    <value>treeView1</value>
+  </data>
+  <data name="&gt;&gt;treeView1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;treeView1.Parent" xml:space="preserve">
     <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;treeView1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tableLayoutPanel1.ColumnCount" type="System.Int32, mscorlib">
+    <value>2</value>
   </data>
   <data name="dataGridView.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="dataGridView.Location" type="System.Drawing.Point, System.Drawing">
+    <value>268, 3</value>
+  </data>
+  <data name="dataGridView.Size" type="System.Drawing.Size, System.Drawing">
+    <value>614, 444</value>
+  </data>
+  <data name="dataGridView.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;dataGridView.Name" xml:space="preserve">
+    <value>dataGridView</value>
+  </data>
+  <data name="&gt;&gt;dataGridView.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dataGridView.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;dataGridView.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="tableLayoutPanel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="tableLayoutPanel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="tableLayoutPanel1.RowCount" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="tableLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>885, 450</value>
+  </data>
+  <data name="tableLayoutPanel1.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel1.Name" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tableLayoutPanel1.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="treeView1" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="dataGridView" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,30,Percent,70" /&gt;&lt;Rows Styles="Percent,100,Absolute,450" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 13</value>
   </data>
-  <data name="treeView1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>259, 444</value>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>885, 450</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1845,202 +2019,25 @@
         /wAA/v8AAP//AAD//wAA//8AAA==
 </value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="tableLayoutPanel1.RowCount" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>Administration Menu</value>
-  </data>
-  <data name="&gt;&gt;dataGridView.Parent" xml:space="preserve">
-    <value>tableLayoutPanel1</value>
-  </data>
-  <data name="treeView1.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 12pt</value>
-  </data>
-  <data name="tableLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>885, 450</value>
-  </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>AdministrationMenu</value>
-  </data>
-  <data name="tableLayoutPanel1.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>901, 489</value>
-  </data>
-  <data name="&gt;&gt;treeView1.Name" xml:space="preserve">
-    <value>treeView1</value>
-  </data>
-  <data name="treeViewImageList.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
-    <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
-        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
-        ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABg
-        DAAAAk1TRnQBSQFMAgEBBQEAAUgBAAFcAQABEAEAARABAAT/AQkBEAj/AUIBTQE2AQQGAAE2AQQCAAEo
-        AwABQAMAASADAAEBAQABCAYAAQgYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
-        AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
-        AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
-        AWYDAAGZAwABzAIAATMDAAIzAgABMwFmAgABMwGZAgABMwHMAgABMwH/AgABZgMAAWYBMwIAAmYCAAFm
-        AZkCAAFmAcwCAAFmAf8CAAGZAwABmQEzAgABmQFmAgACmQIAAZkBzAIAAZkB/wIAAcwDAAHMATMCAAHM
-        AWYCAAHMAZkCAALMAgABzAH/AgAB/wFmAgAB/wGZAgAB/wHMAQABMwH/AgAB/wEAATMBAAEzAQABZgEA
-        ATMBAAGZAQABMwEAAcwBAAEzAQAB/wEAAf8BMwIAAzMBAAIzAWYBAAIzAZkBAAIzAcwBAAIzAf8BAAEz
-        AWYCAAEzAWYBMwEAATMCZgEAATMBZgGZAQABMwFmAcwBAAEzAWYB/wEAATMBmQIAATMBmQEzAQABMwGZ
-        AWYBAAEzApkBAAEzAZkBzAEAATMBmQH/AQABMwHMAgABMwHMATMBAAEzAcwBZgEAATMBzAGZAQABMwLM
-        AQABMwHMAf8BAAEzAf8BMwEAATMB/wFmAQABMwH/AZkBAAEzAf8BzAEAATMC/wEAAWYDAAFmAQABMwEA
-        AWYBAAFmAQABZgEAAZkBAAFmAQABzAEAAWYBAAH/AQABZgEzAgABZgIzAQABZgEzAWYBAAFmATMBmQEA
-        AWYBMwHMAQABZgEzAf8BAAJmAgACZgEzAQADZgEAAmYBmQEAAmYBzAEAAWYBmQIAAWYBmQEzAQABZgGZ
-        AWYBAAFmApkBAAFmAZkBzAEAAWYBmQH/AQABZgHMAgABZgHMATMBAAFmAcwBmQEAAWYCzAEAAWYBzAH/
-        AQABZgH/AgABZgH/ATMBAAFmAf8BmQEAAWYB/wHMAQABzAEAAf8BAAH/AQABzAEAApkCAAGZATMBmQEA
-        AZkBAAGZAQABmQEAAcwBAAGZAwABmQIzAQABmQEAAWYBAAGZATMBzAEAAZkBAAH/AQABmQFmAgABmQFm
-        ATMBAAGZATMBZgEAAZkBZgGZAQABmQFmAcwBAAGZATMB/wEAApkBMwEAApkBZgEAA5kBAAKZAcwBAAKZ
-        Af8BAAGZAcwCAAGZAcwBMwEAAWYBzAFmAQABmQHMAZkBAAGZAswBAAGZAcwB/wEAAZkB/wIAAZkB/wEz
-        AQABmQHMAWYBAAGZAf8BmQEAAZkB/wHMAQABmQL/AQABzAMAAZkBAAEzAQABzAEAAWYBAAHMAQABmQEA
-        AcwBAAHMAQABmQEzAgABzAIzAQABzAEzAWYBAAHMATMBmQEAAcwBMwHMAQABzAEzAf8BAAHMAWYCAAHM
-        AWYBMwEAAZkCZgEAAcwBZgGZAQABzAFmAcwBAAGZAWYB/wEAAcwBmQIAAcwBmQEzAQABzAGZAWYBAAHM
-        ApkBAAHMAZkBzAEAAcwBmQH/AQACzAIAAswBMwEAAswBZgEAAswBmQEAA8wBAALMAf8BAAHMAf8CAAHM
-        Af8BMwEAAZkB/wFmAQABzAH/AZkBAAHMAf8BzAEAAcwC/wEAAcwBAAEzAQAB/wEAAWYBAAH/AQABmQEA
-        AcwBMwIAAf8CMwEAAf8BMwFmAQAB/wEzAZkBAAH/ATMBzAEAAf8BMwH/AQAB/wFmAgAB/wFmATMBAAHM
-        AmYBAAH/AWYBmQEAAf8BZgHMAQABzAFmAf8BAAH/AZkCAAH/AZkBMwEAAf8BmQFmAQAB/wKZAQAB/wGZ
-        AcwBAAH/AZkB/wEAAf8BzAIAAf8BzAEzAQAB/wHMAWYBAAH/AcwBmQEAAf8CzAEAAf8BzAH/AQAC/wEz
-        AQABzAH/AWYBAAL/AZkBAAL/AcwBAAJmAf8BAAFmAf8BZgEAAWYC/wEAAf8CZgEAAf8BZgH/AQAC/wFm
-        AQABIQEAAaUBAANfAQADdwEAA4YBAAOWAQADywEAA7IBAAPXAQAD3QEAA+MBAAPqAQAD8QEAA/gBAAHw
-        AfsB/wEAAaQCoAEAA4ADAAH/AgAB/wMAAv8BAAH/AwAB/wEAAf8BAAL/AgAD/w8AAQcBQz0AAQcBAAEH
-        PAABBwEAAQc0AAH/AbwBkgHsAfcB8gH/AQABBwEAAQc0AAHwARABDgFtAewBEwEAARIB7wEAAQc0AAG8
-        AQAB9wH/AwAB9AHqAQAB7zQAAfQBDgHvBgAB/wHqARIB/zMAAe0BFAH/BwAB9AEAAfIzAAFDAQcJAAET
-        Afc0AAHwCQAC7DMAAQ8BvAkAAW0BkjMAAesB7AgAAf8BDgG8MwAB8QEAAfMHAAH3ARAB/zQAAewBEAHz
-        BAAB/wHvAQAB8DUAAf8B7AEAAewBvAHwAQcBEwEOAbw4AAHxAesBDwEAAUMBkgH0VgAB/wUAAf8B9wHv
-        Af8FAAH/AfABDwcAAf8BAAH/AfQB/wG8AZIRAAHzDAAC9AEHAe8B8AHyAfACBwL/AQcB7wHwAfIB8QLv
-        AQ8B7wfyAf8B8AEPAQABEAEAAbwRAAHvDAAB7wH/AQAB9wH0AfMB9AH/BAAB/wH0AfMB9AHvAf8BAAHy
-        BwAB9AEOAQcB9AGSAQ8B/wIAAv8J8QHyAwAB8gHxCgAB9AEHAgAD7wGSAfIEAAHzAu8BkgHtAgAB8gEA
-        AQcB8QEAAfAB7wH0AfABEQIAAf8BAAHzAgAB7QEHAfMB/wwAAQcB9AgAAf8B9wH/AQAC8QIAAf8B7wH0
-        AgAB9AEHAwAB8AHyAQAB8gEAAewB7wEAAfcBbQHyAfMBAAH0AQAB8QEAAf8CAAHyAQcB8wHyAfEB8goA
-        Af8BBwHzBgAB9AHvAf8CAAHvBAAB/wEHAgAB7wH/BAAB7wEAAfIIAAHsAQ4BEgEAAe8DAAH/AfEB8AHy
-        AQAB8AH/CwAB8gHvAQcC8gG8AQcB8AH/AwABBwUAAewC8gHtBQAB7wEAAfIIAAH/AfIBBwHzBQAB8QH/
-        AfEBAAH/AfENAAH/AvMB/wYAAQcB/wMAAfMBBwLzAbwB8wMAAf8B7wEAAfIBAAEHAfABAAG8Be8B8QEA
-        AfMBDwMAAfAB/wMAAfABvAH/CgAB/wIHAe8B9wH/BQAB/wGSAfMB/wHxAfcCBwHvAfcBkgHyAf8B8wGS
-        Af8BAAHyAQAB7AEHAQAB7wXrAbwBAAHyBAAB/wHwAfIB/wH0AfEB/wHxCgAB9wH/AgAB/wH3BgAB/wHx
-        AQcB8wH3Af8CAAH/AfcB8gEHAfEB/wIAAfIMAAHyBgAB/wEHAfEMAAH0AbwEAAHwAfQIAAH0AbwEAAHw
-        AfQFAAHyDAAB8gcAAfIB9AwAAfQB8QQAAvIIAAH0AfEEAALyBQAB8gEAAewB7wEAAZIF6gEHAQAB8ggA
-        AfIMAAH/Ae8EAAHvAf8IAAH/Ae8EAAHvAf8FAAHyAQABvAHxAQAB8AUHAfIBAAHyFgAB8gEHAv8BBwHx
-        CgAB8gEHAv8BBwHxBgAB8gwAAfIXAAH0AgcB9AwAAfQCBwH0BgABDwHvDPIB7wEPMAAB8AEPDAABDwHw
-        AUIBTQE+BwABPgMAASgDAAFAAwABIAMAAQEBAAEBBgABARYAA/8BAAH/AfwGAAH/AfgGAAH/AfEGAAHg
-        ASMGAAHAAQcGAAGHAQ8GAAEfAYcGAAEfAccGAAE/AecGAAE/AecGAAE/AecGAAE/AccGAAEfAccGAAGP
-        AQ8GAAGAAR8GAAHgAT8GAAT/AXwBPgEAASAC/wG/AfwEAAL/Ab8B/AGDAcABPwGAAcABAwGfAfkBgwHB
-        ASQBGAHDAf8BzwHxATEBnAEkAQgBwAH/AccB4wF5AZ4BPwHBAcIBfwHwAQcBfAE+AT8BwwHiAX8B/AE/
-        ATgBHAEkAQQB5wEfAfgBHwIAASQBBAHgAR8B+QGfAoEBPwH8AfgB/wHzAc8B8wHPAT8C/AH/AfMBzwHz
-        Ac8BJAEEAf4B/wHzAc8B8wHPASQBBAL/AfgBHwH4AR8BPwH8Av8B/AE/AfwBPwIABv8YAAs=
-</value>
-  </data>
-  <data name="tableLayoutPanel1.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="treeView1" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="dataGridView" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,30,Percent,70" /&gt;&lt;Rows Styles="Percent,100,Absolute,450" /&gt;&lt;/TableLayoutSettings&gt;</value>
-  </data>
-  <data name="&gt;&gt;tableLayoutPanel1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>885, 450</value>
-  </data>
-  <data name="treeView1.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="treeView1.ImageIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;treeViewImageList.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ImageList, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="tableLayoutPanel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="treeView1.Nodes" mimetype="application/x-microsoft.net.object.binary.base64">
-    <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
-        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAAB1TeXN0
-        ZW0uV2luZG93cy5Gb3Jtcy5UcmVlTm9kZQ0AAAAEVGV4dAtUb29sVGlwVGV4dAROYW1lCUlzQ2hlY2tl
-        ZApJbWFnZUluZGV4CEltYWdlS2V5ElNlbGVjdGVkSW1hZ2VJbmRleBBTZWxlY3RlZEltYWdlS2V5CkNo
-        aWxkQ291bnQJY2hpbGRyZW4wCWNoaWxkcmVuMQljaGlsZHJlbjIIVXNlckRhdGEBAQEAAAEAAQAEBAQB
-        AQgICB1TeXN0ZW0uV2luZG93cy5Gb3Jtcy5UcmVlTm9kZQIAAAAdU3lzdGVtLldpbmRvd3MuRm9ybXMu
-        VHJlZU5vZGUCAAAAHVN5c3RlbS5XaW5kb3dzLkZvcm1zLlRyZWVOb2RlAgAAAAIAAAAGAwAAAAlTdW1t
-        YXJpZXMGBAAAAAAGBQAAAARyb290AP////8JBAAAAP////8JBAAAAAMAAAAJBwAAAAkIAAAACQkAAAAG
-        CgAAAAhyb290Tm9kZQUHAAAAHVN5c3RlbS5XaW5kb3dzLkZvcm1zLlRyZWVOb2RlCgAAAARUZXh0C1Rv
-        b2xUaXBUZXh0BE5hbWUJSXNDaGVja2VkCkltYWdlSW5kZXgISW1hZ2VLZXkSU2VsZWN0ZWRJbWFnZUlu
-        ZGV4EFNlbGVjdGVkSW1hZ2VLZXkKQ2hpbGRDb3VudAhVc2VyRGF0YQEBAQAAAQABAAEBCAgIAgAAAAYL
-        AAAABVVzZXJzCQQAAAAGDQAAAAV1c2VycwD/////Bg4AAAAMdXNlckljb24ucG5n/////wYPAAAADHVz
-        ZXJJY29uLnBuZwAAAAAGEAAAAAl1c2Vyc05vZGUFCAAAAB1TeXN0ZW0uV2luZG93cy5Gb3Jtcy5UcmVl
-        Tm9kZQoAAAAEVGV4dAtUb29sVGlwVGV4dAROYW1lCUlzQ2hlY2tlZApJbWFnZUluZGV4CEltYWdlS2V5
-        ElNlbGVjdGVkSW1hZ2VJbmRleBBTZWxlY3RlZEltYWdlS2V5CkNoaWxkQ291bnQIVXNlckRhdGEBAQEA
-        AAEAAQABAQgICAIAAAAGEQAAAAdDbGFzc2VzCQQAAAAGEwAAAAdjbGFzc2VzAP////8GFAAAAAlncm91
-        cC5wbmf/////BhUAAAAJZ3JvdXAucG5nAAAAAAYWAAAAC2NsYXNzZXNOb2RlBQkAAAAdU3lzdGVtLldp
-        bmRvd3MuRm9ybXMuVHJlZU5vZGUKAAAABFRleHQLVG9vbFRpcFRleHQETmFtZQlJc0NoZWNrZWQKSW1h
-        Z2VJbmRleAhJbWFnZUtleRJTZWxlY3RlZEltYWdlSW5kZXgQU2VsZWN0ZWRJbWFnZUtleQpDaGlsZENv
-        dW50CFVzZXJEYXRhAQEBAAABAAEAAQEICAgCAAAABhcAAAAKV29ya3NwYWNlcwkEAAAABhkAAAAKd29y
-        a3NwYWNlcwD/////BhoAAAAKc2VhcmNoLnBuZ/////8GGwAAAApzZWFyY2gucG5nAAAAAAYcAAAADndv
-        cmtzcGFjZXNOb2RlCw==
-</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterScreen</value>
   </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Administration Menu</value>
+  </data>
   <data name="&gt;&gt;treeViewImageList.Name" xml:space="preserve">
     <value>treeViewImageList</value>
   </data>
-  <data name="dataGridView.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+  <data name="&gt;&gt;treeViewImageList.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ImageList, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="tableLayoutPanel1.ColumnCount" type="System.Int32, mscorlib">
-    <value>2</value>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>AdministrationMenu</value>
   </data>
-  <data name="treeView1.SelectedImageIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;dataGridView.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;dataGridView.Name" xml:space="preserve">
-    <value>dataGridView</value>
-  </data>
-  <data name="&gt;&gt;tableLayoutPanel1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="dataGridView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>614, 444</value>
-  </data>
-  <data name="&gt;&gt;treeView1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;dataGridView.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;tableLayoutPanel1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="treeView1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="dataGridView.Location" type="System.Drawing.Point, System.Drawing">
-    <value>268, 3</value>
-  </data>
-  <data name="tableLayoutPanel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="&gt;&gt;treeView1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tableLayoutPanel1.Name" xml:space="preserve">
-    <value>tableLayoutPanel1</value>
-  </data>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>pt-PT</value>
-  </metadata>
-  <metadata name="treeViewImageList.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
 </root>

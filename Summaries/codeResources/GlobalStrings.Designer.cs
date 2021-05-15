@@ -160,11 +160,11 @@ namespace Summaries.codeResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to days.
+        ///   Looks up a localized string similar to (≈{0} days).
         /// </summary>
-        internal static string Days {
+        internal static string daysRemaining {
             get {
-                return ResourceManager.GetString("Days", resourceCulture);
+                return ResourceManager.GetString("daysRemaining", resourceCulture);
             }
         }
         

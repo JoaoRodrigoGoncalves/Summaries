@@ -106,5 +106,17 @@ namespace Summaries.Properties {
                 this["callUpgrade"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("901, 489")]
+        public global::System.Drawing.Size adminMenuSize {
+            get {
+                return ((global::System.Drawing.Size)(this["adminMenuSize"]));
+            }
+            set {
+                this["adminMenuSize"] = value;
+            }
+        }
     }
 }

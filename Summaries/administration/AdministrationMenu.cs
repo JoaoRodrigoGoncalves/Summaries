@@ -301,6 +301,30 @@ namespace Summaries.administration
 
         private void AdministrationMenu_Load(object sender, EventArgs e)
         {
+
+            if(Properties.Settings.Default.adminMenuSize.Width < this.MinimumSize.Width || Properties.Settings.Default.adminMenuSize.Height < this.MinimumSize.Height)
+            {
+                // Size set on the settings file is lower than the minimum allowed. Resetting to default
+                Properties.Settings.Default.adminMenuSize = this.MinimumSize;
+                Properties.Settings.Default.Save();
+                this.Size = this.MinimumSize;
+            }
+            else
+            {
+                if(Properties.Settings.Default.adminMenuSize.Width > Screen.PrimaryScreen.Bounds.Width || Properties.Settings.Default.adminMenuSize.Height > Screen.PrimaryScreen.Bounds.Height)
+                {
+                    // Size set on the settings file is heigher than the screen size. Resetting do default
+                    Properties.Settings.Default.adminMenuSize = this.MinimumSize;
+                    Properties.Settings.Default.Save();
+                    this.Size = this.MinimumSize;
+                }
+                else
+                {
+                    this.Size = Properties.Settings.Default.adminMenuSize;
+                    CenterToScreen();
+                }
+            }
+
             treeView1.Nodes[0].Expand();
             treeView1.Nodes[0].Nodes[0].ContextMenuStrip = usersMenu;
             treeView1.Nodes[0].Nodes[1].ContextMenuStrip = classesMenu;
@@ -742,6 +766,12 @@ namespace Summaries.administration
                 EditEntry_ContextEvent(sender, e);
             }
             catch { }
+        }
+
+        private void AdministrationMenu_ResizeEnd(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.adminMenuSize = this.Size;
+            Properties.Settings.Default.Save();
         }
     }
 }

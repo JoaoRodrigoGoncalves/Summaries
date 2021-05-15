@@ -203,7 +203,8 @@ namespace Summaries
                                         dataGrid.Sort(this.dataGrid.Columns[0], Properties.Settings.Default.summaryOrderDate);
                                         decimal daysLeft = 0;
                                         daysLeft = (totalWorkspaceHours - summarizedHours) / 7;
-                                        summarizedHoursHolder.Text = summarizedHours.ToString() + " (" + daysLeft + " " + GlobalStrings.Days + ")";
+                                        summarizedHoursHolder.Text = summarizedHours.ToString();
+                                        hoursRemainingHolder.Text = (totalWorkspaceHours - summarizedHours).ToString() + " " + String.Format(GlobalStrings.daysRemaining, daysLeft);
                                     }
                                 }
                                 else
