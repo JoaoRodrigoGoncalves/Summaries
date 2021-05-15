@@ -151,6 +151,9 @@
   <data name="CriticalError" xml:space="preserve">
     <value>Erro Critico</value>
   </data>
+  <data name="Days" xml:space="preserve">
+    <value>dias</value>
+  </data>
   <data name="EmptyFields" xml:space="preserve">
     <value>Campos Vazios</value>
   </data>

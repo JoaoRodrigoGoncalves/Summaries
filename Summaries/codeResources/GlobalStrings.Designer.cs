@@ -160,6 +160,15 @@ namespace Summaries.codeResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to days.
+        /// </summary>
+        internal static string Days {
+            get {
+                return ResourceManager.GetString("Days", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Empty Fields.
         /// </summary>
         internal static string EmptyFields {

@@ -17,5 +17,8 @@
     <Setting Name="serverURL" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="summaryOrderDate" Type="System.ComponentModel.ListSortDirection" Scope="User">
+      <Value Profile="(Default)">Ascending</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -136,19 +136,23 @@ namespace Summaries
                                 }
                             }
 
+                            int totalWorkspaceHours = 0;
+
                             if (workspaceName == null || workspaceName == string.Empty || workspaceName == "")
                             {
                                 int index = workspaceResponse.contents.FindIndex(x => x.read == true && x.hours.Exists(c => c.classID == storage.classID));
                                 workspaceSelectedID = workspaceResponse.contents[index].id;
                                 workspaceName = workspaceResponse.contents[index].workspaceName;
                                 workspaceComboBox.SelectedItem = workspaceName;
-                                totalHoursHolder.Text = workspaceResponse.contents[index].hours[workspaceResponse.contents[index].hours.FindIndex(x => x.classID == storage.classID)].totalHours.ToString();
+                                totalWorkspaceHours = workspaceResponse.contents[index].hours[workspaceResponse.contents[index].hours.FindIndex(x => x.classID == storage.classID)].totalHours;
+                                totalHoursHolder.Text = totalWorkspaceHours.ToString();
                             }
                             else
                             {
                                 int workspaceIndex = workspaceResponse.contents.FindIndex(x => x.workspaceName == workspaceName);
                                 workspaceSelectedID = workspaceResponse.contents[workspaceIndex].id;
-                                totalHoursHolder.Text = workspaceResponse.contents[workspaceIndex].hours[workspaceResponse.contents[workspaceIndex].hours.FindIndex(x => x.classID == storage.classID)].totalHours.ToString();
+                                totalWorkspaceHours = workspaceResponse.contents[workspaceIndex].hours[workspaceResponse.contents[workspaceIndex].hours.FindIndex(x => x.classID == storage.classID)].totalHours;
+                                totalHoursHolder.Text = totalWorkspaceHours.ToString();
                                 workspaceComboBox.SelectedItem = workspaceName;
                             }
 
@@ -196,8 +200,10 @@ namespace Summaries
                                         {
                                             dataGrid.Rows.Add(rowArray);
                                         }
-                                        dataGrid.Sort(dataGrid.Columns[0], System.ComponentModel.ListSortDirection.Ascending);
-                                        summarizedHoursHolder.Text = summarizedHours.ToString();
+                                        dataGrid.Sort(this.dataGrid.Columns[0], Properties.Settings.Default.summaryOrderDate);
+                                        decimal daysLeft = 0;
+                                        daysLeft = (totalWorkspaceHours - summarizedHours) / 7;
+                                        summarizedHoursHolder.Text = summarizedHours.ToString() + " (" + daysLeft + " " + GlobalStrings.Days + ")";
                                     }
                                 }
                                 else
@@ -370,6 +376,22 @@ namespace Summaries
         {
             codeResources.ExportSummary.ExportSummaryForm export = new codeResources.ExportSummary.ExportSummaryForm();
             export.ShowDialog();
+        }
+
+        private void dataGrid_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if(Properties.Settings.Default.summaryOrderDate == System.ComponentModel.ListSortDirection.Ascending)
+            {
+                Properties.Settings.Default.summaryOrderDate = System.ComponentModel.ListSortDirection.Descending;
+                Properties.Settings.Default.Save();
+                dataGrid.Sort(this.dataGrid.Columns[0], System.ComponentModel.ListSortDirection.Descending);
+            }
+            else
+            {
+                Properties.Settings.Default.summaryOrderDate = System.ComponentModel.ListSortDirection.Ascending;
+                Properties.Settings.Default.Save();
+                dataGrid.Sort(this.dataGrid.Columns[0], System.ComponentModel.ListSortDirection.Ascending);
+            }
         }
     }
 }
