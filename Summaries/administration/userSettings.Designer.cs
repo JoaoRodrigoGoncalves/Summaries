@@ -98,12 +98,12 @@
             // 
             // groupBox1
             // 
-            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Controls.Add(this.bigBarCheckBox);
             this.groupBox1.Controls.Add(this.userTypeBox);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.classNameBox);
             this.groupBox1.Controls.Add(this.label1);
+            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
             // 

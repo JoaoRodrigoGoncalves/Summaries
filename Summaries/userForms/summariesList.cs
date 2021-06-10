@@ -116,7 +116,7 @@ namespace Summaries
                     workspaceResponse = JsonConvert.DeserializeObject<workspacesServerResponse>(jsonResponse);
                     if (workspaceResponse.status)
                     {
-                        if (workspaceResponse.contents == null)
+                        if (workspaceResponse.contents == null || !workspaceResponse.contents.Exists(x => x.hours.Exists(y => y.classID == storage.classID)))
                         {
                             storage.currentWorkspaceID = 0;
                             MessageBox.Show(summariesListStrings.NoAvailableWorkspacesLong, summariesListStrings.NoAvailableWorkspaces, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -201,10 +201,14 @@ namespace Summaries
                                             dataGrid.Rows.Add(rowArray);
                                         }
                                         dataGrid.Sort(this.dataGrid.Columns[0], Properties.Settings.Default.summaryOrderDate);
-                                        decimal daysLeft = 0;
+                                        double daysLeft = 0;
                                         daysLeft = (totalWorkspaceHours - summarizedHours) / 7;
                                         summarizedHoursHolder.Text = summarizedHours.ToString();
-                                        hoursRemainingHolder.Text = (totalWorkspaceHours - summarizedHours).ToString() + " " + String.Format(GlobalStrings.daysRemaining, daysLeft);
+                                        hoursRemainingHolder.Text = (totalWorkspaceHours - summarizedHours).ToString() + " " + String.Format(GlobalStrings.DaysRemaining, Math.Round(daysLeft));
+                                    }
+                                    else
+                                    {
+                                        hoursRemainingHolder.Text = totalWorkspaceHours.ToString() + " " + String.Format(GlobalStrings.DaysRemaining, Math.Round((double)totalWorkspaceHours/7));
                                     }
                                 }
                                 else
@@ -369,8 +373,12 @@ namespace Summaries
 
         private void workspaceComboBox_DropDownClosed(object sender, EventArgs e)
         {
-            workspaceName = workspaceComboBox.SelectedItem.ToString();
-            summariesList_Load(sender, e);
+            try
+            {
+                workspaceName = workspaceComboBox.SelectedItem.ToString();
+                summariesList_Load(sender, e);
+            }
+            catch {}
         }
 
         private void exportWorkspace_Click(object sender, EventArgs e)

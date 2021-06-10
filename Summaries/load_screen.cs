@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Net;
+using System.Threading;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -31,6 +32,8 @@ namespace Summaries
                     Properties.Settings.Default.Upgrade();
                     Properties.Settings.Default.callUpgrade = false;
                     Properties.Settings.Default.Save();
+                    Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(Properties.Settings.Default.Language);
+                    Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(Properties.Settings.Default.Language);
                 }
 
                 if (String.IsNullOrEmpty(Properties.Settings.Default.serverURL) || String.IsNullOrWhiteSpace(Properties.Settings.Default.serverURL))

@@ -84,22 +84,73 @@ namespace Summaries.codeResources.ExportSummary
 
         workspaceServerResponse workspaceResponse;
 
-        public Document CreateDocument()
+        public class userServerResponse
         {
+            public bool status { get; set; }
+            public string errors { get; set; }
+            public List<userContents> contents { get; set; }
+        }
+
+        public class userContents
+        {
+            public int userid { get; set; }
+            public string user { get; set; }
+            public string displayName { get; set; }
+            public int classID { get; set; }
+            public bool isAdmin { get; set; }
+            public bool isDeletionProtected { get; set; }
+        }
+
+        userServerResponse userResponse;
+
+        string studentName_g;
+        int? classID_g;        
+
+        public Document CreateDocument(int? userID = null, int? classID = null, int? workspaceID = null)
+        {
+            if(userID == null || classID == null || workspaceID == null)
+            {
+                userID = storage.userID;
+                classID = storage.classID;
+                classID_g = storage.classID;
+                workspaceID = storage.currentWorkspaceID;
+                studentName_g = storage.displayName;
+            }
+            else
+            {
+                if (userID < 1 || classID < 0 || workspaceID < 0)
+                {
+                    throw new Exception("The userID, classID and workspaceID parameters have to be greater than 0. No document was generated.");
+                }
+                else
+                {
+                    userResponse = JsonConvert.DeserializeObject<userServerResponse>(func.APIRequest("GET", null, "user/" + userID));
+                    if (userResponse.status)
+                    {
+                        classID_g = userResponse.contents[0].classID;
+                        studentName_g = userResponse.contents[0].displayName;
+                    }
+                    else
+                    {
+                        throw new Exception(GlobalStrings.Error + ": " + userResponse.errors);
+                    }
+                }
+            }
+
             try
             {
-                summariesResponse = JsonConvert.DeserializeObject<summariesServerResponse>(func.APIRequest("GET", null, "user/" + storage.userID + "/workspace/" + storage.currentWorkspaceID + "/summary"));
+                summariesResponse = JsonConvert.DeserializeObject<summariesServerResponse>(func.APIRequest("GET", null, "user/" + userID + "/workspace/" + workspaceID + "/summary"));
                 if (summariesResponse.status)
                 {
-                    classResponse = JsonConvert.DeserializeObject<classServerResponse>(func.APIRequest("GET", null, "class/" + storage.classID));
+                    classResponse = JsonConvert.DeserializeObject<classServerResponse>(func.APIRequest("GET", null, "class/" + classID));
                     if (classResponse.status)
                     {
-                        workspaceResponse = JsonConvert.DeserializeObject<workspaceServerResponse>(func.APIRequest("GET", null, "workspace/" + storage.currentWorkspaceID));
+                        workspaceResponse = JsonConvert.DeserializeObject<workspaceServerResponse>(func.APIRequest("GET", null, "workspace/" + workspaceID));
                         if (workspaceResponse.status)
                         {
                             // Create a new MigraDoc document.
                             _document = new Document();
-                            _document.Info.Title = GenerateSummaryExportStrings.DocumentType + " - " + storage.displayName;
+                            _document.Info.Title = GenerateSummaryExportStrings.DocumentType + " - " + studentName_g;
                             _document.Info.Author = storage.displayName + " (Summaries)";
 
                             DefineStyles();
@@ -207,7 +258,14 @@ namespace Summaries.codeResources.ExportSummary
                 documentType.Format.Font.Size = 11;
                 documentType.Format.Alignment = ParagraphAlignment.Right;
 
-                var info = section.AddParagraph(String.Format("{0}: {1}.\n{2}: {3}.\n{4}: {5}.", GenerateSummaryExportStrings.StudentName, storage.displayName, GenerateSummaryExportStrings.Class, classResponse.contents[0].className, GenerateSummaryExportStrings.Workload, workspaceResponse.contents[0].hours[workspaceResponse.contents[0].hours.FindIndex(x => x.classID == storage.classID)].TotalHours));
+                var info = section.AddParagraph(String.Format("{0}: {1}.\n{2}: {3}.\n{4}: {5}.",
+                                                                GenerateSummaryExportStrings.StudentName,
+                                                                studentName_g,
+                                                                GenerateSummaryExportStrings.Class,
+                                                                classResponse.contents[0].className,
+                                                                GenerateSummaryExportStrings.Workload,
+                                                                workspaceResponse.contents[0].hours[workspaceResponse.contents[0].hours.FindIndex(x => x.classID == classID_g)].TotalHours
+                                                ));
                 info.Format.Font.Size = 11;
                 info.Format.SpaceAfter = "0.5cm";
                 info.Format.SpaceBefore = "0.5cm";
@@ -255,7 +313,7 @@ namespace Summaries.codeResources.ExportSummary
                 key.Format.Font.Size = 11;
                 key.Format.SpaceBefore = "0.5cm";
 
-                String[] signers = { storage.displayName, GenerateSummaryExportStrings.CompanyResponsable, GenerateSummaryExportStrings.Teacher };
+                String[] signers = { studentName_g, GenerateSummaryExportStrings.CompanyResponsable, GenerateSummaryExportStrings.Teacher };
                 foreach (string name in signers)
                 {
                     var _signLine = section.AddParagraph("______________________________");
