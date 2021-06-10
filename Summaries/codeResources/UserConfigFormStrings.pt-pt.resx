@@ -136,4 +136,10 @@
   <data name="UnsavedChangesQuestion" xml:space="preserve">
     <value>Existem alterações a este utilizador que não foram guardadas. Pretende guardá-las agora?</value>
   </data>
+  <data name="WorkspaceTab_ExportUserReport" xml:space="preserve">
+    <value>Exportar Relatório do Utilizador</value>
+  </data>
+  <data name="WorkspaceTab_Name" xml:space="preserve">
+    <value>Nome</value>
+  </data>
 </root>

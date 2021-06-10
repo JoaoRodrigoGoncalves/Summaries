@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="usernameLB.Text" xml:space="preserve">
+    <value>Login Name</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="classCB.Size" type="System.Drawing.Size, System.Drawing">
     <value>370, 21</value>
@@ -131,8 +134,8 @@
   <data name="footerLayoutPanel.IconPadding" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="cancelBTN.IconPadding" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="&gt;&gt;workspacesPage.Name" xml:space="preserve">
+    <value>workspacesPage</value>
   </data>
   <data name="&gt;&gt;loginNameTB.Name" xml:space="preserve">
     <value>loginNameTB</value>
@@ -140,8 +143,9 @@
   <data name="&gt;&gt;displayNameLB.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
-  <data name="tabControl1.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="footerLayoutPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="okBTN" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="cancelBTN" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,60,Percent,20,Percent,20" /&gt;&lt;Rows Styles="Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="cancelBTN.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -149,15 +153,23 @@
   <data name="$this.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>417, 545</value>
   </data>
+  <data name="&gt;&gt;workspacesPage.Parent" xml:space="preserve">
+    <value>tabControl1</value>
+  </data>
+  <data name="noDataLabel.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
   <data name="displayNameLB.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="splitterLine.Size" type="System.Drawing.Size, System.Drawing">
-    <value>373, 13</value>
+  <data name="classCB.Error" xml:space="preserve">
+    <value />
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="footerLayoutPanel.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
-    <value>MiddleRight</value>
+  <data name="isDeletionProtectedCheck.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="tabControl1.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
   </data>
   <data name="&gt;&gt;classLB.Name" xml:space="preserve">
     <value>classLB</value>
@@ -168,17 +180,26 @@
   <data name="isAdminCheck.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
     <value>MiddleRight</value>
   </data>
-  <data name="&gt;&gt;userProfilePic.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;noDataLabel.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="cancelBTN.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
     <value>MiddleRight</value>
   </data>
+  <data name="tabControl1.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
   <data name="displayNameLB.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
   </data>
-  <data name="isAdminCheck.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 241</value>
+  <data name="&gt;&gt;workspacesDataGrid.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="workspacesDataGrid.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 3</value>
+  </data>
+  <data name="&gt;&gt;noDataLabel.Parent" xml:space="preserve">
+    <value>workspacesPage</value>
   </data>
   <data name="displayNameTB.Location" type="System.Drawing.Point, System.Drawing">
     <value>10, 149</value>
@@ -198,35 +219,44 @@
   <data name="cancelBTN.Location" type="System.Drawing.Point, System.Drawing">
     <value>240, 3</value>
   </data>
-  <data name="GeneralTabPage.Error" xml:space="preserve">
-    <value />
+  <data name="&gt;&gt;displayNameLB.Name" xml:space="preserve">
+    <value>displayNameLB</value>
   </data>
-  <data name="&gt;&gt;splitterLine.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="tabControl1.IconPadding" type="System.Int32, mscorlib">
+  <data name="noDataLabel.IconPadding" type="System.Int32, mscorlib">
     <value>0</value>
-  </data>
-  <data name="&gt;&gt;classCB.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="displayNameTB.IconPadding" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;loginNameTB.Parent" xml:space="preserve">
-    <value>GeneralTabPage</value>
   </data>
   <data name="loginNameTB.Error" xml:space="preserve">
     <value />
   </data>
-  <data name="displayNameLB.Error" xml:space="preserve">
-    <value />
+  <data name="displayNameLB.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 133</value>
+  </data>
+  <data name="&gt;&gt;loginNameTB.Parent" xml:space="preserve">
+    <value>GeneralTabPage</value>
+  </data>
+  <data name="workspacesPage.Text" xml:space="preserve">
+    <value>Workspaces</value>
+  </data>
+  <data name="&gt;&gt;workspacesPage.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;isDeletionProtectedCheck.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="classLB.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>401, 506</value>
+  </data>
+  <data name="cancelBTN.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;workspacesPage.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="cancelBTN.Text" xml:space="preserve">
     <value>Cancel</value>
-  </data>
-  <data name="userProfilePic.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 6</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Properties</value>
@@ -234,29 +264,32 @@
   <data name="okBTN.Text" xml:space="preserve">
     <value>OK</value>
   </data>
+  <data name="noDataLabel.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="workspacesDataGrid.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;errorProvider.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ErrorProvider, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="okBTN.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
     <value>MiddleRight</value>
   </data>
-  <data name="UsernameTOPBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>306, 20</value>
+  <data name="usernameLB.Error" xml:space="preserve">
+    <value />
   </data>
   <data name="loginNameTB.IconPadding" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="usernameLB.Text" xml:space="preserve">
-    <value>Login Name</value>
+  <data name="noDataLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>117, 16</value>
   </data>
   <data name="footerLayoutPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="loginNameTB.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
   <data name="userProfilePic.IconPadding" type="System.Int32, mscorlib">
     <value>0</value>
-  </data>
-  <data name="displayNameLB.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 133</value>
   </data>
   <data name="splitterLine.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -270,11 +303,14 @@
   <data name="&gt;&gt;loginNameTB.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
+  <data name="isAdminCheck.Size" type="System.Drawing.Size, System.Drawing">
+    <value>139, 17</value>
+  </data>
   <data name="&gt;&gt;displayNameLB.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;UsernameTOPBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="GeneralTabPage.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
   </data>
   <data name="&gt;&gt;isAdminCheck.Name" xml:space="preserve">
     <value>isAdminCheck</value>
@@ -285,8 +321,8 @@
   <data name="classLB.IconPadding" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;errorProvider.Name" xml:space="preserve">
-    <value>errorProvider</value>
+  <data name="footerLayoutPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>395, 30</value>
   </data>
   <data name="&gt;&gt;footerLayoutPanel.Name" xml:space="preserve">
     <value>footerLayoutPanel</value>
@@ -297,8 +333,14 @@
   <data name="&gt;&gt;cancelBTN.Name" xml:space="preserve">
     <value>cancelBTN</value>
   </data>
-  <data name="displayNameTB.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
-    <value>MiddleRight</value>
+  <data name="workspacesPage.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="usernameLB.Size" type="System.Drawing.Size, System.Drawing">
+    <value>64, 13</value>
+  </data>
+  <data name="workspacesPage.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
   </data>
   <data name="splitterLine.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -306,11 +348,20 @@
   <data name="&gt;&gt;isDeletionProtectedCheck.Parent" xml:space="preserve">
     <value>GeneralTabPage</value>
   </data>
+  <data name="splitterLine.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
   <data name="GeneralTabPage.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
   <data name="&gt;&gt;GeneralTabPage.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <data name="usernameLB.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;workspacesDataGrid.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="&gt;&gt;okBTN.Name" xml:space="preserve">
     <value>okBTN</value>
@@ -321,20 +372,23 @@
   <data name="userProfilePic.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;tabControl1.Name" xml:space="preserve">
-    <value>tabControl1</value>
-  </data>
-  <data name="usernameLB.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+  <data name="displayNameTB.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
     <value>MiddleRight</value>
   </data>
   <data name="usernameLB.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
+  </data>
+  <data name="&gt;&gt;splitterLine.ZOrder" xml:space="preserve">
+    <value>10</value>
   </data>
   <data name="footerLayoutPanel.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 473</value>
   </data>
   <data name="mainLayoutPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
+  </data>
+  <data name="noDataLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>136, 78</value>
   </data>
   <data name="&gt;&gt;usernameLB.Name" xml:space="preserve">
     <value>usernameLB</value>
@@ -351,11 +405,23 @@
   <data name="&gt;&gt;tabControl1.Type" xml:space="preserve">
     <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;mainLayoutPanel.Name" xml:space="preserve">
+    <value>mainLayoutPanel</value>
+  </data>
+  <data name="workspacesDataGrid.Error" xml:space="preserve">
+    <value />
+  </data>
   <data name="&gt;&gt;classLB.Parent" xml:space="preserve">
     <value>GeneralTabPage</value>
   </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>UserConfigForm</value>
+  <data name="noDataLabel.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="tabControl1.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="isDeletionProtectedCheck.Text" xml:space="preserve">
+    <value>Protected Against Accidental Deletion</value>
   </data>
   <data name="&gt;&gt;classCB.Parent" xml:space="preserve">
     <value>GeneralTabPage</value>
@@ -366,20 +432,23 @@
   <data name="&gt;&gt;classLB.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="GeneralTabPage.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
-    <value>MiddleRight</value>
+  <data name="classCB.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;errorProvider.Name" xml:space="preserve">
+    <value>errorProvider</value>
   </data>
   <data name="okBTN.IconPadding" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;errorProvider.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ErrorProvider, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;okBTN.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="isAdminCheck.Error" xml:space="preserve">
     <value />
   </data>
-  <data name="&gt;&gt;userProfilePic.ZOrder" xml:space="preserve">
-    <value>9</value>
+  <data name="splitterLine.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
   </data>
   <data name="displayNameTB.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -402,11 +471,11 @@
   <data name="displayNameLB.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
     <value>MiddleRight</value>
   </data>
-  <data name="classCB.IconPadding" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="&gt;&gt;classCB.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
-  <data name="isDeletionProtectedCheck.Text" xml:space="preserve">
-    <value>Protected Against Accidental Deletion</value>
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterScreen</value>
   </data>
   <data name="classLB.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -417,8 +486,8 @@
   <data name="&gt;&gt;loginNameTB.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
-    <value>CenterScreen</value>
+  <data name="&gt;&gt;workspacesDataGrid.Name" xml:space="preserve">
+    <value>workspacesDataGrid</value>
   </data>
   <data name="isDeletionProtectedCheck.Size" type="System.Drawing.Size, System.Drawing">
     <value>205, 17</value>
@@ -429,35 +498,38 @@
   <data name="okBTN.Location" type="System.Drawing.Point, System.Drawing">
     <value>319, 3</value>
   </data>
-  <data name="&gt;&gt;mainLayoutPanel.Name" xml:space="preserve">
+  <data name="&gt;&gt;tabControl1.Parent" xml:space="preserve">
     <value>mainLayoutPanel</value>
   </data>
-  <data name="okBTN.Size" type="System.Drawing.Size, System.Drawing">
-    <value>73, 23</value>
+  <data name="isAdminCheck.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 241</value>
   </data>
-  <data name="&gt;&gt;okBTN.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="&gt;&gt;splitterLine.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;cancelBTN.Parent" xml:space="preserve">
     <value>footerLayoutPanel</value>
   </data>
+  <data name="okBTN.Size" type="System.Drawing.Size, System.Drawing">
+    <value>73, 23</value>
+  </data>
   <data name="&gt;&gt;usernameLB.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="footerLayoutPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="okBTN" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="cancelBTN" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,60,Percent,20,Percent,20" /&gt;&lt;Rows Styles="Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  <data name="loginNameTB.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
   </data>
   <data name="&gt;&gt;isDeletionProtectedCheck.Name" xml:space="preserve">
     <value>isDeletionProtectedCheck</value>
   </data>
-  <data name="isDeletionProtectedCheck.IconPadding" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;isDeletionProtectedCheck.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="workspacesPage.Size" type="System.Drawing.Size, System.Drawing">
+    <value>387, 438</value>
   </data>
   <data name="&gt;&gt;displayNameTB.ZOrder" xml:space="preserve">
     <value>4</value>
+  </data>
+  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>417, 545</value>
   </data>
   <data name="splitterLine.Text" xml:space="preserve">
     <value>_____________________________________________________________</value>
@@ -465,11 +537,8 @@
   <data name="userProfilePic.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
     <value>MiddleRight</value>
   </data>
-  <data name="GeneralTabPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>387, 438</value>
-  </data>
-  <data name="isDeletionProtectedCheck.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 265</value>
+  <data name="mainLayoutPanel.RowCount" type="System.Int32, mscorlib">
+    <value>2</value>
   </data>
   <data name="classLB.Size" type="System.Drawing.Size, System.Drawing">
     <value>32, 13</value>
@@ -489,8 +558,8 @@
   <data name="usernameLB.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
-  <data name="&gt;&gt;mainLayoutPanel.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="&gt;&gt;tabControl1.Name" xml:space="preserve">
+    <value>tabControl1</value>
   </data>
   <data name="&gt;&gt;tabControl1.ZOrder" xml:space="preserve">
     <value>1</value>
@@ -498,20 +567,23 @@
   <data name="&gt;&gt;footerLayoutPanel.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="GeneralTabPage.Error" xml:space="preserve">
+    <value />
+  </data>
   <data name="&gt;&gt;isAdminCheck.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="classLB.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
-    <value>MiddleRight</value>
+  <data name="&gt;&gt;userProfilePic.ZOrder" xml:space="preserve">
+    <value>9</value>
   </data>
   <data name="footerLayoutPanel.RowCount" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="mainLayoutPanel.IconPadding" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
   <data name="&gt;&gt;UsernameTOPBox.ZOrder" xml:space="preserve">
     <value>8</value>
+  </data>
+  <data name="displayNameTB.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="&gt;&gt;UsernameTOPBox.Parent" xml:space="preserve">
     <value>GeneralTabPage</value>
@@ -522,8 +594,8 @@
   <data name="mainLayoutPanel.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
     <value>MiddleRight</value>
   </data>
-  <data name="GeneralTabPage.Text" xml:space="preserve">
-    <value>General</value>
+  <data name="&gt;&gt;UsernameTOPBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="isAdminCheck.Text" xml:space="preserve">
     <value>Administrative Privileges</value>
@@ -534,20 +606,32 @@
   <data name="&gt;&gt;classCB.Type" xml:space="preserve">
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>UserConfigForm</value>
+  </data>
+  <data name="workspacesDataGrid.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
   <data name="classLB.Text" xml:space="preserve">
     <value>Class</value>
   </data>
   <data name="mainLayoutPanel.ColumnCount" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="footerLayoutPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>395, 30</value>
+  <data name="&gt;&gt;mainLayoutPanel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;noDataLabel.Name" xml:space="preserve">
+    <value>noDataLabel</value>
   </data>
   <data name="&gt;&gt;classCB.Name" xml:space="preserve">
     <value>classCB</value>
   </data>
-  <data name="mainLayoutPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
+  <data name="noDataLabel.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tabControl1.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
   </data>
   <data name="&gt;&gt;isAdminCheck.Parent" xml:space="preserve">
     <value>GeneralTabPage</value>
@@ -567,44 +651,47 @@
   <data name="isAdminCheck.IconPadding" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="usernameLB.Size" type="System.Drawing.Size, System.Drawing">
-    <value>64, 13</value>
+  <data name="&gt;&gt;footerLayoutPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="displayNameLB.Text" xml:space="preserve">
     <value>Display Name</value>
   </data>
-  <data name="classCB.Error" xml:space="preserve">
-    <value />
+  <data name="&gt;&gt;footerLayoutPanel.Parent" xml:space="preserve">
+    <value>mainLayoutPanel</value>
   </data>
   <data name="&gt;&gt;isDeletionProtectedCheck.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="tabControl1.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+  <data name="GeneralTabPage.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
     <value>MiddleRight</value>
   </data>
   <data name="GeneralTabPage.IconPadding" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;mainLayoutPanel.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="UsernameTOPBox.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
   </data>
-  <data name="tabControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>395, 464</value>
+  <data name="workspacesPage.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
   </data>
-  <data name="&gt;&gt;footerLayoutPanel.Parent" xml:space="preserve">
-    <value>mainLayoutPanel</value>
+  <data name="&gt;&gt;displayNameLB.Parent" xml:space="preserve">
+    <value>GeneralTabPage</value>
   </data>
   <data name="displayNameTB.Size" type="System.Drawing.Size, System.Drawing">
     <value>370, 20</value>
   </data>
-  <data name="UsernameTOPBox.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+  <data name="displayNameLB.Error" xml:space="preserve">
+    <value />
   </data>
   <data name="cancelBTN.Size" type="System.Drawing.Size, System.Drawing">
     <value>73, 23</value>
   </data>
-  <data name="tabControl1.Error" xml:space="preserve">
-    <value />
+  <data name="&gt;&gt;noDataLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="loginNameTB.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -2320,6 +2407,9 @@
   <data name="mainLayoutPanel.Size" type="System.Drawing.Size, System.Drawing">
     <value>401, 506</value>
   </data>
+  <data name="workspacesPage.Error" xml:space="preserve">
+    <value />
+  </data>
   <data name="displayNameLB.IconPadding" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
@@ -2331,6 +2421,9 @@
   </data>
   <data name="&gt;&gt;splitterLine.Parent" xml:space="preserve">
     <value>GeneralTabPage</value>
+  </data>
+  <data name="UsernameTOPBox.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="splitterLine.Location" type="System.Drawing.Point, System.Drawing">
     <value>7, 65</value>
@@ -2344,17 +2437,23 @@
   <data name="displayNameTB.Error" xml:space="preserve">
     <value />
   </data>
-  <data name="&gt;&gt;splitterLine.ZOrder" xml:space="preserve">
-    <value>10</value>
+  <data name="splitterLine.Size" type="System.Drawing.Size, System.Drawing">
+    <value>373, 13</value>
   </data>
-  <data name="&gt;&gt;displayNameLB.Name" xml:space="preserve">
-    <value>displayNameLB</value>
+  <data name="GeneralTabPage.Size" type="System.Drawing.Size, System.Drawing">
+    <value>387, 438</value>
+  </data>
+  <data name="noDataLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
   </data>
   <data name="splitterLine.Error" xml:space="preserve">
     <value />
   </data>
   <data name="isDeletionProtectedCheck.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
     <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;workspacesDataGrid.Parent" xml:space="preserve">
+    <value>workspacesPage</value>
   </data>
   <data name="classCB.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -2368,16 +2467,22 @@
   <data name="UsernameTOPBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>76, 28</value>
   </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>401, 506</value>
+  <data name="&gt;&gt;userProfilePic.Parent" xml:space="preserve">
+    <value>GeneralTabPage</value>
   </data>
   <data name="okBTN.Error" xml:space="preserve">
     <value />
   </data>
-  <data name="GeneralTabPage.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
+  <data name="userProfilePic.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 6</value>
   </data>
   <data name="UsernameTOPBox.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="noDataLabel.Text" xml:space="preserve">
+    <value>No data to display</value>
+  </data>
+  <data name="footerLayoutPanel.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
     <value>MiddleRight</value>
   </data>
   <data name="&gt;&gt;GeneralTabPage.Type" xml:space="preserve">
@@ -2386,11 +2491,11 @@
   <data name="&gt;&gt;displayNameTB.Parent" xml:space="preserve">
     <value>GeneralTabPage</value>
   </data>
-  <data name="loginNameTB.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
-    <value>MiddleRight</value>
+  <data name="GeneralTabPage.Text" xml:space="preserve">
+    <value>General</value>
   </data>
-  <data name="splitterLine.IconPadding" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="footerLayoutPanel.Error" xml:space="preserve">
+    <value />
   </data>
   <data name="&gt;&gt;cancelBTN.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -2404,43 +2509,43 @@
   <data name="UsernameTOPBox.Error" xml:space="preserve">
     <value />
   </data>
+  <data name="workspacesDataGrid.Size" type="System.Drawing.Size, System.Drawing">
+    <value>377, 432</value>
+  </data>
   <data name="displayNameLB.Size" type="System.Drawing.Size, System.Drawing">
     <value>72, 13</value>
-  </data>
-  <data name="&gt;&gt;tabControl1.Parent" xml:space="preserve">
-    <value>mainLayoutPanel</value>
   </data>
   <data name="&gt;&gt;displayNameTB.Name" xml:space="preserve">
     <value>displayNameTB</value>
   </data>
-  <data name="usernameLB.Error" xml:space="preserve">
-    <value />
+  <data name="isDeletionProtectedCheck.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 265</value>
   </data>
-  <data name="mainLayoutPanel.RowCount" type="System.Int32, mscorlib">
-    <value>2</value>
+  <data name="tabControl1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>395, 464</value>
   </data>
   <data name="mainLayoutPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
     <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="footerLayoutPanel" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="tabControl1" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100" /&gt;&lt;Rows Styles="Percent,93,Percent,7" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
-  <data name="&gt;&gt;footerLayoutPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="mainLayoutPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
   </data>
-  <data name="splitterLine.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
-    <value>MiddleRight</value>
+  <data name="noDataLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
-  <data name="isAdminCheck.Size" type="System.Drawing.Size, System.Drawing">
-    <value>139, 17</value>
+  <data name="workspacesPage.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
   </data>
-  <data name="&gt;&gt;userProfilePic.Parent" xml:space="preserve">
-    <value>GeneralTabPage</value>
+  <data name="mainLayoutPanel.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
-  <data name="footerLayoutPanel.Error" xml:space="preserve">
-    <value />
+  <data name="&gt;&gt;userProfilePic.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;displayNameLB.Parent" xml:space="preserve">
-    <value>GeneralTabPage</value>
+  <data name="workspacesDataGrid.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
-  <data name="UsernameTOPBox.IconPadding" type="System.Int32, mscorlib">
+  <data name="&gt;&gt;mainLayoutPanel.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="footerLayoutPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
@@ -2449,14 +2554,11 @@
   <data name="userProfilePic.Error" xml:space="preserve">
     <value />
   </data>
-  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>417, 545</value>
+  <data name="UsernameTOPBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>306, 20</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </metadata>
-  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>pt-PT</value>
   </metadata>
   <metadata name="errorProvider.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>

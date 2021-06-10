@@ -48,12 +48,17 @@ namespace Summaries.administration
             this.UsernameTOPBox = new System.Windows.Forms.TextBox();
             this.userProfilePic = new System.Windows.Forms.PictureBox();
             this.splitterLine = new System.Windows.Forms.Label();
+            this.workspacesPage = new System.Windows.Forms.TabPage();
+            this.noDataLabel = new System.Windows.Forms.Label();
+            this.workspacesDataGrid = new System.Windows.Forms.DataGridView();
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.mainLayoutPanel.SuspendLayout();
             this.footerLayoutPanel.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.GeneralTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.userProfilePic)).BeginInit();
+            this.workspacesPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.workspacesDataGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
             // 
@@ -101,6 +106,7 @@ namespace Summaries.administration
             // 
             resources.ApplyResources(this.tabControl1, "tabControl1");
             this.tabControl1.Controls.Add(this.GeneralTabPage);
+            this.tabControl1.Controls.Add(this.workspacesPage);
             this.errorProvider.SetError(this.tabControl1, resources.GetString("tabControl1.Error"));
             this.errorProvider.SetIconAlignment(this.tabControl1, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("tabControl1.IconAlignment"))));
             this.errorProvider.SetIconPadding(this.tabControl1, ((int)(resources.GetObject("tabControl1.IconPadding"))));
@@ -224,6 +230,43 @@ namespace Summaries.administration
             this.errorProvider.SetIconPadding(this.splitterLine, ((int)(resources.GetObject("splitterLine.IconPadding"))));
             this.splitterLine.Name = "splitterLine";
             // 
+            // workspacesPage
+            // 
+            resources.ApplyResources(this.workspacesPage, "workspacesPage");
+            this.workspacesPage.Controls.Add(this.noDataLabel);
+            this.workspacesPage.Controls.Add(this.workspacesDataGrid);
+            this.errorProvider.SetError(this.workspacesPage, resources.GetString("workspacesPage.Error"));
+            this.errorProvider.SetIconAlignment(this.workspacesPage, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("workspacesPage.IconAlignment"))));
+            this.errorProvider.SetIconPadding(this.workspacesPage, ((int)(resources.GetObject("workspacesPage.IconPadding"))));
+            this.workspacesPage.Name = "workspacesPage";
+            this.workspacesPage.UseVisualStyleBackColor = true;
+            // 
+            // noDataLabel
+            // 
+            resources.ApplyResources(this.noDataLabel, "noDataLabel");
+            this.noDataLabel.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.errorProvider.SetError(this.noDataLabel, resources.GetString("noDataLabel.Error"));
+            this.errorProvider.SetIconAlignment(this.noDataLabel, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("noDataLabel.IconAlignment"))));
+            this.errorProvider.SetIconPadding(this.noDataLabel, ((int)(resources.GetObject("noDataLabel.IconPadding"))));
+            this.noDataLabel.Name = "noDataLabel";
+            // 
+            // workspacesDataGrid
+            // 
+            resources.ApplyResources(this.workspacesDataGrid, "workspacesDataGrid");
+            this.workspacesDataGrid.AllowUserToAddRows = false;
+            this.workspacesDataGrid.AllowUserToDeleteRows = false;
+            this.workspacesDataGrid.AllowUserToResizeRows = false;
+            this.workspacesDataGrid.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.workspacesDataGrid.CausesValidation = false;
+            this.workspacesDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.workspacesDataGrid.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.errorProvider.SetError(this.workspacesDataGrid, resources.GetString("workspacesDataGrid.Error"));
+            this.errorProvider.SetIconAlignment(this.workspacesDataGrid, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("workspacesDataGrid.IconAlignment"))));
+            this.errorProvider.SetIconPadding(this.workspacesDataGrid, ((int)(resources.GetObject("workspacesDataGrid.IconPadding"))));
+            this.workspacesDataGrid.Name = "workspacesDataGrid";
+            this.workspacesDataGrid.ReadOnly = true;
+            this.workspacesDataGrid.MouseClick += new System.Windows.Forms.MouseEventHandler(this.workspacesDataGrid_MouseClick);
+            // 
             // errorProvider
             // 
             this.errorProvider.ContainerControl = this;
@@ -246,6 +289,9 @@ namespace Summaries.administration
             this.GeneralTabPage.ResumeLayout(false);
             this.GeneralTabPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.userProfilePic)).EndInit();
+            this.workspacesPage.ResumeLayout(false);
+            this.workspacesPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.workspacesDataGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.ResumeLayout(false);
 
@@ -271,5 +317,8 @@ namespace Summaries.administration
         private System.Windows.Forms.CheckBox isDeletionProtectedCheck;
         private System.Windows.Forms.CheckBox isAdminCheck;
         private System.Windows.Forms.ErrorProvider errorProvider;
+        private System.Windows.Forms.TabPage workspacesPage;
+        private System.Windows.Forms.DataGridView workspacesDataGrid;
+        private System.Windows.Forms.Label noDataLabel;
     }
 }

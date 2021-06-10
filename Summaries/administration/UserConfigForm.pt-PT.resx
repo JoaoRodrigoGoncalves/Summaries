@@ -1832,8 +1832,46 @@
   <data name="$this.Text" xml:space="preserve">
     <value>Propriedades</value>
   </data>
+  <data name="okBTN.Error" xml:space="preserve">
+    <value />
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="okBTN.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="okBTN.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="cancelBTN.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cancelBTN.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="cancelBTN.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
   <data name="cancelBTN.Text" xml:space="preserve">
     <value>Cancelar</value>
+  </data>
+  <data name="footerLayoutPanel.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="footerLayoutPanel.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="footerLayoutPanel.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="isDeletionProtectedCheck.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="isDeletionProtectedCheck.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="isDeletionProtectedCheck.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="isDeletionProtectedCheck.Size" type="System.Drawing.Size, System.Drawing">
     <value>201, 17</value>
@@ -1841,11 +1879,38 @@
   <data name="isDeletionProtectedCheck.Text" xml:space="preserve">
     <value>Protegido Contra Remoção Acidental</value>
   </data>
+  <data name="isAdminCheck.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="isAdminCheck.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="isAdminCheck.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
   <data name="isAdminCheck.Size" type="System.Drawing.Size, System.Drawing">
     <value>146, 17</value>
   </data>
   <data name="isAdminCheck.Text" xml:space="preserve">
     <value>Privilégios Administrativos</value>
+  </data>
+  <data name="classCB.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="classCB.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="classCB.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="classLB.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="classLB.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="classLB.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="classLB.Size" type="System.Drawing.Size, System.Drawing">
     <value>37, 13</value>
@@ -1853,11 +1918,47 @@
   <data name="classLB.Text" xml:space="preserve">
     <value>Turma</value>
   </data>
+  <data name="displayNameTB.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="displayNameTB.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="displayNameTB.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="displayNameLB.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="displayNameLB.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="displayNameLB.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
   <data name="displayNameLB.Size" type="System.Drawing.Size, System.Drawing">
     <value>35, 13</value>
   </data>
   <data name="displayNameLB.Text" xml:space="preserve">
     <value>Nome</value>
+  </data>
+  <data name="loginNameTB.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="loginNameTB.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="loginNameTB.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="usernameLB.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="usernameLB.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="usernameLB.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="usernameLB.Size" type="System.Drawing.Size, System.Drawing">
     <value>131, 13</value>
@@ -1865,7 +1966,100 @@
   <data name="usernameLB.Text" xml:space="preserve">
     <value>Nome de Inicio de Sessão</value>
   </data>
+  <data name="UsernameTOPBox.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="UsernameTOPBox.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="UsernameTOPBox.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="userProfilePic.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="userProfilePic.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="userProfilePic.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="splitterLine.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="splitterLine.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="splitterLine.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="GeneralTabPage.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="GeneralTabPage.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="GeneralTabPage.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
   <data name="GeneralTabPage.Text" xml:space="preserve">
     <value>Geral</value>
+  </data>
+  <data name="noDataLabel.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="noDataLabel.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="noDataLabel.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="noDataLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>102, 76</value>
+  </data>
+  <data name="noDataLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>185, 16</value>
+  </data>
+  <data name="noDataLabel.Text" xml:space="preserve">
+    <value>Sem informação para mostrar</value>
+  </data>
+  <data name="workspacesDataGrid.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="workspacesDataGrid.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="workspacesDataGrid.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="workspacesPage.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="workspacesPage.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="workspacesPage.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="workspacesPage.Text" xml:space="preserve">
+    <value>Espaços de Trabalho</value>
+  </data>
+  <data name="tabControl1.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tabControl1.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="tabControl1.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="mainLayoutPanel.Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="mainLayoutPanel.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
+  <data name="mainLayoutPanel.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
 </root>

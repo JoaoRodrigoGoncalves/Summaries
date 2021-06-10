@@ -113,5 +113,23 @@ namespace Summaries.codeResources {
                 return ResourceManager.GetString("UnsavedChangesQuestion", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export User Report.
+        /// </summary>
+        internal static string WorkspaceTab_ExportUserReport {
+            get {
+                return ResourceManager.GetString("WorkspaceTab_ExportUserReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        internal static string WorkspaceTab_Name {
+            get {
+                return ResourceManager.GetString("WorkspaceTab_Name", resourceCulture);
+            }
+        }
     }
 }

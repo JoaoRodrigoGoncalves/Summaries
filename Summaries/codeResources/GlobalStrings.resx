@@ -151,7 +151,7 @@
   <data name="CriticalError" xml:space="preserve">
     <value>Critical Error</value>
   </data>
-  <data name="daysRemaining" xml:space="preserve">
+  <data name="DaysRemaining" xml:space="preserve">
     <value>(≈{0} days)</value>
   </data>
   <data name="EmptyFields" xml:space="preserve">

@@ -136,4 +136,10 @@
   <data name="UnsavedChangesQuestion" xml:space="preserve">
     <value>There are unsaved changes made to this user. Would you like to save them first?</value>
   </data>
+  <data name="WorkspaceTab_ExportUserReport" xml:space="preserve">
+    <value>Export User Report</value>
+  </data>
+  <data name="WorkspaceTab_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
 </root>

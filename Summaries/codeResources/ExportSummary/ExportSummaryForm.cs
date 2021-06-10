@@ -7,9 +7,15 @@ namespace Summaries.codeResources.ExportSummary
 {
     public partial class ExportSummaryForm : Form
     {
-        public ExportSummaryForm()
+        int? userID_g;
+        int? classID_g;
+        int? workspace_g;
+        public ExportSummaryForm(int? userID = null, int? classID = null, int? workspaceID = null)
         {
             InitializeComponent();
+            userID_g = userID;
+            classID_g = classID;
+            workspace_g = workspaceID;
         }
 
         private void ExportSummaryForm_Load(object sender, EventArgs e)
@@ -36,7 +42,7 @@ namespace Summaries.codeResources.ExportSummary
             try
             {
                 GenerateSummaryExport report = new GenerateSummaryExport();
-                var pdf = report.CreateDocument();
+                var pdf = report.CreateDocument(userID_g, classID_g, workspace_g);
                 pdf.UseCmykColor = true;
 
                 // Create a renderer for PDF that uses Unicode font encoding.
