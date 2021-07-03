@@ -348,6 +348,7 @@ namespace Summaries.codeResources.ExportSummary
             int totalHours = 0;
             if (summariesResponse.contents != null)
             {
+                summariesResponse.contents.Sort((x, y) => x.summaryNumber.CompareTo(y.summaryNumber)); // Sort by summary number
                 foreach (summariesContent item in summariesResponse.contents)
                 {
                     totalHours += item.dayHours;
