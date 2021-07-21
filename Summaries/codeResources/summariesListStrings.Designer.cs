@@ -115,7 +115,7 @@ namespace Summaries.codeResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You cannot delete this summary because the current workspace is in read-only mode!.
+        ///   Looks up a localized string similar to You cannot modify this workspace because it is in read-only mode!.
         /// </summary>
         internal static string ReadOnlyWorkspace {
             get {

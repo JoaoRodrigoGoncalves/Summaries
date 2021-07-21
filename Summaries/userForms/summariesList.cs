@@ -136,98 +136,109 @@ namespace Summaries
                                 }
                             }
 
-                            int totalWorkspaceHours = 0;
-
-                            if (workspaceName == null || workspaceName == string.Empty || workspaceName == "")
+                            if(workspaceComboBox.Items.Count == 0)
                             {
-                                int index = workspaceResponse.contents.FindIndex(x => x.read == true && x.hours.Exists(c => c.classID == storage.classID));
-                                workspaceSelectedID = workspaceResponse.contents[index].id;
-                                workspaceName = workspaceResponse.contents[index].workspaceName;
-                                workspaceComboBox.SelectedItem = workspaceName;
-                                totalWorkspaceHours = workspaceResponse.contents[index].hours[workspaceResponse.contents[index].hours.FindIndex(x => x.classID == storage.classID)].totalHours;
-                                totalHoursHolder.Text = totalWorkspaceHours.ToString();
+                                // If there are no workspaces with read permission, show warning to user and close dialog
+                                storage.currentWorkspaceID = 0;
+                                MessageBox.Show(summariesListStrings.NoAvailableWorkspacesLong, summariesListStrings.NoAvailableWorkspaces, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                                this.Close();
                             }
                             else
                             {
-                                int workspaceIndex = workspaceResponse.contents.FindIndex(x => x.workspaceName == workspaceName);
-                                workspaceSelectedID = workspaceResponse.contents[workspaceIndex].id;
-                                totalWorkspaceHours = workspaceResponse.contents[workspaceIndex].hours[workspaceResponse.contents[workspaceIndex].hours.FindIndex(x => x.classID == storage.classID)].totalHours;
-                                totalHoursHolder.Text = totalWorkspaceHours.ToString();
-                                workspaceComboBox.SelectedItem = workspaceName;
-                            }
+                                int totalWorkspaceHours = 0;
 
-                            storage.currentWorkspaceID = workspaceSelectedID;
-
-                            try
-                            {
-                                using (loadingForm form = new loadingForm(requestSummaryList))
+                                if (workspaceName == null || workspaceName == string.Empty || workspaceName == "")
                                 {
-                                    form.ShowDialog();
+                                    int index = workspaceResponse.contents.FindIndex(x => x.read == true && x.hours.Exists(c => c.classID == storage.classID));
+                                    workspaceSelectedID = workspaceResponse.contents[index].id;
+                                    workspaceName = workspaceResponse.contents[index].workspaceName;
+                                    workspaceComboBox.SelectedItem = workspaceName;
+                                    totalWorkspaceHours = workspaceResponse.contents[index].hours[workspaceResponse.contents[index].hours.FindIndex(x => x.classID == storage.classID)].totalHours;
+                                    totalHoursHolder.Text = totalWorkspaceHours.ToString();
+                                }
+                                else
+                                {
+                                    int workspaceIndex = workspaceResponse.contents.FindIndex(x => x.workspaceName == workspaceName);
+                                    workspaceSelectedID = workspaceResponse.contents[workspaceIndex].id;
+                                    totalWorkspaceHours = workspaceResponse.contents[workspaceIndex].hours[workspaceResponse.contents[workspaceIndex].hours.FindIndex(x => x.classID == storage.classID)].totalHours;
+                                    totalHoursHolder.Text = totalWorkspaceHours.ToString();
+                                    workspaceComboBox.SelectedItem = workspaceName;
                                 }
 
-                                response = JsonConvert.DeserializeObject<serverResponse>(jsonResponse);
+                                storage.currentWorkspaceID = workspaceSelectedID;
 
-                                if (response.status)
+                                try
                                 {
-                                    int summarizedHours = 0;
-                                    dataGrid.Rows.Clear();
-                                    dataGrid.Refresh();
-                                    if (response.contents != null)
+                                    using (loadingForm form = new loadingForm(requestSummaryList))
                                     {
-                                        dataGrid.ColumnCount = 3;
-                                        dataGrid.Columns[0].Name = "date";
-                                        dataGrid.Columns[0].HeaderText = summariesListStrings.Date;
-                                        dataGrid.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                                        dataGrid.Columns[1].Name = "summaryNumber";
-                                        dataGrid.Columns[1].HeaderText = "#";
-                                        dataGrid.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                                        dataGrid.Columns[2].Name = "contents";
-                                        dataGrid.Columns[2].HeaderText = summariesListStrings.Summary;
-                                        dataGrid.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                                        dataGrid.AllowUserToDeleteRows = false;
-                                        dataGrid.AllowUserToAddRows = false;
-                                        dataGrid.MultiSelect = false; //just to reinforce
+                                        form.ShowDialog();
+                                    }
 
-                                        var rows = new List<string[]>();
-                                        foreach (Content content in response.contents)
-                                        {
-                                            string[] row1 = new string[] { content.date.ToString(), content.summaryNumber.ToString(), content.bodyText.ToString() };
-                                            summarizedHours += content.dayHours;
-                                            rows.Add(row1);
-                                        }
+                                    response = JsonConvert.DeserializeObject<serverResponse>(jsonResponse);
 
-                                        foreach (string[] rowArray in rows)
+                                    if (response.status)
+                                    {
+                                        int summarizedHours = 0;
+                                        dataGrid.Rows.Clear();
+                                        dataGrid.Refresh();
+                                        if (response.contents != null)
                                         {
-                                            dataGrid.Rows.Add(rowArray);
+                                            dataGrid.ColumnCount = 3;
+                                            dataGrid.Columns[0].Name = "date";
+                                            dataGrid.Columns[0].HeaderText = summariesListStrings.Date;
+                                            dataGrid.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                                            dataGrid.Columns[1].Name = "summaryNumber";
+                                            dataGrid.Columns[1].HeaderText = "#";
+                                            dataGrid.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                                            dataGrid.Columns[2].Name = "contents";
+                                            dataGrid.Columns[2].HeaderText = summariesListStrings.Summary;
+                                            dataGrid.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                                            dataGrid.AllowUserToDeleteRows = false;
+                                            dataGrid.AllowUserToAddRows = false;
+                                            dataGrid.MultiSelect = false; //just to reinforce
+
+                                            var rows = new List<string[]>();
+                                            foreach (Content content in response.contents)
+                                            {
+                                                string[] row1 = new string[] { content.date.ToString(), content.summaryNumber.ToString(), content.bodyText.ToString() };
+                                                summarizedHours += content.dayHours;
+                                                rows.Add(row1);
+                                            }
+
+                                            foreach (string[] rowArray in rows)
+                                            {
+                                                dataGrid.Rows.Add(rowArray);
+                                            }
+                                            dataGrid.Sort(this.dataGrid.Columns[0], Properties.Settings.Default.summaryOrderDate);
+                                            double daysLeft = 0;
+                                            daysLeft = (totalWorkspaceHours - summarizedHours) / 7;
+                                            summarizedHoursHolder.Text = summarizedHours.ToString();
+                                            hoursRemainingHolder.Text = (totalWorkspaceHours - summarizedHours).ToString() + " " + String.Format(GlobalStrings.DaysRemaining, Math.Round(daysLeft));
                                         }
-                                        dataGrid.Sort(this.dataGrid.Columns[0], Properties.Settings.Default.summaryOrderDate);
-                                        double daysLeft = 0;
-                                        daysLeft = (totalWorkspaceHours - summarizedHours) / 7;
-                                        summarizedHoursHolder.Text = summarizedHours.ToString();
-                                        hoursRemainingHolder.Text = (totalWorkspaceHours - summarizedHours).ToString() + " " + String.Format(GlobalStrings.DaysRemaining, Math.Round(daysLeft));
+                                        else
+                                        {
+                                            hoursRemainingHolder.Text = totalWorkspaceHours.ToString() + " " + String.Format(GlobalStrings.DaysRemaining, Math.Round((double)totalWorkspaceHours/7));
+                                        }
                                     }
                                     else
                                     {
-                                        hoursRemainingHolder.Text = totalWorkspaceHours.ToString() + " " + String.Format(GlobalStrings.DaysRemaining, Math.Round((double)totalWorkspaceHours/7));
+                                        MessageBox.Show(GlobalStrings.Error + ": " + response.errors, GlobalStrings.CriticalError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                                     }
                                 }
-                                else
+                                catch (Exception ex)
                                 {
-                                    MessageBox.Show(GlobalStrings.Error + ": " + response.errors, GlobalStrings.CriticalError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    functions functions = new functions();
+                                    if (!functions.CheckForInternetConnection(storage.inUseDomain))
+                                    {
+                                        MessageBox.Show(GlobalStrings.ConnectionToServerLost, GlobalStrings.ConnectionLost, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show(GlobalStrings.CriticalError + ": " + ex.Message + "\n" + jsonResponse + "\n" + ex.StackTrace, GlobalStrings.CriticalError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    }
                                 }
                             }
-                            catch (Exception ex)
-                            {
-                                functions functions = new functions();
-                                if (!functions.CheckForInternetConnection(storage.inUseDomain))
-                                {
-                                    MessageBox.Show(GlobalStrings.ConnectionToServerLost, GlobalStrings.ConnectionLost, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                }
-                                else
-                                {
-                                    MessageBox.Show(GlobalStrings.CriticalError + ": " + ex.Message + "\n" + jsonResponse + "\n" + ex.StackTrace, GlobalStrings.CriticalError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                }
-                            }
+
                         }
                     }
                     else

@@ -17,6 +17,13 @@ namespace Summaries
             {
                 try
                 {
+                    if (Properties.Settings.Default.callUpgrade)
+                    {
+                        Properties.Settings.Default.Upgrade();
+                        Properties.Settings.Default.callUpgrade = false;
+                        Properties.Settings.Default.Save();
+                    }
+
                     Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(Properties.Settings.Default.Language);
                     Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(Properties.Settings.Default.Language);
                     Application.EnableVisualStyles();

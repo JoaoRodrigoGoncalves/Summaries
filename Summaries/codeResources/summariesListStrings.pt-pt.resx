@@ -136,7 +136,7 @@
     <value>Apenas Leitura</value>
   </data>
   <data name="ReadOnlyWorkspace" xml:space="preserve">
-    <value>Não pode apagar este sumário porque o Espaço de Trabalho em que este se encontra está em modo de apenas leitura!</value>
+    <value>Não pode modificar este Espaço de Trabalho pois o mesmo se encontra em modo de apenas leitura!</value>
   </data>
   <data name="RowDoesNotExist" xml:space="preserve">
     <value>Entrada não existe</value>

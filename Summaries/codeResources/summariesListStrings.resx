@@ -136,7 +136,7 @@
     <value>Read-Only</value>
   </data>
   <data name="ReadOnlyWorkspace" xml:space="preserve">
-    <value>You cannot delete this summary because the current workspace is in read-only mode!</value>
+    <value>You cannot modify this workspace because it is in read-only mode!</value>
   </data>
   <data name="RowDoesNotExist" xml:space="preserve">
     <value>Row does not exist</value>
