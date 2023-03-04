@@ -117,17 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="changePasswordBTN.Size" type="System.Drawing.Size, System.Drawing">
-    <value>595, 51</value>
-  </data>
   <data name="changePasswordBTN.Text" xml:space="preserve">
     <value>Alterar palavra-passe</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="userImagePB.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EwAACxMBAJqcGAAAK2JJREFUeF7t3Xn8veWcx3FKq7QqlRZpkSiUhsqSKaWFiSlkK1uZRsY2GFkbGoQU
+        EgAACxIB0t1+/AAAK2JJREFUeF7t3Xn8veWcx3FKq7QqlRZpkSiUhsqSKaWFiSlkK1uZRsY2GFkbGoQU
         xhapNJaxUylJCtkTiSKSbC1SaVXNvN4zmgmfX933fe5zvuc+5/V8PF6P8UdTv98597nuc+77vq7rdpIk
         SZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIk
         SZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIk
@@ -315,14 +312,20 @@
         JEmSJEmSJEmSJEmSJEkz7Xa3+28YX4W7RJNyLwAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="userImagePB.Size" type="System.Drawing.Size, System.Drawing">
-    <value>162, 168</value>
+  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>146, 112</value>
   </data>
-  <data name="nameBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>415, 20</value>
+  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>102, 13</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>Carga Horária Diária</value>
+  </data>
+  <data name="hoursPerDaySetting.Location" type="System.Drawing.Point, System.Drawing">
+    <value>99, 108</value>
   </data>
   <data name="bigBarCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>99, 99</value>
+    <value>99, 85</value>
   </data>
   <data name="bigBarCheckBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>260, 17</value>
@@ -359,27 +362,6 @@
   </data>
   <data name="label1.Text" xml:space="preserve">
     <value>Turma:</value>
-  </data>
-  <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>415, 137</value>
-  </data>
-  <data name="tableLayoutPanel4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>171, 3</value>
-  </data>
-  <data name="tableLayoutPanel4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>421, 168</value>
-  </data>
-  <data name="tableLayoutPanel3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>595, 174</value>
-  </data>
-  <data name="tableLayoutPanel2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>601, 237</value>
-  </data>
-  <data name="tableLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>647, 283</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>647, 283</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

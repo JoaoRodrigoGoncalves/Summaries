@@ -211,14 +211,22 @@ namespace Summaries
                                             }
                                             dataGrid.Sort(this.dataGrid.Columns[0], Properties.Settings.Default.summaryOrderDate);
                                             double daysLeft = 0;
-                                            daysLeft = (totalWorkspaceHours - summarizedHours) / 7;
+                                            daysLeft = (totalWorkspaceHours - summarizedHours) / Properties.Settings.Default.hoursPerDay;
                                             summarizedHoursHolder.Text = summarizedHours.ToString();
                                             hoursRemainingHolder.Text = (totalWorkspaceHours - summarizedHours).ToString() + " " + String.Format(GlobalStrings.DaysRemaining, Math.Round(daysLeft));
                                         }
                                         else
                                         {
-                                            hoursRemainingHolder.Text = totalWorkspaceHours.ToString() + " " + String.Format(GlobalStrings.DaysRemaining, Math.Round((double)totalWorkspaceHours/7));
+                                            hoursRemainingHolder.Text = totalWorkspaceHours.ToString() + " " + String.Format(GlobalStrings.DaysRemaining, Math.Round((double)totalWorkspaceHours/Properties.Settings.Default.hoursPerDay));
                                         }
+
+                                        System.ComponentModel.ComponentResourceManager resManager = new System.ComponentModel.ComponentResourceManager(typeof(summariesList));
+
+                                        string text = resManager.GetString("hoursRemainingHolder.ToolTipText");
+
+                                        text = String.Format(text, Properties.Settings.Default.hoursPerDay);
+
+                                        hoursRemainingHolder.ToolTipText = text;
                                     }
                                     else
                                     {

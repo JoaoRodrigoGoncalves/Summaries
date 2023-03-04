@@ -4,7 +4,7 @@
   <description asmv2:iconFile="icon.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="Summaries" version="7.0.2.0" language="neutral" processorArchitecture="msil" />
+    <assemblyIdentity name="Summaries" version="7.0.3.0" language="neutral" processorArchitecture="msil" />
     <commandLine file="Summaries.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -79,14 +79,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Newtonsoft.Json.dll" size="700336">
-      <assemblyIdentity name="Newtonsoft.Json" version="12.0.0.0" publicKeyToken="30AD4FE6B2A6AEED" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Newtonsoft.Json.dll" size="711952">
+      <assemblyIdentity name="Newtonsoft.Json" version="13.0.0.0" publicKeyToken="30AD4FE6B2A6AEED" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>f5ErKKB8Im4L46z7L1fwUFOKugEA+h8L8sOfGh8dqBQ=</dsig:DigestValue>
+        <dsig:DigestValue>xcg7vBdBvm/0xJDAruNMFilFQj7Fd8ZGU4stIc4TGZ4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -115,14 +115,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Summaries.exe" size="2442736">
-      <assemblyIdentity name="Summaries" version="7.0.2.0" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Summaries.exe" size="2445328">
+      <assemblyIdentity name="Summaries" version="7.0.3.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>S+Spz5qJ+9rPWfl4vpu3M7PtaD3Swfu/BYufvIBruSI=</dsig:DigestValue>
+        <dsig:DigestValue>CWsa81Wiqz7rGwyK57m2DfYuCzwOJp9UsW0iqzjujLU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -135,13 +135,13 @@
       <dsig:DigestValue>enKP4F+SYRDhsTfNgbRQlpHQOijw2QckL6hOpFyk7+c=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Summaries.exe.config" size="1763">
+  <file name="Summaries.exe.config" size="1884">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>SNa233RADUwlV1mAxb50ccRly8pxoKYFUv5hzpzNpXw=</dsig:DigestValue>
+      <dsig:DigestValue>TVjONoTED8zH+jP+44+BRCREpAKBQN3sjKTkd5tnc8s=</dsig:DigestValue>
     </hash>
   </file>
   <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">

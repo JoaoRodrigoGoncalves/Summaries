@@ -37,6 +37,8 @@
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.nameBox = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.hoursPerDaySetting = new System.Windows.Forms.NumericUpDown();
             this.bigBarCheckBox = new System.Windows.Forms.CheckBox();
             this.userTypeBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -48,6 +50,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.userImagePB)).BeginInit();
             this.tableLayoutPanel4.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.hoursPerDaySetting)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -98,6 +101,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.hoursPerDaySetting);
             this.groupBox1.Controls.Add(this.bigBarCheckBox);
             this.groupBox1.Controls.Add(this.userTypeBox);
             this.groupBox1.Controls.Add(this.label2);
@@ -106,6 +111,32 @@
             resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
+            // 
+            // label3
+            // 
+            resources.ApplyResources(this.label3, "label3");
+            this.label3.Name = "label3";
+            // 
+            // hoursPerDaySetting
+            // 
+            resources.ApplyResources(this.hoursPerDaySetting, "hoursPerDaySetting");
+            this.hoursPerDaySetting.Maximum = new decimal(new int[] {
+            24,
+            0,
+            0,
+            0});
+            this.hoursPerDaySetting.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.hoursPerDaySetting.Name = "hoursPerDaySetting";
+            this.hoursPerDaySetting.Value = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
+            this.hoursPerDaySetting.ValueChanged += new System.EventHandler(this.hoursPerDaySetting_ValueChanged);
             // 
             // bigBarCheckBox
             // 
@@ -152,6 +183,7 @@
             this.tableLayoutPanel4.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.hoursPerDaySetting)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -171,5 +203,7 @@
         private System.Windows.Forms.TextBox userTypeBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox bigBarCheckBox;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.NumericUpDown hoursPerDaySetting;
     }
 }

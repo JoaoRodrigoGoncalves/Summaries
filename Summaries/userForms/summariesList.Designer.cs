@@ -56,10 +56,10 @@
             // 
             // dataGrid
             // 
+            resources.ApplyResources(this.dataGrid, "dataGrid");
             this.dataGrid.AllowUserToAddRows = false;
             this.dataGrid.AllowUserToDeleteRows = false;
             this.dataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            resources.ApplyResources(this.dataGrid, "dataGrid");
             this.dataGrid.MultiSelect = false;
             this.dataGrid.Name = "dataGrid";
             this.dataGrid.ReadOnly = true;
@@ -68,6 +68,7 @@
             // 
             // toolStrip
             // 
+            resources.ApplyResources(this.toolStrip, "toolStrip");
             this.toolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addSummary,
@@ -75,42 +76,41 @@
             this.deleteSummary,
             this.refreshList,
             this.toolStripLabel2});
-            resources.ApplyResources(this.toolStrip, "toolStrip");
             this.toolStrip.Name = "toolStrip";
             // 
             // addSummary
             // 
-            this.addSummary.Image = global::Summaries.Properties.Resources.addSummary;
             resources.ApplyResources(this.addSummary, "addSummary");
+            this.addSummary.Image = global::Summaries.Properties.Resources.addSummary;
             this.addSummary.Name = "addSummary";
             this.addSummary.Click += new System.EventHandler(this.addSummary_Click);
             // 
             // editSummary
             // 
-            this.editSummary.Image = global::Summaries.Properties.Resources.newSummary;
             resources.ApplyResources(this.editSummary, "editSummary");
+            this.editSummary.Image = global::Summaries.Properties.Resources.newSummary;
             this.editSummary.Name = "editSummary";
             this.editSummary.Click += new System.EventHandler(this.editSummary_Click);
             // 
             // deleteSummary
             // 
-            this.deleteSummary.Image = global::Summaries.Properties.Resources.deleteSummary;
             resources.ApplyResources(this.deleteSummary, "deleteSummary");
+            this.deleteSummary.Image = global::Summaries.Properties.Resources.deleteSummary;
             this.deleteSummary.Name = "deleteSummary";
             this.deleteSummary.Click += new System.EventHandler(this.deleteSummary_Click);
             // 
             // refreshList
             // 
-            this.refreshList.Image = global::Summaries.Properties.Resources.refresh;
             resources.ApplyResources(this.refreshList, "refreshList");
+            this.refreshList.Image = global::Summaries.Properties.Resources.refresh;
             this.refreshList.Name = "refreshList";
             this.refreshList.Click += new System.EventHandler(this.refreshList_Click);
             // 
             // toolStripLabel2
             // 
+            resources.ApplyResources(this.toolStripLabel2, "toolStripLabel2");
             this.toolStripLabel2.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.toolStripLabel2.Name = "toolStripLabel2";
-            resources.ApplyResources(this.toolStripLabel2, "toolStripLabel2");
             // 
             // toolStrip1
             // 
@@ -132,71 +132,71 @@
             // 
             // totalHoursLB
             // 
-            this.totalHoursLB.Name = "totalHoursLB";
             resources.ApplyResources(this.totalHoursLB, "totalHoursLB");
+            this.totalHoursLB.Name = "totalHoursLB";
             // 
             // totalHoursHolder
             // 
-            this.totalHoursHolder.Name = "totalHoursHolder";
             resources.ApplyResources(this.totalHoursHolder, "totalHoursHolder");
+            this.totalHoursHolder.Name = "totalHoursHolder";
             // 
             // toolStripSeparator2
             // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
             resources.ApplyResources(this.toolStripSeparator2, "toolStripSeparator2");
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
             // 
             // summarizedHoursLB
             // 
-            this.summarizedHoursLB.Name = "summarizedHoursLB";
             resources.ApplyResources(this.summarizedHoursLB, "summarizedHoursLB");
+            this.summarizedHoursLB.Name = "summarizedHoursLB";
             // 
             // toolStripLabel3
             // 
+            resources.ApplyResources(this.toolStripLabel3, "toolStripLabel3");
             this.toolStripLabel3.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.toolStripLabel3.Name = "toolStripLabel3";
-            resources.ApplyResources(this.toolStripLabel3, "toolStripLabel3");
             // 
             // exportWorkspace
             // 
+            resources.ApplyResources(this.exportWorkspace, "exportWorkspace");
             this.exportWorkspace.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.exportWorkspace.Image = global::Summaries.Properties.Resources.export;
-            resources.ApplyResources(this.exportWorkspace, "exportWorkspace");
             this.exportWorkspace.Name = "exportWorkspace";
             this.exportWorkspace.Click += new System.EventHandler(this.exportWorkspace_Click);
             // 
             // workspaceComboBox
             // 
+            resources.ApplyResources(this.workspaceComboBox, "workspaceComboBox");
             this.workspaceComboBox.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.workspaceComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.workspaceComboBox.Name = "workspaceComboBox";
-            resources.ApplyResources(this.workspaceComboBox, "workspaceComboBox");
             this.workspaceComboBox.DropDownClosed += new System.EventHandler(this.workspaceComboBox_DropDownClosed);
             // 
             // toolStripLabel4
             // 
+            resources.ApplyResources(this.toolStripLabel4, "toolStripLabel4");
             this.toolStripLabel4.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.toolStripLabel4.Name = "toolStripLabel4";
-            resources.ApplyResources(this.toolStripLabel4, "toolStripLabel4");
             // 
             // summarizedHoursHolder
             // 
-            this.summarizedHoursHolder.Name = "summarizedHoursHolder";
             resources.ApplyResources(this.summarizedHoursHolder, "summarizedHoursHolder");
+            this.summarizedHoursHolder.Name = "summarizedHoursHolder";
             // 
             // toolStripSeparator1
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
             resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
             // 
             // hoursRemainingLB
             // 
-            this.hoursRemainingLB.Name = "hoursRemainingLB";
             resources.ApplyResources(this.hoursRemainingLB, "hoursRemainingLB");
+            this.hoursRemainingLB.Name = "hoursRemainingLB";
             // 
             // hoursRemainingHolder
             // 
-            this.hoursRemainingHolder.Name = "hoursRemainingHolder";
             resources.ApplyResources(this.hoursRemainingHolder, "hoursRemainingHolder");
+            this.hoursRemainingHolder.Name = "hoursRemainingHolder";
             // 
             // summariesList
             // 

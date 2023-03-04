@@ -136,7 +136,7 @@
     <value>595, 51</value>
   </data>
   <data name="changePasswordBTN.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="changePasswordBTN.Text" xml:space="preserve">
     <value>Change Password</value>
@@ -162,7 +162,7 @@
   <data name="userImagePB.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EwAACxMBAJqcGAAAK2JJREFUeF7t3Xn8veWcx3FKq7QqlRZpkSiUhsqSKaWFiSlkK1uZRsY2GFkbGoQU
+        DgAACw4BQL7hQQAAK2JJREFUeF7t3Xn8veWcx3FKq7QqlRZpkSiUhsqSKaWFiSlkK1uZRsY2GFkbGoQU
         xhapNJaxUylJCtkTiSKSbC1SaVXNvN4zmgmfX933fe5zvuc+5/V8PF6P8UdTv98597nuc+77vq7rdpIk
         SZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIk
         SZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIk
@@ -407,17 +407,65 @@
   <data name="&gt;&gt;nameBox.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="label3.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>119, 113</value>
+  </data>
+  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>79, 13</value>
+  </data>
+  <data name="label3.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>Daily Workload</value>
+  </data>
+  <data name="&gt;&gt;label3.Name" xml:space="preserve">
+    <value>label3</value>
+  </data>
+  <data name="&gt;&gt;label3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="hoursPerDaySetting.Location" type="System.Drawing.Point, System.Drawing">
+    <value>72, 109</value>
+  </data>
+  <data name="hoursPerDaySetting.Size" type="System.Drawing.Size, System.Drawing">
+    <value>41, 20</value>
+  </data>
+  <data name="hoursPerDaySetting.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;hoursPerDaySetting.Name" xml:space="preserve">
+    <value>hoursPerDaySetting</value>
+  </data>
+  <data name="&gt;&gt;hoursPerDaySetting.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;hoursPerDaySetting.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;hoursPerDaySetting.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="bigBarCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="bigBarCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>72, 100</value>
+    <value>72, 86</value>
   </data>
   <data name="bigBarCheckBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>249, 17</value>
   </data>
   <data name="bigBarCheckBox.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+    <value>2</value>
   </data>
   <data name="bigBarCheckBox.Text" xml:space="preserve">
     <value>Use Large Bar (Requires restart the application)</value>
@@ -432,7 +480,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;bigBarCheckBox.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>2</value>
   </data>
   <data name="userTypeBox.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -444,7 +492,7 @@
     <value>337, 20</value>
   </data>
   <data name="userTypeBox.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>0</value>
   </data>
   <data name="&gt;&gt;userTypeBox.Name" xml:space="preserve">
     <value>userTypeBox</value>
@@ -456,7 +504,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;userTypeBox.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>3</value>
   </data>
   <data name="label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -483,7 +531,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>4</value>
   </data>
   <data name="classNameBox.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -495,7 +543,7 @@
     <value>337, 20</value>
   </data>
   <data name="classNameBox.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+    <value>0</value>
   </data>
   <data name="&gt;&gt;classNameBox.Name" xml:space="preserve">
     <value>classNameBox</value>
@@ -507,7 +555,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;classNameBox.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>5</value>
   </data>
   <data name="label1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -534,7 +582,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>6</value>
   </data>
   <data name="groupBox1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>

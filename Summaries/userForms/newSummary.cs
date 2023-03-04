@@ -252,6 +252,8 @@ namespace Summaries
                                         {
                                             summaryNumberBox.Value = 1;
                                         }
+
+                                        dayHoursNumberBox.Value = Properties.Settings.Default.hoursPerDay;
                                     }
                                     else
                                     {
@@ -467,8 +469,6 @@ namespace Summaries
                             MessageBox.Show(newSummaryStrings.ErrorSaveLong, newSummaryStrings.ErrorSave, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
-
-
                 }
             }
         }

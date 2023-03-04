@@ -80,6 +80,7 @@ namespace Summaries.userSettings
                 userTypeBox.Text = GlobalStrings.Student;
             }
             bigBarCheckBox.Checked = Properties.Settings.Default.bigBar;
+            hoursPerDaySetting.Value = Properties.Settings.Default.hoursPerDay;
         }
 
         private void changePasswordBTN_Click(object sender, EventArgs e)
@@ -95,6 +96,11 @@ namespace Summaries.userSettings
                 Properties.Settings.Default.bigBar = bigBarCheckBox.Checked;
                 Properties.Settings.Default.Save();
             }
+        }
+        private void hoursPerDaySetting_ValueChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.hoursPerDay = (int) hoursPerDaySetting.Value;
+            Properties.Settings.Default.Save();
         }
     }
 }

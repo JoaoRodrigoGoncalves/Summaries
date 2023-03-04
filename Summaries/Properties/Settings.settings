@@ -26,5 +26,8 @@
     <Setting Name="adminMenuSize" Type="System.Drawing.Size" Scope="User">
       <Value Profile="(Default)">901, 489</Value>
     </Setting>
+    <Setting Name="hoursPerDay" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">8</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
